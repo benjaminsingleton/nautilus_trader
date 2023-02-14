@@ -2280,6 +2280,33 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.common.factories.OrderFactory.create_list">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderFactory.create_list()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.common.factories.OrderFactory.generate_client_order_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderFactory.generate_client_order_id()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.common.factories.OrderFactory.generate_order_list_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderFactory.generate_order_list_id()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.common.factories.OrderFactory.limit">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -2334,10 +2361,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.common.factories.OrderFactory.set_order_id_count">
+                 <a class="md-nav__link" href="#nautilus_trader.common.factories.OrderFactory.set_client_order_id_count">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderFactory.set_order_id_count()
+                    OrderFactory.set_client_order_id_count()
                    </span>
                   </code>
                  </a>
@@ -19791,6 +19818,251 @@ of
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.common.factories.OrderFactory.create_list">
+             <span class="sig-name descname">
+              <span class="pre">
+               create_list
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                list
+               </span>
+               <span class="pre">
+                orders
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.list.OrderList" title="nautilus_trader.model.orders.list.OrderList">
+                <span class="pre">
+                 OrderList
+                </span>
+               </a>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.common.factories.OrderFactory.create_list" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a new order list containing the given
+              <cite>
+               orders
+              </cite>
+              .
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 orders
+                </strong>
+                (
+                <em>
+                 list
+                </em>
+                <em>
+                 [
+                </em>
+                <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+                 <em>
+                  Order
+                 </em>
+                </a>
+                <em>
+                 ]
+                </em>
+                ) – The orders for the list.
+               </p>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 OrderList
+                </em>
+               </p>
+              </dd>
+              <dt class="field-odd">
+               Raises
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 ValueError
+                </strong>
+                – If
+                <cite>
+                 orders
+                </cite>
+                is empty.
+               </p>
+              </dd>
+             </dl>
+             <p class="rubric">
+              Notes
+             </p>
+             <p>
+              The order at index 0 in the list will be considered the ‘first’ order.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.common.factories.OrderFactory.generate_client_order_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               generate_client_order_id
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
+                <span class="pre">
+                 ClientOrderId
+                </span>
+               </a>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.common.factories.OrderFactory.generate_client_order_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Generate and return a new client order ID.
+             </p>
+             <p>
+              The identifier will be the next in the logical sequence.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 ClientOrderId
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.common.factories.OrderFactory.generate_order_list_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               generate_order_list_id
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.OrderListId" title="nautilus_trader.model.identifiers.OrderListId">
+                <span class="pre">
+                 OrderListId
+                </span>
+               </a>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.common.factories.OrderFactory.generate_order_list_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Generate and return a new order list ID.
+             </p>
+             <p>
+              The identifier will be the next in the logical sequence.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 OrderListId
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.common.factories.OrderFactory.limit">
              <span class="sig-name descname">
               <span class="pre">
@@ -22036,10 +22308,10 @@ contain any arbitrary delimiter if required.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.common.factories.OrderFactory.set_order_id_count">
+            <dt class="sig sig-object py" id="nautilus_trader.common.factories.OrderFactory.set_client_order_id_count">
              <span class="sig-name descname">
               <span class="pre">
-               set_order_id_count
+               set_client_order_id_count
               </span>
              </span>
              <span class="sig-paren">
@@ -22076,7 +22348,7 @@ contain any arbitrary delimiter if required.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.common.factories.OrderFactory.set_order_id_count" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.common.factories.OrderFactory.set_client_order_id_count" title="Permalink to this definition">
               ¶
              </a>
             </dt>
