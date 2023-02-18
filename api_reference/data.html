@@ -3173,6 +3173,17 @@ trading operations.
                </span>
               </span>
              </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                ts_init
+               </span>
+              </span>
+             </em>
              <span class="sig-paren">
               )
              </span>
@@ -3204,16 +3215,32 @@ trading operations.
                </span>
               </dt>
               <dd class="field-odd">
-               <p>
-                <strong>
-                 ts_event
-                </strong>
-                (
-                <em>
-                 uint64_t
-                </em>
-                ) – The UNIX timestamp (nanoseconds) of the bar close.
-               </p>
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   ts_event
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The UNIX timestamp (nanoseconds) for the bar event.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ts_init
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The UNIX timestamp (nanoseconds) for the bar initialization.
+                 </p>
+                </li>
+               </ul>
               </dd>
               <dt class="field-even">
                Returns
@@ -4109,7 +4136,13 @@ specification, then a bar is created and sent to the handler.
              bool
             </span>
             <span class="pre">
-             build_bars_with_no_updates=True
+             build_with_no_updates=True,
+            </span>
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             timestamp_on_close=True
             </span>
            </em>
            <span class="sig-paren">
@@ -4240,7 +4273,7 @@ a bar is created and sent to the handler.
               <li>
                <p>
                 <strong>
-                 build_bars_with_no_updates
+                 build_with_no_updates
                 </strong>
                 (
                 <em>
@@ -4253,6 +4286,29 @@ a bar is created and sent to the handler.
                  default True
                 </em>
                 ) – If build and emit bars with no new market updates.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 timestamp_on_close
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default True
+                </em>
+                ) – If timestamp
+                <cite>
+                 ts_event
+                </cite>
+                will be bar close.
+If False then timestamp will be bar open.
                </p>
               </li>
              </ul>

@@ -3520,10 +3520,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.node.TradingNode.start">
+               <a class="md-nav__link" href="#nautilus_trader.live.node.TradingNode.run">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  TradingNode.start()
+                  TradingNode.run()
                  </span>
                 </code>
                </a>
@@ -3542,6 +3542,24 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   TradingNode.dispose()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.live.node.TradingNode.run_async">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  TradingNode.run_async()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.live.node.TradingNode.stop_async">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  TradingNode.stop_async()
                  </span>
                 </code>
                </a>
@@ -27308,9 +27326,9 @@ then the component state will not change, and an error will be logged.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="common.html#nautilus_trader.common.logging.LiveLogger" title="nautilus_trader.common.logging.LiveLogger">
+              <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
                <span class="pre">
-                LiveLogger
+                Logger
                </span>
               </a>
              </span>
@@ -27333,7 +27351,7 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <em>
-                LiveLogger
+                Logger
                </em>
               </p>
              </dd>
@@ -27626,10 +27644,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.node.TradingNode.start">
+           <dt class="sig sig-object py" id="nautilus_trader.live.node.TradingNode.run">
             <span class="sig-name descname">
              <span class="pre">
-              start
+              run
              </span>
             </span>
             <span class="sig-paren">
@@ -27648,13 +27666,13 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.live.node.TradingNode.start" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.live.node.TradingNode.run" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Start the trading node.
+             Start and run the trading node.
             </p>
            </dd>
           </dl>
@@ -27694,10 +27712,10 @@ then the component state will not change, and an error will be logged.
              <cite>
               Trader
              </cite>
-             residuals will be checked.
+             residual state will be checked.
             </p>
             <p>
-             If save strategy is specified then strategy states will then be saved.
+             If save strategy is configured, then strategy states will be saved.
             </p>
            </dd>
           </dl>
@@ -27734,6 +27752,96 @@ then the component state will not change, and an error will be logged.
             </p>
             <p>
              Gracefully shuts down the executor and event loop.
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.live.node.TradingNode.run_async">
+            <em class="property">
+             <span class="pre">
+              async
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              run_async
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.live.node.TradingNode.run_async" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Start and run the trading node asynchronously.
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.live.node.TradingNode.stop_async">
+            <em class="property">
+             <span class="pre">
+              async
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              stop_async
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.live.node.TradingNode.stop_async" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Stop the trading node gracefully, asynchronously.
+            </p>
+            <p>
+             After a specified delay the internal
+             <cite>
+              Trader
+             </cite>
+             residual state will be checked.
+            </p>
+            <p>
+             If save strategy is configured, then strategy states will be saved.
             </p>
            </dd>
           </dl>
@@ -27902,9 +28010,9 @@ then the component state will not change, and an error will be logged.
            <span class="w">
            </span>
            <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.logging.LiveLogger" title="nautilus_trader.common.logging.LiveLogger">
+            <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
              <span class="pre">
-              LiveLogger
+              Logger
              </span>
             </a>
            </span>
@@ -28047,9 +28155,9 @@ then the component state will not change, and an error will be logged.
                 logger
                </strong>
                (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.LiveLogger" title="nautilus_trader.common.logging.LiveLogger">
+               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
                 <em>
-                 LiveLogger
+                 Logger
                 </em>
                </a>
                ) – The logger for building clients.
@@ -28414,9 +28522,19 @@ then the component state will not change, and an error will be logged.
                <em>
                 ,
                </em>
+               <a class="reference internal" href="config.html#nautilus_trader.config.common.ImportableConfig" title="nautilus_trader.config.common.ImportableConfig">
+                <em>
+                 ImportableConfig
+                </em>
+               </a>
                <em>
-                object
+                |
                </em>
+               <a class="reference internal" href="config.html#nautilus_trader.config.live.LiveDataClientConfig" title="nautilus_trader.config.live.LiveDataClientConfig">
+                <em>
+                 LiveDataClientConfig
+                </em>
+               </a>
                <em>
                 ]
                </em>
@@ -28516,9 +28634,19 @@ then the component state will not change, and an error will be logged.
                <em>
                 ,
                </em>
+               <a class="reference internal" href="config.html#nautilus_trader.config.common.ImportableConfig" title="nautilus_trader.config.common.ImportableConfig">
+                <em>
+                 ImportableConfig
+                </em>
+               </a>
                <em>
-                object
+                |
                </em>
+               <a class="reference internal" href="config.html#nautilus_trader.config.live.LiveExecClientConfig" title="nautilus_trader.config.live.LiveExecClientConfig">
+                <em>
+                 LiveExecClientConfig
+                </em>
+               </a>
                <em>
                 ]
                </em>

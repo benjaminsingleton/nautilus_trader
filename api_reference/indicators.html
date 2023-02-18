@@ -12921,6 +12921,118 @@ within a defined Keltner channel. This provides a measure of the relative
            An indicator which calculates the difference between two moving averages.
 Different moving average types can be selected for the inner calculation.
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                fast_period
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               ) – The period for the fast moving average (&gt; 0).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                slow_period
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               ) – The period for the slow moving average (&gt; 0 &amp; &gt; fast_sma).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ma_type
+               </strong>
+               (
+               <a class="reference internal" href="#nautilus_trader.indicators.average.moving_average.MovingAverageType" title="nautilus_trader.indicators.average.moving_average.MovingAverageType">
+                <em>
+                 MovingAverageType
+                </em>
+               </a>
+               ) – The moving average type for the calculations.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                price_type
+               </strong>
+               (
+               <em>
+                PriceType
+               </em>
+               ) – The specified price type for extracting values from quote ticks.
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                fast_period
+               </cite>
+               is not positive (&gt; 0).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                slow_period
+               </cite>
+               is not positive (&gt; 0).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                fast_period
+               </cite>
+               is not &lt;
+               <cite>
+                slow_period
+               </cite>
+               .
+              </p>
+             </li>
+            </ul>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.indicators.macd.MovingAverageConvergenceDivergence.fast_period">
             <span class="sig-name descname">
@@ -13531,6 +13643,44 @@ Different moving average types can be selected for the inner calculation.
            An indicator which calculates the momentum of relative positive or negative
 volume.
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <p>
+             <strong>
+              period
+             </strong>
+             (
+             <em>
+              int
+             </em>
+             ) – The period for the indicator, zero indicates no window (&gt;= 0).
+            </p>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <p>
+             <strong>
+              ValueError
+             </strong>
+             – If
+             <cite>
+              period
+             </cite>
+             is negative (&lt; 0).
+            </p>
+           </dd>
+          </dl>
           <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.indicators.obv.OnBalanceVolume.handle_bar">
             <span class="sig-name descname">
@@ -14111,6 +14261,90 @@ volume.
            An indicator which calculates the relative volume (multiple of average volume)
 to move the market across a relative range (multiple of ATR).
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                period
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               ) – The period for the indicator (&gt; 0).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ma_type
+               </strong>
+               (
+               <a class="reference internal" href="#nautilus_trader.indicators.average.moving_average.MovingAverageType" title="nautilus_trader.indicators.average.moving_average.MovingAverageType">
+                <em>
+                 MovingAverageType
+                </em>
+               </a>
+               ) – The moving average type for the calculations.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                atr_floor
+               </strong>
+               (
+               <em>
+                double
+               </em>
+               ) – The ATR floor (minimum) output value for the indicator (&gt;= 0.).
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                period
+               </cite>
+               is not positive (&gt; 0).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                atr_floor
+               </cite>
+               is negative (&lt; 0).
+              </p>
+             </li>
+            </ul>
+           </dd>
+          </dl>
           <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.indicators.pressure.Pressure.handle_bar">
             <span class="sig-name descname">
@@ -14729,6 +14963,60 @@ to move the market across a relative range (multiple of ATR).
            An indicator which calculates the rate of change of price over a defined period.
 The return output can be simple or log.
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                period
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               ) – The period for the indicator.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                use_log
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               ) – Use log returns for value calculation.
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <p>
+             <strong>
+              ValueError
+             </strong>
+             – If
+             <cite>
+              period
+             </cite>
+             is not &gt; 1.
+            </p>
+           </dd>
+          </dl>
           <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.indicators.roc.RateOfChange.handle_bar">
             <span class="sig-name descname">
@@ -15247,6 +15535,62 @@ The return output can be simple or log.
           <p>
            An indicator which calculates a relative strength index (RSI) across a rolling window.
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                ma_type
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               ) – The moving average type for average gain/loss.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                period
+               </strong>
+               (
+               <a class="reference internal" href="#nautilus_trader.indicators.average.moving_average.MovingAverageType" title="nautilus_trader.indicators.average.moving_average.MovingAverageType">
+                <em>
+                 MovingAverageType
+                </em>
+               </a>
+               ) – The rolling window period for the indicator.
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <p>
+             <strong>
+              ValueError
+             </strong>
+             – If
+             <cite>
+              period
+             </cite>
+             is not positive (&gt; 0).
+            </p>
+           </dd>
+          </dl>
           <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.indicators.rsi.RelativeStrengthIndex.handle_bar">
             <span class="sig-name descname">
@@ -15759,6 +16103,66 @@ The return output can be simple or log.
           <p>
            Provides various spread analysis metrics.
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                instrument_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                <em>
+                 InstrumentId
+                </em>
+               </a>
+               ) – The instrument ID for the tick updates.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                capacity
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               ) – The max length for the internal
+               <cite>
+                QuoteTick
+               </cite>
+               deque (determines averages).
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <p>
+             <strong>
+              ValueError
+             </strong>
+             – If
+             <cite>
+              capacity
+             </cite>
+             is not positive (&gt; 0).
+            </p>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.indicators.spread_analyzer.SpreadAnalyzer.average">
             <span class="sig-name descname">
@@ -16283,6 +16687,76 @@ The return output can be simple or log.
            An oscillator which can indicate when an asset may be over bought or over
 sold.
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                period_k
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               ) – The period for the K line.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                period_d
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               ) – The period for the D line.
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                period_k
+               </cite>
+               is not positive (&gt; 0).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                period_d
+               </cite>
+               is not positive (&gt; 0).
+              </p>
+             </li>
+            </ul>
+           </dd>
+          </dl>
           <p class="rubric">
            References
           </p>
@@ -16906,6 +17380,26 @@ sold.
           <p>
            A swing indicator which calculates and stores various swing metrics.
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <p>
+             <strong>
+              period
+             </strong>
+             (
+             <em>
+              int
+             </em>
+             ) – The rolling window period for the indicator (&gt; 0).
+            </p>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.indicators.swings.Swings.changed">
             <span class="sig-name descname">

@@ -668,11 +668,6 @@
            </span>
            <ul class="submenu">
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#limitations">
-              Limitations
-             </a>
-            </li>
-            <li class="md-nav__item">
              <a class="md-nav__link" href="#submitting-for-emulation">
               Submitting for emulation
              </a>
@@ -741,19 +736,14 @@ and utilize a common
          </code>
          component.
         </p>
-        <section id="limitations">
-         <h2 id="limitations">
-          Limitations
-          <a class="headerlink" href="#limitations" title="Permalink to this heading">
-           ¶
-          </a>
-         </h2>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
          <p>
           There is no limitation on the number of emulated orders you can have per running instance.
-Currently only individual orders can be emulated, so it is not possible to submit contingency order lists
-for emulation (this may be supported in a future version).
          </p>
-        </section>
+        </div>
         <section id="submitting-for-emulation">
          <h2 id="submitting-for-emulation">
           Submitting for emulation
@@ -877,7 +867,7 @@ when canceling all orders.
               RiskEngine
              </span>
             </code>
-            for pre-trade risk checks (if may be denied at this point)
+            for pre-trade risk checks (it may be denied at this point)
            </p>
           </li>
           <li>
@@ -904,7 +894,11 @@ when canceling all orders.
            </a>
           </h3>
           <p>
-           The following will occur for an emulated order now inside the
+           The following will occur for an emulated order now
+           <em>
+            held
+           </em>
+           by the
            <code class="docutils literal notranslate">
             <span class="pre">
              OrderEmulator
@@ -926,7 +920,7 @@ when canceling all orders.
            </li>
            <li>
             <p>
-             The emulated order will be held inside a local
+             The emulated order will be processed inside a local
              <code class="docutils literal notranslate">
               <span class="pre">
                MatchingCore
@@ -948,7 +942,7 @@ when canceling all orders.
            </li>
            <li>
             <p>
-             The emulated order will be modified (by the trader) and updated (by the market) until
+             The emulated order can be modified (by the trader) and updated (by the market) until
              <em>
               released
              </em>
@@ -965,7 +959,7 @@ when canceling all orders.
            </a>
           </h3>
           <p>
-           Once an emulated order is triggered / matched locally based on a data feed, the following
+           Once an emulated order is triggered / matched locally based on the arrival of data, the following
            <em>
             release
            </em>
@@ -1357,7 +1351,7 @@ It’s possible to query for emulated orders through the following
           for additional details.
          </p>
          <p>
-          You can also query order objects directly in pure Python:
+          You can also query order objects directly in Python:
          </p>
          <ul class="simple">
           <li>

@@ -2852,7 +2852,7 @@ If
                 <em>
                  str
                 </em>
-                ) – paper or live
+                ) – paper or live.
                </p>
               </li>
               <li>
@@ -4598,6 +4598,124 @@ client_id: int, optional
            <p>
             Provides a data client for the InteractiveBrokers exchange.
            </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 loop
+                </strong>
+                (
+                <em>
+                 asyncio.AbstractEventLoop
+                </em>
+                ) – The event loop for the client.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 client
+                </strong>
+                (
+                <em>
+                 IB
+                </em>
+                ) – The ib_insync IB client.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 msgbus
+                </strong>
+                (
+                <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+                 <em>
+                  MessageBus
+                 </em>
+                </a>
+                ) – The message bus for the client.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 cache
+                </strong>
+                (
+                <a class="reference internal" href="../cache.html#nautilus_trader.cache.cache.Cache" title="nautilus_trader.cache.cache.Cache">
+                 <em>
+                  Cache
+                 </em>
+                </a>
+                ) – The cache for the client.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 clock
+                </strong>
+                (
+                <a class="reference internal" href="../common.html#nautilus_trader.common.clock.LiveClock" title="nautilus_trader.common.clock.LiveClock">
+                 <em>
+                  LiveClock
+                 </em>
+                </a>
+                ) – The clock for the client.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 logger
+                </strong>
+                (
+                <a class="reference internal" href="../common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
+                 <em>
+                  Logger
+                 </em>
+                </a>
+                ) – The logger for the client.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 instrument_provider
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.adapters.interactive_brokers.providers.InteractiveBrokersInstrumentProvider" title="nautilus_trader.adapters.interactive_brokers.providers.InteractiveBrokersInstrumentProvider">
+                 <em>
+                  InteractiveBrokersInstrumentProvider
+                 </em>
+                </a>
+                ) – The instrument provider.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 handle_revised_bars
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                ) – If DataClient will emit bar updates as soon new bar opens.
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient.connect">
              <span class="sig-name descname">
@@ -16918,9 +17036,9 @@ cached client will be returned.
               <span class="w">
               </span>
               <span class="n">
-               <a class="reference internal" href="../common.html#nautilus_trader.common.logging.LiveLogger" title="nautilus_trader.common.logging.LiveLogger">
+               <a class="reference internal" href="../common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
                 <span class="pre">
-                 LiveLogger
+                 Logger
                 </span>
                </a>
               </span>
@@ -17041,9 +17159,9 @@ cached client will be returned.
                    logger
                   </strong>
                   (
-                  <a class="reference internal" href="../common.html#nautilus_trader.common.logging.LiveLogger" title="nautilus_trader.common.logging.LiveLogger">
+                  <a class="reference internal" href="../common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
                    <em>
-                    LiveLogger
+                    Logger
                    </em>
                   </a>
                   ) – The logger for the client.
@@ -17262,9 +17380,9 @@ cached client will be returned.
               <span class="w">
               </span>
               <span class="n">
-               <a class="reference internal" href="../common.html#nautilus_trader.common.logging.LiveLogger" title="nautilus_trader.common.logging.LiveLogger">
+               <a class="reference internal" href="../common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
                 <span class="pre">
-                 LiveLogger
+                 Logger
                 </span>
                </a>
               </span>
@@ -17400,9 +17518,9 @@ cached client will be returned.
                    logger
                   </strong>
                   (
-                  <a class="reference internal" href="../common.html#nautilus_trader.common.logging.LiveLogger" title="nautilus_trader.common.logging.LiveLogger">
+                  <a class="reference internal" href="../common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
                    <em>
-                    LiveLogger
+                    Logger
                    </em>
                   </a>
                   ) – The logger for the client.
@@ -17645,6 +17763,94 @@ cached client will be returned.
             </cite>
             objects through Interactive Brokers.
            </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 client
+                </strong>
+                (
+                <em>
+                 ib_insync.IB
+                </em>
+                ) – The Interactive Brokers client.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 config
+                </strong>
+                (
+                <a class="reference internal" href="../config.html#nautilus_trader.config.common.InstrumentProviderConfig" title="nautilus_trader.config.common.InstrumentProviderConfig">
+                 <em>
+                  InstrumentProviderConfig
+                 </em>
+                </a>
+                ) – The instrument provider config
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 logger
+                </strong>
+                (
+                <a class="reference internal" href="../common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
+                 <em>
+                  Logger
+                 </em>
+                </a>
+                ) – The logger for the instrument provider.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 host
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                ) – The client host name or IP address.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 port
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                ) – The client port number.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 client_id
+                </strong>
+                (
+                <em>
+                 int
+                </em>
+                ) – The unique client ID number for the connection.
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.interactive_brokers.providers.InteractiveBrokersInstrumentProvider.load_all_async">
              <em class="property">
@@ -18024,15 +18230,12 @@ applying the given filters.
                    bool
                   </em>
                   <em>
-                   (
+                   ,
                   </em>
                   <em>
-                   default: False
+                   default False
                   </em>
-                  <em>
-                   )
-                  </em>
-                  ) – Search for full option chain
+                  ) – Search for full option chain.
                  </p>
                 </li>
                 <li>
@@ -18045,15 +18248,12 @@ applying the given filters.
                    str
                   </em>
                   <em>
-                   (
+                   ,
                   </em>
                   <em>
-                   default: False
+                   default False
                   </em>
-                  <em>
-                   )
-                  </em>
-                  ) – JSON string for options filtering, available fields: min_expiry, max_expiry, min_strike, max_strike, kind
+                  ) – JSON string for options filtering, available fields: min_expiry, max_expiry, min_strike, max_strike, kind.
                  </p>
                 </li>
                 <li>
@@ -18077,7 +18277,7 @@ applying the given filters.
                    <p>
                     secType, conId, symbol, lastTradeDateOrContractMonth, strike, right, multiplier, exchange,
 primaryExchange, currency, localSymbol, tradingClass, includeExpired, secIdType, secId,
-comboLegsDescrip, comboLegs,  deltaNeutralContract
+comboLegsDescrip, comboLegs,  deltaNeutralContract.
                    </p>
                   </dd>
                  </dl>

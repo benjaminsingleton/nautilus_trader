@@ -728,6 +728,11 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#aggregated-trades">
+                Aggregated Trades
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#parser-warnings">
                 Parser warnings
                </a>
@@ -828,20 +833,32 @@ which can be used together or separately depending on the users needs.
            <p>
             <code class="docutils literal notranslate">
              <span class="pre">
-              BinanceDataClient
+              BinanceSpotDataClient
              </span>
             </code>
-            provides a market data feed manager
+            /
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              BinanceFuturesDataClient
+             </span>
+            </code>
+            provide a market data feed manager
            </p>
           </li>
           <li>
            <p>
             <code class="docutils literal notranslate">
              <span class="pre">
-              BinanceExecutionClient
+              BinanceSpotExecutionClient
              </span>
             </code>
-            provides an account management and trade execution gateway
+            /
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              BinanceFuturesExecutionClient
+             </span>
+            </code>
+            provide an account management and trade execution gateway
            </p>
           </li>
           <li>
@@ -1540,9 +1557,20 @@ credentials are valid and have trading permissions.
             <p>
              <code class="docutils literal notranslate">
               <span class="pre">
-               MARGIN
+               MARGIN_CROSS
               </span>
              </code>
+             (Margin shared between open positions.)
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               MARGIN_ISOLATED
+              </span>
+             </code>
+             (Margin assigned to a single position.)
             </p>
            </li>
            <li>
@@ -1665,6 +1693,53 @@ Simply set the
            </div>
           </div>
          </section>
+         <section id="aggregated-trades">
+          <h3 id="aggregated-trades">
+           Aggregated Trades
+           <a class="headerlink" href="#aggregated-trades" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Binance provide aggregated trade data endpoints as an alternative source of trade ticks.
+In comparison to the default trade endpoints, aggregated trade data endpoints can return all
+ticks between a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             start_time
+            </span>
+           </code>
+           and
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             end_time
+            </span>
+           </code>
+           .
+          </p>
+          <p>
+           To use aggregated trades and the endpoint features, set the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             use_agg_trade_ticks
+            </span>
+           </code>
+           option
+to
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             True
+            </span>
+           </code>
+           (this is
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             False
+            </span>
+           </code>
+           by default.)
+          </p>
+         </section>
          <section id="parser-warnings">
           <h3 id="parser-warnings">
            Parser warnings
@@ -1690,7 +1765,7 @@ example below:
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">instrument_provider</span><span class="o">=</span><span class="n">InstrumentProviderConfig</span><span class="p">(</span>
-    <span class="n">load_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+    <span class="n">load_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">log_warnings</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span>
 </pre>

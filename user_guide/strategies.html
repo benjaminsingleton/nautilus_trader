@@ -716,7 +716,7 @@ trading strategies. Defining a trading strategy is achieved by inheriting the
 and implementing the methods required by the strategy.
         </p>
         <p>
-         Using the basic building blocks of data ingest and order management (which we will discuss
+         Using the basic building blocks of data ingest, event handling, and order management (which we will discuss
 below), it’s possible to implement any type of trading strategy including directional, momentum, re-balancing,
 pairs, market making etc.
         </p>
@@ -795,7 +795,7 @@ a constructor where you can handle initialization. Minimally the base/super clas
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="k">class</span> <span class="nc">MyStrategy</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>  <span class="c1"># &lt;-- the super class must be called to initialize the strategy</span>
 </pre>
           </div>
@@ -843,7 +843,7 @@ live trading servers remotely, then you will need to define a configuration.
 <span class="c1"># parameterize the instrument the strategy will trade.</span>
 
 <span class="k">class</span> <span class="nc">MyStrategy</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">MyStrategyConfig</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">MyStrategyConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
         <span class="c1"># Configuration</span>
