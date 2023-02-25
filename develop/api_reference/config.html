@@ -10461,6 +10461,40 @@ how the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              log_level_file:
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              'DEBUG'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_path:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               log_rate_limit:
              </span>
              <span class="pre">
@@ -10800,7 +10834,49 @@ how the
                 <em>
                  default "INFO"
                 </em>
-                ) – The stdout log level for the node.
+                ) – The minimum log level to write to stdout.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_level_file
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default "DEBUG"
+                </em>
+                ) – The minimum log level to write to a log file.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_file_path
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The optional log file path. If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                then will not log to a file.
                </p>
               </li>
               <li>
@@ -10836,7 +10912,7 @@ how the
                 <em>
                  default False
                 </em>
-                ) – If logging to stdout should be bypassed.
+                ) – If all logging should be bypassed.
                </p>
               </li>
              </ul>
@@ -14198,6 +14274,40 @@ how the
              </span>
              <span class="pre">
               'INFO'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_level_file:
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              'DEBUG'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_path:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>
@@ -19630,6 +19740,40 @@ is checked with the venue.
              </span>
              <span class="pre">
               'INFO'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_level_file:
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              'DEBUG'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_path:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>
