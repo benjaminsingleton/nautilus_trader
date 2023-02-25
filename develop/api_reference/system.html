@@ -883,6 +883,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.system.kernel.NautilusKernel.catalog">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  NautilusKernel.catalog
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.system.kernel.NautilusKernel.dispose">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1300,6 +1309,55 @@
             <a class="reference internal" href="config.html#nautilus_trader.config.common.StreamingConfig" title="nautilus_trader.config.common.StreamingConfig">
              <span class="pre">
               StreamingConfig
+             </span>
+            </a>
+            <span class="p">
+             <span class="pre">
+              ]
+             </span>
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="o">
+            <span class="pre">
+             =
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="default_value">
+            <span class="pre">
+             None
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             catalog_config
+            </span>
+           </span>
+           <span class="p">
+            <span class="pre">
+             :
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="n">
+            <span class="pre">
+             Optional
+            </span>
+            <span class="p">
+             <span class="pre">
+              [
+             </span>
+            </span>
+            <a class="reference internal" href="config.html#nautilus_trader.config.common.DataCatalogConfig" title="nautilus_trader.config.common.DataCatalogConfig">
+             <span class="pre">
+              DataCatalogConfig
              </span>
             </a>
             <span class="p">
@@ -2077,6 +2135,26 @@
                 optional
                </em>
                ) – The configuration for streaming to feather files.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                catalog_config
+               </strong>
+               (
+               <a class="reference internal" href="config.html#nautilus_trader.config.common.DataCatalogConfig" title="nautilus_trader.config.common.DataCatalogConfig">
+                <em>
+                 DataCatalogConfig
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <em>
+                optional
+               </em>
+               ) – The data catalog configuration.
               </p>
              </li>
              <li>
@@ -3625,6 +3703,75 @@
              <dd class="field-odd">
               <p>
                StreamingFeatherWriter or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py property">
+           <dt class="sig sig-object py" id="nautilus_trader.system.kernel.NautilusKernel.catalog">
+            <em class="property">
+             <span class="pre">
+              property
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              catalog
+             </span>
+            </span>
+            <em class="property">
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <a class="reference internal" href="persistence.html#nautilus_trader.persistence.catalog.ParquetDataCatalog" title="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
+              <span class="pre">
+               ParquetDataCatalog
+              </span>
+             </a>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </em>
+            <a class="headerlink" href="#nautilus_trader.system.kernel.NautilusKernel.catalog" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the kernels data catalog.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               ParquetDataCatalog or
                <code class="docutils literal notranslate">
                 <span class="pre">
                  None

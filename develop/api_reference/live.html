@@ -1804,6 +1804,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.live.data_engine.LiveDataEngine.register_catalog">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  LiveDataEngine.register_catalog()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.live.data_engine.LiveDataEngine.register_client">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -8929,7 +8938,7 @@ actions when done.
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -8940,7 +8949,7 @@ actions when done.
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -9021,7 +9030,7 @@ actions when done.
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -9039,7 +9048,7 @@ actions when done.
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -9123,7 +9132,7 @@ to the current datetime.
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -9134,7 +9143,7 @@ to the current datetime.
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -9215,7 +9224,7 @@ to the current datetime.
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -9233,7 +9242,7 @@ to the current datetime.
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -9317,7 +9326,7 @@ to the current datetime.
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -9328,7 +9337,7 @@ to the current datetime.
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -9409,7 +9418,7 @@ to the current datetime.
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -9427,7 +9436,7 @@ to the current datetime.
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -12928,6 +12937,90 @@ until queue size reduces.
 running on.
              </p>
             </div>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.live.data_engine.LiveDataEngine.register_catalog">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_catalog
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               catalog
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <a class="reference internal" href="persistence.html#nautilus_trader.persistence.catalog.ParquetDataCatalog" title="nautilus_trader.persistence.catalog.ParquetDataCatalog">
+               <span class="pre">
+                ParquetDataCatalog
+               </span>
+              </a>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.live.data_engine.LiveDataEngine.register_catalog" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given data catalog with the engine.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                catalog
+               </strong>
+               (
+               <a class="reference internal" href="persistence.html#nautilus_trader.persistence.catalog.ParquetDataCatalog" title="nautilus_trader.persistence.catalog.ParquetDataCatalog">
+                <em>
+                 ParquetDataCatalog
+                </em>
+               </a>
+               ) – The data catalog to register.
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py method">

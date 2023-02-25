@@ -8433,7 +8433,7 @@ If
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -8444,7 +8444,7 @@ If
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -8487,7 +8487,7 @@ If
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -8523,7 +8523,7 @@ If
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -8535,13 +8535,13 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -8553,14 +8553,14 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -8605,26 +8605,16 @@ If
                </strong>
                – If
                <cite>
-                from_datetime
+                start
                </cite>
                is not less than
                <cite>
-                to_datetime
+                end
                </cite>
                .
               </p>
              </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the bar capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -9002,7 +8992,7 @@ If
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -9013,7 +9003,7 @@ If
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -9056,7 +9046,7 @@ If
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -9092,7 +9082,7 @@ If
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -9104,13 +9094,13 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -9122,14 +9112,14 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -9161,17 +9151,29 @@ If
                </li>
               </ul>
              </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                start
+               </cite>
+               is not less than
+               <cite>
+                end
+               </cite>
+               .
+              </p>
+             </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the tick capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -9209,7 +9211,7 @@ If
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -9220,7 +9222,7 @@ If
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -9263,7 +9265,7 @@ If
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -9299,7 +9301,7 @@ If
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -9311,13 +9313,13 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -9329,14 +9331,14 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -9368,17 +9370,29 @@ If
                </li>
               </ul>
              </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                start
+               </cite>
+               is not less than
+               <cite>
+                end
+               </cite>
+               .
+              </p>
+             </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the tick capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
