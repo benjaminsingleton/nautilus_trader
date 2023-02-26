@@ -5575,23 +5575,6 @@ If False then will timestamp on bar open.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              deny_modify_pending_update:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              True
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               max_order_submit_rate:
              </span>
              <span class="pre">
@@ -5716,32 +5699,6 @@ If False then will timestamp on bar open.
                  default False
                 </em>
                 ) – If True then will bypass all pre-trade risk checks and rate limits (will still check for duplicate IDs).
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 deny_modify_pending_update
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default True
-                </em>
-                ) – If deny
-                <cite>
-                 ModifyOrder
-                </cite>
-                commands when an order is in a
-                <cite>
-                 PENDING_UPDATE
-                </cite>
-                state.
                </p>
               </li>
               <li>
@@ -14745,14 +14702,6 @@ how the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              deny_modify_pending_update=True
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               max_order_submit_rate='100/00:00:01'
              </span>
             </span>
@@ -17108,23 +17057,6 @@ external inputs of venues and data.
              </span>
              <span class="pre">
               False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              deny_modify_pending_update:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              True
              </span>
             </span>
            </em>
@@ -20186,14 +20118,6 @@ is checked with the venue.
              </span>
              <span class="pre">
               LiveRiskEngineConfig(bypass=False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              deny_modify_pending_update=True
              </span>
             </span>
            </em>
