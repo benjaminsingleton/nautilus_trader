@@ -750,7 +750,7 @@
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data.tick</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span><span class="p">,</span> <span class="n">Quantity</span>
 
-<span class="kn">from</span> <span class="nn">nautilus_trader.backtest.data.providers</span> <span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.test_kit.providers</span> <span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.backtest.node</span> <span class="kn">import</span> <span class="n">BacktestNode</span><span class="p">,</span> <span class="n">BacktestVenueConfig</span><span class="p">,</span> <span class="n">BacktestDataConfig</span><span class="p">,</span> <span class="n">BacktestRunConfig</span><span class="p">,</span> <span class="n">BacktestEngineConfig</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.config.common</span> <span class="kn">import</span> <span class="n">ImportableStrategyConfig</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.persistence.catalog</span> <span class="kn">import</span> <span class="n">ParquetDataCatalog</span>
@@ -1050,7 +1050,7 @@
         <span class="n">oms_type</span><span class="o">=</span><span class="s2">"HEDGING"</span><span class="p">,</span>
         <span class="n">account_type</span><span class="o">=</span><span class="s2">"MARGIN"</span><span class="p">,</span>
         <span class="n">base_currency</span><span class="o">=</span><span class="s2">"USD"</span><span class="p">,</span>
-        <span class="n">starting_balances</span><span class="o">=</span><span class="p">[</span><span class="s2">"1000000 USD"</span><span class="p">],</span>
+        <span class="n">starting_balances</span><span class="o">=</span><span class="p">[</span><span class="s2">"1_000_000 USD"</span><span class="p">],</span>
     <span class="p">)</span>
 <span class="p">]</span>
 

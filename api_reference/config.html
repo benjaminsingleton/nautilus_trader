@@ -1212,6 +1212,66 @@
                </ul>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.config.common.DataCatalogConfig">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  DataCatalogConfig
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.DataCatalogConfig.dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataCatalogConfig.dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.DataCatalogConfig.fully_qualified_name">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataCatalogConfig.fully_qualified_name()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.DataCatalogConfig.json">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataCatalogConfig.json()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.DataCatalogConfig.parse">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataCatalogConfig.parse()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.DataCatalogConfig.validate">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataCatalogConfig.validate()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.config.common.ActorConfig">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2896,13 +2956,13 @@
             </a>
            </p>
            <p>
-            Configuration for
+            Configuration for a
             <code class="docutils literal notranslate">
              <span class="pre">
               Cache
              </span>
             </code>
-            instances.
+            instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -3600,13 +3660,13 @@
             </a>
            </p>
            <p>
-            Configuration for
+            Configuration for a
             <code class="docutils literal notranslate">
              <span class="pre">
               CacheDatabase
              </span>
             </code>
-            instances.
+            instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -4386,13 +4446,13 @@
             </a>
            </p>
            <p>
-            Configuration for
+            Configuration for an
             <code class="docutils literal notranslate">
              <span class="pre">
               InstrumentProvider
              </span>
             </code>
-            instances.
+            instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -5033,13 +5093,13 @@ whether the instrument should be loaded
             </a>
            </p>
            <p>
-            Configuration for
+            Configuration for a
             <code class="docutils literal notranslate">
              <span class="pre">
               DataEngine
              </span>
             </code>
-            instances.
+            instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -5515,23 +5575,6 @@ If False then will timestamp on bar open.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              deny_modify_pending_update:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              True
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               max_order_submit_rate:
              </span>
              <span class="pre">
@@ -5623,13 +5666,13 @@ If False then will timestamp on bar open.
             </a>
            </p>
            <p>
-            Configuration for
+            Configuration for a
             <code class="docutils literal notranslate">
              <span class="pre">
               RiskEngine
              </span>
             </code>
-            instances.
+            instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -5656,32 +5699,6 @@ If False then will timestamp on bar open.
                  default False
                 </em>
                 ) – If True then will bypass all pre-trade risk checks and rate limits (will still check for duplicate IDs).
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 deny_modify_pending_update
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default True
-                </em>
-                ) – If deny
-                <cite>
-                 ModifyOrder
-                </cite>
-                commands when an order is in a
-                <cite>
-                 PENDING_UPDATE
-                </cite>
-                state.
                </p>
               </li>
               <li>
@@ -6260,13 +6277,13 @@ The value should be a valid decimal format.
             </a>
            </p>
            <p>
-            Configuration for
+            Configuration for an
             <code class="docutils literal notranslate">
              <span class="pre">
               ExecutionEngine
              </span>
             </code>
-            instances.
+            instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -6712,13 +6729,13 @@ The value should be a valid decimal format.
             </a>
            </p>
            <p>
-            Configuration for
+            Configuration for an
             <code class="docutils literal notranslate">
              <span class="pre">
               OrderEmulator
              </span>
             </code>
-            instances.
+            instance.
            </p>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.config.common.OrderEmulatorConfig.dict">
@@ -7813,6 +7830,617 @@ The value should be a valid decimal format.
           </dd>
          </dl>
          <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.config.common.DataCatalogConfig">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             DataCatalogConfig
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              path
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              fs_protocol
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              fs_storage_options
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              dict
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              use_rust
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <a class="headerlink" href="#nautilus_trader.config.common.DataCatalogConfig" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <a class="reference internal" href="#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+             <code class="xref py py-class docutils literal notranslate">
+              <span class="pre">
+               NautilusConfig
+              </span>
+             </code>
+            </a>
+           </p>
+           <p>
+            Configuration for a data catalog.
+           </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 path
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                ) – The path to the data catalog.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 fs_protocol
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The fsspec file system protocol for the data catalog.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 fs_storage_options
+                </strong>
+                (
+                <em>
+                 dict
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The fsspec storage options for the data catalog.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 use_rust
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If queries will be for Rust schema versions (when implemented).
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.DataCatalogConfig.dict">
+             <span class="sig-name descname">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                dict
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                str
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ,
+                </span>
+               </span>
+               <span class="w">
+               </span>
+               <span class="pre">
+                Any
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.DataCatalogConfig.dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of the configuration.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, Any]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.DataCatalogConfig.fully_qualified_name">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               fully_qualified_name
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                str
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.DataCatalogConfig.fully_qualified_name" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the fully qualified name for the
+              <cite>
+               NautilusConfig
+              </cite>
+              class.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 str
+                </em>
+               </p>
+              </dd>
+             </dl>
+             <p class="rubric">
+              References
+             </p>
+             <p>
+              <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
+               https://www.python.org/dev/peps/pep-3155/
+              </a>
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.DataCatalogConfig.json">
+             <span class="sig-name descname">
+              <span class="pre">
+               json
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.DataCatalogConfig.json" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return serialized JSON encoded bytes.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bytes
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.DataCatalogConfig.parse">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               parse
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                raw
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                Any
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.DataCatalogConfig.parse" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a decoded object of the given
+              <cite>
+               cls
+              </cite>
+              .
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   cls
+                  </strong>
+                  (
+                  <em>
+                   type
+                  </em>
+                  ) – The type to decode to.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   raw
+                  </strong>
+                  (
+                  <em>
+                   bytes
+                  </em>
+                  ) – The raw bytes to decode.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 Any
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.DataCatalogConfig.validate">
+             <span class="sig-name descname">
+              <span class="pre">
+               validate
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.DataCatalogConfig.validate" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return whether the configuration can be represented as valid JSON.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
+         <dl class="py class">
           <dt class="sig sig-object py" id="nautilus_trader.config.common.ActorConfig">
            <em class="property">
             <span class="pre">
@@ -8383,7 +9011,7 @@ The value should be a valid decimal format.
             </a>
            </p>
            <p>
-            Represents an actor configuration for one specific backtest run.
+            Configuration for an actor instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -9645,7 +10273,7 @@ how the
             </a>
            </p>
            <p>
-            Represents a trading strategy configuration for one specific backtest run.
+            Configuration for a trading strategy instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -10359,6 +10987,23 @@ how the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              catalog:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.DataCatalogConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               actors:
              </span>
              <span class="pre">
@@ -10461,6 +11106,40 @@ how the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              log_level_file:
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              'DEBUG'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_path:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               log_rate_limit:
              </span>
              <span class="pre">
@@ -10510,13 +11189,13 @@ how the
             </a>
            </p>
            <p>
-            Configuration for core system
+            Configuration for a
             <code class="docutils literal notranslate">
              <span class="pre">
               NautilusKernel
              </span>
             </code>
-            instances.
+            core system instance.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -10688,6 +11367,26 @@ how the
               <li>
                <p>
                 <strong>
+                 catalog
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.config.common.DataCatalogConfig" title="nautilus_trader.config.common.DataCatalogConfig">
+                 <em>
+                  DataCatalogConfig
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The data catalog config.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
                  actors
                 </strong>
                 (
@@ -10800,7 +11499,49 @@ how the
                 <em>
                  default "INFO"
                 </em>
-                ) – The stdout log level for the node.
+                ) – The minimum log level to write to stdout.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_level_file
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default "DEBUG"
+                </em>
+                ) – The minimum log level to write to a log file.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_file_path
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The optional log file path. If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                then will not log to a file.
                </p>
               </li>
               <li>
@@ -10836,7 +11577,7 @@ how the
                 <em>
                  default False
                 </em>
-                ) – If logging to stdout should be bypassed.
+                ) – If all logging should be bypassed.
                </p>
               </li>
              </ul>
@@ -11245,7 +11986,7 @@ how the
             </a>
            </p>
            <p>
-            Represents an importable (json) Factory config.
+            Represents an importable (JSON) factory config.
            </p>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.config.common.ImportableFactoryConfig.dict">
@@ -14013,14 +14754,6 @@ how the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              deny_modify_pending_update=True
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               max_order_submit_rate='100/00:00:01'
              </span>
             </span>
@@ -14090,6 +14823,23 @@ how the
              </span>
              <span class="pre">
               ~typing.Optional[~nautilus_trader.config.common.StreamingConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              catalog:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.DataCatalogConfig]
              </span>
              <span class="pre">
               =
@@ -14198,6 +14948,40 @@ how the
              </span>
              <span class="pre">
               'INFO'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_level_file:
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              'DEBUG'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_path:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>
@@ -15649,7 +16433,20 @@ external inputs of venues and data.
             </span>
             <span class="n">
              <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
               str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
              </span>
             </span>
            </em>
@@ -15928,7 +16725,7 @@ external inputs of venues and data.
                ,
               </em>
               <em>
-               default 10000
+               default 10_000
               </em>
               ) – The queue size for the engines internal queue buffers.
              </p>
@@ -16319,23 +17116,6 @@ external inputs of venues and data.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              deny_modify_pending_update:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              True
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               max_order_submit_rate:
              </span>
              <span class="pre">
@@ -16472,7 +17252,7 @@ external inputs of venues and data.
                ,
               </em>
               <em>
-               default 10000
+               default 10_000
               </em>
               ) – The queue size for the engines internal queue buffers.
              </p>
@@ -17055,7 +17835,7 @@ external inputs of venues and data.
             </span>
             <span class="default_value">
              <span class="pre">
-              5000
+              2000
              </span>
             </span>
            </em>
@@ -17089,7 +17869,7 @@ external inputs of venues and data.
             </span>
             <span class="default_value">
              <span class="pre">
-              1000
+              5000
              </span>
             </span>
            </em>
@@ -17153,6 +17933,11 @@ external inputs of venues and data.
              </span>
             </code>
             instances.
+           </p>
+           <p>
+            The purpose of the in-flight order check is for live reconciliation, events
+emitted from the exchange may have been lost at some point - leaving an order
+in an intermediate state, the check can recover these events via status reports.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -17219,10 +18004,15 @@ If
                  ,
                 </em>
                 <em>
-                 default 5000
+                 default 2_000
                 </em>
                 ) – The interval (milliseconds) between checking whether in-flight orders
 have exceeded their time-in-flight threshold.
+This should not be set less than the
+                <cite>
+                 inflight_check_interval_ms
+                </cite>
+                .
                </p>
               </li>
               <li>
@@ -17238,10 +18028,12 @@ have exceeded their time-in-flight threshold.
                  ,
                 </em>
                 <em>
-                 default 1000
+                 default 5_000
                 </em>
                 ) – The threshold (milliseconds) beyond which an in-flight orders status
 is checked with the venue.
+As a rule of thumb, you shouldn’t consider reducing this setting unless you
+are colocated with the venue (to avoid the potential for race conditions).
                </p>
               </li>
               <li>
@@ -17257,7 +18049,7 @@ is checked with the venue.
                  ,
                 </em>
                 <em>
-                 default 10000
+                 default 10_000
                 </em>
                 ) – The queue size for the engines internal queue buffers.
                </p>
@@ -19397,14 +20189,6 @@ is checked with the venue.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              deny_modify_pending_update=True
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               max_order_submit_rate='100/00:00:01'
              </span>
             </span>
@@ -19494,7 +20278,7 @@ is checked with the venue.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              inflight_check_interval_ms=5000
+              inflight_check_interval_ms=2000
              </span>
             </span>
            </em>
@@ -19502,7 +20286,7 @@ is checked with the venue.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              inflight_check_threshold_ms=1000
+              inflight_check_threshold_ms=5000
              </span>
             </span>
            </em>
@@ -19522,6 +20306,23 @@ is checked with the venue.
              </span>
              <span class="pre">
               ~typing.Optional[~nautilus_trader.config.common.StreamingConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              catalog:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.DataCatalogConfig]
              </span>
              <span class="pre">
               =
@@ -19630,6 +20431,40 @@ is checked with the venue.
              </span>
              <span class="pre">
               'INFO'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_level_file:
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              'DEBUG'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_path:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>

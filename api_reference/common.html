@@ -2641,6 +2641,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.common.logging.Logger.file_path">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    Logger.file_path
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.common.logging.Logger.instance_id">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -2663,15 +2672,6 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     Logger.machine_id
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.common.logging.Logger.register_sink">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    Logger.register_sink()
                    </span>
                   </code>
                  </a>
@@ -8433,7 +8433,7 @@ If
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -8444,7 +8444,7 @@ If
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -8487,7 +8487,7 @@ If
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -8523,7 +8523,7 @@ If
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -8535,13 +8535,13 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -8553,14 +8553,14 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -8605,26 +8605,16 @@ If
                </strong>
                – If
                <cite>
-                from_datetime
+                start
                </cite>
                is not less than
                <cite>
-                to_datetime
+                end
                </cite>
                .
               </p>
              </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the bar capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -9002,7 +8992,7 @@ If
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -9013,7 +9003,7 @@ If
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -9056,7 +9046,7 @@ If
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -9092,7 +9082,7 @@ If
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -9104,13 +9094,13 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -9122,14 +9112,14 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -9161,17 +9151,29 @@ If
                </li>
               </ul>
              </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                start
+               </cite>
+               is not less than
+               <cite>
+                end
+               </cite>
+               .
+              </p>
+             </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the tick capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -9209,7 +9211,7 @@ If
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -9220,7 +9222,7 @@ If
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -9263,7 +9265,7 @@ If
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -9299,7 +9301,7 @@ If
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -9311,13 +9313,13 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -9329,14 +9331,14 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -9368,17 +9370,29 @@ If
                </li>
               </ul>
              </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                start
+               </cite>
+               is not less than
+               <cite>
+                end
+               </cite>
+               .
+              </p>
+             </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the tick capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -26187,6 +26201,28 @@ will be appended with ‘F’.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              LogLevel
+             </span>
+             <span class="pre">
+              level_file=LogLevel.DEBUG
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              unicode
+             </span>
+             <span class="pre">
+              file_path=None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               int
              </span>
              <span class="pre">
@@ -26310,11 +26346,51 @@ will be appended with ‘F’.
                 <strong>
                  level_stdout
                 </strong>
+                (LogLevel, default
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  INFO
+                 </span>
+                </code>
+                ) – The minimum log level to write to stdout.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 level_file
+                </strong>
+                (LogLevel, default
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  DEBUG
+                 </span>
+                </code>
+                ) – The minimum log level to write to a file.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 file_path
+                </strong>
                 (
                 <em>
-                 LogLevel
+                 str
                 </em>
-                ) – The minimum log level for logging messages to stdout.
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The optional log file path. If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                will not log to a file.
                </p>
               </li>
               <li>
@@ -26424,6 +26500,41 @@ will be appended with ‘F’.
             </dd>
            </dl>
            <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.common.logging.Logger.file_path">
+             <span class="sig-name descname">
+              <span class="pre">
+               file_path
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.common.logging.Logger.file_path" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the optional file path for logging.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                str or
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
             <dt class="sig sig-object py" id="nautilus_trader.common.logging.Logger.instance_id">
              <span class="sig-name descname">
               <span class="pre">
@@ -26514,158 +26625,6 @@ will be appended with ‘F’.
                 <em>
                  str
                 </em>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.common.logging.Logger.register_sink">
-             <span class="sig-name descname">
-              <span class="pre">
-               register_sink
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                handler
-               </span>
-              </span>
-              <span class="p">
-               <span class="pre">
-                :
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="n">
-               <span class="pre">
-                Callable
-               </span>
-               <span class="p">
-                <span class="pre">
-                 [
-                </span>
-               </span>
-               <span class="p">
-                <span class="pre">
-                 [
-                </span>
-               </span>
-               <span class="pre">
-                dict
-               </span>
-               <span class="p">
-                <span class="pre">
-                 ]
-                </span>
-               </span>
-               <span class="p">
-                <span class="pre">
-                 ,
-                </span>
-               </span>
-               <span class="w">
-               </span>
-               <span class="pre">
-                None
-               </span>
-               <span class="p">
-                <span class="pre">
-                 ]
-                </span>
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                void
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.common.logging.Logger.register_sink" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Register the given sink handler with the logger.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Parameters
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <strong>
-                 handler
-                </strong>
-                (
-                <em>
-                 Callable
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 dict
-                </em>
-                <em>
-                 ]
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 None
-                </em>
-                <em>
-                 ]
-                </em>
-                ) – The sink handler to register.
-               </p>
-              </dd>
-              <dt class="field-even">
-               Raises
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-even">
-               <p>
-                <strong>
-                 KeyError
-                </strong>
-                – If
-                <cite>
-                 handler
-                </cite>
-                already registered.
                </p>
               </dd>
              </dl>

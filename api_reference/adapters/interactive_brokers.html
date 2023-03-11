@@ -1666,24 +1666,6 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_order_pending_cancel">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    InteractiveBrokersExecutionClient.generate_order_pending_cancel()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_order_pending_update">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    InteractiveBrokersExecutionClient.generate_order_pending_update()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_order_rejected">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -5793,7 +5775,7 @@ then the component state will not change, and an error will be logged.
                 datetime
                </span>
                <span class="pre">
-                from_datetime=None
+                start=None
                </span>
               </span>
              </em>
@@ -5804,7 +5786,7 @@ then the component state will not change, and an error will be logged.
                 datetime
                </span>
                <span class="pre">
-                to_datetime=None
+                end=None
                </span>
               </span>
              </em>
@@ -5885,7 +5867,7 @@ then the component state will not change, and an error will be logged.
                 <li>
                  <p>
                   <strong>
-                   from_datetime
+                   start
                   </strong>
                   (
                   <em>
@@ -5903,7 +5885,7 @@ then the component state will not change, and an error will be logged.
                 <li>
                  <p>
                   <strong>
-                   to_datetime
+                   end
                   </strong>
                   (
                   <em>
@@ -6199,7 +6181,7 @@ to the current datetime.
                 datetime
                </span>
                <span class="pre">
-                from_datetime=None
+                start=None
                </span>
               </span>
              </em>
@@ -6210,7 +6192,7 @@ to the current datetime.
                 datetime
                </span>
                <span class="pre">
-                to_datetime=None
+                end=None
                </span>
               </span>
              </em>
@@ -6291,7 +6273,7 @@ to the current datetime.
                 <li>
                  <p>
                   <strong>
-                   from_datetime
+                   start
                   </strong>
                   (
                   <em>
@@ -6309,7 +6291,7 @@ to the current datetime.
                 <li>
                  <p>
                   <strong>
-                   to_datetime
+                   end
                   </strong>
                   (
                   <em>
@@ -6393,7 +6375,7 @@ to the current datetime.
                 datetime
                </span>
                <span class="pre">
-                from_datetime=None
+                start=None
                </span>
               </span>
              </em>
@@ -6404,7 +6386,7 @@ to the current datetime.
                 datetime
                </span>
                <span class="pre">
-                to_datetime=None
+                end=None
                </span>
               </span>
              </em>
@@ -6485,7 +6467,7 @@ to the current datetime.
                 <li>
                  <p>
                   <strong>
-                   from_datetime
+                   start
                   </strong>
                   (
                   <em>
@@ -6503,7 +6485,7 @@ to the current datetime.
                 <li>
                  <p>
                   <strong>
-                   to_datetime
+                   end
                   </strong>
                   (
                   <em>
@@ -9931,14 +9913,6 @@ then the component state will not change, and an error will be logged.
                 ) – The instrument provider.
                </p>
               </li>
-              <li>
-               <p>
-                <strong>
-                 instrument_provider
-                </strong>
-                – The instrument provider.
-               </p>
-              </li>
              </ul>
             </dd>
            </dl>
@@ -10112,7 +10086,11 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              Generate an order status report for the given order identifier parameter(s).
+              Generate an
+              <cite>
+               OrderStatusReport
+              </cite>
+              for the given order identifier parameter(s).
              </p>
              <p>
               If the order is not found, or an error occurs, then logs and returns
@@ -10462,7 +10440,13 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              Generate a list of order status reports with optional query filters.
+              Generate a list of
+              <a href="#id1">
+               <span class="problematic" id="id2">
+                `
+               </span>
+              </a>
+              OrderStatusReport`s with optional query filters.
              </p>
              <p>
               The returned list may be empty if no orders match the given parameters.
@@ -10810,7 +10794,13 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              Generate a list of trade reports with optional query filters.
+              Generate a list of
+              <a href="#id3">
+               <span class="problematic" id="id4">
+                `
+               </span>
+              </a>
+              TradeReport`s with optional query filters.
              </p>
              <p>
               The returned list may be empty if no trades match the given parameters.
@@ -11111,7 +11101,13 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              Generate a list of position status reports with optional query filters.
+              Generate a list of
+              <a href="#id5">
+               <span class="problematic" id="id6">
+                `
+               </span>
+              </a>
+              PositionStatusReport`s with optional query filters.
              </p>
              <p>
               The returned list may be empty if no positions match the given parameters.
@@ -12517,7 +12513,11 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              Generate an execution mass status report.
+              Generate an
+              <cite>
+               ExecutionMassStatus
+              </cite>
+              report.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -13878,372 +13878,6 @@ position ID resolution.
                    uint64_t
                   </em>
                   ) – The UNIX timestamp (nanoseconds) when the order update rejection event occurred.
-                 </p>
-                </li>
-               </ul>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_order_pending_cancel">
-             <span class="sig-name descname">
-              <span class="pre">
-               generate_order_pending_cancel
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                StrategyId
-               </span>
-               <span class="pre">
-                strategy_id
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                InstrumentId
-               </span>
-               <span class="pre">
-                instrument_id
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                ClientOrderId
-               </span>
-               <span class="pre">
-                client_order_id
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                VenueOrderId
-               </span>
-               <span class="pre">
-                venue_order_id
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                uint64_t
-               </span>
-               <span class="pre">
-                ts_event
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                void
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_order_pending_cancel" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Generate an
-              <cite>
-               OrderPendingCancel
-              </cite>
-              event and send it to the
-              <cite>
-               ExecutionEngine
-              </cite>
-              .
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Parameters
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <ul class="simple">
-                <li>
-                 <p>
-                  <strong>
-                   strategy_id
-                  </strong>
-                  (
-                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
-                   <em>
-                    StrategyId
-                   </em>
-                  </a>
-                  ) – The strategy ID associated with the event.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   instrument_id
-                  </strong>
-                  (
-                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
-                   <em>
-                    InstrumentId
-                   </em>
-                  </a>
-                  ) – The instrument ID.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   client_order_id
-                  </strong>
-                  (
-                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
-                   <em>
-                    ClientOrderId
-                   </em>
-                  </a>
-                  ) – The client order ID.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   venue_order_id
-                  </strong>
-                  (
-                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.VenueOrderId" title="nautilus_trader.model.identifiers.VenueOrderId">
-                   <em>
-                    VenueOrderId
-                   </em>
-                  </a>
-                  ) – The venue order ID (assigned by the venue).
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   ts_event
-                  </strong>
-                  (
-                  <em>
-                   uint64_t
-                  </em>
-                  ) – The UNIX timestamp (nanoseconds) when the order pending cancel event occurred.
-                 </p>
-                </li>
-               </ul>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_order_pending_update">
-             <span class="sig-name descname">
-              <span class="pre">
-               generate_order_pending_update
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                StrategyId
-               </span>
-               <span class="pre">
-                strategy_id
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                InstrumentId
-               </span>
-               <span class="pre">
-                instrument_id
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                ClientOrderId
-               </span>
-               <span class="pre">
-                client_order_id
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                VenueOrderId
-               </span>
-               <span class="pre">
-                venue_order_id
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                uint64_t
-               </span>
-               <span class="pre">
-                ts_event
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                void
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_order_pending_update" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Generate an
-              <cite>
-               OrderPendingUpdate
-              </cite>
-              event and send it to the
-              <cite>
-               ExecutionEngine
-              </cite>
-              .
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Parameters
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <ul class="simple">
-                <li>
-                 <p>
-                  <strong>
-                   strategy_id
-                  </strong>
-                  (
-                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
-                   <em>
-                    StrategyId
-                   </em>
-                  </a>
-                  ) – The strategy ID associated with the event.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   instrument_id
-                  </strong>
-                  (
-                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
-                   <em>
-                    InstrumentId
-                   </em>
-                  </a>
-                  ) – The instrument ID.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   client_order_id
-                  </strong>
-                  (
-                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
-                   <em>
-                    ClientOrderId
-                   </em>
-                  </a>
-                  ) – The client order ID.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   venue_order_id
-                  </strong>
-                  (
-                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.VenueOrderId" title="nautilus_trader.model.identifiers.VenueOrderId">
-                   <em>
-                    VenueOrderId
-                   </em>
-                  </a>
-                  ) – The venue order ID (assigned by the venue).
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   ts_event
-                  </strong>
-                  (
-                  <em>
-                   uint64_t
-                  </em>
-                  ) – The UNIX timestamp (nanoseconds) when the order pending update event occurred.
                  </p>
                 </li>
                </ul>

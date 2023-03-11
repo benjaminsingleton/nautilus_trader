@@ -10815,7 +10815,7 @@ data for the given instrument ID.
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -10826,7 +10826,7 @@ data for the given instrument ID.
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -10869,7 +10869,7 @@ data for the given instrument ID.
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -10905,7 +10905,7 @@ data for the given instrument ID.
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -10917,13 +10917,13 @@ data for the given instrument ID.
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -10935,14 +10935,14 @@ data for the given instrument ID.
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -10987,26 +10987,16 @@ If
                </strong>
                – If
                <cite>
-                from_datetime
+                start
                </cite>
                is not less than
                <cite>
-                to_datetime
+                end
                </cite>
                .
               </p>
              </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the bar capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -11384,7 +11374,7 @@ If
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -11395,7 +11385,7 @@ If
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -11438,7 +11428,7 @@ If
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -11474,7 +11464,7 @@ If
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -11486,13 +11476,13 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -11504,14 +11494,14 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -11543,17 +11533,29 @@ If
                </li>
               </ul>
              </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                start
+               </cite>
+               is not less than
+               <cite>
+                end
+               </cite>
+               .
+              </p>
+             </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the tick capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -11591,7 +11593,7 @@ If
                datetime
               </span>
               <span class="pre">
-               from_datetime=None
+               start=None
               </span>
              </span>
             </em>
@@ -11602,7 +11604,7 @@ If
                datetime
               </span>
               <span class="pre">
-               to_datetime=None
+               end=None
               </span>
              </span>
             </em>
@@ -11645,7 +11647,7 @@ If
             <p>
              If
              <cite>
-              to_datetime
+              end
              </cite>
              is
              <code class="docutils literal notranslate">
@@ -11681,7 +11683,7 @@ If
                <li>
                 <p>
                  <strong>
-                  from_datetime
+                  start
                  </strong>
                  (
                  <em>
@@ -11693,13 +11695,13 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  to_datetime
+                  end
                  </strong>
                  (
                  <em>
@@ -11711,14 +11713,14 @@ If
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
+                 ) – The end datetime (UTC) of request time range (inclusive).
+If
                  <code class="docutils literal notranslate">
                   <span class="pre">
                    None
                   </span>
                  </code>
-                 then will default
-to the current datetime.
+                 then will default to the current datetime (UTC).
                 </p>
                </li>
                <li>
@@ -11750,17 +11752,29 @@ If
                </li>
               </ul>
              </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                start
+               </cite>
+               is not less than
+               <cite>
+                end
+               </cite>
+               .
+              </p>
+             </dd>
             </dl>
-            <p class="rubric">
-             Notes
-            </p>
-            <p>
-             Always limited to the tick capacity of the
-             <cite>
-              DataEngine
-             </cite>
-             cache.
-            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -12242,6 +12256,9 @@ and routing instructions.
              </cite>
              .
             </p>
+            <p>
+             If the client order ID is duplicate, then the order will be denied.
+            </p>
             <dl class="field-list simple">
              <dt class="field-odd">
               Parameters
@@ -12350,6 +12367,30 @@ If
                 </p>
                </li>
               </ul>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                order.status
+               </cite>
+               is not
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 INITIALIZED
+                </span>
+               </code>
+               .
+              </p>
              </dd>
             </dl>
             <div class="admonition warning">
@@ -12473,6 +12514,10 @@ and routing instructions.
              </cite>
              .
             </p>
+            <p>
+             If the order list ID is duplicate, or any client order ID is duplicate,
+then all orders will be denied.
+            </p>
             <dl class="field-list simple">
              <dt class="field-odd">
               Parameters
@@ -12590,6 +12635,30 @@ If
                 </p>
                </li>
               </ul>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If any
+               <cite>
+                order.status
+               </cite>
+               is not
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 INITIALIZED
+                </span>
+               </code>
+               .
+              </p>
              </dd>
             </dl>
             <div class="admonition warning">

@@ -2421,6 +2421,33 @@ performance metrics and statistics.
               currencies
              </span>
             </span>
+            <em class="property">
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <span class="pre">
+               nautilus_trader.model.currency.Currency
+              </span>
+             </a>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </em>
             <a class="headerlink" href="#nautilus_trader.analysis.analyzer.PortfolioAnalyzer.currencies" title="Permalink to this definition">
              ¶
             </a>
@@ -3211,11 +3238,73 @@ performance metrics and statistics.
              <span class="w">
              </span>
              <span class="n">
+              <span class="pre">
+               Optional
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
               <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
                <span class="pre">
                 Currency
                </span>
               </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="o">
+              <span class="pre">
+               =
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="default_value">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unrealized_pnl
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               Optional
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+               <span class="pre">
+                Money
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
              </span>
              <span class="w">
              </span>
@@ -3264,24 +3353,48 @@ performance metrics and statistics.
               </span>
              </dt>
              <dd class="field-odd">
-              <p>
-               <strong>
-                currency
-               </strong>
-               (
-               <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
-                <em>
-                 Currency
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – The currency for the result.
-              </p>
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  currency
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                  <em>
+                   Currency
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The currency for the result.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  unrealized_pnl
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+                  <em>
+                   Money
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The unrealized PnL for the given currency.
+                </p>
+               </li>
+              </ul>
              </dd>
              <dt class="field-even">
               Returns
@@ -3332,6 +3445,24 @@ performance metrics and statistics.
                   currency
                  </cite>
                  is not contained in the tracked account balances.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If
+                 <cite>
+                  unrealized_pnl
+                 </cite>
+                 is not
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   None
+                  </span>
+                 </code>
+                 and currency is not equal to the given currency.
                 </p>
                </li>
               </ul>
@@ -3384,6 +3515,55 @@ performance metrics and statistics.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unrealized_pnl
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               Optional
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+               <span class="pre">
+                Money
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="o">
+              <span class="pre">
+               =
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="default_value">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -3416,24 +3596,48 @@ performance metrics and statistics.
               </span>
              </dt>
              <dd class="field-odd">
-              <p>
-               <strong>
-                currency
-               </strong>
-               (
-               <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
-                <em>
-                 Currency
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – The currency for the result.
-              </p>
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  currency
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                  <em>
+                   Currency
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The currency for the result.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  unrealized_pnl
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+                  <em>
+                   Money
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The unrealized PnL for the given currency.
+                </p>
+               </li>
+              </ul>
              </dd>
              <dt class="field-even">
               Returns
@@ -3486,6 +3690,24 @@ performance metrics and statistics.
                  is not contained in the tracked account balances.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If
+                 <cite>
+                  unrealized_pnl
+                 </cite>
+                 is not
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   None
+                  </span>
+                 </code>
+                 and currency is not equal to the given currency.
+                </p>
+               </li>
               </ul>
              </dd>
             </dl>
@@ -3520,6 +3742,55 @@ performance metrics and statistics.
                 Currency
                </span>
               </a>
+             </span>
+             <span class="w">
+             </span>
+             <span class="o">
+              <span class="pre">
+               =
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="default_value">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unrealized_pnl
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               Optional
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+               <span class="pre">
+                Money
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
              </span>
              <span class="w">
              </span>
@@ -3578,11 +3849,7 @@ performance metrics and statistics.
            </dt>
            <dd>
             <p>
-             Return the
-             <cite>
-              PnL
-             </cite>
-             performance statistics.
+             Return the ‘PnL’ (profit and loss) performance statistics, optionally includes the unrealized PnL.
             </p>
             <p>
              Money objects are converted to floats.
@@ -3595,18 +3862,42 @@ performance metrics and statistics.
               </span>
              </dt>
              <dd class="field-odd">
-              <p>
-               <strong>
-                currency
-               </strong>
-               (
-               <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
-                <em>
-                 Currency
-                </em>
-               </a>
-               ) – The currency for the performance.
-              </p>
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  currency
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                  <em>
+                   Currency
+                  </em>
+                 </a>
+                 ) – The currency for the performance.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  unrealized_pnl
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+                  <em>
+                   Money
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The unrealized PnL for the performance.
+                </p>
+               </li>
+              </ul>
              </dd>
              <dt class="field-even">
               Returns
@@ -3819,6 +4110,55 @@ performance metrics and statistics.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unrealized_pnl
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               Optional
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+               <span class="pre">
+                Money
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="o">
+              <span class="pre">
+               =
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="default_value">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -3862,18 +4202,42 @@ for printing in the backtest run footer.
               </span>
              </dt>
              <dd class="field-odd">
-              <p>
-               <strong>
-                currency
-               </strong>
-               (
-               <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
-                <em>
-                 Currency
-                </em>
-               </a>
-               ) – The currency for the performance.
-              </p>
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  currency
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                  <em>
+                   Currency
+                  </em>
+                 </a>
+                 ) – The currency for the performance.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  unrealized_pnl
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+                  <em>
+                   Money
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The unrealized PnL for the performance.
+                </p>
+               </li>
+              </ul>
              </dd>
              <dt class="field-even">
               Returns
