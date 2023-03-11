@@ -1089,7 +1089,7 @@ instruments (of various asset classes) can be found in
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.persistence.external.core</span> <span class="kn">import</span> <span class="n">process_files</span><span class="p">,</span> <span class="n">write_objects</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.backtest.data.providers</span> <span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.backtest.providers</span> <span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
 
 <span class="c1"># Use nautilus test helpers to create a EUR/USD FX instrument for our purposes</span>
 <span class="n">instrument</span> <span class="o">=</span> <span class="n">TestInstrumentProvider</span><span class="o">.</span><span class="n">default_fx_ccy</span><span class="p">(</span><span class="s2">"EUR/USD"</span><span class="p">)</span>
