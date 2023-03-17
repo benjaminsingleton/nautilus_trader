@@ -26223,6 +26223,34 @@ will be appended with ‘F’.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              dict
+             </span>
+             <span class="pre">
+              component_levels:
+             </span>
+             <span class="pre">
+              dict[ComponentId
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              LogLevel]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               int
              </span>
              <span class="pre">
@@ -26384,13 +26412,43 @@ will be appended with ‘F’.
                 <em>
                  optional
                 </em>
-                ) – The optional log file path. If
+                ) – The log file path. If
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   None
                  </span>
                 </code>
                 will not log to a file.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 component_levels
+                </strong>
+                (
+                <em>
+                 dict
+                </em>
+                <em>
+                 [
+                </em>
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ComponentId" title="nautilus_trader.model.identifiers.ComponentId">
+                 <em>
+                  ComponentId
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 LogLevel
+                </em>
+                <em>
+                 ]
+                </em>
+                ) – The additional per component log level filters, where keys are component
+IDs (e.g. actor/strategy IDs) and values are log levels.
                </p>
               </li>
               <li>
