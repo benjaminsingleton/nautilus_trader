@@ -1828,6 +1828,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.exchange.SimulatedExchange.bar_execution">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulatedExchange.bar_execution
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.exchange.SimulatedExchange.base_currency">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -10959,6 +10968,18 @@ a venue with a
               False,
              </span>
              <span class="pre">
+              bar_execution:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              True,
+             </span>
+             <span class="pre">
               reject_stop_orders:
              </span>
              <span class="pre">
@@ -11289,6 +11310,24 @@ generate new position IDs.
                   default False
                  </em>
                  ) – If the account for this exchange is frozen (balances will not change).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  bar_execution
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If bars should be processed by the matching engine(s) (and move the market).
                 </p>
                </li>
                <li>
@@ -12909,6 +12948,12 @@ following the run iterations.
             bool
            </span>
            <span class="pre">
+            bar_execution=True,
+           </span>
+           <span class="pre">
+            bool
+           </span>
+           <span class="pre">
             reject_stop_orders=True,
            </span>
            <span class="pre">
@@ -13200,6 +13245,24 @@ following the run iterations.
                 default False
                </em>
                ) – If the account for this exchange is frozen (balances will not change).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                bar_execution
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default True
+               </em>
+               ) – If bars should be processed by the matching engine(s) (and move the market).
               </p>
              </li>
              <li>
@@ -13555,6 +13618,38 @@ following the run iterations.
                 </em>
                </a>
                ) – The adjustment for the account.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.exchange.SimulatedExchange.bar_execution">
+            <span class="sig-name descname">
+             <span class="pre">
+              bar_execution
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.exchange.SimulatedExchange.bar_execution" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             If bars should be processed by the matching engine(s) (and move the market).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <cite>
+                bool
+               </cite>
               </p>
              </dd>
             </dl>
