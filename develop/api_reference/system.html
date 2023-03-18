@@ -1820,6 +1820,53 @@
           <em class="sig-param">
            <span class="n">
             <span class="pre">
+             log_file_format
+            </span>
+           </span>
+           <span class="p">
+            <span class="pre">
+             :
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="n">
+            <span class="pre">
+             Optional
+            </span>
+            <span class="p">
+             <span class="pre">
+              [
+             </span>
+            </span>
+            <span class="pre">
+             str
+            </span>
+            <span class="p">
+             <span class="pre">
+              ]
+             </span>
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="o">
+            <span class="pre">
+             =
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="default_value">
+            <span class="pre">
+             None
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
              log_component_levels
             </span>
            </span>
@@ -2388,9 +2435,9 @@
                 ,
                </em>
                <em>
-                default LogLevel.INFO
+                default "INFO"
                </em>
-               ) – The minimum log level for write to stdout.
+               ) – The minimum log level to write to stdout.
               </p>
              </li>
              <li>
@@ -2406,7 +2453,7 @@
                 ,
                </em>
                <em>
-                default LogLevel.DEBUG
+                default "DEBUG"
                </em>
                ) – The minimum log level to write to a log file.
               </p>
@@ -2426,13 +2473,66 @@
                <em>
                 optional
                </em>
-               ) – The optional log file path. If
+               ) – The log file path. If
                <code class="docutils literal notranslate">
                 <span class="pre">
                  None
                 </span>
                </code>
                then will not log to a file.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                log_file_format
+               </strong>
+               (
+               <em>
+                str { 'JSON' }
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                optional
+               </em>
+               ) – The log file format. If
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+               (default) then will log in plain text.
+If set to ‘JSON’ then logs will be in JSON format.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                log_component_levels
+               </strong>
+               (
+               <em>
+                dict
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                str
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                LogLevel
+               </em>
+               <em>
+                ]
+               </em>
+               ) – The additional per component log level filters, where keys are component
+IDs (e.g. actor/strategy IDs) and values are log levels.
               </p>
              </li>
              <li>
@@ -2468,7 +2568,7 @@
                <em>
                 default False
                </em>
-               ) – If logging to stdout should be bypassed.
+               ) – If all logging should be bypassed.
               </p>
              </li>
             </ul>

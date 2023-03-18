@@ -26223,6 +26223,17 @@ will be appended with ‘F’.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              unicode
+             </span>
+             <span class="pre">
+              file_format=None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               dict
              </span>
              <span class="pre">
@@ -26419,6 +26430,31 @@ will be appended with ‘F’.
                  </span>
                 </code>
                 will not log to a file.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 file_format
+                </strong>
+                (
+                <em>
+                 str { 'JSON' }
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The log file format. If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                (default) then will log in plain text.
+If set to ‘JSON’ then logs will be in JSON format.
                </p>
               </li>
               <li>

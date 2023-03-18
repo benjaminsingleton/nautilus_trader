@@ -11140,6 +11140,23 @@ how the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              log_file_format:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               log_component_levels:
              </span>
              <span class="pre">
@@ -11560,13 +11577,38 @@ how the
                 <em>
                  optional
                 </em>
-                ) – The optional log file path. If
+                ) – The log file path. If
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   None
                  </span>
                 </code>
                 then will not log to a file.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_file_format
+                </strong>
+                (
+                <em>
+                 str { 'JSON' }
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The log file format. If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                (default) then will log in plain text.
+If set to ‘JSON’ then logs will be in JSON format.
                </p>
               </li>
               <li>
@@ -15026,6 +15068,23 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             <span class="n">
              <span class="pre">
               log_file_path:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_format:
              </span>
              <span class="pre">
               ~typing.Optional[str]
@@ -20534,6 +20593,23 @@ are colocated with the venue (to avoid the potential for race conditions).
             <span class="n">
              <span class="pre">
               log_file_path:
+             </span>
+             <span class="pre">
+              ~typing.Optional[str]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_format:
              </span>
              <span class="pre">
               ~typing.Optional[str]
