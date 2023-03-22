@@ -11123,7 +11123,24 @@ how the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              log_file_path:
+              log_file_auto:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_name:
              </span>
              <span class="pre">
               ~typing.Optional[str]
@@ -11529,6 +11546,24 @@ how the
               <li>
                <p>
                 <strong>
+                 log_file_auto
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If automatic file naming and daily rotation should be used.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
                  log_level
                 </strong>
                 (
@@ -11565,7 +11600,15 @@ how the
               <li>
                <p>
                 <strong>
-                 log_file_path
+                 log_file_auto
+                </strong>
+                – If automatic file naming and daily rotation should be used.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_file_name
                 </strong>
                 (
                 <em>
@@ -11577,13 +11620,18 @@ how the
                 <em>
                  optional
                 </em>
-                ) – The log file path. If
+                ) – The custom log file name (will always use a ‘.log’ suffix).
+If
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   None
                  </span>
                 </code>
-                then will not log to a file.
+                will not log to a file (unless
+                <cite>
+                 log_file_auto
+                </cite>
+                is True).
                </p>
               </li>
               <li>
@@ -15101,7 +15149,24 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              log_file_path:
+              log_file_auto:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_name:
              </span>
              <span class="pre">
               ~typing.Optional[str]
@@ -20626,7 +20691,24 @@ are colocated with the venue (to avoid the potential for race conditions).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              log_file_path:
+              log_file_auto:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_name:
              </span>
              <span class="pre">
               ~typing.Optional[str]
@@ -21108,101 +21190,6 @@ are colocated with the venue (to avoid the potential for race conditions).
                  optional
                 </em>
                 ) – The execution client configurations.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 strategies
-                </strong>
-                (
-                <em>
-                 list
-                </em>
-                <em>
-                 [
-                </em>
-                <a class="reference internal" href="#nautilus_trader.config.common.ImportableStrategyConfig" title="nautilus_trader.config.common.ImportableStrategyConfig">
-                 <em>
-                  ImportableStrategyConfig
-                 </em>
-                </a>
-                <em>
-                 ]
-                </em>
-                ) – The strategy configurations for the node.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 load_state
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default True
-                </em>
-                ) – If trading strategy state should be loaded from the database on start.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 save_state
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default True
-                </em>
-                ) – If trading strategy state should be saved to the database on stop.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_level
-                </strong>
-                (
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default "INFO"
-                </em>
-                ) – The stdout log level for the node.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 loop_debug
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default False
-                </em>
-                ) – If the asyncio event loop should be in debug mode.
                </p>
               </li>
               <li>

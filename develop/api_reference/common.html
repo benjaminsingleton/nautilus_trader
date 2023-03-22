@@ -2641,15 +2641,6 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.common.logging.Logger.file_path">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    Logger.file_path
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.common.logging.Logger.instance_id">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -26440,10 +26431,21 @@ will be appended with ‘F’.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              file_auto=False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               unicode
              </span>
              <span class="pre">
-              file_path=None
+              file_name=None
              </span>
             </span>
            </em>
@@ -26639,7 +26641,25 @@ will be appended with ‘F’.
               <li>
                <p>
                 <strong>
-                 file_path
+                 file_auto
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If automatic file naming and daily rotation should be used.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 file_name
                 </strong>
                 (
                 <em>
@@ -26651,13 +26671,18 @@ will be appended with ‘F’.
                 <em>
                  optional
                 </em>
-                ) – The log file path. If
+                ) – The custom log file name (will always use a ‘.log’ suffix).
+If
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   None
                  </span>
                 </code>
-                will not log to a file.
+                will not log to a file (unless
+                <cite>
+                 file_auto
+                </cite>
+                is True).
                </p>
               </li>
               <li>
@@ -26816,41 +26841,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                  </em>
                 </a>
                 ) –
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py attribute">
-            <dt class="sig sig-object py" id="nautilus_trader.common.logging.Logger.file_path">
-             <span class="sig-name descname">
-              <span class="pre">
-               file_path
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.common.logging.Logger.file_path" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return the optional file path for logging.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                str or
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  None
-                 </span>
-                </code>
                </p>
               </dd>
              </dl>
