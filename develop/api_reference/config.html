@@ -1565,6 +1565,66 @@
                </ul>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.config.common.LoggingConfig">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  LoggingConfig
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.LoggingConfig.dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    LoggingConfig.dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.LoggingConfig.fully_qualified_name">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    LoggingConfig.fully_qualified_name()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.LoggingConfig.json">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    LoggingConfig.json()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.LoggingConfig.parse">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    LoggingConfig.parse()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.LoggingConfig.validate">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    LoggingConfig.validate()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.config.common.NautilusKernelConfig">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -10832,6 +10892,949 @@ how the
           </dd>
          </dl>
          <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.config.common.LoggingConfig">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             LoggingConfig
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_level
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              'INFO'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_level_file
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_directory
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_name
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_file_format
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_component_levels
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              dict
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ,
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_rate_limit
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              int
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              100000
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              bypass_logging
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <a class="headerlink" href="#nautilus_trader.config.common.LoggingConfig" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <a class="reference internal" href="#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+             <code class="xref py py-class docutils literal notranslate">
+              <span class="pre">
+               NautilusConfig
+              </span>
+             </code>
+            </a>
+           </p>
+           <p>
+            Configuration for standard output and file logging for a
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              NautilusKernel
+             </span>
+            </code>
+            instance.
+           </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 log_level
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default "INFO"
+                </em>
+                ) – The minimum log level to write to stdout.
+Will always write ERROR level logs to stderr (unless
+                <cite>
+                 bypass_logging
+                </cite>
+                is True).
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_level_file
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The minimum log level to write to a log file.
+If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                then no file logging will occur.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_directory
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The path to the log file directory.
+If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                then will write to the current working directory.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_file_name
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The custom log file name (will use a ‘.log’ suffix for plain text or ‘.json’ for JSON).
+This will override automatic naming, and no daily file rotation will occur.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_file_format
+                </strong>
+                (
+                <em>
+                 str { 'JSON' }
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The log file format. If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                (default) then will log in plain text.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_component_levels
+                </strong>
+                (
+                <em>
+                 dict
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 LogLevel
+                </em>
+                <em>
+                 ]
+                </em>
+                ) – The additional per component log level filters, where keys are component
+IDs (e.g. actor/strategy IDs) and values are log levels.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 log_rate_limit
+                </strong>
+                (
+                <em>
+                 int
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default 100_000
+                </em>
+                ) – The maximum messages per second which can be flushed to stdout or stderr.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 bypass_logging
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If all logging should be bypassed.
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.LoggingConfig.dict">
+             <span class="sig-name descname">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                dict
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                str
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ,
+                </span>
+               </span>
+               <span class="w">
+               </span>
+               <span class="pre">
+                Any
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.LoggingConfig.dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of the configuration.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, Any]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.LoggingConfig.fully_qualified_name">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               fully_qualified_name
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                str
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.LoggingConfig.fully_qualified_name" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the fully qualified name for the
+              <cite>
+               NautilusConfig
+              </cite>
+              class.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 str
+                </em>
+               </p>
+              </dd>
+             </dl>
+             <p class="rubric">
+              References
+             </p>
+             <p>
+              <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
+               https://www.python.org/dev/peps/pep-3155/
+              </a>
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.LoggingConfig.json">
+             <span class="sig-name descname">
+              <span class="pre">
+               json
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.LoggingConfig.json" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return serialized JSON encoded bytes.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bytes
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.LoggingConfig.parse">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               parse
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                raw
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                Any
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.LoggingConfig.parse" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a decoded object of the given
+              <cite>
+               cls
+              </cite>
+              .
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   cls
+                  </strong>
+                  (
+                  <em>
+                   type
+                  </em>
+                  ) – The type to decode to.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   raw
+                  </strong>
+                  (
+                  <em>
+                   bytes
+                  </em>
+                  ) – The raw bytes to decode.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 Any
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.LoggingConfig.validate">
+             <span class="sig-name descname">
+              <span class="pre">
+               validate
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.LoggingConfig.validate" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return whether the configuration can be represented as valid JSON.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
+         <dl class="py class">
           <dt class="sig sig-object py" id="nautilus_trader.config.common.NautilusKernelConfig">
            <em class="property">
             <span class="pre">
@@ -11094,143 +12097,16 @@ how the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              log_level:
+              logging:
              </span>
              <span class="pre">
-              str
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              'INFO'
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_level_file:
-             </span>
-             <span class="pre">
-              str
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              'DEBUG'
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_auto:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_name:
-             </span>
-             <span class="pre">
-              ~typing.Optional[str]
+              ~typing.Optional[~nautilus_trader.config.common.LoggingConfig]
              </span>
              <span class="pre">
               =
              </span>
              <span class="pre">
               None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_format:
-             </span>
-             <span class="pre">
-              ~typing.Optional[str]
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_component_levels:
-             </span>
-             <span class="pre">
-              ~typing.Optional[dict[str
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              str]]
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_rate_limit:
-             </span>
-             <span class="pre">
-              int
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              100000
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              bypass_logging:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              False
              </span>
             </span>
            </em>
@@ -11546,186 +12422,6 @@ how the
                  default False
                 </em>
                 ) – If the asyncio event loop should be in debug mode.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_file_auto
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default False
-                </em>
-                ) – If automatic file naming and daily rotation should be used.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_level
-                </strong>
-                (
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default "INFO"
-                </em>
-                ) – The minimum log level to write to stdout.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_level_file
-                </strong>
-                (
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default "DEBUG"
-                </em>
-                ) – The minimum log level to write to a log file.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_file_auto
-                </strong>
-                – If automatic file naming and daily rotation should be used.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_file_name
-                </strong>
-                (
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 optional
-                </em>
-                ) – The custom log file name (will always use a ‘.log’ suffix).
-If
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  None
-                 </span>
-                </code>
-                will not log to a file (unless
-                <cite>
-                 log_file_auto
-                </cite>
-                is True).
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_file_format
-                </strong>
-                (
-                <em>
-                 str { 'JSON' }
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 optional
-                </em>
-                ) – The log file format. If
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  None
-                 </span>
-                </code>
-                (default) then will log in plain text.
-If set to ‘JSON’ then logs will be in JSON format.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_component_levels
-                </strong>
-                (
-                <em>
-                 dict
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 LogLevel
-                </em>
-                <em>
-                 ]
-                </em>
-                ) – The additional per component log level filters, where keys are component
-IDs (e.g. actor/strategy IDs) and values are log levels.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 log_rate_limit
-                </strong>
-                (
-                <em>
-                 int
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default 100_000
-                </em>
-                ) – The maximum messages per second which can be flushed to stdout or stderr.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 bypass_logging
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default False
-                </em>
-                ) – If all logging should be bypassed.
                </p>
               </li>
              </ul>
@@ -15120,143 +15816,16 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              log_level:
+              logging:
              </span>
              <span class="pre">
-              str
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              'INFO'
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_level_file:
-             </span>
-             <span class="pre">
-              str
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              'DEBUG'
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_auto:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_name:
-             </span>
-             <span class="pre">
-              ~typing.Optional[str]
+              ~typing.Optional[~nautilus_trader.config.common.LoggingConfig]
              </span>
              <span class="pre">
               =
              </span>
              <span class="pre">
               None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_format:
-             </span>
-             <span class="pre">
-              ~typing.Optional[str]
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_component_levels:
-             </span>
-             <span class="pre">
-              ~typing.Optional[dict[str
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              str]]
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_rate_limit:
-             </span>
-             <span class="pre">
-              int
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              100000
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              bypass_logging:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              False
              </span>
             </span>
            </em>
@@ -20662,143 +21231,16 @@ are colocated with the venue (to avoid the potential for race conditions).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              log_level:
+              logging:
              </span>
              <span class="pre">
-              str
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              'INFO'
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_level_file:
-             </span>
-             <span class="pre">
-              str
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              'DEBUG'
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_auto:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_name:
-             </span>
-             <span class="pre">
-              ~typing.Optional[str]
+              ~typing.Optional[~nautilus_trader.config.common.LoggingConfig]
              </span>
              <span class="pre">
               =
              </span>
              <span class="pre">
               None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_file_format:
-             </span>
-             <span class="pre">
-              ~typing.Optional[str]
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_component_levels:
-             </span>
-             <span class="pre">
-              ~typing.Optional[dict[str
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              str]]
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              log_rate_limit:
-             </span>
-             <span class="pre">
-              int
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              100000
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              bypass_logging:
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              False
              </span>
             </span>
            </em>

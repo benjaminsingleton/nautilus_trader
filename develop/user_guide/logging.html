@@ -758,34 +758,20 @@ This keeps the main thread free from log string formatting and file I/O operatio
           </a>
          </h2>
          <p>
-          By default, log events with an ‘INFO’
+          Logging can be configured by importing the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            LoggingConfig
+           </span>
+          </code>
+          object.
+By default, log events with an ‘INFO’
           <code class="docutils literal notranslate">
            <span class="pre">
             LogLevel
            </span>
           </code>
           or higher are written to stdout/stderr.
-         </p>
-         <p>
-          Writers can be configured separately via a
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            NautilusKernelConfig
-           </span>
-          </code>
-          (e.g.,
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            BacktestEngineConfig
-           </span>
-          </code>
-          and
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            TradingNodeConfig
-           </span>
-          </code>
-          ).
          </p>
          <p>
           Log levels include:
@@ -820,7 +806,7 @@ This keeps the main thread free from log string formatting and file I/O operatio
            See the
            <code class="docutils literal notranslate">
             <span class="pre">
-             NautilusKernelConfig
+             LoggingConfig
             </span>
            </code>
            <a class="reference internal" href="../api_reference/config.html">
@@ -847,12 +833,7 @@ This keeps the main thread free from log string formatting and file I/O operatio
           </li>
           <li>
            <p>
-            Automatic log file naming and daily rotation
-           </p>
-          </li>
-          <li>
-           <p>
-            Custom log file name
+            Automatic log file naming and daily rotation or custom log file name
            </p>
           </li>
           <li>
@@ -891,16 +872,33 @@ This keeps the main thread free from log string formatting and file I/O operatio
            </a>
           </h3>
           <p>
-           Log files will be written to the current working directory. If a
+           Log files will be written to the current working directory unless you provide
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             log_directory
+            </span>
+           </code>
+           .
+If a
            <code class="docutils literal notranslate">
             <span class="pre">
              log_file_name
             </span>
            </code>
-           is provided then the suffix will always be ‘.log’ (no need to include a suffix).
+           is provided then the suffix will be ‘.log’ for plain text, or ‘.json’ for JSON (no need to include a suffix).
           </p>
           <p>
-           When log_file_auto mode is set to true, log files use the following naming convention:
+           If a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             log_file_name
+            </span>
+           </code>
+           is
+           <em>
+            not
+           </em>
+           provided then log files will be automatically named as follows:
           </p>
           <ul class="simple">
            <li>
@@ -935,9 +933,9 @@ This keeps the main thread free from log string formatting and file I/O operatio
             </p>
            </li>
           </ul>
-          <div class="highlight-bash notranslate">
+          <div class="highlight-default notranslate">
            <div class="highlight">
-            <pre><span></span><span class="o">{</span>trader_id<span class="o">}</span>_<span class="o">{</span>instance_id<span class="o">}</span>_<span class="o">{</span>ISO<span class="w"> </span><span class="m">8601</span><span class="w"> </span>datetime<span class="o">}</span>_<span class="o">{</span>discriminant<span class="o">}</span>.<span class="o">{</span>log<span class="w"> </span><span class="p">|</span><span class="w"> </span>json<span class="o">}</span>
+            <pre><span></span><span class="p">{</span><span class="n">trader_id</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">instance_id</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">ISO</span> <span class="mi">8601</span> <span class="n">datetime</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">discriminant</span><span class="p">}</span><span class="o">.</span><span class="p">{</span><span class="n">log</span> <span class="o">|</span> <span class="n">json</span><span class="p">}</span>
 </pre>
            </div>
           </div>
@@ -950,7 +948,7 @@ This keeps the main thread free from log string formatting and file I/O operatio
            </code>
           </p>
           <p>
-           Auto mode also handles daily log rotation.
+           Automatically named files will also be rotated daily.
           </p>
          </section>
          <section id="component-filtering">
@@ -976,13 +974,14 @@ This keeps the main thread free from log string formatting and file I/O operatio
            <div class="highlight">
             <pre><span></span><span class="n">config_node</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
     <span class="n">trader_id</span><span class="o">=</span><span class="s2">"TESTER-001"</span><span class="p">,</span>
-    <span class="n">log_level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">,</span>
-    <span class="n">log_level_file</span><span class="o">=</span><span class="s2">"DEBUG"</span><span class="p">,</span>
-    <span class="n">log_file_auto</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">log_file_format</span><span class="o">=</span><span class="s2">"json"</span><span class="p">,</span>
-    <span class="n">log_component_levels</span><span class="o">=</span><span class="p">{</span> <span class="s2">"Portfolio"</span><span class="p">:</span> <span class="s2">"INFO"</span> <span class="p">},</span>
+    <span class="n">logging</span><span class="o">=</span><span class="n">LoggingConfig</span><span class="p">(</span>
+        <span class="n">log_level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">,</span>
+        <span class="n">log_level_file</span><span class="o">=</span><span class="s2">"DEBUG"</span><span class="p">,</span>
+        <span class="n">log_file_format</span><span class="o">=</span><span class="s2">"json"</span><span class="p">,</span>
+        <span class="n">log_component_levels</span><span class="o">=</span><span class="p">{</span> <span class="s2">"Portfolio"</span><span class="p">:</span> <span class="s2">"INFO"</span> <span class="p">},</span>
+    <span class="p">),</span>
     <span class="o">...</span> <span class="c1"># Omitted</span>
-    <span class="p">)</span>
+<span class="p">)</span>
 </pre>
            </div>
           </div>

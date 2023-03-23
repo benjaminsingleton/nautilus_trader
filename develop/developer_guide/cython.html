@@ -838,16 +838,17 @@ for the Cython part of the codebase, there are a few things which can help:
                LogLevel.DEBUG
               </span>
              </code>
-             is configured for the backtesting or live system you are debugging. This is available on
+             is configured for the backtesting or live system you are debugging.
+This is available on
              <code class="docutils literal notranslate">
               <span class="pre">
-               BacktestEngineConfig(log_level="DEBUG")
+               BacktestEngineConfig(logging=LoggingConfig(log_level="DEBUG"))
               </span>
              </code>
              or
              <code class="docutils literal notranslate">
               <span class="pre">
-               TradingNodeConfig(log_level="DEBUG")
+               TradingNodeConfig(logging=LoggingConfig=log_level="DEBUG"))
               </span>
              </code>
              .

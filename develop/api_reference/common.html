@@ -26439,7 +26439,18 @@ will be appended with ‘F’.
               bool
              </span>
              <span class="pre">
-              file_auto=False
+              file_logging=False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              unicode
+             </span>
+             <span class="pre">
+              directory=None
              </span>
             </span>
            </em>
@@ -26646,7 +26657,7 @@ will be appended with ‘F’.
               <li>
                <p>
                 <strong>
-                 file_auto
+                 file_logging
                 </strong>
                 (
                 <em>
@@ -26658,7 +26669,32 @@ will be appended with ‘F’.
                 <em>
                  default False
                 </em>
-                ) – If automatic file naming and daily rotation should be used.
+                ) – If logging to a file is enabled.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 directory
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The path to the log file directory.
+If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                then will write to the current working directory.
                </p>
               </li>
               <li>
@@ -26676,7 +26712,7 @@ will be appended with ‘F’.
                 <em>
                  optional
                 </em>
-                ) – The custom log file name (will always use a ‘.log’ suffix).
+                ) – The custom log file name (will use a ‘.log’ suffix for plain text or ‘.json’ for JSON).
 If
                 <code class="docutils literal notranslate">
                  <span class="pre">
