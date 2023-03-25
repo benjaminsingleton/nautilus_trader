@@ -748,7 +748,7 @@ This design ensures that the main thread is not blocked by log string formatting
          <a class="reference external" href="https://github.com/vectordotdev/vector">
           vector
          </a>
-         can be configured to collect there log events.
+         can be configured to collect these log events.
         </p>
         <section id="configuration">
          <h2 id="configuration">
@@ -771,10 +771,16 @@ By default, log events with an ‘INFO’
             LogLevel
            </span>
           </code>
-          or higher are written to stdout/stderr.
+          and higher are written to stdout/stderr.
          </p>
          <p>
-          Log levels include:
+          Log level (
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            LogLevel
+           </span>
+          </code>
+          ) values include:
          </p>
          <ul class="simple">
           <li>
@@ -823,12 +829,24 @@ By default, log events with an ‘INFO’
          <ul class="simple">
           <li>
            <p>
-            Minimum LogLevel for stdout/stderr
+            Minimum
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              LogLevel
+             </span>
+            </code>
+            for stdout/stderr
            </p>
           </li>
           <li>
            <p>
-            Minimum LogLevel for log files
+            Minimum
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              LogLevel
+             </span>
+            </code>
+            for log files
            </p>
           </li>
           <li>
@@ -873,7 +891,9 @@ By default, log events with an ‘INFO’
           </h3>
           <p>
            Log files are written to the current working directory with automatic naming and daily rotation by default.
-You can specify a custom log directory using the
+          </p>
+          <p>
+           You can specify a custom log directory using the
            <code class="docutils literal notranslate">
             <span class="pre">
              log_directory
@@ -934,9 +954,9 @@ The log files will be suffixed with ‘.log’ for plain text or ‘.json’ for
             </p>
            </li>
           </ul>
-          <div class="highlight-default notranslate">
+          <div class="highlight-bash notranslate">
            <div class="highlight">
-            <pre><span></span><span class="p">{</span><span class="n">trader_id</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">instance_id</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">ISO</span><span class="o">-</span><span class="mi">8601</span><span class="o">-</span><span class="n">datetime</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">discriminant</span><span class="p">}</span><span class="o">.</span><span class="p">{</span><span class="n">log</span> <span class="o">|</span> <span class="n">json</span><span class="p">}</span>
+            <pre><span></span><span class="o">{</span>trader_id<span class="o">}</span>_<span class="o">{</span>instance_id<span class="o">}</span>_<span class="o">{</span><span class="s2">"ISO 8601 datetime"</span><span class="o">}</span>_<span class="o">{</span>discriminant<span class="o">}</span>.<span class="o">{</span>log<span class="w"> </span><span class="p">|</span><span class="w"> </span>json<span class="o">}</span>
 </pre>
            </div>
           </div>
@@ -964,7 +984,7 @@ The log files will be suffixed with ‘.log’ for plain text or ‘.json’ for
             </span>
            </code>
            parameter can be used to set log levels for each component individually.
-A dictionary of component ID strings to log level strings should be passed in the following format:
+The input value should be a dictionary of component ID strings to log level strings:
            <code class="docutils literal notranslate">
             <span class="pre">
              dict[str,
