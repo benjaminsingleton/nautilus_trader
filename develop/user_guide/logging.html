@@ -710,9 +710,9 @@
          </a>
         </h1>
         <p>
-         Logging for the platform is provided uniformly for both backtesting and live trading.
-A high-performance logger, implemented in Rust, operates in a separate thread, receiving log messages across a multi-producer single consumer (MPSC) channel.
-This keeps the main thread free from log string formatting and file I/O operations.
+         The platform provides logging for both backtesting and live trading using a high-performance logger implemented in Rust.
+The logger operates in a separate thread and uses a multi-producer single consumer (MPSC) channel to receive log messages.
+This design ensures that the main thread is not blocked by log string formatting or file I/O operations.
         </p>
         <div class="admonition note">
          <p class="admonition-title">
@@ -748,7 +748,7 @@ This keeps the main thread free from log string formatting and file I/O operatio
          <a class="reference external" href="https://github.com/vectordotdev/vector">
           vector
          </a>
-         can be configured to collect log events from these writers.
+         can be configured to collect there log events.
         </p>
         <section id="configuration">
          <h2 id="configuration">
@@ -833,7 +833,7 @@ By default, log events with an ‘INFO’
           </li>
           <li>
            <p>
-            Automatic log file naming and daily rotation or custom log file name
+            Automatic log file naming and daily rotation, or custom log file name
            </p>
           </li>
           <li>
@@ -855,7 +855,7 @@ By default, log events with an ‘INFO’
            </a>
           </h3>
           <p>
-           The stdout/stderr writers log events to the console, and the minimum log level can be configured with the
+           Log messages are written to the console via stdout/stderr writers. The minimum log level can be configured using the
            <code class="docutils literal notranslate">
             <span class="pre">
              log_level
@@ -872,20 +872,21 @@ By default, log events with an ‘INFO’
            </a>
           </h3>
           <p>
-           Log files will be written to the current working directory unless you provide
+           Log files are written to the current working directory with automatic naming and daily rotation by default.
+You can specify a custom log directory using the
            <code class="docutils literal notranslate">
             <span class="pre">
              log_directory
             </span>
            </code>
-           .
-If a
+           parameter and/or a custom log file name using the
            <code class="docutils literal notranslate">
             <span class="pre">
              log_file_name
             </span>
            </code>
-           is provided then the suffix will be ‘.log’ for plain text, or ‘.json’ for JSON (no need to include a suffix).
+           parameter.
+The log files will be suffixed with ‘.log’ for plain text or ‘.json’ for JSON (no need to include a suffix in file names).
           </p>
           <p>
            If a
@@ -935,7 +936,7 @@ If a
           </ul>
           <div class="highlight-default notranslate">
            <div class="highlight">
-            <pre><span></span><span class="p">{</span><span class="n">trader_id</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">instance_id</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">ISO</span> <span class="mi">8601</span> <span class="n">datetime</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">discriminant</span><span class="p">}</span><span class="o">.</span><span class="p">{</span><span class="n">log</span> <span class="o">|</span> <span class="n">json</span><span class="p">}</span>
+            <pre><span></span><span class="p">{</span><span class="n">trader_id</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">instance_id</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">ISO</span><span class="o">-</span><span class="mi">8601</span><span class="o">-</span><span class="n">datetime</span><span class="p">}</span><span class="n">_</span><span class="p">{</span><span class="n">discriminant</span><span class="p">}</span><span class="o">.</span><span class="p">{</span><span class="n">log</span> <span class="o">|</span> <span class="n">json</span><span class="p">}</span>
 </pre>
            </div>
           </div>
@@ -947,9 +948,6 @@ If a
             </span>
            </code>
           </p>
-          <p>
-           Automatically named files will also be rotated daily.
-          </p>
          </section>
          <section id="component-filtering">
           <h3 id="component-filtering">
@@ -959,16 +957,26 @@ If a
            </a>
           </h3>
           <p>
-           Per component log levels can be set via the
+           The
            <code class="docutils literal notranslate">
             <span class="pre">
              log_component_levels
             </span>
            </code>
-           parameter. Pass a dictionary of component ID strings to log level strings dict[str, str].
+           parameter can be used to set log levels for each component individually.
+A dictionary of component ID strings to log level strings should be passed in the following format:
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             dict[str,
+            </span>
+            <span class="pre">
+             str]
+            </span>
+           </code>
+           .
           </p>
           <p>
-           Here is an example trading node logging configuration, showing some of the above options:
+           Below is an example of a trading node logging configuration that includes some of the options mentioned above:
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
@@ -986,10 +994,16 @@ If a
            </div>
           </div>
           <p>
-           For backtesting, simply replace the config class with
+           For backtesting, the
            <code class="docutils literal notranslate">
             <span class="pre">
              BacktestEngineConfig
+            </span>
+           </code>
+           class can be used instead of
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             TradingNodeConfig
             </span>
            </code>
            , as the same options are available.
