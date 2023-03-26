@@ -2907,6 +2907,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.register_exec_algorithm">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  LiveExecutionEngine.register_exec_algorithm()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.register_oms_type">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -23574,6 +23583,95 @@ venue routing cannot be found).
                 </em>
                </a>
                ) – The client to register.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.live.execution_engine.LiveExecutionEngine.register_exec_algorithm">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_exec_algorithm
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ExecAlgorithm
+              </span>
+              <span class="pre">
+               exec_algorithm
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.register_exec_algorithm" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given execution algorithm with the execution engine.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                exec_algorithm
+               </strong>
+               (
+               <em>
+                ExecAlgorithm
+               </em>
+               ) – The execution algorithm to register.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                exec_algorithm
+               </cite>
+               is already registered with the execution engine.
               </p>
              </dd>
             </dl>
