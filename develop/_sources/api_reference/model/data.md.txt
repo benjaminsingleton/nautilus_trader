@@ -1,0 +1,53 @@
+# Data
+
+```{eval-rst}
+.. automodule:: nautilus_trader.model.data
+```
+
+```{eval-rst}
+.. automodule:: nautilus_trader.model.data.bar
+   :show-inheritance:
+   :inherited-members:
+   :members:
+   :member-order: bysource
+```
+
+```{eval-rst}
+.. automodule:: nautilus_trader.model.data.bet
+   :show-inheritance:
+   :inherited-members:
+   :members:
+   :member-order: bysource
+```
+
+```{eval-rst}
+.. automodule:: nautilus_trader.model.data.tick
+   :show-inheritance:
+   :inherited-members:
+   :members:
+   :member-order: bysource
+```
+
+```{eval-rst}
+.. automodule:: nautilus_trader.model.data.ticker
+   :show-inheritance:
+   :inherited-members:
+   :members:
+   :member-order: bysource
+```
+
+```{eval-rst}
+.. automodule:: nautilus_trader.model.data.venue
+   :show-inheritance:
+   :inherited-members:
+   :members:
+   :member-order: bysource
+```
+
+```{eval-rst}
+.. automodule:: nautilus_trader.model.data.base
+   :show-inheritance:
+   :inherited-members:
+   :members:
+   :member-order: bysource
+```
