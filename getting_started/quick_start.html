@@ -94,7 +94,7 @@
   <link href="../_static/favicon-32x32.png" rel="shortcut icon"/>
   <link href="../genindex.html" rel="index" title="Index"/>
   <link href="../search.html" rel="search" title="Search"/>
-  <link href="../user_guide/index.html" rel="next" title="User Guide"/>
+  <link href="../concepts/index.html" rel="next" title="Concepts"/>
   <link href="installation.html" rel="prev" title="Installation"/>
   <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
@@ -293,8 +293,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../user_guide/index.html">
-             User Guide
+            <a class="md-nav__link" href="../concepts/index.html">
+             Concepts
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -302,47 +302,37 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/core_concepts.html">
-               Core Concepts
-              </a>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/architecture.html">
+              <a class="md-nav__link" href="../concepts/architecture.html">
                Architecture
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/backtest_example.html">
-               Complete Backtest Example
-              </a>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/loading_external_data.html">
-               Loading External Data
-              </a>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/strategies.html">
+              <a class="md-nav__link" href="../concepts/strategies.html">
                Strategies
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/instruments.html">
+              <a class="md-nav__link" href="../concepts/instruments.html">
                Instruments
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/orders.html">
-               Orders
-              </a>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/adapters.html">
+              <a class="md-nav__link" href="../concepts/adapters.html">
                Adapters
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../user_guide/advanced/index.html">
+              <a class="md-nav__link" href="../concepts/orders.html">
+               Orders
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/logging.html">
+               Logging
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/advanced/index.html">
                Advanced
               </a>
               <span class="arrow">
@@ -351,26 +341,47 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../user_guide/advanced/data.html">
+                <a class="md-nav__link" href="../concepts/advanced/data.html">
                  Data
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../user_guide/advanced/advanced_orders.html">
+                <a class="md-nav__link" href="../concepts/advanced/advanced_orders.html">
                  Advanced Orders
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../user_guide/advanced/emulated_orders.html">
+                <a class="md-nav__link" href="../concepts/advanced/emulated_orders.html">
                  Emulated Orders
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../user_guide/advanced/portfolio_statistics.html">
+                <a class="md-nav__link" href="../concepts/advanced/portfolio_statistics.html">
                  Portfolio Statistics
                 </a>
                </li>
               </ul>
+             </li>
+            </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../guides/index.html">
+             Guides
+            </a>
+            <span class="arrow">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </span>
+            <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../guides/backtest_example.html">
+               Complete Backtest Example
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../guides/loading_external_data.html">
+               Loading External Data
+              </a>
              </li>
             </ul>
            </li>
@@ -735,7 +746,7 @@ format (Parquet) for this guide.
         </p>
         <p>
          For more details on how to load data into Nautilus, see
-         <a class="reference internal" href="../user_guide/backtest_example.html">
+         <a class="reference internal" href="../guides/backtest_example.html">
           <span class="doc std std-doc">
            Backtest Example
           </span>
@@ -943,22 +954,23 @@ registering indicators to receive certain data types, however in this example we
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.core.message</span> <span class="kn">import</span> <span class="n">Event</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.trading.strategy</span> <span class="kn">import</span> <span class="n">Strategy</span><span class="p">,</span> <span class="n">StrategyConfig</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.indicators.macd</span> <span class="kn">import</span> <span class="n">MovingAverageConvergenceDivergence</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data.tick</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">PriceType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">PositionSide</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.model.events.position</span> <span class="kn">import</span> <span class="n">PositionEvent</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events.position</span> <span class="kn">import</span> <span class="n">PositionOpened</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.position</span> <span class="kn">import</span> <span class="n">Position</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.trading.strategy</span> <span class="kn">import</span> <span class="n">Strategy</span><span class="p">,</span> <span class="n">StrategyConfig</span>
 
 
 <span class="k">class</span> <span class="nc">MACDConfig</span><span class="p">(</span><span class="n">StrategyConfig</span><span class="p">):</span>
     <span class="n">instrument_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">fast_period</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">slow_period</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">trade_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">fast_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">slow_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">26</span>
+    <span class="n">trade_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1_000_000</span>
     <span class="n">entry_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00010</span>
 
 
@@ -977,63 +989,66 @@ registering indicators to receive certain data types, however in this example we
         <span class="c1"># Convenience</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Position</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subscribe_quote_ticks</span><span class="p">(</span><span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">on_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close_all_positions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unsubscribe_quote_ticks</span><span class="p">(</span><span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on_quote_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">QuoteTick</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># Update our MACD</span>
+    <span class="k">def</span> <span class="nf">on_quote_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">QuoteTick</span><span class="p">):</span>
+        <span class="c1"># You can register indicators to receive quote tick updates automatically,</span>
+        <span class="c1"># here we manually update the indicator to demonstrate the flexibility available.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">handle_quote_tick</span><span class="p">(</span><span class="n">tick</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
-            <span class="c1"># self._log.info(f"{self.macd.value=}:%5d")</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_for_entry</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_for_exit</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">quantity</span> <span class="o">&lt;=</span> <span class="mi">1000</span>
 
-    <span class="k">def</span> <span class="nf">on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">PositionEvent</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">initialized</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="c1"># Wait for indicator to warm up</span>
+        
+        <span class="c1"># self._log.info(f"{self.macd.value=}:%5d")</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_for_entry</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_for_exit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">PositionOpened</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">position</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">position_id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">check_for_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">positions</span><span class="p">():</span>
-            <span class="c1"># If we have a position, do not enter again</span>
-            <span class="k">return</span>
+    <span class="k">def</span> <span class="nf">check_for_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># If MACD line is above our entry threshold, we should be LONG</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry_threshold</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">PositionSide</span><span class="o">.</span><span class="n">LONG</span><span class="p">:</span>
+                <span class="k">return</span>  <span class="c1"># Already LONG</span>
 
-        <span class="c1"># We have no position, check if we are above or below our MACD entry threshold</span>
-        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry_threshold</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Entering trade, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">entry_threshold</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
-            <span class="c1"># We're above (to sell) or below (to buy) our entry threshold, with no position: enter a trade</span>
-            <span class="n">side</span> <span class="o">=</span> <span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">entry_threshold</span> <span class="k">else</span> <span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span>
             <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
                 <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
-                <span class="n">order_side</span><span class="o">=</span><span class="n">side</span><span class="p">,</span>
+                <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+                <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+        <span class="c1"># If MACD line is below our entry threshold, we should be SHORT</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">entry_threshold</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">PositionSide</span><span class="o">.</span><span class="n">SHORT</span><span class="p">:</span>
+                <span class="k">return</span>  <span class="c1"># Already SHORT</span>
+
+            <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
+                <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
+                <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
                 <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">check_for_exit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">positions</span><span class="p">():</span>
-            <span class="c1"># If we don't have a position, return early</span>
-            <span class="k">return</span>
+    <span class="k">def</span> <span class="nf">check_for_exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># If MACD line is above zero then exit if we are SHORT</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">PositionSide</span><span class="o">.</span><span class="n">SHORT</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">close_position</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="c1"># If MACD line is below zero then exit if we are LONG</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">PositionSide</span><span class="o">.</span><span class="n">LONG</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">close_position</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
 
-        <span class="c1"># We have a position, check if we have crossed back over the MACD 0 line (and therefore close position)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">is_long</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">is_short</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exiting trade, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">macd</span><span class="o">.</span><span class="n">value</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
-            <span class="c1"># We've crossed back over 0 line - close the position.</span>
-            <span class="c1"># Opposite to trade entry, except only sell our position size (we may not have been full filled)</span>
-            <span class="n">side</span> <span class="o">=</span> <span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">is_long</span> <span class="k">else</span> <span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span>
-            <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
-                <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
-                <span class="n">order_side</span><span class="o">=</span><span class="n">side</span><span class="p">,</span>
-                <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">quantity</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">on_dispose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">on_dispose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>  <span class="c1"># Do nothing else</span>
+
 </pre>
           </div>
          </div>
@@ -1137,6 +1152,14 @@ the account type (
           </code>
           ), an optional base currency, and starting balance(s).
          </p>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           FX trading is typically done on margin with Non-Deliverable Forward, Swap or CFD type instruments.
+          </p>
+         </div>
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">BacktestVenueConfig</span>
@@ -1144,9 +1167,9 @@ the account type (
 <span class="n">venue</span> <span class="o">=</span> <span class="n">BacktestVenueConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">"SIM"</span><span class="p">,</span>
     <span class="n">oms_type</span><span class="o">=</span><span class="s2">"NETTING"</span><span class="p">,</span>
-    <span class="n">account_type</span><span class="o">=</span><span class="s2">"CASH"</span><span class="p">,</span>
+    <span class="n">account_type</span><span class="o">=</span><span class="s2">"MARGIN"</span><span class="p">,</span>
     <span class="n">base_currency</span><span class="o">=</span><span class="s2">"USD"</span><span class="p">,</span>
-    <span class="n">starting_balances</span><span class="o">=</span><span class="p">[</span><span class="s2">"100_000 USD"</span><span class="p">]</span>
+    <span class="n">starting_balances</span><span class="o">=</span><span class="p">[</span><span class="s2">"1_000_000 USD"</span><span class="p">]</span>
 <span class="p">)</span>
 </pre>
           </div>
@@ -1212,7 +1235,7 @@ adding the
     <span class="n">catalog_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
     <span class="n">data_cls</span><span class="o">=</span><span class="n">QuoteTick</span><span class="p">,</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">instruments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
-    <span class="n">end_time</span><span class="o">=</span><span class="s2">"2020-01-05"</span><span class="p">,</span>
+    <span class="n">end_time</span><span class="o">=</span><span class="s2">"2020-01-10"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre>
           </div>
@@ -1262,6 +1285,7 @@ user packages. In this instance, our
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">BacktestEngineConfig</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">ImportableStrategyConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">LoggingConfig</span>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">BacktestEngineConfig</span><span class="p">(</span>
     <span class="n">strategies</span><span class="o">=</span><span class="p">[</span>
@@ -1275,7 +1299,7 @@ user packages. In this instance, our
             <span class="p">),</span>
         <span class="p">)</span>
     <span class="p">],</span>
-    <span class="n">log_level</span><span class="o">=</span><span class="s2">"ERROR"</span><span class="p">,</span>  <span class="c1"># Lower to `INFO` to see more logging about orders, events, etc.</span>
+    <span class="n">logging</span><span class="o">=</span><span class="n">LoggingConfig</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="s2">"ERROR"</span><span class="p">),</span>  <span class="c1"># Lower to `INFO` to see more logging about orders, events, etc.</span>
 <span class="p">)</span>
 </pre>
           </div>
@@ -1308,7 +1332,6 @@ full configuration for our backtest.
     <span class="n">venues</span><span class="o">=</span><span class="p">[</span><span class="n">venue</span><span class="p">],</span>
     <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">data</span><span class="p">],</span>
 <span class="p">)</span>
-
 </pre>
           </div>
          </div>
@@ -1370,19 +1393,19 @@ parameters or batches of data).
 
 <span class="n">engine</span><span class="p">:</span> <span class="n">BacktestEngine</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-<span class="n">engine</span><span class="o">.</span><span class="n">trader</span><span class="o">.</span><span class="n">generate_account_report</span><span class="p">(</span><span class="n">Venue</span><span class="p">(</span><span class="s2">"SIM"</span><span class="p">))</span>
-</pre>
-          </div>
-         </div>
-         <div class="highlight-python notranslate">
-          <div class="highlight">
-           <pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">trader</span><span class="o">.</span><span class="n">generate_order_fills_report</span><span class="p">()</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">trader</span><span class="o">.</span><span class="n">generate_order_fills_report</span><span class="p">()</span>
 </pre>
           </div>
          </div>
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">trader</span><span class="o">.</span><span class="n">generate_positions_report</span><span class="p">()</span>
+</pre>
+          </div>
+         </div>
+         <div class="highlight-python notranslate">
+          <div class="highlight">
+           <pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">trader</span><span class="o">.</span><span class="n">generate_account_report</span><span class="p">(</span><span class="n">Venue</span><span class="p">(</span><span class="s2">"SIM"</span><span class="p">))</span>
 </pre>
           </div>
          </div>
@@ -1410,13 +1433,13 @@ parameters or batches of data).
        </span>
       </div>
      </a>
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../user_guide/index.html" rel="next" title="User Guide">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../concepts/index.html" rel="next" title="Concepts">
       <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
        <span class="md-flex__ellipsis">
         <span class="md-footer-nav__direction">
          Next
         </span>
-        User Guide
+        Concepts
        </span>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">

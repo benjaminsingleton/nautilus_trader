@@ -285,8 +285,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="user_guide/index.html">
-             User Guide
+            <a class="md-nav__link" href="concepts/index.html">
+             Concepts
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -294,47 +294,37 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/core_concepts.html">
-               Core Concepts
-              </a>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/architecture.html">
+              <a class="md-nav__link" href="concepts/architecture.html">
                Architecture
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/backtest_example.html">
-               Complete Backtest Example
-              </a>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/loading_external_data.html">
-               Loading External Data
-              </a>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/strategies.html">
+              <a class="md-nav__link" href="concepts/strategies.html">
                Strategies
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/instruments.html">
+              <a class="md-nav__link" href="concepts/instruments.html">
                Instruments
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/orders.html">
-               Orders
-              </a>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/adapters.html">
+              <a class="md-nav__link" href="concepts/adapters.html">
                Adapters
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="user_guide/advanced/index.html">
+              <a class="md-nav__link" href="concepts/orders.html">
+               Orders
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="concepts/logging.html">
+               Logging
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="concepts/advanced/index.html">
                Advanced
               </a>
               <span class="arrow">
@@ -343,26 +333,47 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="user_guide/advanced/data.html">
+                <a class="md-nav__link" href="concepts/advanced/data.html">
                  Data
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="user_guide/advanced/advanced_orders.html">
+                <a class="md-nav__link" href="concepts/advanced/advanced_orders.html">
                  Advanced Orders
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="user_guide/advanced/emulated_orders.html">
+                <a class="md-nav__link" href="concepts/advanced/emulated_orders.html">
                  Emulated Orders
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="user_guide/advanced/portfolio_statistics.html">
+                <a class="md-nav__link" href="concepts/advanced/portfolio_statistics.html">
                  Portfolio Statistics
                 </a>
                </li>
               </ul>
+             </li>
+            </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="guides/index.html">
+             Guides
+            </a>
+            <span class="arrow">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </span>
+            <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="guides/backtest_example.html">
+               Complete Backtest Example
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="guides/loading_external_data.html">
+               Loading External Data
+              </a>
              </li>
             </ul>
            </li>
@@ -1440,6 +1451,16 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.add_exec_algorithm">
+             add_exec_algorithm() (Trader method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.add_exec_algorithms">
+             add_exec_algorithms() (Trader method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/live.html#nautilus_trader.live.node.TradingNode.add_exec_client_factory">
              add_exec_client_factory() (TradingNode method)
             </a>
@@ -2481,6 +2502,11 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.bar_execution">
+             bar_execution (SimulatedExchange attribute)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.bar_type">
              bar_type (Bar attribute)
             </a>
@@ -2525,6 +2551,11 @@
            <li>
             <a href="api_reference/data.html#nautilus_trader.data.aggregation.BarBuilder">
              BarBuilder (class in nautilus_trader.data.aggregation)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.BarDataWrangler">
+             BarDataWrangler (class in nautilus_trader.persistence.wranglers)
             </a>
            </li>
            <li>
@@ -2711,8 +2742,8 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.catalog.BaseDataCatalog">
-             BaseDataCatalog (class in nautilus_trader.persistence.catalog)
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.catalog.base.BaseDataCatalog">
+             BaseDataCatalog (class in nautilus_trader.persistence.catalog.base)
             </a>
            </li>
            <li>
@@ -2964,6 +2995,16 @@
            <li>
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data.BetfairDataClient">
              BetfairDataClient (class in nautilus_trader.adapters.betfair.data)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairDataClientConfig">
+             BetfairDataClientConfig (class in nautilus_trader.adapters.betfair.config)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairExecClientConfig">
+             BetfairExecClientConfig (class in nautilus_trader.adapters.betfair.config)
             </a>
            </li>
            <li>
@@ -4244,6 +4285,11 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.check_flush">
+             check_flush() (StreamingFeatherWriter method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.check_information_aggregated">
              check_information_aggregated() (BarSpecification static method)
             </a>
@@ -4459,6 +4505,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.clear_exec_algorithms">
+             clear_exec_algorithms() (Trader method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.clear_index">
              clear_index() (Cache method)
             </a>
@@ -4555,6 +4606,11 @@
              client_order_id (CancelOrder attribute)
             </a>
             <ul>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.messages.ExecAlgorithmSpecification.client_order_id">
+               (ExecAlgorithmSpecification attribute)
+              </a>
+             </li>
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.client_order_id">
                (LimitIfTouchedOrder attribute)
@@ -4843,9 +4899,16 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/network.html#nautilus_trader.network.websocket.WebSocketClient.close">
-             close() (WebSocketClient method)
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.close">
+             close() (StreamingFeatherWriter method)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/network.html#nautilus_trader.network.websocket.WebSocketClient.close">
+               (WebSocketClient method)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.close_all_positions">
@@ -5065,6 +5128,28 @@
             <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.ComponentId">
              ComponentId (class in nautilus_trader.model.identifiers)
             </a>
+           </li>
+           <li>
+            <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.config">
+             config (Actor attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.config">
+               (FXRolloverInterestModule attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.SimulationModule.config">
+               (SimulationModule attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.config">
+               (Strategy attribute)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.node.BacktestNode.configs">
@@ -5407,6 +5492,11 @@
              <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.factories.BinanceLiveExecClientFactory.create">
                (BinanceLiveExecClientFactory static method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmFactory.create">
+               (ExecAlgorithmFactory static method)
               </a>
              </li>
              <li>
@@ -6231,11 +6321,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.external.core.determine_partition_cols">
-             determine_partition_cols() (in module nautilus_trader.persistence.external.core)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/config.html#nautilus_trader.config.common.ActorConfig.dict">
              dict() (ActorConfig method)
             </a>
@@ -6258,6 +6343,16 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.backtest.BacktestVenueConfig.dict">
                (BacktestVenueConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairDataClientConfig.dict">
+               (BetfairDataClientConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairExecClientConfig.dict">
+               (BetfairExecClientConfig method)
               </a>
              </li>
              <li>
@@ -6291,6 +6386,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmConfig.dict">
+               (ExecAlgorithmConfig method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ExecEngineConfig.dict">
                (ExecEngineConfig method)
               </a>
@@ -6308,6 +6408,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ImportableConfig.dict">
                (ImportableConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ImportableExecAlgorithmConfig.dict">
+               (ImportableExecAlgorithmConfig method)
               </a>
              </li>
              <li>
@@ -6361,6 +6466,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.LoggingConfig.dict">
+               (LoggingConfig method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.NautilusConfig.dict">
                (NautilusConfig method)
               </a>
@@ -6411,11 +6521,6 @@
          </td>
          <td style="width: 33%; vertical-align: top;">
           <ul>
-           <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.external.core.dicts_to_dataframes">
-             dicts_to_dataframes() (in module nautilus_trader.persistence.external.core)
-            </a>
-           </li>
            <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.fuzzy_candlesticks.FuzzyCandle.direction">
              direction (FuzzyCandle attribute)
@@ -7107,6 +7212,16 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.messages.ExecAlgorithmSpecification.exec_algorithm_id">
+             exec_algorithm_id (ExecAlgorithmSpecification attribute)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.exec_algorithm_ids">
+             exec_algorithm_ids() (Trader method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrder.exec_algorithm_spec">
              exec_algorithm_spec (SubmitOrder attribute)
             </a>
@@ -7114,6 +7229,16 @@
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrderList.exec_algorithm_specs">
              exec_algorithm_specs (SubmitOrderList attribute)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.exec_algorithm_states">
+             exec_algorithm_states() (Trader method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.exec_algorithms">
+             exec_algorithms() (Trader method)
             </a>
            </li>
            <li>
@@ -7127,8 +7252,23 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmConfig">
+             ExecAlgorithmConfig (class in nautilus_trader.config.common)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmFactory">
+             ExecAlgorithmFactory (class in nautilus_trader.config.common)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId">
              ExecAlgorithmId (class in nautilus_trader.model.identifiers)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.messages.ExecAlgorithmSpecification">
+             ExecAlgorithmSpecification (class in nautilus_trader.execution.messages)
             </a>
            </li>
            <li>
@@ -7324,6 +7464,11 @@
            <li>
             <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.ladder.Ladder.exposures">
              exposures() (Ladder method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.streaming.engine.extract_generic_data_client_ids">
+             extract_generic_data_client_ids() (in module nautilus_trader.persistence.streaming.engine)
             </a>
            </li>
            <li>
@@ -7537,11 +7682,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/common.html#nautilus_trader.common.logging.Logger.file_path">
-             file_path (Logger attribute)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.fill_model">
              fill_model (SimulatedExchange attribute)
             </a>
@@ -7673,6 +7813,11 @@
              <li>
               <a href="api_reference/infrastructure.html#nautilus_trader.infrastructure.cache.RedisCacheDatabase.flush">
                (RedisCacheDatabase method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/persistence.html#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.flush">
+               (StreamingFeatherWriter method)
               </a>
              </li>
             </ul>
@@ -8132,6 +8277,16 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairDataClientConfig.fully_qualified_name">
+               (BetfairDataClientConfig class method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairExecClientConfig.fully_qualified_name">
+               (BetfairExecClientConfig class method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.fully_qualified_name">
                (BetfairExecutionClient class method)
               </a>
@@ -8262,6 +8417,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmConfig.fully_qualified_name">
+               (ExecAlgorithmConfig class method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ExecEngineConfig.fully_qualified_name">
                (ExecEngineConfig class method)
               </a>
@@ -8309,6 +8469,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ImportableConfig.fully_qualified_name">
                (ImportableConfig class method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ImportableExecAlgorithmConfig.fully_qualified_name">
+               (ImportableExecAlgorithmConfig class method)
               </a>
              </li>
              <li>
@@ -8414,6 +8579,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.live.LiveRiskEngineConfig.fully_qualified_name">
                (LiveRiskEngineConfig class method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.LoggingConfig.fully_qualified_name">
+               (LoggingConfig class method)
               </a>
              </li>
              <li>
@@ -9243,6 +9413,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.streaming.writer.generate_signal_class">
+             generate_signal_class() (in module nautilus_trader.persistence.streaming.writer)
+            </a>
            </li>
            <li>
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.generate_trade_reports">
@@ -11555,6 +11730,11 @@
            <li>
             <a href="api_reference/config.html#nautilus_trader.config.common.ImportableConfig">
              ImportableConfig (class in nautilus_trader.config.common)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/config.html#nautilus_trader.config.common.ImportableExecAlgorithmConfig">
+             ImportableExecAlgorithmConfig (class in nautilus_trader.config.common)
             </a>
            </li>
            <li>
@@ -14879,6 +15059,16 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairDataClientConfig.json">
+               (BetfairDataClientConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairExecClientConfig.json">
+               (BetfairExecClientConfig method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.config.BinanceDataClientConfig.json">
                (BinanceDataClientConfig method)
               </a>
@@ -14909,6 +15099,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmConfig.json">
+               (ExecAlgorithmConfig method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ExecEngineConfig.json">
                (ExecEngineConfig method)
               </a>
@@ -14926,6 +15121,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ImportableConfig.json">
                (ImportableConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ImportableExecAlgorithmConfig.json">
+               (ImportableExecAlgorithmConfig method)
               </a>
              </li>
              <li>
@@ -14976,6 +15176,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.live.LiveRiskEngineConfig.json">
                (LiveRiskEngineConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.LoggingConfig.json">
+               (LoggingConfig method)
               </a>
              </li>
              <li>
@@ -16237,6 +16442,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/config.html#nautilus_trader.config.common.LoggingConfig">
+             LoggingConfig (class in nautilus_trader.config.common)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.statistics.long_ratio.LongRatio">
              LongRatio (class in nautilus_trader.analysis.statistics.long_ratio)
             </a>
@@ -16929,11 +17139,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.external.core.merge_existing_data">
-             merge_existing_data() (in module nautilus_trader.persistence.external.core)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/msgbus.html#nautilus_trader.msgbus.bus.MessageBus">
              MessageBus (class in nautilus_trader.msgbus.bus)
             </a>
@@ -17254,6 +17459,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/adapters/betfair.html#module-nautilus_trader.adapters.betfair.config">
+               nautilus_trader.adapters.betfair.config
+              </a>
+             </li>
+             <li>
               <a href="api_reference/adapters/betfair.html#module-nautilus_trader.adapters.betfair.data">
                nautilus_trader.adapters.betfair.data
               </a>
@@ -17274,8 +17484,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/adapters/betfair.html#module-nautilus_trader.adapters.betfair.parsing">
-               nautilus_trader.adapters.betfair.parsing
+              <a href="api_reference/adapters/betfair.html#module-nautilus_trader.adapters.betfair.historic">
+               nautilus_trader.adapters.betfair.historic
               </a>
              </li>
              <li>
@@ -18179,13 +18389,13 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.catalog">
-               nautilus_trader.persistence.catalog
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.catalog.base">
+               nautilus_trader.persistence.catalog.base
               </a>
              </li>
              <li>
-              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.external.core">
-               nautilus_trader.persistence.external.core
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.catalog.parquet">
+               nautilus_trader.persistence.catalog.parquet
               </a>
              </li>
              <li>
@@ -18194,8 +18404,23 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.streaming">
-               nautilus_trader.persistence.streaming
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.streaming.batching">
+               nautilus_trader.persistence.streaming.batching
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.streaming.engine">
+               nautilus_trader.persistence.streaming.engine
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.streaming.writer">
+               nautilus_trader.persistence.streaming.writer
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.wranglers">
+               nautilus_trader.persistence.wranglers
               </a>
              </li>
              <li>
@@ -18819,6 +19044,16 @@
             </ul>
            </li>
            <li>
+            nautilus_trader.adapters.betfair.config
+            <ul>
+             <li>
+              <a href="api_reference/adapters/betfair.html#module-nautilus_trader.adapters.betfair.config">
+               module
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             nautilus_trader.adapters.betfair.data
             <ul>
              <li>
@@ -18859,10 +19094,10 @@
             </ul>
            </li>
            <li>
-            nautilus_trader.adapters.betfair.parsing
+            nautilus_trader.adapters.betfair.historic
             <ul>
              <li>
-              <a href="api_reference/adapters/betfair.html#module-nautilus_trader.adapters.betfair.parsing">
+              <a href="api_reference/adapters/betfair.html#module-nautilus_trader.adapters.betfair.historic">
                module
               </a>
              </li>
@@ -20673,20 +20908,20 @@
             </ul>
            </li>
            <li>
-            nautilus_trader.persistence.catalog
+            nautilus_trader.persistence.catalog.base
             <ul>
              <li>
-              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.catalog">
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.catalog.base">
                module
               </a>
              </li>
             </ul>
            </li>
            <li>
-            nautilus_trader.persistence.external.core
+            nautilus_trader.persistence.catalog.parquet
             <ul>
              <li>
-              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.external.core">
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.catalog.parquet">
                module
               </a>
              </li>
@@ -20703,10 +20938,40 @@
             </ul>
            </li>
            <li>
-            nautilus_trader.persistence.streaming
+            nautilus_trader.persistence.streaming.batching
             <ul>
              <li>
-              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.streaming">
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.streaming.batching">
+               module
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            nautilus_trader.persistence.streaming.engine
+            <ul>
+             <li>
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.streaming.engine">
+               module
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            nautilus_trader.persistence.streaming.writer
+            <ul>
+             <li>
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.streaming.writer">
+               module
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            nautilus_trader.persistence.wranglers
+            <ul>
+             <li>
+              <a href="api_reference/persistence.html#module-nautilus_trader.persistence.wranglers">
                module
               </a>
              </li>
@@ -20919,38 +21184,6 @@
              <li>
               <a href="api_reference/portfolio.html#nautilus_trader.portfolio.base.PortfolioFacade.net_position">
                (PortfolioFacade method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/position.html#nautilus_trader.model.position.Position.net_qty">
-             net_qty (Position attribute)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/events.html#nautilus_trader.model.events.position.PositionChanged.net_qty">
-               (PositionChanged attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/events.html#nautilus_trader.model.events.position.PositionClosed.net_qty">
-               (PositionClosed attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/events.html#nautilus_trader.model.events.position.PositionEvent.net_qty">
-               (PositionEvent attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/events.html#nautilus_trader.model.events.position.PositionOpened.net_qty">
-               (PositionOpened attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.reports.PositionStatusReport.net_qty">
-               (PositionStatusReport attribute)
               </a>
              </li>
             </ul>
@@ -22410,6 +22643,11 @@
          <td style="width: 33%; vertical-align: top;">
           <ul>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.messages.ExecAlgorithmSpecification.params">
+             params (ExecAlgorithmSpecification attribute)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.parent_order_id">
              parent_order_id (LimitIfTouchedOrder attribute)
             </a>
@@ -22467,8 +22705,8 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.catalog.ParquetDataCatalog">
-             ParquetDataCatalog (class in nautilus_trader.persistence.catalog)
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
+             ParquetDataCatalog (class in nautilus_trader.persistence.catalog.parquet)
             </a>
            </li>
            <li>
@@ -22507,6 +22745,16 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairDataClientConfig.parse">
+               (BetfairDataClientConfig class method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairExecClientConfig.parse">
+               (BetfairExecClientConfig class method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.config.BinanceDataClientConfig.parse">
                (BinanceDataClientConfig class method)
               </a>
@@ -22537,6 +22785,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmConfig.parse">
+               (ExecAlgorithmConfig class method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ExecEngineConfig.parse">
                (ExecEngineConfig class method)
               </a>
@@ -22554,6 +22807,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ImportableConfig.parse">
                (ImportableConfig class method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ImportableExecAlgorithmConfig.parse">
+               (ImportableExecAlgorithmConfig class method)
               </a>
              </li>
              <li>
@@ -22604,6 +22862,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.live.LiveRiskEngineConfig.parse">
                (LiveRiskEngineConfig class method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.LoggingConfig.parse">
+               (LoggingConfig class method)
               </a>
              </li>
              <li>
@@ -23677,10 +23940,15 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/data.html#nautilus_trader.data.engine.DataEngine.process">
-             process() (DataEngine method)
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.BarDataWrangler.process">
+             process() (BarDataWrangler method)
             </a>
             <ul>
+             <li>
+              <a href="api_reference/data.html#nautilus_trader.data.engine.DataEngine.process">
+               (DataEngine method)
+              </a>
+             </li>
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.engine.ExecutionEngine.process">
                (ExecutionEngine method)
@@ -23707,6 +23975,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.QuoteTickDataWrangler.process">
+               (QuoteTickDataWrangler method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/risk.html#nautilus_trader.risk.engine.RiskEngine.process">
                (RiskEngine method)
               </a>
@@ -23721,11 +23994,21 @@
                (SimulationModule method)
               </a>
              </li>
+             <li>
+              <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.TradeTickDataWrangler.process">
+               (TradeTickDataWrangler method)
+              </a>
+             </li>
             </ul>
            </li>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.process_bar">
              process_bar() (SimulatedExchange method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.QuoteTickDataWrangler.process_bar_data">
+             process_bar_data() (QuoteTickDataWrangler method)
             </a>
            </li>
            <li>
@@ -24094,6 +24377,11 @@
              QuoteTick (class in nautilus_trader.model.data.tick)
             </a>
            </li>
+           <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.QuoteTickDataWrangler">
+             QuoteTickDataWrangler (class in nautilus_trader.persistence.wranglers)
+            </a>
+           </li>
           </ul>
          </td>
         </tr>
@@ -24121,16 +24409,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.external.core.RawFile">
-             RawFile (class in nautilus_trader.persistence.external.core)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.external.core.read_progress">
-             read_progress() (in module nautilus_trader.persistence.external.core)
-            </a>
            </li>
            <li>
             <a href="api_reference/persistence.html#nautilus_trader.persistence.external.readers.Reader">
@@ -24492,6 +24770,18 @@
              <li>
               <a href="api_reference/common.html#nautilus_trader.common.clock.TestClock.register_default_handler">
                (TestClock method)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.engine.ExecutionEngine.register_exec_algorithm">
+             register_exec_algorithm() (ExecutionEngine method)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/live.html#nautilus_trader.live.execution_engine.LiveExecutionEngine.register_exec_algorithm">
+               (LiveExecutionEngine method)
               </a>
              </li>
             </ul>
@@ -26286,6 +26576,43 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.reports.PositionStatusReport.signed_decimal_qty">
+             signed_decimal_qty (PositionStatusReport attribute)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/model/position.html#nautilus_trader.model.position.Position.signed_decimal_qty">
+             signed_decimal_qty() (Position method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/model/position.html#nautilus_trader.model.position.Position.signed_qty">
+             signed_qty (Position attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/events.html#nautilus_trader.model.events.position.PositionChanged.signed_qty">
+               (PositionChanged attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/events.html#nautilus_trader.model.events.position.PositionClosed.signed_qty">
+               (PositionClosed attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/events.html#nautilus_trader.model.events.position.PositionEvent.signed_qty">
+               (PositionEvent attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/events.html#nautilus_trader.model.events.position.PositionOpened.signed_qty">
+               (PositionOpened attribute)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.data.BookOrder.signed_size">
              signed_size() (BookOrder method)
             </a>
@@ -26573,11 +26900,6 @@
            <li>
             <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarType.spec">
              spec (BarType attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.external.core.split_and_serialize">
-             split_and_serialize() (in module nautilus_trader.persistence.external.core)
             </a>
            </li>
            <li>
@@ -27568,6 +27890,16 @@
            <li>
             <a href="api_reference/config.html#nautilus_trader.config.common.StreamingConfig">
              StreamingConfig (class in nautilus_trader.config.common)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.streaming.engine.StreamingEngine">
+             StreamingEngine (class in nautilus_trader.persistence.streaming.engine)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter">
+             StreamingFeatherWriter (class in nautilus_trader.persistence.streaming.writer)
             </a>
            </li>
            <li>
@@ -30435,6 +30767,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.TradeTickDataWrangler">
+             TradeTickDataWrangler (class in nautilus_trader.persistence.wranglers)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/live.html#nautilus_trader.live.risk_engine.LiveRiskEngine.trading_state">
              trading_state (LiveRiskEngine attribute)
             </a>
@@ -32920,6 +33257,16 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairDataClientConfig.validate">
+               (BetfairDataClientConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.config.BetfairExecClientConfig.validate">
+               (BetfairExecClientConfig method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.config.BinanceDataClientConfig.validate">
                (BinanceDataClientConfig method)
               </a>
@@ -32950,6 +33297,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmConfig.validate">
+               (ExecAlgorithmConfig method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ExecEngineConfig.validate">
                (ExecEngineConfig method)
               </a>
@@ -32967,6 +33319,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ImportableConfig.validate">
                (ImportableConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.ImportableExecAlgorithmConfig.validate">
+               (ImportableExecAlgorithmConfig method)
               </a>
              </li>
              <li>
@@ -33017,6 +33374,11 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.live.LiveRiskEngineConfig.validate">
                (LiveRiskEngineConfig method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/config.html#nautilus_trader.config.common.LoggingConfig.validate">
+               (LoggingConfig method)
               </a>
              </li>
              <li>
@@ -33325,6 +33687,10 @@
              Venue (class in nautilus_trader.model.identifiers)
             </a>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.crypto_future.CryptoFuture.venue">
              venue (CryptoFuture attribute)
@@ -33507,10 +33873,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.messages.CancelOrder.venue_order_id">
              venue_order_id (CancelOrder attribute)
@@ -33916,13 +34278,8 @@
          <td style="width: 33%; vertical-align: top;">
           <ul>
            <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.external.core.write_parquet">
-             write_parquet() (in module nautilus_trader.persistence.external.core)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/persistence.html#nautilus_trader.persistence.external.core.write_tables">
-             write_tables() (in module nautilus_trader.persistence.external.core)
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.write">
+             write() (StreamingFeatherWriter method)
             </a>
            </li>
            <li>
