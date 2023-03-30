@@ -896,36 +896,10 @@ By default, log events with an ‘INFO’
            </a>
           </h3>
           <p>
-           Log files are written to the current working directory with automatic naming and daily rotation by default.
+           Log files are written to the current working directory with daily rotation (UTC) by default.
           </p>
           <p>
-           You can specify a custom log directory using the
-           <code class="docutils literal notranslate">
-            <span class="pre">
-             log_directory
-            </span>
-           </code>
-           parameter and/or a custom log file name using the
-           <code class="docutils literal notranslate">
-            <span class="pre">
-             log_file_name
-            </span>
-           </code>
-           parameter.
-The log files will be suffixed with ‘.log’ for plain text or ‘.json’ for JSON (no need to include a suffix in file names).
-          </p>
-          <p>
-           If a
-           <code class="docutils literal notranslate">
-            <span class="pre">
-             log_file_name
-            </span>
-           </code>
-           is
-           <em>
-            not
-           </em>
-           provided then log files will be automatically named as follows:
+           The default naming convention is as follows:
           </p>
           <ul class="simple">
            <li>
@@ -935,23 +909,12 @@ The log files will be suffixed with ‘.log’ for plain text or ‘.json’ for
            </li>
            <li>
             <p>
-             Instance ID
-            </p>
-           </li>
-           <li>
-            <p>
              ISO 8601 datetime
             </p>
            </li>
            <li>
             <p>
-             If the log file is the latest active (
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               _rCURRENT
-              </span>
-             </code>
-             discriminant)
+             Instance ID
             </p>
            </li>
            <li>
@@ -960,9 +923,9 @@ The log files will be suffixed with ‘.log’ for plain text or ‘.json’ for
             </p>
            </li>
           </ul>
-          <div class="highlight-bash notranslate">
+          <div class="highlight-default notranslate">
            <div class="highlight">
-            <pre><span></span><span class="o">{</span>trader_id<span class="o">}</span>_<span class="o">{</span>instance_id<span class="o">}</span>_<span class="o">{</span><span class="s2">"ISO 8601 datetime"</span><span class="o">}</span>_<span class="o">{</span>discriminant<span class="o">}</span>.<span class="o">{</span>log<span class="w"> </span><span class="p">|</span><span class="w"> </span>json<span class="o">}</span>
+            <pre><span></span>{trader_id}_{%Y-%m-%d}_{instance_id}.{log | json}`
 </pre>
            </div>
           </div>
@@ -970,9 +933,28 @@ The log files will be suffixed with ‘.log’ for plain text or ‘.json’ for
            e.g.
            <code class="docutils literal notranslate">
             <span class="pre">
-             TESTER-001_635a4539-4fe2-4cb1-9be3-3079ba8d879e_2023-03-22_15-51-48_rCURRENT.json
+             TESTER-001_2023-03-23_635a4539-4fe2-4cb1-9be3-3079ba8d879e.json
             </span>
            </code>
+          </p>
+          <p>
+           You can specify a custom log directory path using the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             log_directory
+            </span>
+           </code>
+           parameter and/or a custom log file basename using the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             log_file_name
+            </span>
+           </code>
+           parameter.
+The log files will always be suffixed with ‘.log’ for plain text, or ‘.json’ for JSON (no need to include a suffix in file names).
+          </p>
+          <p>
+           If the log file already exists, it will be appended to.
           </p>
          </section>
          <section id="component-filtering">
