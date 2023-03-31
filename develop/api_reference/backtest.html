@@ -1536,6 +1536,24 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithm">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BacktestEngine.add_exec_algorithm()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithms">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BacktestEngine.add_exec_algorithms()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.engine.BacktestEngine.add_instrument">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -10543,6 +10561,156 @@ data.
 data types could result in incorrect backtest logic.
              </p>
             </div>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithm">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_exec_algorithm
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ExecAlgorithm
+              </span>
+              <span class="pre">
+               exec_algorithm:
+              </span>
+              <span class="pre">
+               ExecAlgorithm
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithm" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given execution algorithm to the backtest engine.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                exec_algorithm
+               </strong>
+               (
+               <em>
+                ExecAlgorithm
+               </em>
+               ) – The execution algorithm to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithms">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_exec_algorithms
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="pre">
+              self,
+             </span>
+             <span class="pre">
+              list
+             </span>
+             <span class="pre">
+              exec_algorithms:
+             </span>
+             <span class="pre">
+              list[ExecAlgorithm]
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithms" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given list of execution algorithms to the backtest engine.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                exec_algorithms
+               </strong>
+               (
+               <em>
+                list
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                ExecAlgorithm
+               </em>
+               <em>
+                ]
+               </em>
+               ) – The execution algorithms to add.
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py method">
