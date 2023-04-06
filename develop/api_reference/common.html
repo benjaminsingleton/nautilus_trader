@@ -19709,6 +19709,72 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                entry_exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                sl_exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                tp_exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                entry_exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                tp_exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                sl_exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
              <span class="sig-paren">
               )
              </span>
@@ -20082,6 +20148,165 @@ of
                    </span>
                   </code>
                   ) – The contingency type for the TP and SL bracket orders.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   entry_exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The entry order execution algorithm ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   sl_exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The stop-loss order execution algorithm ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   tp_exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The take-profit order execution algorithm ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   entry_exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   tp_exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   sl_exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                </ul>
@@ -20478,6 +20703,28 @@ of
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -20738,6 +20985,59 @@ of
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -20978,6 +21278,28 @@ contain any arbitrary delimiter if required.
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
                </span>
               </span>
              </em>
@@ -21261,6 +21583,59 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -21473,6 +21848,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -21632,6 +22029,59 @@ contain any arbitrary delimiter if required.
                    default False
                   </em>
                   ) – If the order carries the ‘reduce-only’ execution instruction.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                 <li>
@@ -21824,6 +22274,28 @@ contain any arbitrary delimiter if required.
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
                </span>
               </span>
              </em>
@@ -22055,6 +22527,59 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -22273,6 +22798,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -22464,6 +23011,59 @@ contain any arbitrary delimiter if required.
                    optional
                   </em>
                   ) – The quantity of the limit order to display on the public book (iceberg).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                 <li>
@@ -22903,6 +23503,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -23179,6 +23801,59 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -23435,6 +24110,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -23654,6 +24351,59 @@ contain any arbitrary delimiter if required.
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                 <li>
@@ -24029,6 +24779,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -24377,6 +25149,59 @@ to the delta of market price and
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -24673,6 +25498,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -24935,6 +25782,59 @@ to the delta of market price and
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                 <li>
