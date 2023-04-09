@@ -1452,6 +1452,24 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.orders_for_exec_algorithm">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.orders_for_exec_algorithm()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.orders_for_exec_spawn">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.orders_for_exec_spawn()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.orders_for_position">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2548,6 +2566,24 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   CacheFacade.orders_emulated_count()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.orders_for_exec_algorithm">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.orders_for_exec_algorithm()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.orders_for_exec_spawn">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.orders_for_exec_spawn()
                  </span>
                 </code>
                </a>
@@ -10838,6 +10874,303 @@ and is open.
               <p>
                <em>
                 int
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.orders_for_exec_algorithm">
+            <span class="sig-name descname">
+             <span class="pre">
+              orders_for_exec_algorithm
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ExecAlgorithmId
+              </span>
+              <span class="pre">
+               exec_algorithm_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Venue
+              </span>
+              <span class="pre">
+               venue=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               StrategyId
+              </span>
+              <span class="pre">
+               strategy_id=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               OrderSide
+              </span>
+              <span class="pre">
+               side=OrderSide.NO_ORDER_SIDE
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.orders_for_exec_algorithm" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return all execution algorithm orders for the given query filters.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  exec_algorithm_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                  <em>
+                   ExecAlgorithmId
+                  </em>
+                 </a>
+                 ) – The execution algorithm ID.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  venue
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.Venue" title="nautilus_trader.model.identifiers.Venue">
+                  <em>
+                   Venue
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The venue ID query filter.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The instrument ID query filter.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  strategy_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
+                  <em>
+                   StrategyId
+                  </em>
+                 </a>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The strategy ID query filter.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  side
+                 </strong>
+                 (OrderSide, default
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   NO_ORDER_SIDE
+                  </span>
+                 </code>
+                 (no filter)) – The order side query filter.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                list[Order]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.orders_for_exec_spawn">
+            <span class="sig-name descname">
+             <span class="pre">
+              orders_for_exec_spawn
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               client_order_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.orders_for_exec_spawn" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return all orders for the given execution spawn ID (if found).
+            </p>
+            <p>
+             Will also include the primary order.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                client_order_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
+                <em>
+                 ClientOrderId
+                </em>
+               </a>
+               ) – The execution algorithm spawning primary client order ID.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                list[Order]
                </em>
               </p>
              </dd>
@@ -20057,6 +20390,152 @@ and is open.
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.orders_emulated_count" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.orders_for_exec_algorithm">
+            <span class="sig-name descname">
+             <span class="pre">
+              orders_for_exec_algorithm
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ExecAlgorithmId
+              </span>
+              <span class="pre">
+               exec_algorithm_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Venue
+              </span>
+              <span class="pre">
+               venue=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               StrategyId
+              </span>
+              <span class="pre">
+               strategy_id=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               OrderSide
+              </span>
+              <span class="pre">
+               side=OrderSide.NO_ORDER_SIDE
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.orders_for_exec_algorithm" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.orders_for_exec_spawn">
+            <span class="sig-name descname">
+             <span class="pre">
+              orders_for_exec_spawn
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               client_order_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.orders_for_exec_spawn" title="Permalink to this definition">
              ¶
             </a>
            </dt>
