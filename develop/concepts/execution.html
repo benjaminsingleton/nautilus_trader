@@ -788,7 +788,7 @@ crucial to understand the possible flows of execution messages (commands and eve
              ExecutionEngine
             </span>
            </code>
-           and
+           or
            <code class="docutils literal notranslate">
             <span class="pre">
              LiveExecutionEngine
@@ -803,7 +803,7 @@ crucial to understand the possible flows of execution messages (commands and eve
              ExecutionClient
             </span>
            </code>
-           amd
+           or
            <code class="docutils literal notranslate">
             <span class="pre">
              LiveExecutionClient
@@ -912,7 +912,13 @@ methods. It also provides methods for managing orders and trade execution:
          <p>
           These methods create the necessary execution commands under the hood and send them on the message
 bus to the relevant components (point-to-point), as well as publishing any events (such as the
-initialization of new orders).
+initialization of new orders i.e.
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            OrderInitialized
+           </span>
+          </code>
+          events).
          </p>
          <p>
           The general execution flow looks like the following (each arrow indicates movement across the message bus):
@@ -932,6 +938,12 @@ initialization of new orders).
           -&gt;
           <code class="docutils literal notranslate">
            <span class="pre">
+            ExecAlgorithm
+           </span>
+          </code>
+          -&gt;
+          <code class="docutils literal notranslate">
+           <span class="pre">
             RiskEngine
            </span>
           </code>
@@ -945,12 +957,6 @@ initialization of new orders).
           <code class="docutils literal notranslate">
            <span class="pre">
             ExecutionClient
-           </span>
-          </code>
-          -&gt;
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            ExecAlgorithm
            </span>
           </code>
          </p>
@@ -999,7 +1005,7 @@ the amount of boilerplate required to create different
            </span>
           </code>
           objects (although these objects
-can be initialized directly with the
+can still be initialized directly with the
           <code class="docutils literal notranslate">
            <span class="pre">
             Order.__init__
@@ -1584,8 +1590,8 @@ simply the
             Note
            </p>
            <p>
-            The ‘primary’, ‘secondary’/’spawn’ terminology was specifically chosen so as not to conflict
-with ‘parent’ and ‘child’ contingency orders (an execution algorithm may also deal with contingent orders).
+            The “primary” and “secondary”/”spawn” terminology was specifically chosen to avoid conflict
+or confusion with the “parent” and “child” contingency orders terminology (an execution algorithm may also deal with contingent orders).
            </p>
           </div>
          </section>
