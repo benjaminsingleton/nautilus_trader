@@ -1223,8 +1223,20 @@ demonstrates how to initialize and register a TWAP execution algorithm directly 
            </li>
           </ul>
           <p>
-           The horizon_secs parameter determines the time period over which the algorithm will execute, while
-the interval_secs parameter sets the time between individual order executions. These parameters
+           The
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             horizon_secs
+            </span>
+           </code>
+           parameter determines the time period over which the algorithm will execute, while
+the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             interval_secs
+            </span>
+           </code>
+           parameter sets the time between individual order executions. These parameters
 determine how a primary order is split into a series of spawned orders.
           </p>
           <div class="highlight-python notranslate">
@@ -1395,13 +1407,7 @@ dictionary is not
             </span>
            </code>
            method. These received orders are
-know as
-           <code class="docutils literal notranslate">
-            <span class="pre">
-             primary
-            </span>
-           </code>
-           (original) orders when being handled by an execution algorithm.
+know as “primary” (original) orders when being handled by an execution algorithm.
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
@@ -1485,7 +1491,7 @@ know as
            </p>
           </div>
           <p>
-           Each of these methods takes the primary
+           Each of these methods takes the primary (original)
            <code class="docutils literal notranslate">
             <span class="pre">
              Order
@@ -1509,8 +1515,8 @@ quantity will be reduced by the
            </p>
           </div>
           <p>
-           Once the desired number of secondard orders have been spawned, and the execution routine is over,
-the intention is that the algorithm will then finally send the ‘original’ primary order.
+           Once the desired number of secondary orders have been spawned, and the execution routine is over,
+the intention is that the algorithm will then finally send the primary (original) order.
           </p>
          </section>
          <section id="spawned-orders">
@@ -1521,7 +1527,7 @@ the intention is that the algorithm will then finally send the ‘original’ pr
            </a>
           </h3>
           <p>
-           All secondard orders spawned from an execution algorithm will carry a
+           All secondary orders spawned from an execution algorithm will carry a
            <code class="docutils literal notranslate">
             <span class="pre">
              exec_spawn_id
@@ -1534,7 +1540,7 @@ simply the
              ClientOrderId
             </span>
            </code>
-           of the ‘original’ primary order, and whose
+           of the primary (original) order, and whose
            <code class="docutils literal notranslate">
             <span class="pre">
              client_order_id
@@ -1550,7 +1556,7 @@ simply the
                exec_spawn_id
               </span>
              </code>
-             (original primary order
+             (primary order
              <code class="docutils literal notranslate">
               <span class="pre">
                client_order_id
@@ -1566,7 +1572,7 @@ simply the
                spawn_sequence
               </span>
              </code>
-             (the sequence number for the spawned secondard order)
+             (the sequence number for the spawned order)
             </p>
            </li>
           </ul>
@@ -1656,12 +1662,12 @@ an execution algorithm:
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Return all orders for the given execution spawn ID (if found).</span>
 
-<span class="sd">    Will also include the primary order.</span>
+<span class="sd">    Will also include the primary (original) order.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    client_order_id : ClientOrderId</span>
-<span class="sd">        The execution algorithm spawning primary client order ID.</span>
+<span class="sd">        The execution algorithm spawning primary (original) client order ID.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
