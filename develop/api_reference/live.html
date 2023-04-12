@@ -2813,6 +2813,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.get_external_order_claim">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  LiveExecutionEngine.get_external_order_claim()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.id">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2907,6 +2916,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   LiveExecutionEngine.register_default_client()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.register_external_order_claims">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  LiveExecutionEngine.register_external_order_claims()
                  </span>
                 </code>
                </a>
@@ -23016,6 +23034,97 @@ then the component state will not change, and an error will be logged.
             </p>
            </dd>
           </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.live.execution_engine.LiveExecutionEngine.get_external_order_claim">
+            <span class="sig-name descname">
+             <span class="pre">
+              get_external_order_claim
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
+               <span class="pre">
+                StrategyId
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.get_external_order_claim" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Get any external order claim for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                instrument_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                <em>
+                 InstrumentId
+                </em>
+               </a>
+               ) – The instrument ID for the claim.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               StrategyId or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.live.execution_engine.LiveExecutionEngine.id">
             <span class="sig-name descname">
@@ -23579,6 +23688,79 @@ venue routing cannot be found).
                 </em>
                </a>
                ) – The client to register.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.live.execution_engine.LiveExecutionEngine.register_external_order_claims">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_external_order_claims
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Strategy
+              </span>
+              <span class="pre">
+               strategy
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.register_external_order_claims" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given strategies external order claim instrument IDs (if any)
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                strategy
+               </strong>
+               (
+               <a class="reference internal" href="trading.html#nautilus_trader.trading.strategy.Strategy" title="nautilus_trader.trading.strategy.Strategy">
+                <em>
+                 Strategy
+                </em>
+               </a>
+               ) – The strategy for the registration.
               </p>
              </dd>
             </dl>
