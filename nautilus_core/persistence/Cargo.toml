@@ -8,7 +8,7 @@ documentation.workspace = true
 
 [lib]
 name = "nautilus_persistence"
-crate-type = ["rlib", "staticlib", "cdylib" ]
+crate-type = ["rlib", "staticlib"]
 
 [dependencies]
 nautilus_core = { path = "../core" }
@@ -31,3 +31,10 @@ pin-project-lite = "0.2.9"
 [features]
 extension-module = ["pyo3/extension-module", "nautilus_core/extension-module", "nautilus_model/extension-module"]
 default = []
+
+[dev-dependencies]
+criterion.workspace = true
+
+[[bench]]
+name = "persistence_benchmark"
+harness = false
