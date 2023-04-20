@@ -10,24 +10,29 @@ use pyo3_asyncio::tokio::get_runtime;
 
 fn single_stream_bench(c: &mut Criterion) {
     let mut group = c.benchmark_group("single_stream");
+    group.sample_size(10);
     let chunk_size = 5000;
     // about 10 M records
-    let file_path =
-        "/Users/twitu/Downloads/nautilus_test_data/single_stream_data/0005-quotes.parquet";
+    let file_path = "/home/twitu/Downloads/0005-quotes.parquet";
+    // let file_path = "/home/twitu/Code/nautilus_trader/tests/test_data/quote_tick_data.parquet";
 
-    group.bench_function("persistence v1", |b| {
-        b.iter_batched(
-            || {
-                let f = File::open(file_path).unwrap();
-                ParquetReader::new(f, chunk_size, GroupFilterArg::None)
-            },
-            |reader: ParquetReader<QuoteTick, File>| {
-                let count: usize = reader.map(|vec| vec.len()).sum();
-                assert_eq!(count, 9689614);
-            },
-            BatchSize::SmallInput,
-        )
-    });
+    // group.bench_function("persistence v1", |b| {
+    //     b.iter_batched(
+    //         || {
+    //             ()
+    //         },
+    //         // |reader: ParquetReader<QuoteTick, File>| {
+    //         |temp: ()| {
+    //             let f = File::open(file_path).unwrap();
+    //             let mut reader: ParquetReader<QuoteTick, File> = ParquetReader::new(f, chunk_size, GroupFilterArg::None);
+    //             // let count: usize = reader.map(|vec: Vec<QuoteTick>| vec.len()).sum();
+    //             // let count = reader.flatten().collect::<Vec<QuoteTick>>().len();
+    //             let count = reader.next().unwrap().len();
+    //             assert_eq!(count, 9689614);
+    //         },
+    //         BatchSize::SmallInput,
+    //     )
+    // });
 
     group.bench_function("persistence v2", |b| {
         b.iter_batched(

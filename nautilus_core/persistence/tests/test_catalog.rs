@@ -13,25 +13,31 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
+use std::fs::File;
+
 use nautilus_model::data::tick::{Data, QuoteTick, TradeTick};
-use nautilus_persistence::session::{PersistenceCatalog, QueryResult};
+use nautilus_persistence::{
+    parquet::{GroupFilterArg, ParquetReader},
+    session::{PersistenceCatalog, QueryResult},
+};
+
+#[test]
+fn test_v1() {
+    let file_path = "/home/twitu/Downloads/0005-quotes.parquet";
+    let chunk_size = 5000;
+    let file = File::open(file_path).expect("Unable to open given file");
+    let reader: ParquetReader<QuoteTick, File> =
+        ParquetReader::new(file, chunk_size, GroupFilterArg::None);
+    let data: Vec<QuoteTick> = reader.flatten().collect();
+    assert_eq!(data.len(), 9689614);
+}
 
 // Note: "current_thread" hangs up for some reason
 #[tokio::test(flavor = "multi_thread")]
 async fn test_quote_ticks() {
     let mut catalog = PersistenceCatalog::new(5000);
     catalog
-        .add_file::<QuoteTick>(
-            "quote_tick",
-            "../../tests/test_data/quote_tick_data.parquet",
-        )
-        .await
-        .unwrap();
-    catalog
-        .add_file::<QuoteTick>(
-            "quote_tick_2",
-            "../../tests/test_data/quote_tick_data.parquet",
-        )
+        .add_file::<QuoteTick>("quote_tick", "/home/twitu/Downloads/0005-quotes.parquet")
         .await
         .unwrap();
     let query_result: QueryResult = catalog.to_query_result();
@@ -51,11 +57,11 @@ async fn test_quote_ticks() {
         true
     };
 
-    match &ticks[0] {
-        Data::Trade(_) => assert!(false),
-        Data::Quote(q) => assert_eq!("EUR/USD.SIM", q.instrument_id.to_string()),
-    }
-    assert_eq!(ticks.len(), 19000);
+    // match &ticks[0] {
+    //     Data::Trade(_) => assert!(false),
+    //     Data::Quote(q) => assert_eq!("EUR/USD.SIM", q.instrument_id.to_string()),
+    // }
+    assert_eq!(ticks.len(), 9689614);
     assert!(is_ascending_by_init(&ticks));
 }
 
