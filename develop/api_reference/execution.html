@@ -1016,6 +1016,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.modify_order_in_place">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.modify_order_in_place()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.msgbus">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1146,6 +1155,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     ExecAlgorithm.on_order_book_delta()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_event">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_event()
                    </span>
                   </code>
                  </a>
@@ -7811,6 +7829,269 @@ then the component state will not change, and an error will be logged.
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.modify_order_in_place">
+             <span class="sig-name descname">
+              <span class="pre">
+               modify_order_in_place
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Order
+               </span>
+               <span class="pre">
+                order
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Quantity
+               </span>
+               <span class="pre">
+                quantity=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Price
+               </span>
+               <span class="pre">
+                price=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Price
+               </span>
+               <span class="pre">
+                trigger_price=None
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.modify_order_in_place" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Modify the given order in place (immediately) with optional parameters.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   order
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+                   <em>
+                    Order
+                   </em>
+                  </a>
+                  ) – The order to update.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   quantity
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                   <em>
+                    Quantity
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The updated quantity for the given order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   price
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                   <em>
+                    Price
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The updated price for the given order (if applicable).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   trigger_price
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                   <em>
+                    Price
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The updated trigger price for the given order (if applicable).
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Raises
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   ValueError
+                  </strong>
+                  – If
+                  <cite>
+                   order.status
+                  </cite>
+                  is not
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    INITIALIZED
+                   </span>
+                  </code>
+                  .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ValueError
+                  </strong>
+                  – If
+                  <cite>
+                   price
+                  </cite>
+                  is not
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  and order does not have a
+                  <cite>
+                   price
+                  </cite>
+                  .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ValueError
+                  </strong>
+                  – If
+                  <cite>
+                   trigger
+                  </cite>
+                  is not
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  and order does not have a
+                  <cite>
+                   trigger_price
+                  </cite>
+                  .
+                 </p>
+                </li>
+               </ul>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If the order is already closed or at
+               <cite>
+                PENDING_CANCEL
+               </cite>
+               status
+then the command will not be generated, and a warning will be logged.
+              </p>
+             </div>
+             <p class="rubric">
+              References
+             </p>
+             <p>
+              <a class="reference external" href="https://www.onixs.biz/fix-dictionary/5.0.SP2/msgType_G_71.html">
+               https://www.onixs.biz/fix-dictionary/5.0.SP2/msgType_G_71.html
+              </a>
+             </p>
+            </dd>
+           </dl>
            <dl class="py attribute">
             <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.msgbus">
              <span class="sig-name descname">
@@ -8878,6 +9159,87 @@ update.
                  </em>
                 </a>
                 ) – The order book delta received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_event">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_event
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderEvent
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_event" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderEvent" title="nautilus_trader.model.events.order.OrderEvent">
+                 <em>
+                  OrderEvent
+                 </em>
+                </a>
+                ) – The order event to be handled.
                </p>
               </dd>
              </dl>

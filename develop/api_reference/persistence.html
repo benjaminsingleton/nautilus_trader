@@ -2258,7 +2258,7 @@ this instance, you could use something like:
 <span class="gp">&gt;&gt;&gt; </span>   <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="gp">&gt;&gt;&gt; </span>       <span class="n">timestamp</span><span class="p">,</span> <span class="n">json_data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' - '</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span>       <span class="k">yield</span> <span class="n">json_data</span><span class="p">,</span> <span class="p">{</span><span class="s1">'ts_init'</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)}</span>
-<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="nd">@staticmethod</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="gp">&gt;&gt;&gt; </span>       <span class="n">obj</span><span class="o">.</span><span class="n">ts_init</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">'ts_init'</span><span class="p">]</span>
