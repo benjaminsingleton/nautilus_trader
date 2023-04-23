@@ -4779,6 +4779,25 @@ instrument. The position ID naming convention is
             <p>
              Cancel all orders for this strategy for the given instrument ID.
             </p>
+            <p>
+             A
+             <cite>
+              CancelAllOrders
+             </cite>
+             command will be created and then sent to
+             <strong>
+              both
+             </strong>
+             the
+             <cite>
+              OrderEmulator
+             </cite>
+             and the
+             <cite>
+              RiskEngine
+             </cite>
+             .
+            </p>
             <dl class="field-list simple">
              <dt class="field-odd">
               Parameters
@@ -4913,11 +4932,19 @@ If
              <cite>
               CancelOrder
              </cite>
-             command will be created and then sent to the
+             command will be created and then sent to
+             <strong>
+              either
+             </strong>
+             the
              <cite>
-              ExecutionEngine
+              OrderEmulator
              </cite>
-             .
+             or the
+             <cite>
+              RiskEngine
+             </cite>
+             (depending on whether the order is emulated).
             </p>
             <p>
              Logs an error if no
@@ -7911,12 +7938,22 @@ then the component state will not change, and an error will be logged.
              <cite>
               ModifyOrder
              </cite>
-             command is created and then sent to the
+             command will be created and then sent to
+             <strong>
+              either
+             </strong>
+             the
              <cite>
-              ExecutionEngine
+              OrderEmulator
              </cite>
-             . Either one or both values must differ from the
-original order for the command to be valid.
+             or the
+             <cite>
+              RiskEngine
+             </cite>
+             (depending on whether the order is emulated).
+            </p>
+            <p>
+             At least one value must differ from the original order for the command to be valid.
             </p>
             <p>
              Will use an Order Cancel/Replace Request (a.k.a Order Modification)
@@ -12619,11 +12656,28 @@ and routing instructions.
              <cite>
               SubmitOrder
              </cite>
-             command will be created and sent to the
+             command will be created and sent to
+             <strong>
+              either
+             </strong>
+             an
+             <cite>
+              ExecAlgorithm
+             </cite>
+             , the
+             <cite>
+              OrderEmulator
+             </cite>
+             or the
              <cite>
               RiskEngine
              </cite>
-             .
+             (depending whether
+the order is emulated and/or has an
+             <cite>
+              exec_algorithm_id
+             </cite>
+             specified).
             </p>
             <p>
              If the client order ID is duplicate, then the order will be denied.
@@ -12848,11 +12902,19 @@ and routing instructions.
              <cite>
               SubmitOrderList
              </cite>
-             command with be created and sent to the
+             command with be created and sent to
+             <strong>
+              either
+             </strong>
+             the
+             <cite>
+              OrderEmulator
+             </cite>
+             , or the
              <cite>
               RiskEngine
              </cite>
-             .
+             (depending whether an order is emulated).
             </p>
             <p>
              If the order list ID is duplicate, or any client order ID is duplicate,
