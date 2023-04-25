@@ -55,20 +55,4 @@
 //     }
 // }
 
-use std::fs::File;
-
-use nautilus_model::data::tick::QuoteTick;
-use nautilus_persistence::parquet::{ParquetReader, GroupFilterArg};
-
-const chunk_size: usize = 5000;
-// about 10 M records
-const file_path: &str =
-    "/home/twitu/Code/nautilus_trader/tests/test_data/quote_tick_data.parquet";
-    // "/home/twitu/Downloads/0005-quotes.parquet";
-
-fn main() {
-    let f = File::open(file_path).unwrap();
-    let mut reader: ParquetReader<QuoteTick, File> = ParquetReader::<QuoteTick, File>::new(f, chunk_size, GroupFilterArg::None);
-    let count: usize = reader.map(|vec: Vec<QuoteTick>| vec.len()).sum();
-    dbg!(count);
-}
+fn main() {}

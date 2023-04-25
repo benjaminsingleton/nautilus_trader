@@ -13,31 +13,42 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-use std::fs::File;
+use std::fs::{self, File};
+use arrow2::io::parquet::read::{self, FileReader};
 
 use nautilus_model::data::tick::{Data, QuoteTick, TradeTick};
 use nautilus_persistence::{
     parquet::{GroupFilterArg, ParquetReader},
     session::{PersistenceCatalog, QueryResult},
 };
+use rstest::rstest;
 
-#[test]
-fn test_v1() {
-    let file_path = "/home/twitu/Downloads/0005-quotes.parquet";
-    let chunk_size = 5000;
+#[rstest]
+#[case("../../tests/test_data/quote_tick_data.parquet", 9500) ]
+#[case("../../bench_data/quotes_0005.parquet", 9689614) ]
+fn test_v1_bench_data(
+    #[case] file_path: &str,
+    #[case] length: usize,
+) {
     let file = File::open(file_path).expect("Unable to open given file");
     let reader: ParquetReader<QuoteTick, File> =
-        ParquetReader::new(file, chunk_size, GroupFilterArg::None);
+        ParquetReader::new(file, 5000, GroupFilterArg::None);
     let data: Vec<QuoteTick> = reader.flatten().collect();
-    assert_eq!(data.len(), 9689614);
+    assert_eq!(data.len(), length);
 }
 
-// Note: "current_thread" hangs up for some reason
+// Note: "current_thread" configuration hangs up for some reason
+#[rstest]
+#[case("../../tests/test_data/quote_tick_data.parquet", 9500) ]
+#[case("../../bench_data/quotes_0005.parquet", 9689614) ]
 #[tokio::test(flavor = "multi_thread")]
-async fn test_quote_ticks() {
-    let mut catalog = PersistenceCatalog::new(5000);
+async fn test_v2_bench_data(
+    #[case] file_path: &str,
+    #[case] length: usize,
+) {
+    let mut catalog = PersistenceCatalog::new(10000);
     catalog
-        .add_file::<QuoteTick>("quote_tick", "/home/twitu/Downloads/0005-quotes.parquet")
+        .add_file::<QuoteTick>("quotes_0005", file_path)
         .await
         .unwrap();
     let query_result: QueryResult = catalog.to_query_result();
@@ -57,11 +68,7 @@ async fn test_quote_ticks() {
         true
     };
 
-    // match &ticks[0] {
-    //     Data::Trade(_) => assert!(false),
-    //     Data::Quote(q) => assert_eq!("EUR/USD.SIM", q.instrument_id.to_string()),
-    // }
-    assert_eq!(ticks.len(), 9689614);
+    assert_eq!(ticks.len(), length);
     assert!(is_ascending_by_init(&ticks));
 }
 

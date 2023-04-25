@@ -26,16 +26,26 @@ from nautilus_trader.model.data.tick import TradeTick
 from nautilus_trader.persistence.wranglers import list_from_capsule
 
 
-def test_python_catalog_v2():
-    file_path = "/Users/twitu/Downloads/nautilus_test_data/single_stream_data/0005-quotes.parquet"
+def test_python_catalog_v2_single_stream():
+    file_path = os.path.join(PACKAGE_ROOT, "bench_data/quotes_0005.parquet")
     session = PythonCatalog()
     session.add_file("quote_ticks", file_path, ParquetType.QuoteTick)
     result = session.to_query_result()
 
     count = 0
+    last_ts_init = None
     for chunk in result:
-        count += len(list_from_capsule(chunk))
+        ticks = list_from_capsule(chunk)
+        count += len(ticks)
+        
+        # check sorted data across chunks
+        for data in ticks:
+            if last_ts_init is not None and data.ts_init < last_ts_init:
+                assert False
+            else:
+                last_ts_init = data.ts_init
 
+    # check total count is correct
     assert count == 9689614
 
 
