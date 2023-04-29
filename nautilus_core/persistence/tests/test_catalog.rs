@@ -13,8 +13,8 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-use std::fs::{self, File};
 use arrow2::io::parquet::read::{self, FileReader};
+use std::fs::{self, File};
 
 use nautilus_model::data::tick::{Data, QuoteTick, TradeTick};
 use nautilus_persistence::{
@@ -23,13 +23,19 @@ use nautilus_persistence::{
 };
 use rstest::rstest;
 
+#[test]
+fn arrow2_test() {
+    let mut reader = File::open("../test_data.parquet").expect("Unable to open given file");
+    let metadata = read::read_metadata(&mut reader).expect("Unable to read metadata");
+    let schema = read::infer_schema(&metadata).expect("Unable to infer schema");
+    let mut fr = FileReader::new(reader, metadata.row_groups, schema, Some(1000), None, None);
+    assert!(fr.next().is_some())
+}
+
 #[rstest]
-#[case("../../tests/test_data/quote_tick_data.parquet", 9500) ]
-#[case("../../bench_data/quotes_0005.parquet", 9689614) ]
-fn test_v1_bench_data(
-    #[case] file_path: &str,
-    #[case] length: usize,
-) {
+#[case("../../tests/test_data/quote_tick_data.parquet", 9500)]
+#[case("../../bench_data/quotes_0005.parquet", 9689614)]
+fn test_v1_bench_data(#[case] file_path: &str, #[case] length: usize) {
     let file = File::open(file_path).expect("Unable to open given file");
     let reader: ParquetReader<QuoteTick, File> =
         ParquetReader::new(file, 5000, GroupFilterArg::None);
@@ -39,13 +45,10 @@ fn test_v1_bench_data(
 
 // Note: "current_thread" configuration hangs up for some reason
 #[rstest]
-#[case("../../tests/test_data/quote_tick_data.parquet", 9500) ]
-#[case("../../bench_data/quotes_0005.parquet", 9689614) ]
+#[case("../../tests/test_data/quote_tick_data.parquet", 9500)]
+#[case("../../bench_data/quotes_0005.parquet", 9689614)]
 #[tokio::test(flavor = "multi_thread")]
-async fn test_v2_bench_data(
-    #[case] file_path: &str,
-    #[case] length: usize,
-) {
+async fn test_v2_bench_data(#[case] file_path: &str, #[case] length: usize) {
     let mut catalog = PersistenceCatalog::new(10000);
     catalog
         .add_file::<QuoteTick>("quotes_0005", file_path)
