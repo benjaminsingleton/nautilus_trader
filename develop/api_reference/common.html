@@ -13843,18 +13843,6 @@ default handler (if registered) will receive the
                 <li>
                  <p>
                   <strong>
-                   ValueError
-                  </strong>
-                  – If
-                  <cite>
-                   alert_time
-                  </cite>
-                  is not &gt;= the clocks current time.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
                    TypeError
                   </strong>
                   – If
@@ -13895,6 +13883,19 @@ default handler (if registered) will receive the
                </ul>
               </dd>
              </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If
+               <cite>
+                alert_time
+               </cite>
+               is in the past or at current time, then an immediate
+time event will be generated (rather than being invalid and failing a condition check).
+              </p>
+             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -14083,18 +14084,6 @@ default handler (if registered) will receive the
                 <li>
                  <p>
                   <strong>
-                   ValueError
-                  </strong>
-                  – If
-                  <cite>
-                   alert_time
-                  </cite>
-                  is not &gt;= the clocks current time.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
                    TypeError
                   </strong>
                   – If
@@ -14135,6 +14124,19 @@ default handler (if registered) will receive the
                </ul>
               </dd>
              </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If
+               <cite>
+                alert_time_ns
+               </cite>
+               is in the past or at current time, then an immediate
+time event will be generated (rather than being invalid and failing a condition check).
+              </p>
+             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -15732,18 +15734,6 @@ default handler (if registered) will receive the
                 <li>
                  <p>
                   <strong>
-                   ValueError
-                  </strong>
-                  – If
-                  <cite>
-                   alert_time
-                  </cite>
-                  is not &gt;= the clocks current time.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
                    TypeError
                   </strong>
                   – If
@@ -15784,6 +15774,19 @@ default handler (if registered) will receive the
                </ul>
               </dd>
              </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If
+               <cite>
+                alert_time
+               </cite>
+               is in the past or at current time, then an immediate
+time event will be generated (rather than being invalid and failing a condition check).
+              </p>
+             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -17204,18 +17207,6 @@ default handler (if registered) will receive the
                 <li>
                  <p>
                   <strong>
-                   ValueError
-                  </strong>
-                  – If
-                  <cite>
-                   alert_time
-                  </cite>
-                  is not &gt;= the clocks current time.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
                    TypeError
                   </strong>
                   – If
@@ -17256,6 +17247,19 @@ default handler (if registered) will receive the
                </ul>
               </dd>
              </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If
+               <cite>
+                alert_time
+               </cite>
+               is in the past or at current time, then an immediate
+time event will be generated (rather than being invalid and failing a condition check).
+              </p>
+             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -32667,7 +32671,7 @@ upstream.
              uint64_t
             </span>
             <span class="pre">
-             now_ns,
+             ts_now,
             </span>
             <span class="pre">
              uint64_t
@@ -32772,13 +32776,13 @@ upstream.
               <li>
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The datetime now (UTC).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </li>
               <li>
@@ -33004,7 +33008,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -33039,13 +33043,13 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The UNIX time now (nanoseconds).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </dd>
              </dl>
@@ -33254,7 +33258,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -33289,7 +33293,7 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
@@ -33413,7 +33417,7 @@ upstream.
              uint64_t
             </span>
             <span class="pre">
-             now_ns,
+             ts_now,
             </span>
             <span class="pre">
              uint64_t
@@ -33526,19 +33530,19 @@ upstream.
                 <em>
                  uint64_t
                 </em>
-                ) – The time interval for the timer.
+                ) – The time interval for the timer (nanoseconds).
                </p>
               </li>
               <li>
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The datetime now (UTC).
+                ) – The current UNIX epoch (nanoseconds).
                </p>
               </li>
               <li>
@@ -33756,7 +33760,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -33791,13 +33795,13 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The UNIX time now (nanoseconds).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </dd>
              </dl>
@@ -34006,7 +34010,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -34041,7 +34045,7 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
@@ -34162,7 +34166,7 @@ upstream.
              uint64_t
             </span>
             <span class="pre">
-             now_ns,
+             ts_now,
             </span>
             <span class="pre">
              uint64_t
@@ -34269,13 +34273,13 @@ upstream.
               <li>
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The datetime now (UTC).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </li>
               <li>
@@ -34493,7 +34497,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -34528,13 +34532,13 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The UNIX time now (nanoseconds).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </dd>
              </dl>
@@ -34743,7 +34747,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -34778,7 +34782,7 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
