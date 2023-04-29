@@ -1,8 +1,11 @@
-use std::fs;
+use std::fs::{self, File};
 
 use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
 use nautilus_model::data::tick::{QuoteTick, TradeTick};
-use nautilus_persistence::session::{PersistenceCatalog, QueryResult};
+use nautilus_persistence::{
+    parquet::{GroupFilterArg, ParquetReader},
+    session::{PersistenceCatalog, QueryResult},
+};
 use pyo3_asyncio::tokio::get_runtime;
 
 fn single_stream_bench(c: &mut Criterion) {
@@ -26,6 +29,22 @@ fn single_stream_bench(c: &mut Criterion) {
                 let rt = get_runtime();
                 let _guard = rt.enter();
                 let count: usize = query_result.map(|vec| vec.len()).sum();
+                assert_eq!(count, 9689614);
+            },
+            BatchSize::SmallInput,
+        )
+    });
+
+    group.bench_function("persistence v1", |b| {
+        b.iter_batched(
+            || {
+                let file = File::open(file_path).expect("Unable to open given file");
+                let reader: ParquetReader<QuoteTick, File> =
+                    ParquetReader::new(file, 5000, GroupFilterArg::None);
+                reader
+            },
+            |reader: ParquetReader<QuoteTick, File>| {
+                let count: usize = reader.map(|vec| vec.len()).sum();
                 assert_eq!(count, 9689614);
             },
             BatchSize::SmallInput,

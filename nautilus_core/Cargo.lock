@@ -2074,10 +2074,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "579fe5745f02cef3d5f236bfed216fd4693e49e4e920a13475c6132233283bce"
 dependencies = [
  "async-stream",
+ "brotli",
+ "flate2",
  "futures",
+ "lz4",
  "parquet-format-safe",
  "seq-macro",
+ "snap",
  "streaming-decompression",
+ "zstd 0.12.3+zstd.1.5.2",
 ]
 
 [[package]]

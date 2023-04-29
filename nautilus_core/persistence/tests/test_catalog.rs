@@ -25,11 +25,13 @@ use rstest::rstest;
 
 #[test]
 fn arrow2_test() {
-    let mut reader = File::open("../test_data.parquet").expect("Unable to open given file");
+    let mut reader =
+        File::open("../../bench_data/quotes_0005.parquet").expect("Unable to open given file");
     let metadata = read::read_metadata(&mut reader).expect("Unable to read metadata");
     let schema = read::infer_schema(&metadata).expect("Unable to infer schema");
     let mut fr = FileReader::new(reader, metadata.row_groups, schema, Some(1000), None, None);
-    assert!(fr.next().is_some())
+    let chunk = fr.next();
+    assert!(chunk.is_some())
 }
 
 #[rstest]
