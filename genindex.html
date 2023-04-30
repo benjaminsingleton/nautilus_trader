@@ -319,6 +319,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="concepts/execution.html">
+               Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="concepts/logging.html">
                Logging
               </a>
@@ -1451,14 +1456,28 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.add_exec_algorithm">
-             add_exec_algorithm() (Trader method)
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithm">
+             add_exec_algorithm() (BacktestEngine method)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.add_exec_algorithm">
+               (Trader method)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
-            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.add_exec_algorithms">
-             add_exec_algorithms() (Trader method)
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithms">
+             add_exec_algorithms() (BacktestEngine method)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.add_exec_algorithms">
+               (Trader method)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/live.html#nautilus_trader.live.node.TradingNode.add_exec_client_factory">
@@ -1522,6 +1541,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.add_order">
+               (MatchingCore method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/infrastructure.html#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_order">
                (RedisCacheDatabase method)
               </a>
@@ -1533,6 +1557,10 @@
              add_order_book() (Cache method)
             </a>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.add_order_list">
              add_order_list() (Cache method)
@@ -1560,10 +1588,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.add_position_id">
              add_position_id() (Cache method)
@@ -2014,9 +2038,16 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.ask">
-             ask (QuoteTick attribute)
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.ask">
+             ask (MatchingCore attribute)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.ask">
+               (QuoteTick attribute)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.ask_size">
@@ -2091,18 +2122,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.asset_class">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.asset_class">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.asset_class">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -2133,18 +2154,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.asset_type">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.asset_type">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.asset_type">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -2678,18 +2689,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.base_from_dict">
-               (Future static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.base_from_dict">
                (Instrument static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.base_from_dict">
-               (Option static method)
               </a>
              </li>
             </ul>
@@ -2725,18 +2726,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.base_to_dict">
-               (Future static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.base_to_dict">
                (Instrument static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.base_to_dict">
-               (Option static method)
               </a>
              </li>
             </ul>
@@ -3058,9 +3049,16 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.bid">
-             bid (QuoteTick attribute)
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.bid">
+             bid (MatchingCore attribute)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.bid">
+               (QuoteTick attribute)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.bid_size">
@@ -3474,13 +3472,23 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.cache">
-             cache (FXRolloverInterestModule attribute)
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.cache">
+             cache (ExecAlgorithm attribute)
             </a>
             <ul>
              <li>
+              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.cache">
+               (FXRolloverInterestModule attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/system.html#nautilus_trader.system.kernel.NautilusKernel.cache">
                (NautilusKernel property)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.cache">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -4123,6 +4131,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.cancel_order">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.cancel_order">
                (ExecutionClient method)
               </a>
@@ -4607,11 +4620,6 @@
             </a>
             <ul>
              <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.messages.ExecAlgorithmSpecification.client_order_id">
-               (ExecAlgorithmSpecification attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.client_order_id">
                (LimitIfTouchedOrder attribute)
               </a>
@@ -4865,13 +4873,23 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.clock">
-             clock (FXRolloverInterestModule attribute)
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.clock">
+             clock (ExecAlgorithm attribute)
             </a>
             <ul>
              <li>
+              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.clock">
+               (FXRolloverInterestModule attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/system.html#nautilus_trader.system.kernel.NautilusKernel.clock">
                (NautilusKernel property)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.clock">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -5135,8 +5153,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.config">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.config">
                (FXRolloverInterestModule attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.config">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -5574,6 +5602,11 @@
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.factories.OrderFactory.create_list">
              create_list() (OrderFactory method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.create_matching_core">
+             create_matching_core() (OrderEmulator method)
             </a>
            </li>
            <li>
@@ -6055,6 +6088,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.degrade">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.degrade">
                (ExecutionClient method)
               </a>
@@ -6112,6 +6150,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.degrade">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.degrade">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -6206,6 +6249,11 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.delete_order">
+             delete_order() (MatchingCore method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.delete_strategy">
              delete_strategy() (Cache method)
             </a>
@@ -6287,8 +6335,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.deregister_warning_event">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.deregister_warning_event">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.deregister_warning_event">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -6733,6 +6791,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.dispose">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.dispose">
                (ExecutionClient method)
               </a>
@@ -6795,6 +6858,11 @@
              <li>
               <a href="api_reference/system.html#nautilus_trader.system.kernel.NautilusKernel.dispose">
                (NautilusKernel method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.dispose">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -7185,10 +7253,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/live.html#nautilus_trader.live.execution_engine.LiveExecutionEngine.evt_qsize">
              evt_qsize() (LiveExecutionEngine method)
@@ -7212,24 +7276,149 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.messages.ExecAlgorithmSpecification.exec_algorithm_id">
-             exec_algorithm_id (ExecAlgorithmSpecification attribute)
+            <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.exec_algorithm_id">
+             exec_algorithm_id (LimitIfTouchedOrder attribute)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit.LimitOrder.exec_algorithm_id">
+               (LimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_if_touched.MarketIfTouchedOrder.exec_algorithm_id">
+               (MarketIfTouchedOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market.MarketOrder.exec_algorithm_id">
+               (MarketOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_to_limit.MarketToLimitOrder.exec_algorithm_id">
+               (MarketToLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.base.Order.exec_algorithm_id">
+               (Order attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderInitialized.exec_algorithm_id">
+               (OrderInitialized attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_limit.StopLimitOrder.exec_algorithm_id">
+               (StopLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_market.StopMarketOrder.exec_algorithm_id">
+               (StopMarketOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrder.exec_algorithm_id">
+               (SubmitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrderList.exec_algorithm_id">
+               (SubmitOrderList attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_limit.TrailingStopLimitOrder.exec_algorithm_id">
+               (TrailingStopLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_market.TrailingStopMarketOrder.exec_algorithm_id">
+               (TrailingStopMarketOrder attribute)
+              </a>
+             </li>
+            </ul>
+           </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
+           <li>
+            <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.exec_algorithm_ids">
+             exec_algorithm_ids() (Cache method)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.exec_algorithm_ids">
+               (CacheFacade method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.exec_algorithm_ids">
+               (Trader method)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
-            <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.exec_algorithm_ids">
-             exec_algorithm_ids() (Trader method)
+            <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.exec_algorithm_params">
+             exec_algorithm_params (LimitIfTouchedOrder attribute)
             </a>
-           </li>
-           <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrder.exec_algorithm_spec">
-             exec_algorithm_spec (SubmitOrder attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrderList.exec_algorithm_specs">
-             exec_algorithm_specs (SubmitOrderList attribute)
-            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit.LimitOrder.exec_algorithm_params">
+               (LimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_if_touched.MarketIfTouchedOrder.exec_algorithm_params">
+               (MarketIfTouchedOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market.MarketOrder.exec_algorithm_params">
+               (MarketOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_to_limit.MarketToLimitOrder.exec_algorithm_params">
+               (MarketToLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.base.Order.exec_algorithm_params">
+               (Order attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderInitialized.exec_algorithm_params">
+               (OrderInitialized attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_limit.StopLimitOrder.exec_algorithm_params">
+               (StopLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_market.StopMarketOrder.exec_algorithm_params">
+               (StopMarketOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_limit.TrailingStopLimitOrder.exec_algorithm_params">
+               (TrailingStopLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_market.TrailingStopMarketOrder.exec_algorithm_params">
+               (TrailingStopMarketOrder attribute)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.exec_algorithm_states">
@@ -7252,6 +7441,68 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.exec_spawn_id">
+             exec_spawn_id (LimitIfTouchedOrder attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit.LimitOrder.exec_spawn_id">
+               (LimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_if_touched.MarketIfTouchedOrder.exec_spawn_id">
+               (MarketIfTouchedOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market.MarketOrder.exec_spawn_id">
+               (MarketOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_to_limit.MarketToLimitOrder.exec_spawn_id">
+               (MarketToLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.base.Order.exec_spawn_id">
+               (Order attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderInitialized.exec_spawn_id">
+               (OrderInitialized attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_limit.StopLimitOrder.exec_spawn_id">
+               (StopLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_market.StopMarketOrder.exec_spawn_id">
+               (StopMarketOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_limit.TrailingStopLimitOrder.exec_spawn_id">
+               (TrailingStopLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_market.TrailingStopMarketOrder.exec_spawn_id">
+               (TrailingStopMarketOrder attribute)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm">
+             ExecAlgorithm (class in nautilus_trader.execution.algorithm)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmConfig">
              ExecAlgorithmConfig (class in nautilus_trader.config.common)
             </a>
@@ -7267,11 +7518,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.messages.ExecAlgorithmSpecification">
-             ExecAlgorithmSpecification (class in nautilus_trader.execution.messages)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/config.html#nautilus_trader.config.common.ExecEngineConfig">
              ExecEngineConfig (class in nautilus_trader.config.common)
             </a>
@@ -7281,6 +7527,11 @@
              execute() (DataEngine method)
             </a>
             <ul>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.execute">
+               (ExecAlgorithm method)
+              </a>
+             </li>
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.engine.ExecutionEngine.execute">
                (ExecutionEngine method)
@@ -7299,6 +7550,11 @@
              <li>
               <a href="api_reference/live.html#nautilus_trader.live.risk_engine.LiveRiskEngine.execute">
                (LiveRiskEngine method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.execute">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -7431,13 +7687,6 @@
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.crypto_future.CryptoFuture.expiry_date">
              expiry_date (CryptoFuture attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.expiry_date">
-               (Future attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.average.ema.ExponentialMovingAverage">
@@ -7464,6 +7713,11 @@
            <li>
             <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.ladder.Ladder.exposures">
              exposures() (Ladder method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.external_order_claims">
+             external_order_claims (Strategy attribute)
             </a>
            </li>
            <li>
@@ -7600,6 +7854,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.fault">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.fault">
                (ExecutionClient method)
               </a>
@@ -7657,6 +7916,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.fault">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.fault">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -7955,11 +8219,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.from_dict">
-               (Future static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.venue.InstrumentClose.from_dict">
                (InstrumentClose static method)
               </a>
@@ -7977,11 +8236,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.ModifyOrder.from_dict">
                (ModifyOrder static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.from_dict">
-               (Option static method)
               </a>
              </li>
              <li>
@@ -8417,6 +8671,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.fully_qualified_name">
+               (ExecAlgorithm class method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.ExecAlgorithmConfig.fully_qualified_name">
                (ExecAlgorithmConfig class method)
               </a>
@@ -8439,11 +8698,6 @@
              <li>
               <a href="api_reference/analysis.html#nautilus_trader.analysis.statistics.expectancy.Expectancy.fully_qualified_name">
                (Expectancy class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.fully_qualified_name">
-               (Future class method)
               </a>
              </li>
              <li>
@@ -8632,11 +8886,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.fully_qualified_name">
-               (Option class method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.data.OrderBookData.fully_qualified_name">
                (OrderBookData class method)
               </a>
@@ -8654,6 +8903,11 @@
              <li>
               <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.data.OrderBookSnapshot.fully_qualified_name">
                (OrderBookSnapshot class method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.fully_qualified_name">
+               (OrderEmulator class method)
               </a>
              </li>
              <li>
@@ -8787,11 +9041,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future">
-             Future (class in nautilus_trader.model.instruments.future)
-            </a>
            </li>
            <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.fuzzy_candlesticks.FuzzyCandle">
@@ -9572,18 +9821,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.get_base_currency">
-               (Future method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.get_base_currency">
                (Instrument method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.get_base_currency">
-               (Option method)
               </a>
              </li>
             </ul>
@@ -9703,6 +9942,18 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.engine.ExecutionEngine.get_external_order_claim">
+             get_external_order_claim() (ExecutionEngine method)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/live.html#nautilus_trader.live.execution_engine.LiveExecutionEngine.get_external_order_claim">
+               (LiveExecutionEngine method)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.AccountId.get_id">
              get_id() (AccountId method)
             </a>
@@ -9728,6 +9979,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.get_matching_core">
+             get_matching_core() (OrderEmulator method)
+            </a>
            </li>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.get_matching_engine">
@@ -9757,6 +10013,26 @@
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.get_open_orders">
              get_open_orders() (SimulatedExchange method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.get_order">
+             get_order() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.get_orders">
+             get_orders() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.get_orders_ask">
+             get_orders_ask() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.get_orders_bid">
+             get_orders_bid() (MatchingCore method)
             </a>
            </li>
            <li>
@@ -9946,18 +10222,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.get_settlement_currency">
-               (Future method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.get_settlement_currency">
                (Instrument method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.get_settlement_currency">
-               (Option method)
               </a>
              </li>
             </ul>
@@ -9985,6 +10251,16 @@
            <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.analyzer.PortfolioAnalyzer.get_stats_returns_formatted">
              get_stats_returns_formatted() (PortfolioAnalyzer method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.get_submit_order_commands">
+             get_submit_order_commands() (OrderEmulator method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.get_submit_order_list_commands">
+             get_submit_order_list_commands() (OrderEmulator method)
             </a>
            </li>
            <li>
@@ -10137,6 +10413,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_bar">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.average.ema.ExponentialMovingAverage.handle_bar">
                (ExponentialMovingAverage method)
               </a>
@@ -10184,6 +10465,11 @@
              <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.obv.OnBalanceVolume.handle_bar">
                (OnBalanceVolume method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_bar">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10254,8 +10540,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_bars">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_bars">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_bars">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10276,8 +10572,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_data">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_data">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_data">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10298,8 +10604,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_event">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_event">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_event">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10320,8 +10636,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_historical_data">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_historical_data">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_historical_data">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10342,8 +10668,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_instrument">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10364,8 +10700,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument_close">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument_close">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_instrument_close">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10386,8 +10732,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument_status_update">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument_status_update">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_instrument_status_update">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10408,8 +10764,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instruments">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instruments">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_instruments">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10430,8 +10796,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_order_book">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_order_book">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_order_book">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10452,8 +10828,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_order_book_delta">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_order_book_delta">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_order_book_delta">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10471,11 +10857,6 @@
            <li>
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.handle_order_stream_update">
              handle_order_stream_update() (BetfairExecutionClient method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/common.html#nautilus_trader.common.timer.TimeEventHandler.handle_py">
-             handle_py() (TimeEventHandler method)
             </a>
            </li>
            <li>
@@ -10511,6 +10892,11 @@
              <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.efficiency_ratio.EfficiencyRatio.handle_quote_tick">
                (EfficiencyRatio method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_quote_tick">
+               (ExecAlgorithm method)
               </a>
              </li>
              <li>
@@ -10561,6 +10947,11 @@
              <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.obv.OnBalanceVolume.handle_quote_tick">
                (OnBalanceVolume method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_quote_tick">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10645,14 +11036,28 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.handle_quote_ticks">
              handle_quote_ticks() (Actor method)
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_quote_ticks">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_quote_ticks">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_quote_ticks">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10673,8 +11078,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_ticker">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_ticker">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_ticker">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10689,10 +11104,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.handle_trade_tick">
              handle_trade_tick() (Actor method)
@@ -10726,6 +11137,11 @@
              <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.efficiency_ratio.EfficiencyRatio.handle_trade_tick">
                (EfficiencyRatio method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_trade_tick">
+               (ExecAlgorithm method)
               </a>
              </li>
              <li>
@@ -10776,6 +11192,11 @@
              <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.obv.OnBalanceVolume.handle_trade_tick">
                (OnBalanceVolume method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_trade_tick">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10866,8 +11287,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_trade_ticks">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_trade_ticks">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_trade_ticks">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -10888,8 +11319,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_venue_status_update">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_venue_status_update">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_venue_status_update">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -11411,6 +11852,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.id">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.id">
                (ExecutionClient attribute)
               </a>
@@ -11428,11 +11874,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.reports.ExecutionReport.id">
                (ExecutionReport attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.id">
-               (Future attribute)
               </a>
              </li>
              <li>
@@ -11501,11 +11942,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.id">
-               (Option attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderAccepted.id">
                (OrderAccepted attribute)
               </a>
@@ -11523,6 +11959,11 @@
              <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderDenied.id">
                (OrderDenied attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.id">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -11793,18 +12234,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.info">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.info">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.info">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -13165,10 +13596,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.is_crypto">
              is_crypto() (Currency static method)
@@ -13179,6 +13606,10 @@
              is_datetime_utc() (in module nautilus_trader.core.datetime)
             </a>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.is_degraded">
              is_degraded (Actor attribute)
@@ -13245,6 +13676,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.is_degraded">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.is_degraded">
                (ExecutionClient attribute)
               </a>
@@ -13302,6 +13738,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.is_degraded">
                (MarketDataClient attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.is_degraded">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -13392,6 +13833,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.is_disposed">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.is_disposed">
                (ExecutionClient attribute)
               </a>
@@ -13449,6 +13895,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.is_disposed">
                (MarketDataClient attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.is_disposed">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -13618,6 +14069,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.is_faulted">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.is_faulted">
                (ExecutionClient attribute)
               </a>
@@ -13675,6 +14131,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.is_faulted">
                (MarketDataClient attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.is_faulted">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -13844,6 +14305,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.is_initialized">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.is_initialized">
                (ExecutionClient attribute)
               </a>
@@ -13904,6 +14370,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.is_initialized">
+               (OrderEmulator attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/risk.html#nautilus_trader.risk.engine.RiskEngine.is_initialized">
                (RiskEngine attribute)
               </a>
@@ -13956,18 +14427,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.is_inverse">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.is_inverse">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.is_inverse">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -13980,6 +14441,11 @@
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.models.FillModel.is_limit_filled">
              is_limit_filled() (FillModel method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.is_limit_matched">
+             is_limit_matched() (MatchingCore method)
             </a>
            </li>
            <li>
@@ -14587,6 +15053,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.is_running">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.is_running">
                (ExecutionClient attribute)
               </a>
@@ -14644,6 +15115,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.is_running">
                (MarketDataClient attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.is_running">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -14768,6 +15244,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.is_stop_triggered">
+             is_stop_triggered() (MatchingCore method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.is_stopped">
              is_stopped (Actor attribute)
             </a>
@@ -14833,6 +15314,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.is_stopped">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.is_stopped">
                (ExecutionClient attribute)
               </a>
@@ -14890,6 +15376,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.is_stopped">
                (MarketDataClient attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.is_stopped">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -14957,6 +15448,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.is_touch_triggered">
+             is_touch_triggered() (MatchingCore method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.is_triggered">
              is_triggered (LimitIfTouchedOrder attribute)
             </a>
@@ -14998,6 +15494,11 @@
            <li>
             <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.iso4217">
              iso4217 (Currency attribute)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.iterate">
+             iterate() (MatchingCore method)
             </a>
            </li>
            <li>
@@ -15323,6 +15824,11 @@
            <li>
             <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.ladder.Ladder">
              Ladder (class in nautilus_trader.model.orderbook.ladder)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.last">
+             last (MatchingCore attribute)
             </a>
            </li>
            <li>
@@ -15804,10 +16310,15 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.list_from_capsule">
-             list_from_capsule() (QuoteTick static method)
+            <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.list_from_capsule">
+             list_from_capsule() (in module nautilus_trader.persistence.wranglers)
             </a>
             <ul>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.list_from_capsule">
+               (QuoteTick static method)
+              </a>
+             </li>
              <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.list_from_capsule">
                (TradeTick static method)
@@ -15921,6 +16432,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.load">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.load">
                (FXRolloverInterestModule method)
               </a>
@@ -15933,6 +16449,11 @@
              <li>
               <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.providers.InteractiveBrokersInstrumentProvider.load">
                (InteractiveBrokersInstrumentProvider method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.load">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -16388,6 +16909,11 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.log">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.log">
                (FXRolloverInterestModule attribute)
               </a>
@@ -16395,6 +16921,11 @@
              <li>
               <a href="api_reference/system.html#nautilus_trader.system.kernel.NautilusKernel.log">
                (NautilusKernel property)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.log">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -16497,18 +17028,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.lot_size">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.lot_size">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.lot_size">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -16626,18 +17147,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.make_price">
-               (Future method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.make_price">
                (Instrument method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.make_price">
-               (Option method)
               </a>
              </li>
             </ul>
@@ -16668,18 +17179,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.make_qty">
-               (Future method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.make_qty">
                (Instrument method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.make_qty">
-               (Option method)
               </a>
              </li>
             </ul>
@@ -16710,18 +17211,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.maker_fee">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.maker_fee">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.maker_fee">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -16757,18 +17248,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.margin_init">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.margin_init">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.margin_init">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -16804,18 +17285,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.margin_maint">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.margin_maint">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.margin_maint">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -16915,6 +17386,41 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.match_limit_if_touched_order">
+             match_limit_if_touched_order() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.match_limit_order">
+             match_limit_order() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.match_market_if_touched_order">
+             match_market_if_touched_order() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.match_order">
+             match_order() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.match_stop_limit_order">
+             match_stop_limit_order() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.match_stop_market_order">
+             match_stop_market_order() (MatchingCore method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore">
+             MatchingCore (class in nautilus_trader.execution.matching_core)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/network.html#nautilus_trader.network.http.HttpClient.max_latency">
              max_latency() (HttpClient method)
             </a>
@@ -16945,18 +17451,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.max_notional">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.max_notional">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.max_notional">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -17040,18 +17536,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.max_price">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.max_price">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.max_price">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -17092,18 +17578,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.max_quantity">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.max_quantity">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.max_quantity">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -17243,18 +17719,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.min_notional">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.min_notional">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.min_notional">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -17290,18 +17756,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.min_price">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.min_price">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.min_price">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -17342,18 +17798,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.min_quantity">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.min_quantity">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.min_quantity">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -17389,6 +17835,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.modify_order">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.modify_order">
                (ExecutionClient method)
               </a>
@@ -17409,6 +17860,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.modify_order_in_place">
+             modify_order_in_place() (ExecAlgorithm method)
+            </a>
            </li>
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.messages.ModifyOrder">
@@ -17909,13 +18365,28 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#module-nautilus_trader.execution.algorithm">
+               nautilus_trader.execution.algorithm
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#module-nautilus_trader.execution.client">
                nautilus_trader.execution.client
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#module-nautilus_trader.execution.emulator">
+               nautilus_trader.execution.emulator
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#module-nautilus_trader.execution.engine">
                nautilus_trader.execution.engine
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#module-nautilus_trader.execution.matching_core">
+               nautilus_trader.execution.matching_core
               </a>
              </li>
              <li>
@@ -18211,16 +18682,6 @@
              <li>
               <a href="api_reference/model/instruments.html#module-nautilus_trader.model.instruments.equity">
                nautilus_trader.model.instruments.equity
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#module-nautilus_trader.model.instruments.future">
-               nautilus_trader.model.instruments.future
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#module-nautilus_trader.model.instruments.option">
-               nautilus_trader.model.instruments.option
               </a>
              </li>
              <li>
@@ -18545,6 +19006,11 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.msgbus">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.msgbus">
                (FXRolloverInterestModule attribute)
               </a>
@@ -18552,6 +19018,11 @@
              <li>
               <a href="api_reference/system.html#nautilus_trader.system.kernel.NautilusKernel.msgbus">
                (NautilusKernel property)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.msgbus">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -18602,18 +19073,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.multiplier">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.multiplier">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.multiplier">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -18942,18 +19403,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.native_symbol">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.native_symbol">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.native_symbol">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -19944,6 +20395,16 @@
             </ul>
            </li>
            <li>
+            nautilus_trader.execution.algorithm
+            <ul>
+             <li>
+              <a href="api_reference/execution.html#module-nautilus_trader.execution.algorithm">
+               module
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             nautilus_trader.execution.client
             <ul>
              <li>
@@ -19954,10 +20415,30 @@
             </ul>
            </li>
            <li>
+            nautilus_trader.execution.emulator
+            <ul>
+             <li>
+              <a href="api_reference/execution.html#module-nautilus_trader.execution.emulator">
+               module
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             nautilus_trader.execution.engine
             <ul>
              <li>
               <a href="api_reference/execution.html#module-nautilus_trader.execution.engine">
+               module
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            nautilus_trader.execution.matching_core
+            <ul>
+             <li>
+              <a href="api_reference/execution.html#module-nautilus_trader.execution.matching_core">
                module
               </a>
              </li>
@@ -19983,6 +20464,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             nautilus_trader.indicators
             <ul>
@@ -20023,10 +20508,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             nautilus_trader.indicators.average.hma
             <ul>
@@ -20552,26 +21033,6 @@
             <ul>
              <li>
               <a href="api_reference/model/instruments.html#module-nautilus_trader.model.instruments.equity">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.instruments.future
-            <ul>
-             <li>
-              <a href="api_reference/model/instruments.html#module-nautilus_trader.model.instruments.future">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.instruments.option
-            <ul>
-             <li>
-              <a href="api_reference/model/instruments.html#module-nautilus_trader.model.instruments.option">
                module
               </a>
              </li>
@@ -21229,18 +21690,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.next_ask_price">
-               (Future method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.next_ask_price">
                (Instrument method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.next_ask_price">
-               (Option method)
               </a>
              </li>
              <li>
@@ -21286,18 +21737,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.next_bid_price">
-               (Future method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.next_bid_price">
                (Instrument method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.next_bid_price">
-               (Option method)
               </a>
              </li>
              <li>
@@ -21392,18 +21833,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.notional_value">
-               (Future method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.notional_value">
                (Instrument method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.notional_value">
-               (Option method)
               </a>
              </li>
              <li>
@@ -21482,8 +21913,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_bar">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_bar">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_bar">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21504,8 +21945,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_data">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_data">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_data">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21526,8 +21977,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_degrade">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_degrade">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_degrade">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21548,8 +22009,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_dispose">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_dispose">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_dispose">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21570,8 +22041,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_event">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_event">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_event">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21592,8 +22073,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_fault">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_fault">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_fault">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21614,8 +22105,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_historical_data">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_historical_data">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_historical_data">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21636,8 +22137,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_instrument">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21658,8 +22169,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument_close">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument_close">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_instrument_close">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21680,8 +22201,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument_status_update">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument_status_update">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_instrument_status_update">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21702,8 +22233,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_load">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_load">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_load">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21719,13 +22260,28 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order">
+             on_order() (ExecAlgorithm method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.on_order_book">
              on_order_book() (Actor method)
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_book">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_order_book">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_order_book">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21746,8 +22302,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_book_delta">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_order_book_delta">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_order_book_delta">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21763,13 +22329,33 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_event">
+             on_order_event() (ExecAlgorithm method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_list">
+             on_order_list() (ExecAlgorithm method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.on_quote_tick">
              on_quote_tick() (Actor method)
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_quote_tick">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_quote_tick">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_quote_tick">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21790,8 +22376,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_reset">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_reset">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_reset">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21812,8 +22408,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_resume">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_resume">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_resume">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21834,8 +22440,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_save">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_save">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_save">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21856,8 +22472,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_start">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_start">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_start">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21878,8 +22504,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_stop">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_stop">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_stop">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21900,8 +22536,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_ticker">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_ticker">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_ticker">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21922,8 +22568,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_trade_tick">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_trade_tick">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_trade_tick">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -21938,14 +22594,28 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.on_venue_status_update">
              on_venue_status_update() (Actor method)
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_venue_status_update">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_venue_status_update">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_venue_status_update">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -22056,15 +22726,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
-           <li>
-            <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option">
-             Option (class in nautilus_trader.model.instruments.option)
-            </a>
-           </li>
            <li>
             <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderInitialized.options">
              options (OrderInitialized attribute)
@@ -22124,6 +22785,11 @@
              <li>
               <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.order_exists">
                (CacheFacade method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.order_exists">
+               (MatchingCore method)
               </a>
              </li>
             </ul>
@@ -22403,6 +23069,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator">
+             OrderEmulator (class in nautilus_trader.execution.emulator)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/config.html#nautilus_trader.config.common.OrderEmulatorConfig">
              OrderEmulatorConfig (class in nautilus_trader.config.common)
             </a>
@@ -22540,6 +23211,30 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.orders_for_exec_algorithm">
+             orders_for_exec_algorithm() (Cache method)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.orders_for_exec_algorithm">
+               (CacheFacade method)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.orders_for_exec_spawn">
+             orders_for_exec_spawn() (Cache method)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.orders_for_exec_spawn">
+               (CacheFacade method)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.orders_for_position">
              orders_for_position() (Cache method)
             </a>
@@ -22642,11 +23337,6 @@
         <tr>
          <td style="width: 33%; vertical-align: top;">
           <ul>
-           <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.messages.ExecAlgorithmSpecification.params">
-             params (ExecAlgorithmSpecification attribute)
-            </a>
-           </li>
            <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.parent_order_id">
              parent_order_id (LimitIfTouchedOrder attribute)
@@ -23130,10 +23820,15 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/system.html#nautilus_trader.system.kernel.NautilusKernel.portfolio">
-             portfolio (NautilusKernel property)
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.portfolio">
+             portfolio (ExecAlgorithm attribute)
             </a>
             <ul>
+             <li>
+              <a href="api_reference/system.html#nautilus_trader.system.kernel.NautilusKernel.portfolio">
+               (NautilusKernel property)
+              </a>
+             </li>
              <li>
               <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.portfolio">
                (Strategy attribute)
@@ -23759,18 +24454,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.price_increment">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.price_increment">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.price_increment">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -23811,11 +24496,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.price_precision">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.price_precision">
                (Instrument attribute)
               </a>
@@ -23838,11 +24518,6 @@
              <li>
               <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.ladder.Ladder.price_precision">
                (Ladder attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.price_precision">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -24057,8 +24732,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.publish_data">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.publish_data">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.publish_data">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -24079,8 +24764,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.publish_signal">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.publish_signal">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.publish_signal">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -24315,18 +25010,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.quote_currency">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.quote_currency">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.quote_currency">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -24653,6 +25338,11 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.register">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/msgbus.html#nautilus_trader.msgbus.bus.MessageBus.register">
                (MessageBus method)
               </a>
@@ -24675,8 +25365,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.register_base">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_base">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.register_base">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -24775,12 +25475,12 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.engine.ExecutionEngine.register_exec_algorithm">
-             register_exec_algorithm() (ExecutionEngine method)
+            <a href="api_reference/execution.html#nautilus_trader.execution.engine.ExecutionEngine.register_external_order_claims">
+             register_external_order_claims() (ExecutionEngine method)
             </a>
             <ul>
              <li>
-              <a href="api_reference/live.html#nautilus_trader.live.execution_engine.LiveExecutionEngine.register_exec_algorithm">
+              <a href="api_reference/live.html#nautilus_trader.live.execution_engine.LiveExecutionEngine.register_external_order_claims">
                (LiveExecutionEngine method)
               </a>
              </li>
@@ -24873,8 +25573,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.register_warning_event">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_warning_event">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.register_warning_event">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -25073,6 +25783,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.request_bars">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.request_bars">
                (FXRolloverInterestModule method)
               </a>
@@ -25090,6 +25805,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.request_bars">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.request_bars">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -25122,8 +25842,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.request_data">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.request_data">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.request_data">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -25164,6 +25894,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.request_instrument">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.request_instrument">
                (FXRolloverInterestModule method)
               </a>
@@ -25181,6 +25916,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.request_instrument">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.request_instrument">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -25221,6 +25961,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.request_instruments">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.request_instruments">
                (FXRolloverInterestModule method)
               </a>
@@ -25238,6 +25983,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.request_instruments">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.request_instruments">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -25282,6 +26032,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.request_quote_ticks">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.request_quote_ticks">
                (FXRolloverInterestModule method)
               </a>
@@ -25299,6 +26054,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.request_quote_ticks">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.request_quote_ticks">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -25339,6 +26099,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.request_trade_ticks">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.request_trade_ticks">
                (FXRolloverInterestModule method)
               </a>
@@ -25356,6 +26121,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.request_trade_ticks">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.request_trade_ticks">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -25491,6 +26261,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.reset">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.reset">
                (ExecutionClient method)
               </a>
@@ -25581,6 +26356,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.reset">
+               (MatchingCore method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.average.moving_average.MovingAverage.reset">
                (MovingAverage method)
               </a>
@@ -25593,6 +26373,11 @@
              <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.obv.OnBalanceVolume.reset">
                (OnBalanceVolume method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.reset">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -25797,6 +26582,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.resume">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.resume">
                (ExecutionClient method)
               </a>
@@ -25854,6 +26644,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.resume">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.resume">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -26059,8 +26854,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.save">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.save">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.save">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -26306,11 +27111,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/common.html#nautilus_trader.common.clock.LiveClock.set_offset">
-             set_offset() (LiveClock method)
-            </a>
            </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.factories.OrderFactory.set_order_list_id_count">
@@ -26581,9 +27381,61 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/position.html#nautilus_trader.model.position.Position.signed_decimal_qty">
-             signed_decimal_qty() (Position method)
+            <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.signed_decimal_qty">
+             signed_decimal_qty() (LimitIfTouchedOrder method)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit.LimitOrder.signed_decimal_qty">
+               (LimitOrder method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_if_touched.MarketIfTouchedOrder.signed_decimal_qty">
+               (MarketIfTouchedOrder method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market.MarketOrder.signed_decimal_qty">
+               (MarketOrder method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_to_limit.MarketToLimitOrder.signed_decimal_qty">
+               (MarketToLimitOrder method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.base.Order.signed_decimal_qty">
+               (Order method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/position.html#nautilus_trader.model.position.Position.signed_decimal_qty">
+               (Position method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_limit.StopLimitOrder.signed_decimal_qty">
+               (StopLimitOrder method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_market.StopMarketOrder.signed_decimal_qty">
+               (StopMarketOrder method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_limit.TrailingStopLimitOrder.signed_decimal_qty">
+               (TrailingStopLimitOrder method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_market.TrailingStopMarketOrder.signed_decimal_qty">
+               (TrailingStopMarketOrder method)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/model/position.html#nautilus_trader.model.position.Position.signed_qty">
@@ -26710,18 +27562,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.size_increment">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.size_increment">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.size_increment">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -26757,11 +27599,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.size_precision">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.size_precision">
                (Instrument attribute)
               </a>
@@ -26784,11 +27621,6 @@
              <li>
               <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.ladder.Ladder.size_precision">
                (Ladder attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.size_precision">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -26895,6 +27727,21 @@
            <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.statistics.sortino_ratio.SortinoRatio">
              SortinoRatio (class in nautilus_trader.analysis.statistics.sortino_ratio)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.spawn_limit">
+             spawn_limit() (ExecAlgorithm method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.spawn_market">
+             spawn_market() (ExecAlgorithm method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.spawn_market_to_limit">
+             spawn_market_to_limit() (ExecAlgorithm method)
             </a>
            </li>
            <li>
@@ -27052,6 +27899,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.start">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.start">
                (ExecutionClient method)
               </a>
@@ -27109,6 +27961,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.start">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.start">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -27243,6 +28100,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.state">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.state">
                (ExecutionClient attribute)
               </a>
@@ -27305,6 +28167,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.state">
                (MarketDataClient attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.state">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -27482,6 +28349,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.stop">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.stop">
                (ExecutionClient method)
               </a>
@@ -27539,6 +28411,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.stop">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.stop">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -27923,6 +28800,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.submit_order">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.submit_order">
                (ExecutionClient method)
               </a>
@@ -28089,6 +28971,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_bars">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_bars">
                (FXRolloverInterestModule method)
               </a>
@@ -28109,6 +28996,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_bars">
+               (OrderEmulator method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.SimulationModule.subscribe_bars">
                (SimulationModule method)
               </a>
@@ -28126,8 +29018,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_data">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_data">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_data">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28168,6 +29070,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument">
                (FXRolloverInterestModule method)
               </a>
@@ -28185,6 +29092,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_instrument">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28225,6 +29137,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument_close">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument_close">
                (FXRolloverInterestModule method)
               </a>
@@ -28242,6 +29159,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_instrument_close">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument_close">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28282,6 +29204,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument_status_updates">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument_status_updates">
                (FXRolloverInterestModule method)
               </a>
@@ -28299,6 +29226,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_instrument_status_updates">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument_status_updates">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28339,6 +29271,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instruments">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instruments">
                (FXRolloverInterestModule method)
               </a>
@@ -28356,6 +29293,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_instruments">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_instruments">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28396,6 +29338,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_order_book_deltas">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_order_book_deltas">
                (FXRolloverInterestModule method)
               </a>
@@ -28413,6 +29360,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_order_book_deltas">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_order_book_deltas">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28453,6 +29405,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_order_book_snapshots">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_order_book_snapshots">
                (FXRolloverInterestModule method)
               </a>
@@ -28470,6 +29427,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_order_book_snapshots">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_order_book_snapshots">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28510,6 +29472,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_quote_ticks">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_quote_ticks">
                (FXRolloverInterestModule method)
               </a>
@@ -28527,6 +29494,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_quote_ticks">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_quote_ticks">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28567,6 +29539,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_ticker">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_ticker">
                (FXRolloverInterestModule method)
               </a>
@@ -28584,6 +29561,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_ticker">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_ticker">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28624,6 +29606,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_trade_ticks">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_trade_ticks">
                (FXRolloverInterestModule method)
               </a>
@@ -28641,6 +29628,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_trade_ticks">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_trade_ticks">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -28681,6 +29673,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_venue_status_updates">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_venue_status_updates">
                (FXRolloverInterestModule method)
               </a>
@@ -28698,6 +29695,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_venue_status_updates">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_venue_status_updates">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -29104,6 +30106,11 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribed_quotes">
+             subscribed_quotes (OrderEmulator attribute)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_tickers">
              subscribed_tickers() (BacktestMarketDataClient method)
             </a>
@@ -29198,6 +30205,11 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribed_trades">
+             subscribed_trades (OrderEmulator attribute)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_venue_status_updates">
              subscribed_venue_status_updates() (BacktestMarketDataClient method)
             </a>
@@ -29290,11 +30302,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.symbol">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.symbol">
                (Instrument attribute)
               </a>
@@ -29327,11 +30334,6 @@
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_to_limit.MarketToLimitOrder.symbol">
                (MarketToLimitOrder attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.symbol">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -29460,18 +30462,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.taker_fee">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.taker_fee">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.taker_fee">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -29527,18 +30519,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.tick_scheme_name">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.tick_scheme_name">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.tick_scheme_name">
-               (Option attribute)
               </a>
              </li>
             </ul>
@@ -29897,11 +30879,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.to_dict">
-               (Future static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.venue.InstrumentClose.to_dict">
                (InstrumentClose static method)
               </a>
@@ -29944,11 +30921,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.ModifyOrder.to_dict">
                (ModifyOrder static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.to_dict">
-               (Option static method)
               </a>
              </li>
              <li>
@@ -30124,8 +31096,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.to_importable_config">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.to_importable_config">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.to_importable_config">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -30461,6 +31443,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.trader_id">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.trader_id">
                (ExecutionClient attribute)
               </a>
@@ -30593,6 +31580,11 @@
              <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderDenied.trader_id">
                (OrderDenied attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.trader_id">
+               (OrderEmulator attribute)
               </a>
              </li>
              <li>
@@ -31071,11 +32063,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.ts_event">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.base.GenericData.ts_event">
                (GenericData attribute)
               </a>
@@ -31098,11 +32085,6 @@
              <li>
               <a href="api_reference/trading.html#nautilus_trader.trading.filters.NewsEvent.ts_event">
                (NewsEvent attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.ts_event">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -31378,11 +32360,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.ts_init">
-               (Future attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.base.GenericData.ts_init">
                (GenericData attribute)
               </a>
@@ -31435,11 +32412,6 @@
              <li>
               <a href="api_reference/trading.html#nautilus_trader.trading.filters.NewsEvent.ts_init">
                (NewsEvent attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.ts_init">
-               (Option attribute)
               </a>
              </li>
              <li>
@@ -31911,6 +32883,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.type">
+               (ExecAlgorithm attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.client.ExecutionClient.type">
                (ExecutionClient attribute)
               </a>
@@ -31996,6 +32973,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.type">
+               (OrderEmulator attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/risk.html#nautilus_trader.risk.engine.RiskEngine.type">
                (RiskEngine attribute)
               </a>
@@ -32047,13 +33029,6 @@
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.crypto_future.CryptoFuture.underlying">
              underlying (CryptoFuture attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.underlying">
-               (Future attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/trading.html#nautilus_trader.trading.filters.EconomicNewsEventFilter.unfiltered_data_end">
@@ -32219,6 +33194,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_bars">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_bars">
                (FXRolloverInterestModule method)
               </a>
@@ -32239,6 +33219,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_bars">
+               (OrderEmulator method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_bars">
                (SimulationModule method)
               </a>
@@ -32256,8 +33241,18 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_data">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_data">
                (FXRolloverInterestModule method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_data">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32298,6 +33293,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instrument">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instrument">
                (FXRolloverInterestModule method)
               </a>
@@ -32315,6 +33315,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_instrument">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instrument">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32392,6 +33397,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instrument_status_updates">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instrument_status_updates">
                (FXRolloverInterestModule method)
               </a>
@@ -32409,6 +33419,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_instrument_status_updates">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instrument_status_updates">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32449,6 +33464,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instruments">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instruments">
                (FXRolloverInterestModule method)
               </a>
@@ -32466,6 +33486,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_instruments">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instruments">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32506,6 +33531,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_order_book_deltas">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_order_book_deltas">
                (FXRolloverInterestModule method)
               </a>
@@ -32523,6 +33553,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_order_book_deltas">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_order_book_deltas">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32563,6 +33598,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_order_book_snapshots">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_order_book_snapshots">
                (FXRolloverInterestModule method)
               </a>
@@ -32580,6 +33620,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_order_book_snapshots">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_order_book_snapshots">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32620,6 +33665,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_quote_ticks">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_quote_ticks">
                (FXRolloverInterestModule method)
               </a>
@@ -32637,6 +33687,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_quote_ticks">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_quote_ticks">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32681,6 +33736,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_ticker">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_ticker">
                (FXRolloverInterestModule method)
               </a>
@@ -32698,6 +33758,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_ticker">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_ticker">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32738,6 +33803,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_trade_ticks">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_trade_ticks">
                (FXRolloverInterestModule method)
               </a>
@@ -32755,6 +33825,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_trade_ticks">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_trade_ticks">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -32795,6 +33870,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_venue_status_updates">
+               (ExecAlgorithm method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_venue_status_updates">
                (FXRolloverInterestModule method)
               </a>
@@ -32812,6 +33892,11 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_venue_status_updates">
                (MarketDataClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_venue_status_updates">
+               (OrderEmulator method)
               </a>
              </li>
              <li>
@@ -33682,15 +34767,15 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.Venue">
              Venue (class in nautilus_trader.model.identifiers)
             </a>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.crypto_future.CryptoFuture.venue">
              venue (CryptoFuture attribute)
@@ -33739,11 +34824,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.reports.ExecutionMassStatus.venue">
                (ExecutionMassStatus attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.future.Future.venue">
-               (Future attribute)
               </a>
              </li>
              <li>
@@ -33819,11 +34899,6 @@
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_to_limit.MarketToLimitOrder.venue">
                (MarketToLimitOrder attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.option.Option.venue">
-               (Option attribute)
               </a>
              </li>
              <li>

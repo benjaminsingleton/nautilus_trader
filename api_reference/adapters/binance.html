@@ -332,6 +332,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/execution.html">
+               Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/logging.html">
                Logging
               </a>
@@ -5738,29 +5743,6 @@ If
                  default False
                 </em>
                 ) – If the client is connecting to a Binance testnet.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 clock_sync_interval_secs
-                </strong>
-                (
-                <em>
-                 int
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default 0
-                </em>
-                ) – The interval (seconds) between syncing the Nautilus clock with the Binance server(s) clock.
-If zero, then will
-                <em>
-                 not
-                </em>
-                perform syncing.
                </p>
               </li>
               <li>
@@ -19643,40 +19625,6 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               clock_sync_interval_secs
-              </span>
-             </span>
-             <span class="p">
-              <span class="pre">
-               :
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="n">
-              <span class="pre">
-               int
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="o">
-              <span class="pre">
-               =
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="default_value">
-              <span class="pre">
-               0
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
                warn_gtd_to_gtc
               </span>
              </span>
@@ -19863,29 +19811,6 @@ then the component state will not change, and an error will be logged.
                   optional
                  </em>
                  ) – The base URL for the WebSocket client.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  clock_sync_interval_secs
-                 </strong>
-                 (
-                 <em>
-                  int
-                 </em>
-                 <em>
-                  ,
-                 </em>
-                 <em>
-                  default 0
-                 </em>
-                 ) – The interval (seconds) between syncing the Nautilus clock with the Binance server(s) clock.
-If zero, then will
-                 <em>
-                  not
-                 </em>
-                 perform syncing.
                 </p>
                </li>
                <li>
@@ -27267,6 +27192,16 @@ applying the given filters.
               <span class="sig-paren">
                )
               </span>
+              <span class="sig-return">
+               <span class="sig-return-icon">
+                →
+               </span>
+               <span class="sig-return-typehint">
+                <span class="pre">
+                 None
+                </span>
+               </span>
+              </span>
               <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.providers.BinanceFuturesInstrumentProvider.load" title="Permalink to this definition">
                ¶
               </a>
@@ -27521,6 +27456,16 @@ given filters.
               </em>
               <span class="sig-paren">
                )
+              </span>
+              <span class="sig-return">
+               <span class="sig-return-icon">
+                →
+               </span>
+               <span class="sig-return-typehint">
+                <span class="pre">
+                 None
+                </span>
+               </span>
               </span>
               <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.providers.BinanceFuturesInstrumentProvider.load_ids" title="Permalink to this definition">
                ¶
@@ -34537,40 +34482,6 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               clock_sync_interval_secs
-              </span>
-             </span>
-             <span class="p">
-              <span class="pre">
-               :
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="n">
-              <span class="pre">
-               int
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="o">
-              <span class="pre">
-               =
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="default_value">
-              <span class="pre">
-               0
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
                warn_gtd_to_gtc
               </span>
              </span>
@@ -34757,29 +34668,6 @@ then the component state will not change, and an error will be logged.
                   optional
                  </em>
                  ) – The base URL for the WebSocket client.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  clock_sync_interval_secs
-                 </strong>
-                 (
-                 <em>
-                  int
-                 </em>
-                 <em>
-                  ,
-                 </em>
-                 <em>
-                  default 0
-                 </em>
-                 ) – The interval (seconds) between syncing the Nautilus clock with the Binance server(s) clock.
-If zero, then will
-                 <em>
-                  not
-                 </em>
-                 perform syncing.
                 </p>
                </li>
                <li>
@@ -42161,6 +42049,16 @@ applying the given filters.
               <span class="sig-paren">
                )
               </span>
+              <span class="sig-return">
+               <span class="sig-return-icon">
+                →
+               </span>
+               <span class="sig-return-typehint">
+                <span class="pre">
+                 None
+                </span>
+               </span>
+              </span>
               <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.providers.BinanceSpotInstrumentProvider.load" title="Permalink to this definition">
                ¶
               </a>
@@ -42415,6 +42313,16 @@ given filters.
               </em>
               <span class="sig-paren">
                )
+              </span>
+              <span class="sig-return">
+               <span class="sig-return-icon">
+                →
+               </span>
+               <span class="sig-return-typehint">
+                <span class="pre">
+                 None
+                </span>
+               </span>
               </span>
               <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.providers.BinanceSpotInstrumentProvider.load_ids" title="Permalink to this definition">
                ¶

@@ -327,6 +327,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/execution.html">
+               Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/logging.html">
                Logging
               </a>
@@ -1792,15 +1797,6 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     LiveClock.register_default_handler()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.common.clock.LiveClock.set_offset">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    LiveClock.set_offset()
                    </span>
                   </code>
                  </a>
@@ -3666,15 +3662,6 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     TimeEventHandler.handle()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.common.timer.TimeEventHandler.handle_py">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    TimeEventHandler.handle_py()
                    </span>
                   </code>
                  </a>
@@ -13267,14 +13254,41 @@ If
                 ) – The name for the timer to cancel.
                </p>
               </dd>
+              <dt class="field-even">
+               Raises
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   ValueError
+                  </strong>
+                  – If
+                  <cite>
+                   name
+                  </cite>
+                  is not a valid string.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   KeyError
+                  </strong>
+                  – If
+                  <cite>
+                   name
+                  </cite>
+                  is not an active timer name for this clock.
+                 </p>
+                </li>
+               </ul>
+              </dd>
              </dl>
-             <p class="rubric">
-              Notes
-             </p>
-             <p>
-              Logs a warning if a timer with the given name is not found (it may have
-already been canceled).
-             </p>
             </dd>
            </dl>
            <dl class="py method">
@@ -13811,19 +13825,19 @@ default handler (if registered) will receive the
                   <cite>
                    name
                   </cite>
-                  is not unique for this clock.
+                  is not a valid string.
                  </p>
                 </li>
                 <li>
                  <p>
                   <strong>
-                   ValueError
+                   KeyError
                   </strong>
                   – If
                   <cite>
-                   alert_time
+                   name
                   </cite>
-                  is not &gt;= the clocks current time.
+                  is not unique for this clock.
                  </p>
                 </li>
                 <li>
@@ -13869,6 +13883,19 @@ default handler (if registered) will receive the
                </ul>
               </dd>
              </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If
+               <cite>
+                alert_time
+               </cite>
+               is in the past or at current time, then an immediate
+time event will be generated (rather than being invalid and failing a condition check).
+              </p>
+             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -14039,7 +14066,7 @@ default handler (if registered) will receive the
                   <cite>
                    name
                   </cite>
-                  is not unique for this clock.
+                  is not a valid string.
                  </p>
                 </li>
                 <li>
@@ -14049,9 +14076,9 @@ default handler (if registered) will receive the
                   </strong>
                   – If
                   <cite>
-                   alert_time
+                   name
                   </cite>
-                  is not &gt;= the clocks current time.
+                  is not unique for this clock.
                  </p>
                 </li>
                 <li>
@@ -14097,6 +14124,19 @@ default handler (if registered) will receive the
                </ul>
               </dd>
              </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If
+               <cite>
+                alert_time_ns
+               </cite>
+               is in the past or at current time, then an immediate
+time event will be generated (rather than being invalid and failing a condition check).
+              </p>
+             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -14311,6 +14351,18 @@ then the default handler (if registered) will receive the
                  <p>
                   <strong>
                    ValueError
+                  </strong>
+                  – If
+                  <cite>
+                   name
+                  </cite>
+                  is not a valid string.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   KeyError
                   </strong>
                   – If
                   <cite>
@@ -14628,6 +14680,18 @@ then the default handler (if registered) will receive the
                  <p>
                   <strong>
                    ValueError
+                  </strong>
+                  – If
+                  <cite>
+                   name
+                  </cite>
+                  is not a valid string.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   KeyError
                   </strong>
                   – If
                   <cite>
@@ -15142,7 +15206,10 @@ then the default handler (if registered) will receive the
             </a>
            </p>
            <p>
-            Provides a monotonic clock for live trading. All times are timezone aware UTC.
+            Provides a monotonic clock for live trading.
+           </p>
+           <p>
+            All times are tz-aware UTC.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -15410,7 +15477,7 @@ the target timezone).
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                handler
+                callback
                </span>
               </span>
               <span class="p">
@@ -15479,116 +15546,6 @@ the target timezone).
              </a>
             </dt>
             <dd>
-             <p>
-              Register the given handler as the clocks default handler.
-             </p>
-             <dl class="simple">
-              <dt>
-               handler
-               <span class="classifier">
-                Callable[[TimeEvent], None]
-               </span>
-              </dt>
-              <dd>
-               <p>
-                The handler to register.
-               </p>
-              </dd>
-             </dl>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Raises
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <strong>
-                 TypeError
-                </strong>
-                – If
-                <cite>
-                 handler
-                </cite>
-                is not of type
-                <cite>
-                 Callable
-                </cite>
-                .
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.common.clock.LiveClock.set_offset">
-             <span class="sig-name descname">
-              <span class="pre">
-               set_offset
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                int64_t
-               </span>
-               <span class="pre">
-                offset_ns
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                void
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.common.clock.LiveClock.set_offset" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Set the offset (nanoseconds) for the clock.
-             </p>
-             <p>
-              The
-              <cite>
-               offset
-              </cite>
-              will then be
-              <em>
-               added
-              </em>
-              to all subsequent timestamps.
-             </p>
-             <div class="admonition warning">
-              <p class="admonition-title">
-               Warning
-              </p>
-              <p>
-               It shouldn’t be necessary for a user to call this method.
-              </p>
-             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -15759,19 +15716,19 @@ default handler (if registered) will receive the
                   <cite>
                    name
                   </cite>
-                  is not unique for this clock.
+                  is not a valid string.
                  </p>
                 </li>
                 <li>
                  <p>
                   <strong>
-                   ValueError
+                   KeyError
                   </strong>
                   – If
                   <cite>
-                   alert_time
+                   name
                   </cite>
-                  is not &gt;= the clocks current time.
+                  is not unique for this clock.
                  </p>
                 </li>
                 <li>
@@ -15817,6 +15774,19 @@ default handler (if registered) will receive the
                </ul>
               </dd>
              </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If
+               <cite>
+                alert_time
+               </cite>
+               is in the past or at current time, then an immediate
+time event will be generated (rather than being invalid and failing a condition check).
+              </p>
+             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -16093,6 +16063,18 @@ then the default handler (if registered) will receive the
                  <p>
                   <strong>
                    ValueError
+                  </strong>
+                  – If
+                  <cite>
+                   name
+                  </cite>
+                  is not a valid string.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   KeyError
                   </strong>
                   – If
                   <cite>
@@ -16897,7 +16879,7 @@ the target timezone).
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                handler
+                callback
                </span>
               </span>
               <span class="p">
@@ -16966,46 +16948,6 @@ the target timezone).
              </a>
             </dt>
             <dd>
-             <p>
-              Register the given handler as the clocks default handler.
-             </p>
-             <dl class="simple">
-              <dt>
-               handler
-               <span class="classifier">
-                Callable[[TimeEvent], None]
-               </span>
-              </dt>
-              <dd>
-               <p>
-                The handler to register.
-               </p>
-              </dd>
-             </dl>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Raises
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <strong>
-                 TypeError
-                </strong>
-                – If
-                <cite>
-                 handler
-                </cite>
-                is not of type
-                <cite>
-                 Callable
-                </cite>
-                .
-               </p>
-              </dd>
-             </dl>
             </dd>
            </dl>
            <dl class="py method">
@@ -17247,19 +17189,19 @@ default handler (if registered) will receive the
                   <cite>
                    name
                   </cite>
-                  is not unique for this clock.
+                  is not a valid string.
                  </p>
                 </li>
                 <li>
                  <p>
                   <strong>
-                   ValueError
+                   KeyError
                   </strong>
                   – If
                   <cite>
-                   alert_time
+                   name
                   </cite>
-                  is not &gt;= the clocks current time.
+                  is not unique for this clock.
                  </p>
                 </li>
                 <li>
@@ -17305,6 +17247,19 @@ default handler (if registered) will receive the
                </ul>
               </dd>
              </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               If
+               <cite>
+                alert_time
+               </cite>
+               is in the past or at current time, then an immediate
+time event will be generated (rather than being invalid and failing a condition check).
+              </p>
+             </div>
             </dd>
            </dl>
            <dl class="py method">
@@ -17581,6 +17536,18 @@ then the default handler (if registered) will receive the
                  <p>
                   <strong>
                    ValueError
+                  </strong>
+                  – If
+                  <cite>
+                   name
+                  </cite>
+                  is not a valid string.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   KeyError
                   </strong>
                   – If
                   <cite>
@@ -19709,6 +19676,72 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                entry_exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                sl_exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                tp_exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                entry_exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                tp_exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                sl_exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
              <span class="sig-paren">
               )
              </span>
@@ -20082,6 +20115,165 @@ of
                    </span>
                   </code>
                   ) – The contingency type for the TP and SL bracket orders.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   entry_exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The entry order execution algorithm ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   sl_exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The stop-loss order execution algorithm ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   tp_exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The take-profit order execution algorithm ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   entry_exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   tp_exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   sl_exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                </ul>
@@ -20478,6 +20670,28 @@ of
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -20738,6 +20952,59 @@ of
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -20978,6 +21245,28 @@ contain any arbitrary delimiter if required.
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
                </span>
               </span>
              </em>
@@ -21261,6 +21550,59 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -21473,6 +21815,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -21632,6 +21996,59 @@ contain any arbitrary delimiter if required.
                    default False
                   </em>
                   ) – If the order carries the ‘reduce-only’ execution instruction.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                 <li>
@@ -21824,6 +22241,28 @@ contain any arbitrary delimiter if required.
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
                </span>
               </span>
              </em>
@@ -22055,6 +22494,59 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -22273,6 +22765,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -22464,6 +22978,59 @@ contain any arbitrary delimiter if required.
                    optional
                   </em>
                   ) – The quantity of the limit order to display on the public book (iceberg).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                 <li>
@@ -22903,6 +23470,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -23179,6 +23768,59 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -23435,6 +24077,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -23654,6 +24318,59 @@ contain any arbitrary delimiter if required.
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                 <li>
@@ -24029,6 +24746,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -24377,6 +25116,59 @@ to the delta of market price and
                 <li>
                  <p>
                   <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    tags
                   </strong>
                   (
@@ -24673,6 +25465,28 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                exec_algorithm_params=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 unicode
                </span>
                <span class="pre">
@@ -24935,6 +25749,59 @@ to the delta of market price and
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ExecAlgorithmId" title="nautilus_trader.model.identifiers.ExecAlgorithmId">
+                   <em>
+                    ExecAlgorithmId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm ID for the order.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   exec_algorithm_params
+                  </strong>
+                  (
+                  <em>
+                   dict
+                  </em>
+                  <em>
+                   [
+                  </em>
+                  <em>
+                   str
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   Any
+                  </em>
+                  <em>
+                   ]
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The execution algorithm parameters for the order.
                  </p>
                 </li>
                 <li>
@@ -26555,17 +27422,6 @@ will be appended with ‘F’.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              int
-             </span>
-             <span class="pre">
-              rate_limit=100000
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               bool
              </span>
              <span class="pre">
@@ -26826,24 +27682,6 @@ If set to ‘JSON’ then logs will be in JSON format.
                 </em>
                 ) – The additional per component log level filters, where keys are component
 IDs (e.g. actor/strategy IDs) and values are log levels.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 rate_limit
-                </strong>
-                (
-                <em>
-                 int
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default 100_000
-                </em>
-                ) – The maximum messages per second which can be flushed to stdout or stderr.
                </p>
               </li>
               <li>
@@ -29011,6 +29849,16 @@ applying the given filters.
              <span class="sig-paren">
               )
              </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
              <a class="headerlink" href="#nautilus_trader.common.providers.InstrumentProvider.load_async" title="Permalink to this definition">
               ¶
              </a>
@@ -29335,6 +30183,16 @@ given filters.
              <span class="sig-paren">
               )
              </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
              <a class="headerlink" href="#nautilus_trader.common.providers.InstrumentProvider.load_ids" title="Permalink to this definition">
               ¶
              </a>
@@ -29479,6 +30337,16 @@ applying the given filters.
              </em>
              <span class="sig-paren">
               )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
              </span>
              <a class="headerlink" href="#nautilus_trader.common.providers.InstrumentProvider.load" title="Permalink to this definition">
               ¶
@@ -31803,7 +32671,7 @@ upstream.
              uint64_t
             </span>
             <span class="pre">
-             now_ns,
+             ts_now,
             </span>
             <span class="pre">
              uint64_t
@@ -31908,13 +32776,13 @@ upstream.
               <li>
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The datetime now (UTC).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </li>
               <li>
@@ -32140,7 +33008,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -32175,13 +33043,13 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The UNIX time now (nanoseconds).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </dd>
              </dl>
@@ -32390,7 +33258,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -32425,7 +33293,7 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
@@ -32549,7 +33417,7 @@ upstream.
              uint64_t
             </span>
             <span class="pre">
-             now_ns,
+             ts_now,
             </span>
             <span class="pre">
              uint64_t
@@ -32662,19 +33530,19 @@ upstream.
                 <em>
                  uint64_t
                 </em>
-                ) – The time interval for the timer.
+                ) – The time interval for the timer (nanoseconds).
                </p>
               </li>
               <li>
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The datetime now (UTC).
+                ) – The current UNIX epoch (nanoseconds).
                </p>
               </li>
               <li>
@@ -32892,7 +33760,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -32927,13 +33795,13 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The UNIX time now (nanoseconds).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </dd>
              </dl>
@@ -33142,7 +34010,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -33177,7 +34045,7 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
@@ -33298,7 +34166,7 @@ upstream.
              uint64_t
             </span>
             <span class="pre">
-             now_ns,
+             ts_now,
             </span>
             <span class="pre">
              uint64_t
@@ -33405,13 +34273,13 @@ upstream.
               <li>
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The datetime now (UTC).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </li>
               <li>
@@ -33629,7 +34497,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -33664,13 +34532,13 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
                  uint64_t
                 </em>
-                ) – The UNIX time now (nanoseconds).
+                ) – The current UNIX time (nanoseconds).
                </p>
               </dd>
              </dl>
@@ -33879,7 +34747,7 @@ upstream.
                 uint64_t
                </span>
                <span class="pre">
-                now_ns
+                ts_now
                </span>
               </span>
              </em>
@@ -33914,7 +34782,7 @@ upstream.
               <dd class="field-odd">
                <p>
                 <strong>
-                 now_ns
+                 ts_now
                 </strong>
                 (
                 <em>
@@ -34316,7 +35184,7 @@ upstream.
             </code>
            </p>
            <p>
-            Represents a bundled event and handler.
+            Represents a time event with its associated handler.
            </p>
            <dl class="py attribute">
             <dt class="sig sig-object py" id="nautilus_trader.common.timer.TimeEventHandler.event">
@@ -34385,45 +35253,8 @@ upstream.
              </a>
             </dt>
             <dd>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.common.timer.TimeEventHandler.handle_py">
-             <span class="sig-name descname">
-              <span class="pre">
-               handle_py
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                None
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.common.timer.TimeEventHandler.handle_py" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
              <p>
-              Python wrapper for testing.
+              Call the handler with the contained time event.
              </p>
             </dd>
            </dl>

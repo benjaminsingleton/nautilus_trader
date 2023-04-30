@@ -327,6 +327,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/execution.html">
+               Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/logging.html">
                Logging
               </a>
@@ -771,6 +776,15 @@
                </a>
               </li>
              </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#nautilus_trader.persistence.wranglers.list_from_capsule">
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                list_from_capsule()
+               </span>
+              </code>
+             </a>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#nautilus_trader.persistence.external.readers.LinePreprocessor">
@@ -2124,6 +2138,56 @@ the data source and the Nautilus system.
           </dl>
          </dd>
         </dl>
+        <dl class="py function">
+         <dt class="sig sig-object py" id="nautilus_trader.persistence.wranglers.list_from_capsule">
+          <span class="sig-name descname">
+           <span class="pre">
+            list_from_capsule
+           </span>
+          </span>
+          <span class="sig-paren">
+           (
+          </span>
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             capsule
+            </span>
+           </span>
+          </em>
+          <span class="sig-paren">
+           )
+          </span>
+          <span class="sig-return">
+           <span class="sig-return-icon">
+            →
+           </span>
+           <span class="sig-return-typehint">
+            <span class="pre">
+             list
+            </span>
+            <span class="p">
+             <span class="pre">
+              [
+             </span>
+            </span>
+            <span class="pre">
+             Data
+            </span>
+            <span class="p">
+             <span class="pre">
+              ]
+             </span>
+            </span>
+           </span>
+          </span>
+          <a class="headerlink" href="#nautilus_trader.persistence.wranglers.list_from_capsule" title="Permalink to this definition">
+           ¶
+          </a>
+         </dt>
+         <dd>
+         </dd>
+        </dl>
         <span class="target" id="module-nautilus_trader.persistence.external.readers">
         </span>
         <dl class="py class">
@@ -2194,7 +2258,7 @@ this instance, you could use something like:
 <span class="gp">&gt;&gt;&gt; </span>   <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="gp">&gt;&gt;&gt; </span>       <span class="n">timestamp</span><span class="p">,</span> <span class="n">json_data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' - '</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span>       <span class="k">yield</span> <span class="n">json_data</span><span class="p">,</span> <span class="p">{</span><span class="s1">'ts_init'</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)}</span>
-<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="nd">@staticmethod</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="gp">&gt;&gt;&gt; </span>       <span class="n">obj</span><span class="o">.</span><span class="n">ts_init</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">'ts_init'</span><span class="p">]</span>
