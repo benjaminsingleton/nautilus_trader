@@ -69,6 +69,7 @@ else:  # Linux
 # Directories with headers to include
 RUST_INCLUDES = ["nautilus_trader/core/includes"]
 RUST_LIB_PATHS: list[Path] = [
+    TARGET_DIR / f"{RUST_LIB_PFX}nautilus_backtest.{RUST_STATIC_LIB_EXT}",
     TARGET_DIR / f"{RUST_LIB_PFX}nautilus_common.{RUST_STATIC_LIB_EXT}",
     TARGET_DIR / f"{RUST_LIB_PFX}nautilus_core.{RUST_STATIC_LIB_EXT}",
     TARGET_DIR / f"{RUST_LIB_PFX}nautilus_model.{RUST_STATIC_LIB_EXT}",
@@ -81,11 +82,21 @@ def _build_rust_libs() -> None:
     try:
         # Build the Rust libraries using Cargo
         build_options = " --release" if BUILD_MODE == "release" else ""
-        extra_flags = ""
         print("Compiling Rust libraries...")
-        build_cmd = f"(cd nautilus_core && cargo build{build_options}{extra_flags} --all-features)"
-        print(build_cmd)
-        os.system(build_cmd)
+
+        cmd_args = [
+            "cargo",
+            "build",
+            *build_options.split(),
+            "--all-features",
+        ]
+        print(" ".join(cmd_args))
+
+        subprocess.run(
+            cmd_args,  # noqa
+            cwd="nautilus_core",
+            check=True,
+        )
     except subprocess.CalledProcessError as e:
         raise RuntimeError(
             f"Error running cargo: {e.stderr.decode()}",
@@ -222,9 +233,8 @@ def _copy_rust_dylibs_to_project() -> None:
 def _get_clang_version() -> str:
     try:
         result = subprocess.run(
-            "clang --version",
+            ["clang", "--version"],  # noqa
             check=True,
-            shell=True,
             capture_output=True,
         )
         output = (
@@ -245,9 +255,8 @@ def _get_clang_version() -> str:
 def _get_rustc_version() -> str:
     try:
         result = subprocess.run(
-            "rustc --version",
+            ["rustc", "--version"],  # noqa
             check=True,
-            shell=True,
             capture_output=True,
         )
         output = result.stdout.decode().lstrip("rustc ")[:-1]
@@ -271,9 +280,9 @@ def _strip_unneeded_symbols() -> None:
             else:
                 raise RuntimeError(f"Cannot strip symbols for platform {platform.system()}")
             subprocess.run(
-                strip_cmd,
+                strip_cmd,  # noqa
                 check=True,
-                shell=True,
+                shell=True,  # noqa
                 capture_output=True,
             )
     except subprocess.CalledProcessError as e:

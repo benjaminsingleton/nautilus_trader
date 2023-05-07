@@ -8,24 +8,20 @@ documentation.workspace = true
 
 [lib]
 name = "nautilus_persistence"
-crate-type = ["rlib", "staticlib"]
+crate-type = ["rlib", "staticlib", "cdylib" ]
 
 [dependencies]
 nautilus_core = { path = "../core" }
 nautilus_model = { path = "../model" }
-chrono.workspace = true
-once_cell.workspace = true
 pyo3.workspace = true
 pyo3-asyncio.workspace = true
 rand.workspace = true
 tokio.workspace = true
 binary-heap-plus = "0.5.0"
 compare = "0.1.0"
-futures = "0.3.28"
-# TODO: remove with catalog v1 implementation
-arrow2 = { version = "0.17.0", features = ["io_parquet", "io_csv_read", "compute_comparison", "io_parquet_compression"] }
 # FIX: default feature "crypto_expressions" using using blake3 fails build on windows: https://github.com/BLAKE3-team/BLAKE3/issues/298
-datafusion = { version = "22.0.0", default-features = false, features = [ "regex_expressions", "unicode_expressions", "compression"] }
+datafusion = { version = "23.0.0", default-features = false, features = ["compression", "regex_expressions", "unicode_expressions"] }
+futures = "0.3.28"
 pin-project-lite = "0.2.9"
 
 [features]

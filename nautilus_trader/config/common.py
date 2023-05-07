@@ -109,7 +109,7 @@ class NautilusConfig(msgspec.Struct, kw_only=True, frozen=True):
 
 class CacheConfig(NautilusConfig, frozen=True):
     """
-    Configuration for a ``Cache`` instance.
+    Configuration for ``Cache`` instances.
 
     Parameters
     ----------
@@ -125,7 +125,7 @@ class CacheConfig(NautilusConfig, frozen=True):
 
 class CacheDatabaseConfig(NautilusConfig, frozen=True):
     """
-    Configuration for a ``CacheDatabase`` instance.
+    Configuration for ``CacheDatabase`` instances.
 
     Parameters
     ----------
@@ -156,7 +156,7 @@ class CacheDatabaseConfig(NautilusConfig, frozen=True):
 
 class InstrumentProviderConfig(NautilusConfig, frozen=True):
     """
-    Configuration for an ``InstrumentProvider`` instance.
+    Configuration for ``InstrumentProvider`` instances.
 
     Parameters
     ----------
@@ -192,7 +192,7 @@ class InstrumentProviderConfig(NautilusConfig, frozen=True):
 
 class DataEngineConfig(NautilusConfig, frozen=True):
     """
-    Configuration for a ``DataEngine`` instance.
+    Configuration for ``DataEngine`` instances.
 
     Parameters
     ----------
@@ -215,7 +215,7 @@ class DataEngineConfig(NautilusConfig, frozen=True):
 
 class RiskEngineConfig(NautilusConfig, frozen=True):
     """
-    Configuration for a ``RiskEngine`` instance.
+    Configuration for ``RiskEngine`` instances.
 
     Parameters
     ----------
@@ -241,7 +241,7 @@ class RiskEngineConfig(NautilusConfig, frozen=True):
 
 class ExecEngineConfig(NautilusConfig, frozen=True):
     """
-    Configuration for an ``ExecutionEngine`` instance.
+    Configuration for ``ExecutionEngine`` instances.
 
     Parameters
     ----------
@@ -260,7 +260,7 @@ class ExecEngineConfig(NautilusConfig, frozen=True):
 
 class OrderEmulatorConfig(NautilusConfig, frozen=True):
     """
-    Configuration for an ``OrderEmulator`` instance.
+    Configuration for ``OrderEmulator`` instances.
     """
 
 
@@ -401,11 +401,14 @@ class StrategyConfig(NautilusConfig, kw_only=True, frozen=True):
     oms_type : OmsType, optional
         The order management system type for the strategy. This will determine
         how the `ExecutionEngine` handles position IDs (see docs).
+    external_order_claims : list[str], optional
+        The external order claim instrument IDs.
     """
 
     strategy_id: Optional[str] = None
     order_id_tag: Optional[str] = None
     oms_type: Optional[str] = None
+    external_order_claims: Optional[list[str]] = None
 
 
 class ImportableStrategyConfig(NautilusConfig, frozen=True):
@@ -545,8 +548,6 @@ class LoggingConfig(NautilusConfig, frozen=True):
     log_component_levels : dict[str, LogLevel]
         The additional per component log level filters, where keys are component
         IDs (e.g. actor/strategy IDs) and values are log levels.
-    log_rate_limit : int, default 100_000
-        The maximum messages per second which can be flushed to stdout or stderr.
     bypass_logging : bool, default False
         If all logging should be bypassed.
     """
@@ -557,7 +558,6 @@ class LoggingConfig(NautilusConfig, frozen=True):
     log_file_name: Optional[str] = None
     log_file_format: Optional[str] = None
     log_component_levels: Optional[dict[str, str]] = None
-    log_rate_limit: int = 100_000
     bypass_logging: bool = False
 
 

@@ -48,7 +48,6 @@ config_node = TradingNodeConfig(
     exec_engine=LiveExecEngineConfig(
         reconciliation=True,
         reconciliation_lookback_mins=1440,
-        external_order_claims={"VolatilityMarketMaker-000": ["ETHUSDT-PERP.BINANCE"]},
     ),
     cache_database=CacheDatabaseConfig(type="in-memory"),
     data_clients={
@@ -79,7 +78,7 @@ config_node = TradingNodeConfig(
     timeout_reconciliation=10.0,
     timeout_portfolio=10.0,
     timeout_disconnection=10.0,
-    timeout_post_stop=2.0,
+    timeout_post_stop=5.0,
 )
 # Instantiate the node with a configuration
 node = TradingNode(config=config_node)
@@ -87,6 +86,7 @@ node = TradingNode(config=config_node)
 # Configure your strategy
 strat_config = VolatilityMarketMakerConfig(
     instrument_id="ETHUSDT-PERP.BINANCE",
+    external_order_claims=["ETHUSDT-PERP.BINANCE"],
     bar_type="ETHUSDT-PERP.BINANCE-1-MINUTE-LAST-EXTERNAL",
     atr_period=20,
     atr_multiple=6.0,

@@ -26,10 +26,10 @@ from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.execution.algorithm import ExecAlgorithm
 from nautilus_trader.model.enums import OrderType
 from nautilus_trader.model.identifiers import ClientOrderId
-from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.instruments import Instrument
 from nautilus_trader.model.objects import Quantity
-from nautilus_trader.model.orders.base import Order
-from nautilus_trader.model.orders.market import MarketOrder
+from nautilus_trader.model.orders import MarketOrder
+from nautilus_trader.model.orders import Order
 
 
 class TWAPExecAlgorithmConfig(ExecAlgorithmConfig, frozen=True):
@@ -75,12 +75,11 @@ class TWAPExecAlgorithm(ExecAlgorithm):
             config = TWAPExecAlgorithmConfig()
         super().__init__(config)
 
-        self._active_timers: dict[ClientOrderId, str] = {}
         self._scheduled_sizes: dict[ClientOrderId, list[Quantity]] = {}
 
     def on_start(self) -> None:
         """Actions to be performed when the algorithm component is started."""
-        pass  # Optionally implement
+        # Optionally implement
 
     def on_stop(self) -> None:
         """Actions to be performed when the algorithm component is stopped."""
@@ -88,7 +87,6 @@ class TWAPExecAlgorithm(ExecAlgorithm):
 
     def on_reset(self) -> None:
         """Actions to be performed when the algorithm component is reset."""
-        self._active_timers.clear()
         self._scheduled_sizes.clear()
 
     def on_save(self) -> dict[str, bytes]:
@@ -117,9 +115,9 @@ class TWAPExecAlgorithm(ExecAlgorithm):
             The algorithm component state dictionary.
 
         """
-        pass  # Optionally implement
+        # Optionally implement
 
-    def round_decimal_down(self, amount: Decimal, precision: int):
+    def round_decimal_down(self, amount: Decimal, precision: int) -> Decimal:
         return amount.quantize(Decimal(f"1e-{precision}"), rounding=ROUND_DOWN)
 
     def on_order(self, order: Order) -> None:  # noqa (too complex)
@@ -141,12 +139,6 @@ class TWAPExecAlgorithm(ExecAlgorithm):
             self._scheduled_sizes,
             "order.client_order_id",
             "self._scheduled_sizes",
-        )
-        PyCondition.not_in(
-            order.client_order_id,
-            self._active_timers,
-            "order.client_order_id",
-            "self._active_timers",
         )
         self.log.info(repr(order), LogColor.CYAN)
 
@@ -276,6 +268,10 @@ class TWAPExecAlgorithm(ExecAlgorithm):
             self.log.error(f"Cannot find primary order for {exec_spawn_id=}")
             return
 
+        if primary.is_closed:
+            self.complete_sequence(primary.client_order_id)
+            return
+
         instrument: Instrument = self.cache.instrument(primary.instrument_id)
         if not instrument:
             self.log.error(
@@ -295,8 +291,7 @@ class TWAPExecAlgorithm(ExecAlgorithm):
         quantity: Quantity = instrument.make_qty(scheduled_sizes.pop(0))
         if not scheduled_sizes:  # Final quantity
             self.submit_order(primary)
-            self.clock.cancel_timer(event.name)
-            self.log.info(f"Completed TWAP execution for {exec_spawn_id}.", LogColor.GREEN)
+            self.complete_sequence(primary.client_order_id)
             return
 
         spawned_order: MarketOrder = self.spawn_market(
@@ -308,3 +303,18 @@ class TWAPExecAlgorithm(ExecAlgorithm):
         )
 
         self.submit_order(spawned_order)
+
+    def complete_sequence(self, exec_spawn_id: ClientOrderId) -> None:
+        """
+        Complete an execution sequence.
+
+        Parameters
+        ----------
+        exec_spawn_id : ClientOrderId
+            The execution spawn ID to complete.
+
+        """
+        if exec_spawn_id.value in self.clock.timer_names:
+            self.clock.cancel_timer(exec_spawn_id.value)
+        self._scheduled_sizes.pop(exec_spawn_id, None)
+        self.log.info(f"Completed TWAP execution for {exec_spawn_id}.", LogColor.BLUE)

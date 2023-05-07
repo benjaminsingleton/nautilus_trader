@@ -361,7 +361,7 @@ class PortfolioAnalyzer:
         """
         realized_pnls = self.realized_pnls(currency)
 
-        output = {
+        output: dict[str, Any] = {
             "PnL (total)": self.total_pnl(currency, unrealized_pnl),
             "PnL% (total)": self.total_pnl_percentage(currency, unrealized_pnl),
         }

@@ -10,13 +10,22 @@ IMAGE_FULL?=${IMAGE}:${GIT_TAG}
 .PHONY: pytest pytest-coverage
 
 install:
-	poetry install --with dev,test --all-extras
+	BUILD_MODE=release poetry install --with dev,test --all-extras
+
+install-debug:
+	BUILD_MODE=debug poetry install --with dev,test --all-extras
 
 install-just-deps:
 	poetry install --with dev,test --all-extras --no-root
 
+install-just-deps-all:
+	poetry install --with dev,test,docs --all-extras --no-root
+
 build: nautilus_trader
-	poetry run python build.py
+	BUILD_MODE=release poetry run python build.py
+
+build-debug: nautilus_trader
+	BUILD_MODE=debug poetry run python build.py
 
 clean:
 	git clean -fxd
@@ -38,7 +47,7 @@ update:
 	poetry update
 
 clippy:
-	(cd nautilus_core && cargo clippy --all-targets --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W clippy::unwrap_used -W clippy::expect_used)
+	(cd nautilus_core && cargo clippy --fix --all-targets --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W clippy::unwrap_used -W clippy::expect_used)
 
 cargo-build:
 	(cd nautilus_core && cargo build --release --all-features)

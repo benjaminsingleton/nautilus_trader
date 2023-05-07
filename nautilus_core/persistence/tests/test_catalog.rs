@@ -13,44 +13,15 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-use arrow2::io::parquet::read::{self, FileReader};
-use std::fs::{self, File};
-
-use nautilus_model::data::tick::{Data, QuoteTick, TradeTick};
-use nautilus_persistence::{
-    parquet::{GroupFilterArg, ParquetReader},
-    session::{PersistenceCatalog, QueryResult},
-};
-use rstest::rstest;
-
-#[test]
-fn arrow2_test() {
-    let mut reader =
-        File::open("../../bench_data/quotes_0005.parquet").expect("Unable to open given file");
-    let metadata = read::read_metadata(&mut reader).expect("Unable to read metadata");
-    let schema = read::infer_schema(&metadata).expect("Unable to infer schema");
-    let mut fr = FileReader::new(reader, metadata.row_groups, schema, Some(1000), None, None);
-    let chunk = fr.next();
-    assert!(chunk.is_some())
-}
-
-#[rstest]
-#[case("../../tests/test_data/quote_tick_data.parquet", 9500)]
-#[case("../../bench_data/quotes_0005.parquet", 9689614)]
-fn test_v1_bench_data(#[case] file_path: &str, #[case] length: usize) {
-    let file = File::open(file_path).expect("Unable to open given file");
-    let reader: ParquetReader<QuoteTick, File> =
-        ParquetReader::new(file, 5000, GroupFilterArg::None);
-    let data: Vec<QuoteTick> = reader.flatten().collect();
-    assert_eq!(data.len(), length);
-}
+use nautilus_model::data::tick::{QuoteTick, TradeTick};
+use nautilus_model::data::Data;
+use nautilus_persistence::session::{PersistenceCatalog, QueryResult};
 
 // Note: "current_thread" configuration hangs up for some reason
-#[rstest]
-#[case("../../tests/test_data/quote_tick_data.parquet", 9500)]
-#[case("../../bench_data/quotes_0005.parquet", 9689614)]
 #[tokio::test(flavor = "multi_thread")]
-async fn test_v2_bench_data(#[case] file_path: &str, #[case] length: usize) {
+async fn test_v2_bench_data() {
+    let file_path = "../../tests/test_data/quote_tick_data.parquet";
+    let length = 9500;
     let mut catalog = PersistenceCatalog::new(10000);
     catalog
         .add_file::<QuoteTick>("quotes_0005", file_path)
@@ -73,6 +44,11 @@ async fn test_v2_bench_data(#[case] file_path: &str, #[case] length: usize) {
         true
     };
 
+    if let Data::Quote(q) = &ticks[0] {
+        assert_eq!("EUR/USD.SIM", q.instrument_id.to_string());
+    } else {
+        assert!(false);
+    }
     assert_eq!(ticks.len(), length);
     assert!(is_ascending_by_init(&ticks));
 }

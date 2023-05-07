@@ -13,165 +13,24 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-use std::collections::{BTreeMap, HashMap};
+use std::collections::HashMap;
+use std::str::FromStr;
 
-use arrow2::{
-    array::{Array, Int64Array, UInt64Array},
-    chunk::Chunk,
-    datatypes::{DataType, Field, Schema},
-    io::parquet::write::{transverse, Encoding},
-};
-use datafusion::arrow::{datatypes::SchemaRef, record_batch::RecordBatch};
+use datafusion::arrow::array::*;
+use datafusion::arrow::datatypes::*;
+use datafusion::arrow::record_batch::RecordBatch;
 use nautilus_model::data::tick::QuoteTick;
 use nautilus_model::{
     identifiers::instrument_id::InstrumentId,
     types::{price::Price, quantity::Quantity},
 };
 
-use crate::parquet::{Data, DecodeDataFromRecordBatch, DecodeFromChunk, EncodeToChunk};
-
-impl EncodeToChunk for QuoteTick {
-    fn assert_metadata(metadata: &BTreeMap<String, String>) {
-        let keys = ["instrument_id", "price_precision", "size_precision"];
-        for key in keys {
-            (!metadata.contains_key(key)).then(|| panic!("metadata missing key \"{key}\""));
-        }
-    }
-
-    fn encodings(metadata: BTreeMap<String, String>) -> Vec<Vec<Encoding>> {
-        QuoteTick::encode_schema(metadata)
-            .fields
-            .iter()
-            .map(|f| transverse(&f.data_type, |_| Encoding::Plain))
-            .collect()
-    }
-
-    fn encode_schema(metadata: BTreeMap<String, String>) -> Schema {
-        Self::assert_metadata(&metadata);
-        let fields = vec![
-            Field::new("bid", DataType::Int64, false),
-            Field::new("ask", DataType::Int64, false),
-            Field::new("bid_size", DataType::UInt64, false),
-            Field::new("ask_size", DataType::UInt64, false),
-            Field::new("ts_event", DataType::UInt64, false),
-            Field::new("ts_init", DataType::UInt64, false),
-        ];
-
-        Schema::from(fields).with_metadata(metadata)
-    }
-
-    #[allow(clippy::type_complexity)]
-    fn encode<'a, I>(data: I) -> Chunk<Box<dyn Array>>
-    where
-        I: Iterator<Item = &'a Self>,
-        Self: 'a,
-    {
-        let (
-            mut bid_column,
-            mut ask_column,
-            mut bid_size_column,
-            mut ask_size_column,
-            mut ts_event_column,
-            mut ts_init_column,
-        ): (Vec<i64>, Vec<i64>, Vec<u64>, Vec<u64>, Vec<u64>, Vec<u64>) =
-            (vec![], vec![], vec![], vec![], vec![], vec![]);
-
-        data.fold((), |(), quote| {
-            bid_column.push(quote.bid.raw);
-            ask_column.push(quote.ask.raw);
-            ask_size_column.push(quote.ask_size.raw);
-            bid_size_column.push(quote.bid_size.raw);
-            ts_event_column.push(quote.ts_event);
-            ts_init_column.push(quote.ts_init);
-        });
-
-        let bid_array = Int64Array::from_vec(bid_column);
-        let ask_array = Int64Array::from_vec(ask_column);
-        let bid_size_array = UInt64Array::from_vec(bid_size_column);
-        let ask_size_array = UInt64Array::from_vec(ask_size_column);
-        let ts_event_array = UInt64Array::from_vec(ts_event_column);
-        let ts_init_array = UInt64Array::from_vec(ts_init_column);
-        Chunk::new(vec![
-            bid_array.to_boxed(),
-            ask_array.to_boxed(),
-            bid_size_array.to_boxed(),
-            ask_size_array.to_boxed(),
-            ts_event_array.to_boxed(),
-            ts_init_array.to_boxed(),
-        ])
-    }
-}
-
-impl DecodeFromChunk for QuoteTick {
-    fn decode(schema: &Schema, cols: Chunk<Box<dyn Array>>) -> Vec<Self> {
-        let instrument_id =
-            InstrumentId::from(schema.metadata.get("instrument_id").unwrap().as_str());
-        let price_precision = schema
-            .metadata
-            .get("price_precision")
-            .unwrap()
-            .parse::<u8>()
-            .unwrap();
-        let size_precision = schema
-            .metadata
-            .get("size_precision")
-            .unwrap()
-            .parse::<u8>()
-            .unwrap();
-
-        // Extract field value arrays from chunk separately
-        let bid_values = cols.arrays()[0]
-            .as_any()
-            .downcast_ref::<Int64Array>()
-            .unwrap();
-        let ask_values = cols.arrays()[1]
-            .as_any()
-            .downcast_ref::<Int64Array>()
-            .unwrap();
-        let ask_size_values = cols.arrays()[2]
-            .as_any()
-            .downcast_ref::<UInt64Array>()
-            .unwrap();
-        let bid_size_values = cols.arrays()[3]
-            .as_any()
-            .downcast_ref::<UInt64Array>()
-            .unwrap();
-        let ts_event_values = cols.arrays()[4]
-            .as_any()
-            .downcast_ref::<UInt64Array>()
-            .unwrap();
-        let ts_init_values = cols.arrays()[5]
-            .as_any()
-            .downcast_ref::<UInt64Array>()
-            .unwrap();
-
-        // Construct iterator of values from field value arrays
-        let values = bid_values
-            .into_iter()
-            .zip(ask_values.into_iter())
-            .zip(ask_size_values.into_iter())
-            .zip(bid_size_values.into_iter())
-            .zip(ts_event_values.into_iter())
-            .zip(ts_init_values.into_iter())
-            .map(
-                |(((((bid, ask), ask_size), bid_size), ts_event), ts_init)| QuoteTick {
-                    instrument_id: instrument_id.clone(),
-                    bid: Price::from_raw(*bid.unwrap(), price_precision),
-                    ask: Price::from_raw(*ask.unwrap(), price_precision),
-                    bid_size: Quantity::from_raw(*bid_size.unwrap(), size_precision),
-                    ask_size: Quantity::from_raw(*ask_size.unwrap(), size_precision),
-                    ts_event: *ts_event.unwrap(),
-                    ts_init: *ts_init.unwrap(),
-                },
-            );
-
-        values.collect()
-    }
-}
+use crate::parquet::{Data, DecodeDataFromRecordBatch};
 
 impl DecodeDataFromRecordBatch for QuoteTick {
     fn decode_batch(metadata: &HashMap<String, String>, record_batch: RecordBatch) -> Vec<Data> {
-        let instrument_id = InstrumentId::from(metadata.get("instrument_id").unwrap().as_str());
+        let instrument_id =
+            InstrumentId::from_str(metadata.get("instrument_id").unwrap().as_str()).unwrap();
         let price_precision = metadata
             .get("price_precision")
             .unwrap()
@@ -182,10 +41,6 @@ impl DecodeDataFromRecordBatch for QuoteTick {
             .unwrap()
             .parse::<u8>()
             .unwrap();
-
-        // TODO: Remove temporary import,
-        // imported here so types don't conflict with arrow2 types.
-        use datafusion::arrow::array::*;
 
         // Extract field value arrays from record batch
         let cols = record_batch.columns();
@@ -223,9 +78,6 @@ impl DecodeDataFromRecordBatch for QuoteTick {
     }
 
     fn get_schema(metadata: std::collections::HashMap<String, String>) -> SchemaRef {
-        // TODO: Remove temporary import,
-        // imported here so types don't conflict with arrow2 types.
-        use datafusion::arrow::datatypes::*;
         let fields = vec![
             Field::new("bid", DataType::Int64, false),
             Field::new("ask", DataType::Int64, false),
@@ -236,5 +88,64 @@ impl DecodeDataFromRecordBatch for QuoteTick {
         ];
 
         Schema::new_with_metadata(fields, metadata).into()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use datafusion::arrow::record_batch::RecordBatch;
+    use std::{collections::HashMap, sync::Arc};
+
+    fn create_metadata() -> HashMap<String, String> {
+        let mut metadata = HashMap::new();
+        metadata.insert("instrument_id".to_string(), "AAPL.NASDAQ".to_string());
+        metadata.insert("price_precision".to_string(), "2".to_string());
+        metadata.insert("size_precision".to_string(), "0".to_string());
+        metadata
+    }
+
+    #[test]
+    fn test_get_schema() {
+        let metadata = create_metadata();
+        let schema = QuoteTick::get_schema(metadata.clone());
+        let expected_fields = vec![
+            Field::new("bid", DataType::Int64, false),
+            Field::new("ask", DataType::Int64, false),
+            Field::new("bid_size", DataType::UInt64, false),
+            Field::new("ask_size", DataType::UInt64, false),
+            Field::new("ts_event", DataType::UInt64, false),
+            Field::new("ts_init", DataType::UInt64, false),
+        ];
+        let expected_schema = Schema::new_with_metadata(expected_fields, metadata).into();
+        assert_eq!(schema, expected_schema);
+    }
+
+    #[test]
+    fn test_decode_batch() {
+        let metadata = create_metadata();
+
+        let bid = Int64Array::from(vec![10000, 9900]);
+        let ask = Int64Array::from(vec![10100, 10000]);
+        let bid_size = UInt64Array::from(vec![100, 90]);
+        let ask_size = UInt64Array::from(vec![110, 100]);
+        let ts_event = UInt64Array::from(vec![1, 2]);
+        let ts_init = UInt64Array::from(vec![3, 4]);
+
+        let record_batch = RecordBatch::try_new(
+            QuoteTick::get_schema(metadata.clone()),
+            vec![
+                Arc::new(bid),
+                Arc::new(ask),
+                Arc::new(bid_size),
+                Arc::new(ask_size),
+                Arc::new(ts_event),
+                Arc::new(ts_init),
+            ],
+        )
+        .unwrap();
+
+        let decoded_data = QuoteTick::decode_batch(&metadata, record_batch);
+        assert_eq!(decoded_data.len(), 2);
     }
 }

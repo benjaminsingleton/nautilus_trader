@@ -593,7 +593,7 @@ cdef class Component:
         if self._fsm == ComponentState.PRE_INITIALIZED:
             return  # Cannot publish event
 
-        cdef uint64_t now = self._clock.timestamp_ns()
+        cdef uint64_t ts_now = self._clock.timestamp_ns()
         cdef ComponentStateChanged event = ComponentStateChanged(
             trader_id=self.trader_id,
             component_id=self.id,
@@ -601,8 +601,8 @@ cdef class Component:
             state=self._fsm.state,
             config=self._config,
             event_id=UUID4(),
-            ts_event=now,
-            ts_init=now,
+            ts_event=ts_now,
+            ts_init=ts_now,
         )
 
         self._msgbus.publish(

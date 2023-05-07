@@ -22,7 +22,8 @@ use datafusion::prelude::*;
 use futures::executor::block_on;
 use futures::{Stream, StreamExt};
 use nautilus_core::cvec::CVec;
-use nautilus_model::data::tick::{Data, QuoteTick, TradeTick};
+use nautilus_model::data::tick::{QuoteTick, TradeTick};
+use nautilus_model::data::Data;
 use pyo3::prelude::*;
 use pyo3::types::PyCapsule;
 use pyo3_asyncio::tokio::get_runtime;
@@ -42,7 +43,7 @@ where
         l: &PeekElementBatchStream<S, Data>,
         r: &PeekElementBatchStream<S, Data>,
     ) -> std::cmp::Ordering {
-        // it is a max heap so the ordering must be reversed
+        // Max heap ordering must be reversed
         l.item.get_ts_init().cmp(&r.item.get_ts_init()).reverse()
     }
 }
@@ -184,7 +185,7 @@ impl PythonCatalog {
     #[new]
     #[pyo3(signature=(chunk_size=5000))]
     pub fn new_session(chunk_size: usize) -> Self {
-        // initialize runtime here
+        // Initialize runtime here
         get_runtime();
         PythonCatalog(PersistenceCatalog::new(chunk_size))
     }
