@@ -1122,84 +1122,6 @@
              </ul>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookData">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                OrderBookData
-               </span>
-              </code>
-             </a>
-             <span class="arrow">
-              <i class="fa-solid fa-chevron-right">
-              </i>
-             </span>
-             <ul class="submenu">
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookData.book_type">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookData.book_type
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookData.fully_qualified_name">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookData.fully_qualified_name()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookData.instrument_id">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookData.instrument_id
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookData.sequence">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookData.sequence
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookData.time_in_force">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookData.time_in_force
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookData.ts_event">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookData.ts_event
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookData.ts_init">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookData.ts_init
-                 </span>
-                </code>
-               </a>
-              </li>
-             </ul>
-            </li>
-            <li class="md-nav__item">
              <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookDelta">
               <code class="docutils literal notranslate">
                <span class="pre">
@@ -1217,15 +1139,6 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OrderBookDelta.action
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookDelta.book_type">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookDelta.book_type
                  </span>
                 </code>
                </a>
@@ -1326,15 +1239,6 @@
               </i>
              </span>
              <ul class="submenu">
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookDeltas.book_type">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookDeltas.book_type
-                 </span>
-                </code>
-               </a>
-              </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookDeltas.deltas">
                 <code class="docutils literal notranslate">
@@ -1445,15 +1349,6 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OrderBookSnapshot.bids
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookSnapshot.book_type">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBookSnapshot.book_type
                  </span>
                 </code>
                </a>
@@ -5596,502 +5491,6 @@ internally aggregated.
          </dd>
         </dl>
         <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookData">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            OrderBookData
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             InstrumentId
-            </span>
-            <span class="pre">
-             instrument_id
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             BookType
-            </span>
-            <span class="pre">
-             book_type
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             uint64_t
-            </span>
-            <span class="pre">
-             sequence
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             uint64_t
-            </span>
-            <span class="pre">
-             ts_event
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             uint64_t
-            </span>
-            <span class="pre">
-             ts_init
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             TimeInForce
-            </span>
-            <span class="pre">
-             time_in_force=TimeInForce.GTC
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookData" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <code class="xref py py-class docutils literal notranslate">
-            <span class="pre">
-             Data
-            </span>
-           </code>
-          </p>
-          <p>
-           The base class for all
-           <cite>
-            OrderBook
-           </cite>
-           data.
-          </p>
-          <dl class="field-list simple">
-           <dt class="field-odd">
-            Parameters
-            <span class="colon">
-             :
-            </span>
-           </dt>
-           <dd class="field-odd">
-            <ul class="simple">
-             <li>
-              <p>
-               <strong>
-                instrument_id
-               </strong>
-               (
-               <a class="reference internal" href="identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
-                <em>
-                 InstrumentId
-                </em>
-               </a>
-               ) – The instrument ID for the book.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                book_type
-               </strong>
-               (BookType {
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L1_TBBO
-                </span>
-               </code>
-               ,
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L2_MBP
-                </span>
-               </code>
-               ,
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L3_MBO
-                </span>
-               </code>
-               }) – The order book type.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                sequence
-               </strong>
-               (
-               <em>
-                uint64
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                default 0
-               </em>
-               ) – The unique sequence number for the update. If default 0 then will increment the
-               <cite>
-                sequence
-               </cite>
-               .
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                ts_event
-               </strong>
-               (
-               <em>
-                uint64_t
-               </em>
-               ) – The UNIX timestamp (nanoseconds) when the data event occurred.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                ts_init
-               </strong>
-               (
-               <em>
-                uint64_t
-               </em>
-               ) – The UNIX timestamp (nanoseconds) when the data object was initialized.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                time_in_force
-               </strong>
-               (TimeInForce, default
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 GTC
-                </span>
-               </code>
-               ) – The order time in force for this update.
-              </p>
-             </li>
-            </ul>
-           </dd>
-          </dl>
-          <div class="admonition warning">
-           <p class="admonition-title">
-            Warning
-           </p>
-           <p>
-            This class should not be used directly, but through a concrete subclass.
-           </p>
-          </div>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookData.book_type">
-            <span class="sig-name descname">
-             <span class="pre">
-              book_type
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookData.book_type" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The order book type (L1_TBBO, L2_MBP, L3_MBO).
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                BookType
-               </cite>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookData.fully_qualified_name">
-            <em class="property">
-             <span class="pre">
-              classmethod
-             </span>
-             <span class="w">
-             </span>
-            </em>
-            <span class="sig-name descname">
-             <span class="pre">
-              fully_qualified_name
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               type
-              </span>
-              <span class="pre">
-               cls
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               str
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookData.fully_qualified_name" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Return the fully qualified name for the
-             <cite>
-              Data
-             </cite>
-             class.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <em>
-                str
-               </em>
-              </p>
-             </dd>
-            </dl>
-            <p class="rubric">
-             References
-            </p>
-            <p>
-             <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
-              https://www.python.org/dev/peps/pep-3155/
-             </a>
-            </p>
-           </dd>
-          </dl>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookData.instrument_id">
-            <span class="sig-name descname">
-             <span class="pre">
-              instrument_id
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookData.instrument_id" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The instrument ID for the order book.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                InstrumentId
-               </cite>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookData.sequence">
-            <span class="sig-name descname">
-             <span class="pre">
-              sequence
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookData.sequence" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The unique sequence number.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                uint64
-               </cite>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookData.time_in_force">
-            <span class="sig-name descname">
-             <span class="pre">
-              time_in_force
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookData.time_in_force" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The time in force for this update.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                TimeInForce
-               </cite>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookData.ts_event">
-            <span class="sig-name descname">
-             <span class="pre">
-              ts_event
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookData.ts_event" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The UNIX timestamp (nanoseconds) when the data event occurred.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                uint64_t
-               </cite>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookData.ts_init">
-            <span class="sig-name descname">
-             <span class="pre">
-              ts_init
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookData.ts_init" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The UNIX timestamp (nanoseconds) when the object was initialized.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                uint64_t
-               </cite>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-         </dd>
-        </dl>
-        <dl class="py class">
          <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookDelta">
           <em class="property">
            <span class="pre">
@@ -6115,17 +5514,6 @@ internally aggregated.
             </span>
             <span class="pre">
              instrument_id
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             BookType
-            </span>
-            <span class="pre">
-             book_type
             </span>
            </span>
           </em>
@@ -6205,13 +5593,11 @@ internally aggregated.
          <dd>
           <p>
            Bases:
-           <a class="reference internal" href="#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
-            <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              OrderBookData
-             </span>
-            </code>
-           </a>
+           <code class="xref py py-class docutils literal notranslate">
+            <span class="pre">
+             Data
+            </span>
+           </code>
           </p>
           <p>
            Represents a single difference on an
@@ -6241,32 +5627,6 @@ internally aggregated.
                 </em>
                </a>
                ) – The instrument ID for the book.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                book_type
-               </strong>
-               (BookType {
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L1_TBBO
-                </span>
-               </code>
-               ,
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L2_MBP
-                </span>
-               </code>
-               ,
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L3_MBO
-                </span>
-               </code>
-               }) – The order book type.
               </p>
              </li>
              <li>
@@ -6428,38 +5788,6 @@ internally aggregated.
               <p>
                <cite>
                 BookAction
-               </cite>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookDelta.book_type">
-            <span class="sig-name descname">
-             <span class="pre">
-              book_type
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookDelta.book_type" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The order book type (L1_TBBO, L2_MBP, L3_MBO).
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                BookType
                </cite>
               </p>
              </dd>
@@ -6923,17 +6251,6 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             BookType
-            </span>
-            <span class="pre">
-             book_type
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              list
             </span>
             <span class="pre">
@@ -6995,16 +6312,18 @@ internally aggregated.
          <dd>
           <p>
            Bases:
-           <a class="reference internal" href="#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
-            <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              OrderBookData
-             </span>
-            </code>
-           </a>
+           <code class="xref py py-class docutils literal notranslate">
+            <span class="pre">
+             Data
+            </span>
+           </code>
           </p>
           <p>
-           Represents bulk changes for an
+           Represents bulk
+           <cite>
+            OrderBookDelta
+           </cite>
+           updates for an
            <cite>
             OrderBook
            </cite>
@@ -7031,32 +6350,6 @@ internally aggregated.
                 </em>
                </a>
                ) – The instrument ID for the book.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                book_type
-               </strong>
-               (BookType {
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L1_TBBO
-                </span>
-               </code>
-               ,
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L2_MBP
-                </span>
-               </code>
-               ,
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L3_MBO
-                </span>
-               </code>
-               }) – The order book type.
               </p>
              </li>
              <li>
@@ -7121,38 +6414,6 @@ internally aggregated.
               </p>
              </li>
             </ul>
-           </dd>
-          </dl>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookDeltas.book_type">
-            <span class="sig-name descname">
-             <span class="pre">
-              book_type
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookDeltas.book_type" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The order book type (L1_TBBO, L2_MBP, L3_MBO).
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                BookType
-               </cite>
-              </p>
-             </dd>
-            </dl>
            </dd>
           </dl>
           <dl class="py attribute">
@@ -7612,17 +6873,6 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             BookType
-            </span>
-            <span class="pre">
-             book_type
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              list
             </span>
             <span class="pre">
@@ -7695,13 +6945,11 @@ internally aggregated.
          <dd>
           <p>
            Bases:
-           <a class="reference internal" href="#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
-            <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              OrderBookData
-             </span>
-            </code>
-           </a>
+           <code class="xref py py-class docutils literal notranslate">
+            <span class="pre">
+             Data
+            </span>
+           </code>
           </p>
           <p>
            Represents a snapshot in time for an
@@ -7731,32 +6979,6 @@ internally aggregated.
                 </em>
                </a>
                ) – The instrument ID for the book.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                book_type
-               </strong>
-               (BookType {
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L1_TBBO
-                </span>
-               </code>
-               ,
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L2_MBP
-                </span>
-               </code>
-               ,
-               <code class="docutils literal notranslate">
-                <span class="pre">
-                 L3_MBO
-                </span>
-               </code>
-               }) – The order book type.
               </p>
              </li>
              <li>
@@ -7904,38 +7126,6 @@ internally aggregated.
               <p>
                <cite>
                 list
-               </cite>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookSnapshot.book_type">
-            <span class="sig-name descname">
-             <span class="pre">
-              book_type
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookSnapshot.book_type" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             The order book type (L1_TBBO, L2_MBP, L3_MBO).
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <cite>
-                BookType
                </cite>
               </p>
              </dd>

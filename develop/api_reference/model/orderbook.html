@@ -3579,7 +3579,7 @@
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
                data
@@ -3605,7 +3605,7 @@
            </dt>
            <dd>
             <p>
-             Apply the data to the order book.
+             Apply the given data to the order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -3617,37 +3617,31 @@
              <dd class="field-odd">
               <p>
                <strong>
-                data
+                delta
                </strong>
                (
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
-                 OrderBookData
+                 OrderBookDelta
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
+                <em>
+                 OrderBookDeltas
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
+                <em>
+                 OrderBookSnapshot
                 </em>
                </a>
                ) – The data to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                data.level
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -3818,28 +3812,6 @@
                ) – The deltas to apply.
               </p>
              </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
-              </p>
-             </dd>
             </dl>
            </dd>
           </dl>
@@ -3911,28 +3883,6 @@
                 </em>
                </a>
                ) – The snapshot to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -5998,7 +5948,7 @@
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
                data
@@ -6024,7 +5974,7 @@
            </dt>
            <dd>
             <p>
-             Apply the data to the order book.
+             Apply the given data to the order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -6036,37 +5986,31 @@
              <dd class="field-odd">
               <p>
                <strong>
-                data
+                delta
                </strong>
                (
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
-                 OrderBookData
+                 OrderBookDelta
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
+                <em>
+                 OrderBookDeltas
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
+                <em>
+                 OrderBookSnapshot
                 </em>
                </a>
                ) – The data to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                data.level
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -6237,28 +6181,6 @@
                ) – The deltas to apply.
               </p>
              </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
-              </p>
-             </dd>
             </dl>
            </dd>
           </dl>
@@ -6330,28 +6252,6 @@
                 </em>
                </a>
                ) – The snapshot to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -8418,7 +8318,7 @@ This class maps directly to the functionality of the base class.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
                data
@@ -8444,7 +8344,7 @@ This class maps directly to the functionality of the base class.
            </dt>
            <dd>
             <p>
-             Apply the data to the order book.
+             Apply the given data to the order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -8456,37 +8356,31 @@ This class maps directly to the functionality of the base class.
              <dd class="field-odd">
               <p>
                <strong>
-                data
+                delta
                </strong>
                (
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
-                 OrderBookData
+                 OrderBookDelta
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
+                <em>
+                 OrderBookDeltas
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
+                <em>
+                 OrderBookSnapshot
                 </em>
                </a>
                ) – The data to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                data.level
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -8657,28 +8551,6 @@ This class maps directly to the functionality of the base class.
                ) – The deltas to apply.
               </p>
              </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
-              </p>
-             </dd>
             </dl>
            </dd>
           </dl>
@@ -8750,28 +8622,6 @@ This class maps directly to the functionality of the base class.
                 </em>
                </a>
                ) – The snapshot to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -10769,7 +10619,7 @@ This class maps directly to the functionality of the base class.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
                data
@@ -10795,7 +10645,7 @@ This class maps directly to the functionality of the base class.
            </dt>
            <dd>
             <p>
-             Apply the data to the order book.
+             Apply the given data to the order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -10807,37 +10657,31 @@ This class maps directly to the functionality of the base class.
              <dd class="field-odd">
               <p>
                <strong>
-                data
+                delta
                </strong>
                (
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
-                 OrderBookData
+                 OrderBookDelta
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
+                <em>
+                 OrderBookDeltas
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
+                <em>
+                 OrderBookSnapshot
                 </em>
                </a>
                ) – The data to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                data.level
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -11008,28 +10852,6 @@ This class maps directly to the functionality of the base class.
                ) – The deltas to apply.
               </p>
              </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
-              </p>
-             </dd>
             </dl>
            </dd>
           </dl>
@@ -11101,28 +10923,6 @@ This class maps directly to the functionality of the base class.
                 </em>
                </a>
                ) – The snapshot to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -14678,7 +14478,7 @@ This class maps directly to the functionality of the base class.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
                data
@@ -14704,7 +14504,7 @@ This class maps directly to the functionality of the base class.
            </dt>
            <dd>
             <p>
-             Apply the data to the order book.
+             Apply the given data to the order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -14716,37 +14516,31 @@ This class maps directly to the functionality of the base class.
              <dd class="field-odd">
               <p>
                <strong>
-                data
+                delta
                </strong>
                (
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
-                 OrderBookData
+                 OrderBookDelta
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
+                <em>
+                 OrderBookDeltas
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
+                <em>
+                 OrderBookSnapshot
                 </em>
                </a>
                ) – The data to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                data.level
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -14917,28 +14711,6 @@ This class maps directly to the functionality of the base class.
                ) – The deltas to apply.
               </p>
              </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
-              </p>
-             </dd>
             </dl>
            </dd>
           </dl>
@@ -15010,28 +14782,6 @@ This class maps directly to the functionality of the base class.
                 </em>
                </a>
                ) – The snapshot to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -17090,7 +16840,7 @@ This class maps directly to the functionality of the base class.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
                data
@@ -17116,7 +16866,7 @@ This class maps directly to the functionality of the base class.
            </dt>
            <dd>
             <p>
-             Apply the data to the order book.
+             Apply the given data to the order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -17128,37 +16878,31 @@ This class maps directly to the functionality of the base class.
              <dd class="field-odd">
               <p>
                <strong>
-                data
+                delta
                </strong>
                (
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
-                 OrderBookData
+                 OrderBookDelta
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
+                <em>
+                 OrderBookDeltas
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
+                <em>
+                 OrderBookSnapshot
                 </em>
                </a>
                ) – The data to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                data.level
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -17329,28 +17073,6 @@ This class maps directly to the functionality of the base class.
                ) – The deltas to apply.
               </p>
              </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
-              </p>
-             </dd>
             </dl>
            </dd>
           </dl>
@@ -17422,28 +17144,6 @@ This class maps directly to the functionality of the base class.
                 </em>
                </a>
                ) – The snapshot to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -19502,7 +19202,7 @@ This class maps directly to the functionality of the base class.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
                data
@@ -19528,7 +19228,7 @@ This class maps directly to the functionality of the base class.
            </dt>
            <dd>
             <p>
-             Apply the data to the order book.
+             Apply the given data to the order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -19540,37 +19240,31 @@ This class maps directly to the functionality of the base class.
              <dd class="field-odd">
               <p>
                <strong>
-                data
+                delta
                </strong>
                (
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookData" title="nautilus_trader.model.data.book.OrderBookData">
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
-                 OrderBookData
+                 OrderBookDelta
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
+                <em>
+                 OrderBookDeltas
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
+                <em>
+                 OrderBookSnapshot
                 </em>
                </a>
                ) – The data to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                data.level
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
@@ -19741,28 +19435,6 @@ This class maps directly to the functionality of the base class.
                ) – The deltas to apply.
               </p>
              </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
-              </p>
-             </dd>
             </dl>
            </dd>
           </dl>
@@ -19834,28 +19506,6 @@ This class maps directly to the functionality of the base class.
                 </em>
                </a>
                ) – The snapshot to apply.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <strong>
-                ValueError
-               </strong>
-               – If
-               <cite>
-                snapshot.book_type
-               </cite>
-               is not equal to
-               <cite>
-                self.type
-               </cite>
-               .
               </p>
              </dd>
             </dl>
