@@ -4775,19 +4775,6 @@ then the component state will not change, and an error will be logged.
             <p>
              Handle the given historical data.
             </p>
-            <p>
-             If state is
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               RUNNING
-              </span>
-             </code>
-             then passes to
-             <cite>
-              on_historical_data
-             </cite>
-             .
-            </p>
             <dl class="field-list simple">
              <dt class="field-odd">
               Parameters
@@ -5305,10 +5292,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
-               delta
+               data
               </span>
              </span>
             </em>
@@ -5359,7 +5346,7 @@ then the component state will not change, and an error will be logged.
                 delta
                </strong>
                (
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.data.OrderBookDelta" title="nautilus_trader.model.orderbook.data.OrderBookDelta">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
                  OrderBookDelta
                 </em>
@@ -5367,7 +5354,7 @@ then the component state will not change, and an error will be logged.
                <em>
                 ,
                </em>
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.data.OrderBookDeltas" title="nautilus_trader.model.orderbook.data.OrderBookDeltas">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
                 <em>
                  OrderBookDeltas
                 </em>
@@ -5375,7 +5362,7 @@ then the component state will not change, and an error will be logged.
                <em>
                 ,
                </em>
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.data.OrderBookSnapshot" title="nautilus_trader.model.orderbook.data.OrderBookSnapshot">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
                 <em>
                  OrderBookSnapshot
                 </em>
@@ -7284,10 +7271,10 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookData
+               Data
               </span>
               <span class="pre">
-               delta
+               data
               </span>
              </span>
             </em>
@@ -7310,7 +7297,7 @@ update.
            </dt>
            <dd>
             <p>
-             Actions to be performed when running and receives an order book delta.
+             Actions to be performed when running and receives order book data.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -7325,7 +7312,7 @@ update.
                 delta
                </strong>
                (
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.data.OrderBookDelta" title="nautilus_trader.model.orderbook.data.OrderBookDelta">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
                 <em>
                  OrderBookDelta
                 </em>
@@ -7333,7 +7320,7 @@ update.
                <em>
                 ,
                </em>
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.data.OrderBookDeltas" title="nautilus_trader.model.orderbook.data.OrderBookDeltas">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
                 <em>
                  OrderBookDeltas
                 </em>
@@ -7341,12 +7328,12 @@ update.
                <em>
                 ,
                </em>
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.data.OrderBookSnapshot" title="nautilus_trader.model.orderbook.data.OrderBookSnapshot">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
                 <em>
                  OrderBookSnapshot
                 </em>
                </a>
-               ) – The order book delta received.
+               ) – The order book data received.
               </p>
              </dd>
             </dl>
@@ -10818,11 +10805,8 @@ If
            </dt>
            <dd>
             <p>
-             Subscribe to the order book deltas stream, being a snapshot then deltas
-             <cite>
-              OrderBookData
-             </cite>
-             for the given instrument ID.
+             Subscribe to the order book data stream, being a snapshot then deltas
+for the given instrument ID.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
