@@ -863,7 +863,7 @@ through adapter implementations, these can be found in the top level
 
 
 <span class="n">clock</span> <span class="o">=</span> <span class="n">LiveClock</span><span class="p">()</span>
-<span class="n">account_type</span> <span class="o">=</span> <span class="n">BinanceAccountType</span><span class="o">.</span><span class="n">FUTURES_USDT</span>
+<span class="n">account_type</span> <span class="o">=</span> <span class="n">BinanceAccountType</span><span class="o">.</span><span class="n">USDT_FUTURE</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_cached_binance_http_client</span><span class="p">(</span>
     <span class="n">loop</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">(),</span>
@@ -879,7 +879,7 @@ through adapter implementations, these can be found in the top level
 <span class="n">provider</span> <span class="o">=</span> <span class="n">BinanceFuturesInstrumentProvider</span><span class="p">(</span>
     <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
     <span class="n">logger</span><span class="o">=</span><span class="n">Logger</span><span class="p">(</span><span class="n">clock</span><span class="o">=</span><span class="n">clock</span><span class="p">),</span>
-    <span class="n">account_type</span><span class="o">=</span><span class="n">BinanceAccountType</span><span class="o">.</span><span class="n">FUTURES_USDT</span><span class="p">,</span>
+    <span class="n">account_type</span><span class="o">=</span><span class="n">BinanceAccountType</span><span class="o">.</span><span class="n">USDT_FUTURE</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="k">await</span> <span class="n">provider</span><span class="o">.</span><span class="n">load_all_async</span><span class="p">()</span>
