@@ -2595,6 +2595,9 @@
            </dt>
            <dd>
             <p>
+             BarType
+            </p>
+            <p>
              Return the bar type of bar.
             </p>
             <dl class="field-list simple">
@@ -2609,6 +2612,17 @@
                <em>
                 BarType
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Bar.bar_type
               </p>
              </dd>
             </dl>
@@ -2627,6 +2641,9 @@
            </dt>
            <dd>
             <p>
+             Price
+            </p>
+            <p>
              Return the close price of the bar.
             </p>
             <dl class="field-list simple">
@@ -2641,6 +2658,17 @@
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Bar.close
               </p>
              </dd>
             </dl>
@@ -2766,9 +2794,6 @@
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               type
-              </span>
-              <span class="pre">
                cls
               </span>
              </span>
@@ -2836,6 +2861,9 @@
            </dt>
            <dd>
             <p>
+             Price
+            </p>
+            <p>
              Return the high price of the bar.
             </p>
             <dl class="field-list simple">
@@ -2850,6 +2878,17 @@
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Bar.high
               </p>
              </dd>
             </dl>
@@ -2959,6 +2998,9 @@
            </dt>
            <dd>
             <p>
+             Price
+            </p>
+            <p>
              Return the low price of the bar.
             </p>
             <dl class="field-list simple">
@@ -2973,6 +3015,17 @@
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Bar.low
               </p>
              </dd>
             </dl>
@@ -2991,6 +3044,9 @@
            </dt>
            <dd>
             <p>
+             Price
+            </p>
+            <p>
              Return the open price of the bar.
             </p>
             <dl class="field-list simple">
@@ -3005,6 +3061,17 @@
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Bar.open
               </p>
              </dd>
             </dl>
@@ -3142,6 +3209,9 @@
            </dt>
            <dd>
             <p>
+             Quantity
+            </p>
+            <p>
              Return the volume of the bar.
             </p>
             <dl class="field-list simple">
@@ -3156,6 +3226,17 @@
                <em>
                 Quantity
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Bar.volume
               </p>
              </dd>
             </dl>
@@ -3311,6 +3392,9 @@ method/rule and price type.
            </dt>
            <dd>
             <p>
+             BarAggregation
+            </p>
+            <p>
              Return the aggregation for the specification.
             </p>
             <dl class="field-list simple">
@@ -3325,6 +3409,17 @@ method/rule and price type.
                <em>
                 BarAggregation
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BarSpecification.aggregation
               </p>
              </dd>
             </dl>
@@ -4122,6 +4217,9 @@ threshold-driven.
            </dt>
            <dd>
             <p>
+             PriceType
+            </p>
+            <p>
              Return the price type for the specification.
             </p>
             <dl class="field-list simple">
@@ -4136,6 +4234,17 @@ threshold-driven.
                <em>
                 PriceType
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BarSpecification.price_type
               </p>
              </dd>
             </dl>
@@ -4154,6 +4263,9 @@ threshold-driven.
            </dt>
            <dd>
             <p>
+             int
+            </p>
+            <p>
              Return the step size for the specification.
             </p>
             <dl class="field-list simple">
@@ -4168,6 +4280,17 @@ threshold-driven.
                <em>
                 int
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BarSpecification.step
               </p>
              </dd>
             </dl>
@@ -4185,6 +4308,9 @@ threshold-driven.
             </a>
            </dt>
            <dd>
+            <p>
+             timedelta
+            </p>
             <p>
              Return the timedelta for the specification.
             </p>
@@ -4218,6 +4344,17 @@ threshold-driven.
                 aggregation
                </cite>
                is not a time aggregation, or is``MONTH`` (which is ambiguous).
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               BarSpecification.timedelta
               </p>
              </dd>
             </dl>
@@ -4390,6 +4527,9 @@ internally aggregated.
            </dt>
            <dd>
             <p>
+             AggregationSource
+            </p>
+            <p>
              Return the aggregation source for the bar type.
             </p>
             <dl class="field-list simple">
@@ -4404,6 +4544,17 @@ internally aggregated.
                <em>
                 AggregationSource
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BarType.aggregation_source
               </p>
              </dd>
             </dl>
@@ -4525,6 +4676,9 @@ internally aggregated.
            </dt>
            <dd>
             <p>
+             InstrumentId
+            </p>
+            <p>
              Return the instrument ID for the bar type.
             </p>
             <dl class="field-list simple">
@@ -4539,6 +4693,17 @@ internally aggregated.
                <em>
                 InstrumentId
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BarType.instrument_id
               </p>
              </dd>
             </dl>
@@ -4679,6 +4844,9 @@ internally aggregated.
            </dt>
            <dd>
             <p>
+             BarSpecification
+            </p>
+            <p>
              Return the specification for the bar type.
             </p>
             <dl class="field-list simple">
@@ -4693,6 +4861,17 @@ internally aggregated.
                <em>
                 BarSpecification
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BarType.spec
               </p>
              </dd>
             </dl>
@@ -5862,9 +6041,6 @@ internally aggregated.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               type
-              </span>
-              <span class="pre">
                cls
               </span>
              </span>
@@ -6458,9 +6634,6 @@ internally aggregated.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -7085,9 +7258,6 @@ internally aggregated.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -8076,6 +8246,9 @@ internally aggregated.
            </dt>
            <dd>
             <p>
+             Price
+            </p>
+            <p>
              Return the top of book ask price.
             </p>
             <dl class="field-list simple">
@@ -8090,6 +8263,17 @@ internally aggregated.
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               QuoteTick.ask
               </p>
              </dd>
             </dl>
@@ -8108,6 +8292,9 @@ internally aggregated.
            </dt>
            <dd>
             <p>
+             Quantity
+            </p>
+            <p>
              Return the top of book ask size.
             </p>
             <dl class="field-list simple">
@@ -8122,6 +8309,17 @@ internally aggregated.
                <em>
                 Quantity
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               QuoteTick.ask_size
               </p>
              </dd>
             </dl>
@@ -8140,6 +8338,9 @@ internally aggregated.
            </dt>
            <dd>
             <p>
+             Price
+            </p>
+            <p>
              Return the top of book bid price.
             </p>
             <dl class="field-list simple">
@@ -8154,6 +8355,17 @@ internally aggregated.
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               QuoteTick.bid
               </p>
              </dd>
             </dl>
@@ -8172,6 +8384,9 @@ internally aggregated.
            </dt>
            <dd>
             <p>
+             Quantity
+            </p>
+            <p>
              Return the top of book bid size.
             </p>
             <dl class="field-list simple">
@@ -8186,6 +8401,17 @@ internally aggregated.
                <em>
                 Quantity
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               QuoteTick.bid_size
               </p>
              </dd>
             </dl>
@@ -8884,9 +9110,6 @@ internally aggregated.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               type
-              </span>
-              <span class="pre">
                cls
               </span>
              </span>
@@ -8954,6 +9177,9 @@ internally aggregated.
            </dt>
            <dd>
             <p>
+             InstrumentId
+            </p>
+            <p>
              Return the tick instrument ID.
             </p>
             <dl class="field-list simple">
@@ -8968,6 +9194,17 @@ internally aggregated.
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               QuoteTick.instrument_id
               </p>
              </dd>
             </dl>
@@ -9404,6 +9641,9 @@ seller counterparties.
            </dt>
            <dd>
             <p>
+             AggressorSide
+            </p>
+            <p>
              Return the ticks aggressor side.
             </p>
             <dl class="field-list simple">
@@ -9418,6 +9658,17 @@ seller counterparties.
                <em>
                 AggressorSide
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               TradeTick.aggressor_side
               </p>
              </dd>
             </dl>
@@ -9854,9 +10105,6 @@ seller counterparties.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               type
-              </span>
-              <span class="pre">
                cls
               </span>
              </span>
@@ -9924,6 +10172,9 @@ seller counterparties.
            </dt>
            <dd>
             <p>
+             InstrumentId
+            </p>
+            <p>
              Return the ticks instrument ID.
             </p>
             <dl class="field-list simple">
@@ -9938,6 +10189,17 @@ seller counterparties.
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               TradeTick.instrument_id
               </p>
              </dd>
             </dl>
@@ -10015,6 +10277,9 @@ seller counterparties.
            </dt>
            <dd>
             <p>
+             Price
+            </p>
+            <p>
              Return the ticks price.
             </p>
             <dl class="field-list simple">
@@ -10029,6 +10294,17 @@ seller counterparties.
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               TradeTick.price
               </p>
              </dd>
             </dl>
@@ -10047,6 +10323,9 @@ seller counterparties.
            </dt>
            <dd>
             <p>
+             Price
+            </p>
+            <p>
              Return the ticks size.
             </p>
             <dl class="field-list simple">
@@ -10061,6 +10340,17 @@ seller counterparties.
                <em>
                 Quantity
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               TradeTick.size
               </p>
              </dd>
             </dl>
@@ -10134,6 +10424,9 @@ seller counterparties.
            </dt>
            <dd>
             <p>
+             InstrumentId
+            </p>
+            <p>
              Return the ticks trade match ID.
             </p>
             <dl class="field-list simple">
@@ -10148,6 +10441,17 @@ seller counterparties.
                <em>
                 Price
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               TradeTick.trade_id
               </p>
              </dd>
             </dl>
@@ -10466,9 +10770,6 @@ seller counterparties.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -11029,9 +11330,6 @@ seller counterparties.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               type
-              </span>
-              <span class="pre">
                cls
               </span>
              </span>
@@ -11502,9 +11800,6 @@ seller counterparties.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               type
-              </span>
-              <span class="pre">
                cls
               </span>
              </span>
@@ -11864,9 +12159,6 @@ seller counterparties.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -12250,9 +12542,6 @@ seller counterparties.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -12919,9 +13208,6 @@ the key and value contents of metadata must themselves be hashable.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>

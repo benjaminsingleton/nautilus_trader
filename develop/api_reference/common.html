@@ -4303,9 +4303,6 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               type
-              </span>
-              <span class="pre">
                cls
               </span>
              </span>
@@ -5982,6 +5979,9 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
+             bool
+            </p>
+            <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
               <span class="pre">
@@ -6004,6 +6004,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_degraded
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6019,6 +6030,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
@@ -6042,6 +6056,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_disposed
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6057,6 +6082,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
@@ -6080,6 +6108,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_faulted
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6095,6 +6134,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the component has been initialized (component.state &gt;=
              <code class="docutils literal notranslate">
@@ -6118,6 +6160,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_initialized
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6133,6 +6186,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
@@ -6156,6 +6212,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_running
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6171,6 +6238,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
@@ -6192,6 +6262,17 @@ then the component state will not change, and an error will be logged.
                <em>
                 bool
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_stopped
               </p>
              </dd>
             </dl>
@@ -9929,6 +10010,9 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
+             ComponentState
+            </p>
+            <p>
              Return the components current state.
             </p>
             <dl class="field-list simple">
@@ -9943,6 +10027,17 @@ then the component state will not change, and an error will be logged.
                <em>
                 ComponentState
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.state
               </p>
              </dd>
             </dl>
@@ -14802,6 +14897,9 @@ then the default handler (if registered) will receive the
             </dt>
             <dd>
              <p>
+              int
+             </p>
+             <p>
               Return the count of
               <em>
                active
@@ -14822,6 +14920,17 @@ then the default handler (if registered) will receive the
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Clock.timer_count
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -14837,6 +14946,9 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              list[str]
+             </p>
              <p>
               Return the names of
               <em>
@@ -14856,6 +14968,17 @@ then the default handler (if registered) will receive the
                 <em>
                  list[str]
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Clock.timer_names
                </p>
               </dd>
              </dl>
@@ -16262,6 +16385,22 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              int
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                LiveClock.timer_count
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py attribute">
@@ -16276,6 +16415,22 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              list[str]
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                LiveClock.timer_names
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py method">
@@ -17735,6 +17890,22 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              int
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                TestClock.timer_count
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py attribute">
@@ -17749,6 +17920,22 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              list[str]
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                TestClock.timer_names
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py method">
@@ -18474,9 +18661,6 @@ then the component state will not change, and an error will be logged.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                type
-               </span>
-               <span class="pre">
                 cls
                </span>
               </span>
@@ -18572,6 +18756,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              bool
+             </p>
+             <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
                <span class="pre">
@@ -18594,6 +18781,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_degraded
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18609,6 +18807,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -18632,6 +18833,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_disposed
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18647,6 +18859,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -18670,6 +18885,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_faulted
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18685,6 +18911,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the component has been initialized (component.state &gt;=
               <code class="docutils literal notranslate">
@@ -18708,6 +18937,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_initialized
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18723,6 +18963,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -18746,6 +18989,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_running
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18761,6 +19015,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -18782,6 +19039,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  bool
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_stopped
                </p>
               </dd>
              </dl>
@@ -19001,6 +19269,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              ComponentState
+             </p>
+             <p>
               Return the components current state.
              </p>
              <dl class="field-list simple">
@@ -19015,6 +19286,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  ComponentState
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.state
                </p>
               </dd>
              </dl>
@@ -27769,6 +28051,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              UUID4
+             </p>
+             <p>
               Return the loggers system instance ID.
              </p>
              <dl class="field-list simple">
@@ -27783,6 +28068,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  UUID4
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Logger.instance_id
                </p>
               </dd>
              </dl>
@@ -27801,6 +28097,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              bool
+             </p>
+             <p>
               Return whether the logger is in bypass mode.
              </p>
              <dl class="field-list simple">
@@ -27815,6 +28114,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  bool
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Logger.is_bypassed
                </p>
               </dd>
              </dl>
@@ -27833,6 +28143,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return the loggers machine ID.
              </p>
              <dl class="field-list simple">
@@ -27847,6 +28160,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Logger.machine_id
                </p>
               </dd>
              </dl>
@@ -27865,6 +28189,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              TraderId
+             </p>
+             <p>
               Return the loggers trader ID.
              </p>
              <dl class="field-list simple">
@@ -27879,6 +28206,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  TraderId
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Logger.trader_id
                </p>
               </dd>
              </dl>
@@ -27994,6 +28332,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return the loggers component name.
              </p>
              <dl class="field-list simple">
@@ -28008,6 +28349,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.component
                </p>
               </dd>
              </dl>
@@ -28814,6 +29166,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              UUID4
+             </p>
+             <p>
               Return the loggers system instance ID.
              </p>
              <dl class="field-list simple">
@@ -28828,6 +29183,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  UUID4
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.instance_id
                </p>
               </dd>
              </dl>
@@ -28846,6 +29212,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return whether the logger is in bypass mode.
              </p>
              <dl class="field-list simple">
@@ -28860,6 +29229,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.is_bypassed
                </p>
               </dd>
              </dl>
@@ -28878,6 +29258,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return the loggers machine ID.
              </p>
              <dl class="field-list simple">
@@ -28892,6 +29275,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.machine_id
                </p>
               </dd>
              </dl>
@@ -28910,6 +29304,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              TraderId
+             </p>
+             <p>
               Return the loggers trader ID.
              </p>
              <dl class="field-list simple">
@@ -28924,6 +29321,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  TraderId
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.trader_id
                </p>
               </dd>
              </dl>
@@ -35032,6 +35440,9 @@ upstream.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return the name of the time event.
              </p>
              <dl class="field-list simple">
@@ -35046,6 +35457,17 @@ upstream.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                TimeEvent.name
                </p>
               </dd>
              </dl>
