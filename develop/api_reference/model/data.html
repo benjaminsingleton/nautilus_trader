@@ -1092,33 +1092,6 @@
                 </code>
                </a>
               </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.BookOrder.update_order_id">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  BookOrder.update_order_id()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.BookOrder.update_price">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  BookOrder.update_price()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.book.BookOrder.update_size">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  BookOrder.update_size()
-                 </span>
-                </code>
-               </a>
-              </li>
              </ul>
             </li>
             <li class="md-nav__item">
@@ -1139,6 +1112,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OrderBookDelta.action
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookDelta.flags">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBookDelta.flags
                  </span>
                 </code>
                </a>
@@ -4901,28 +4883,6 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             double
-            </span>
-            <span class="pre">
-             price
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             double
-            </span>
-            <span class="pre">
-             size
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              OrderSide
             </span>
             <span class="pre">
@@ -4934,10 +4894,32 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             unicode
+             Price
             </span>
             <span class="pre">
-             order_id=None
+             price
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Quantity
+            </span>
+            <span class="pre">
+             size
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             uint64_t
+            </span>
+            <span class="pre">
+             order_id
             </span>
            </span>
           </em>
@@ -4972,30 +4954,6 @@ internally aggregated.
              <li>
               <p>
                <strong>
-                price
-               </strong>
-               (
-               <em>
-                double
-               </em>
-               ) – The order price.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                size
-               </strong>
-               (
-               <em>
-                double
-               </em>
-               ) – The order size.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
                 side
                </strong>
                (OrderSide {
@@ -5016,11 +4974,39 @@ internally aggregated.
              <li>
               <p>
                <strong>
-                id
+                price
+               </strong>
+               (
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                <em>
+                 Price
+                </em>
+               </a>
+               ) – The order price.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                size
+               </strong>
+               (
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                <em>
+                 Quantity
+                </em>
+               </a>
+               ) – The order size.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                order_id
                </strong>
                (
                <em>
-                str
+                uint64_t
                </em>
                ) – The order ID.
               </p>
@@ -5196,7 +5182,10 @@ internally aggregated.
            </dt>
            <dd>
             <p>
-             The orders ID.
+             uint64_t
+            </p>
+            <p>
+             Return the book orders side.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -5207,9 +5196,20 @@ internally aggregated.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                str
-               </cite>
+               <em>
+                uint64_t
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BookOrder.order_id
               </p>
              </dd>
             </dl>
@@ -5228,7 +5228,10 @@ internally aggregated.
            </dt>
            <dd>
             <p>
-             The orders price.
+             Price
+            </p>
+            <p>
+             Return the book orders price.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -5239,9 +5242,20 @@ internally aggregated.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                double
-               </cite>
+               <em>
+                Price
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BookOrder.price
               </p>
              </dd>
             </dl>
@@ -5260,7 +5274,10 @@ internally aggregated.
            </dt>
            <dd>
             <p>
-             The orders side.
+             OrderSide
+            </p>
+            <p>
+             Return the book orders side.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -5271,9 +5288,20 @@ internally aggregated.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
+               <em>
                 OrderSide
-               </cite>
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BookOrder.side
               </p>
              </dd>
             </dl>
@@ -5353,7 +5381,10 @@ internally aggregated.
            </dt>
            <dd>
             <p>
-             The orders size.
+             Price
+            </p>
+            <p>
+             Return the book orders size.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -5364,9 +5395,20 @@ internally aggregated.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                double
-               </cite>
+               <em>
+                Quantity
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BookOrder.size
               </p>
              </dd>
             </dl>
@@ -5422,219 +5464,6 @@ internally aggregated.
                <em>
                 dict[str, object]
                </em>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.BookOrder.update_order_id">
-            <span class="sig-name descname">
-             <span class="pre">
-              update_order_id
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               self
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               unicode
-              </span>
-              <span class="pre">
-               value
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               void
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.BookOrder.update_order_id" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Update the orders ID.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                value
-               </strong>
-               (
-               <em>
-                str
-               </em>
-               ) – The updated order ID.
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.BookOrder.update_price">
-            <span class="sig-name descname">
-             <span class="pre">
-              update_price
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               self
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               double
-              </span>
-              <span class="pre">
-               price
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               void
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.BookOrder.update_price" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Update the orders price.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                price
-               </strong>
-               (
-               <em>
-                double
-               </em>
-               ) – The updated price.
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.BookOrder.update_size">
-            <span class="sig-name descname">
-             <span class="pre">
-              update_size
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               self
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               double
-              </span>
-              <span class="pre">
-               size
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               void
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.book.BookOrder.update_size" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Update the orders size.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                size
-               </strong>
-               (
-               <em>
-                double
-               </em>
-               ) – The updated size.
               </p>
              </dd>
             </dl>
@@ -5717,6 +5546,17 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
+             uint8_t
+            </span>
+            <span class="pre">
+             flags=0
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
              uint64_t
             </span>
             <span class="pre">
@@ -5784,7 +5624,7 @@ internally aggregated.
                ,
                <code class="docutils literal notranslate">
                 <span class="pre">
-                 UPDATED
+                 UPDATE
                 </span>
                </code>
                ,
@@ -5843,11 +5683,33 @@ internally aggregated.
              <li>
               <p>
                <strong>
+                flags
+               </strong>
+               (
+               <em>
+                uint8_t
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default 0
+               </em>
+               ) – The unique sequence number for the update. If default 0 then will increment the
+               <cite>
+                sequence
+               </cite>
+               .
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
                 sequence
                </strong>
                (
                <em>
-                uint64
+                uint64_t
                </em>
                <em>
                 ,
@@ -5878,7 +5740,10 @@ internally aggregated.
            </dt>
            <dd>
             <p>
-             The order book delta action {
+             BookAction
+            </p>
+            <p>
+             Return the deltas book action {
              <code class="docutils literal notranslate">
               <span class="pre">
                ADD
@@ -5887,7 +5752,7 @@ internally aggregated.
              ,
              <code class="docutils literal notranslate">
               <span class="pre">
-               UPDATED
+               UPDATE
               </span>
              </code>
              ,
@@ -5902,7 +5767,7 @@ internally aggregated.
                CLEAR
               </span>
              </code>
-             }.
+             }
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -5913,9 +5778,66 @@ internally aggregated.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
+               <em>
                 BookAction
-               </cite>
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDelta.action
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookDelta.flags">
+            <span class="sig-name descname">
+             <span class="pre">
+              flags
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookDelta.flags" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             uint8_t
+            </p>
+            <p>
+             Return the flags for the delta.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                uint8_t
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDelta.flags
               </p>
              </dd>
             </dl>
@@ -6108,7 +6030,10 @@ internally aggregated.
            </dt>
            <dd>
             <p>
-             The instrument ID for the order book.
+             InstrumentId
+            </p>
+            <p>
+             Return the deltas book instrument ID.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -6119,9 +6044,20 @@ internally aggregated.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
+               <em>
                 InstrumentId
-               </cite>
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDelta.instrument_id
               </p>
              </dd>
             </dl>
@@ -6140,7 +6076,10 @@ internally aggregated.
            </dt>
            <dd>
             <p>
-             The order to apply.
+             BookOrder
+            </p>
+            <p>
+             Return the deltas book order for the action.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -6151,9 +6090,20 @@ internally aggregated.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                Order
-               </cite>
+               <em>
+                BookOrder
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDelta.order
               </p>
              </dd>
             </dl>
@@ -6172,7 +6122,10 @@ internally aggregated.
            </dt>
            <dd>
             <p>
-             The unique sequence number.
+             uint64_t
+            </p>
+            <p>
+             Return the sequence number for the delta.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -6183,9 +6136,20 @@ internally aggregated.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                uint64
-               </cite>
+               <em>
+                uint64_t
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDelta.sequence
               </p>
              </dd>
             </dl>
@@ -9192,7 +9156,7 @@ internally aggregated.
              <dd class="field-odd">
               <p>
                <em>
-                Price
+                InstrumentId
                </em>
               </p>
              </dd>
@@ -10187,7 +10151,7 @@ seller counterparties.
              <dd class="field-odd">
               <p>
                <em>
-                Price
+                InstrumentId
                </em>
               </p>
              </dd>
