@@ -836,6 +836,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.portfolio.portfolio.Portfolio.set_specific_venue">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Portfolio.set_specific_venue()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.portfolio.portfolio.Portfolio.unrealized_pnl">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2380,6 +2389,79 @@ If no positions for instrument_id then will return
             <p>
              All stateful fields are reset to their initial value.
             </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.portfolio.portfolio.Portfolio.set_specific_venue">
+            <span class="sig-name descname">
+             <span class="pre">
+              set_specific_venue
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Venue
+              </span>
+              <span class="pre">
+               venue
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.portfolio.portfolio.Portfolio.set_specific_venue" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Set a specific venue for the portfolio.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                venue
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.Venue" title="nautilus_trader.model.identifiers.Venue">
+                <em>
+                 Venue
+                </em>
+               </a>
+               ) – The specific venue to set.
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py method">
