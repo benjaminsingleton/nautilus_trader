@@ -2014,6 +2014,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.events.order.OrderInitialized.trigger_instrument_id">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderInitialized.trigger_instrument_id
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.events.order.OrderInitialized.ts_event">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -10882,6 +10891,15 @@ any other reason that an otherwise valid order is not able to be submitted.
             emulation_trigger,
            </span>
            <span class="pre">
+            InstrumentId
+           </span>
+           <span class="pre">
+            trigger_instrument_id:
+           </span>
+           <span class="pre">
+            Optional[InstrumentId],
+           </span>
+           <span class="pre">
             ContingencyType
            </span>
            <span class="pre">
@@ -11222,6 +11240,30 @@ order parameters.
                 EmulationTrigger
                </em>
                ) – The emulation trigger for the order.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                trigger_instrument_id
+               </strong>
+               (InstrumentId, optional with no default so
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+               must be passed explicitly) – The emulation trigger instrument ID for the order (if
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+               then will be the
+               <cite>
+                instrument_id
+               </cite>
+               ).
               </p>
              </li>
              <li>
@@ -12359,6 +12401,54 @@ contain any arbitrary delimiter if required.
                <cite>
                 TraderId
                </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.events.order.OrderInitialized.trigger_instrument_id">
+            <span class="sig-name descname">
+             <span class="pre">
+              trigger_instrument_id
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.events.order.OrderInitialized.trigger_instrument_id" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             The order emulation trigger instrument ID (will be
+             <cite>
+              instrument_id
+             </cite>
+             if
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               None
+              </span>
+             </code>
+             ).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <cite>
+                InstrumentId
+               </cite>
+               or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
               </p>
              </dd>
             </dl>
