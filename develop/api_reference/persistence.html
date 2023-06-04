@@ -4497,6 +4497,16 @@ correctly loaded.
           <span class="sig-paren">
            )
           </span>
+          <span class="sig-return">
+           <span class="sig-return-icon">
+            →
+           </span>
+           <span class="sig-return-typehint">
+            <span class="pre">
+             type
+            </span>
+           </span>
+          </span>
           <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.generate_signal_class" title="Permalink to this definition">
            ¶
           </a>
@@ -4505,6 +4515,55 @@ correctly loaded.
           <p>
            Dynamically create a Data subclass for this signal.
           </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                name
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The name of the signal data.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                value_type
+               </strong>
+               (
+               <em>
+                type
+               </em>
+               ) – The type for the signal data value.
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Returns
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <p>
+             <em>
+              SignalData
+             </em>
+            </p>
+           </dd>
+          </dl>
          </dd>
         </dl>
        </section>

@@ -732,6 +732,11 @@ will need to define your data by subclassing from
 
 
 <span class="k">class</span> <span class="nc">MyDataPoint</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    This is an example of a user-defined data class, inheriting from the base class `Data`.</span>
+
+<span class="sd">    The fields `label`, `x`, `y`, and `z` in this class are examples of arbitrary user data.</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -742,48 +747,124 @@ will need to define your data by subclassing from
         <span class="n">ts_event</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">ts_init</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ts_event</span><span class="p">,</span> <span class="n">ts_init</span><span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ts_event</span> <span class="o">=</span> <span class="n">ts_event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ts_init</span> <span class="o">=</span> <span class="n">ts_init</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ts_event</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        The UNIX timestamp (nanoseconds) when the data event occurred.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ts_event</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ts_init</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        The UNIX timestamp (nanoseconds) when the object was initialized.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ts_init</span>
+
 </pre>
           </div>
          </div>
          <p>
-          As you can see, this requires you to call the
+          The
           <code class="docutils literal notranslate">
            <span class="pre">
             Data
            </span>
           </code>
-          base classes
+          abstract base class acts as a contract within the system and requires two properties
+for all types of data:
           <code class="docutils literal notranslate">
            <span class="pre">
-            __init__
+            ts_event
            </span>
           </code>
-          method,
-and passing in the UNIX
-          <strong>
-           nanosecond
-          </strong>
-          timestamps for the event, and object initialization.
+          and
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            ts_init
+           </span>
+          </code>
+          . These represent the UNIX nanosecond timestamps
+for when the event occurred and when the object was initialized, respectively.
+         </p>
+         <p>
+          The recommended approach to satisfy the contract is to assign
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            ts_event
+           </span>
+          </code>
+          and
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            ts_init
+           </span>
+          </code>
+          to backing fields, and then implement the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            @property
+           </span>
+          </code>
+          for each as shown above
+(for completeness, the docstrings are copied from the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            Data
+           </span>
+          </code>
+          base class).
          </p>
          <div class="admonition note">
           <p class="admonition-title">
            Note
           </p>
           <p>
-           Passing these timestamps is what allows Nautilus to correctly order data streams
+           As
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             Data
+            </span>
+           </code>
+           holds no state, it is not strictly necessary to call
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             super().__init__()
+            </span>
+           </code>
+           .
+          </p>
+         </div>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           These timestamps are what allow Nautilus to correctly order data streams for backtests
 by monotonically increasing
            <code class="docutils literal notranslate">
             <span class="pre">
              ts_init
             </span>
            </code>
-           timestamps for backtests.
+           UNIX nanoseconds.
           </p>
          </div>
          <p>
