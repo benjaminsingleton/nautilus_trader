@@ -16333,9 +16333,9 @@ then the component state will not change, and an error will be logged.
               <p>
                Subscribe to
                <cite>
-                OrderBookSnapshot
+                OrderBook
                </cite>
-               data for the given instrument ID.
+               snapshots data for the given instrument ID.
               </p>
               <dl class="field-list simple">
                <dt class="field-odd">
@@ -17955,9 +17955,9 @@ then the component state will not change, and an error will be logged.
               <p>
                Unsubscribe from
                <cite>
-                OrderBookSnapshot
+                OrderBook
                </cite>
-               data for the given instrument ID.
+               snapshots data for the given instrument ID.
               </p>
               <dl class="field-list simple">
                <dt class="field-odd">
@@ -28749,6 +28749,26 @@ applying the given filters.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
+               base_url_ws
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               str
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
                account_type
               </span>
              </span>
@@ -28778,53 +28798,6 @@ applying the given filters.
              <span class="default_value">
               <span class="pre">
                BinanceAccountType.SPOT
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               base_url_ws
-              </span>
-             </span>
-             <span class="p">
-              <span class="pre">
-               :
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="n">
-              <span class="pre">
-               Optional
-              </span>
-              <span class="p">
-               <span class="pre">
-                [
-               </span>
-              </span>
-              <span class="pre">
-               str
-              </span>
-              <span class="p">
-               <span class="pre">
-                ]
-               </span>
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="o">
-              <span class="pre">
-               =
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="default_value">
-              <span class="pre">
-               None
               </span>
              </span>
             </em>
@@ -28991,6 +28964,18 @@ applying the given filters.
                <li>
                 <p>
                  <strong>
+                  base_url_ws
+                 </strong>
+                 (
+                 <em>
+                  str
+                 </em>
+                 ) – The base URL for the WebSocket client.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
                   account_type
                  </strong>
                  (
@@ -29000,24 +28985,6 @@ applying the given filters.
                   </em>
                  </a>
                  ) – The account type for the client.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  base_url_ws
-                 </strong>
-                 (
-                 <em>
-                  str
-                 </em>
-                 <em>
-                  ,
-                 </em>
-                 <em>
-                  optional
-                 </em>
-                 ) – The base URL for the WebSocket client.
                 </p>
                </li>
                <li>
@@ -32032,9 +31999,9 @@ then the component state will not change, and an error will be logged.
               <p>
                Subscribe to
                <cite>
-                OrderBookSnapshot
+                OrderBook
                </cite>
-               data for the given instrument ID.
+               snapshots data for the given instrument ID.
               </p>
               <dl class="field-list simple">
                <dt class="field-odd">
@@ -33654,9 +33621,9 @@ then the component state will not change, and an error will be logged.
               <p>
                Unsubscribe from
                <cite>
-                OrderBookSnapshot
+                OrderBook
                </cite>
-               data for the given instrument ID.
+               snapshots data for the given instrument ID.
               </p>
               <dl class="field-list simple">
                <dt class="field-odd">

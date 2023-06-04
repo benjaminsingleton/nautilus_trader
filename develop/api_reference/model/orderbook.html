@@ -733,15 +733,6 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.OrderBook.apply_snapshot">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  OrderBook.apply_snapshot()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.OrderBook.best_ask_price">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -841,6 +832,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.OrderBook.fully_qualified_name">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBook.fully_qualified_name()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.OrderBook.instrument_id">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -899,6 +899,24 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OrderBook.spread()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.OrderBook.ts_event">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBook.ts_event
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.OrderBook.ts_init">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBook.ts_init
                  </span>
                 </code>
                </a>
@@ -1047,7 +1065,7 @@
            Bases:
            <code class="xref py py-class docutils literal notranslate">
             <span class="pre">
-             object
+             Data
             </span>
            </code>
           </p>
@@ -1250,14 +1268,6 @@
                  OrderBookDeltas
                 </em>
                </a>
-               <em>
-                ,
-               </em>
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
-                <em>
-                 OrderBookSnapshot
-                </em>
-               </a>
                ) – The data to apply.
               </p>
              </dd>
@@ -1427,79 +1437,6 @@
                 </em>
                </a>
                ) – The deltas to apply.
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.OrderBook.apply_snapshot">
-            <span class="sig-name descname">
-             <span class="pre">
-              apply_snapshot
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               self
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               OrderBookSnapshot
-              </span>
-              <span class="pre">
-               snapshot
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               void
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.OrderBook.apply_snapshot" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Apply the bulk snapshot to the order book.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                snapshot
-               </strong>
-               (
-               <a class="reference internal" href="data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
-                <em>
-                 OrderBookSnapshot
-                </em>
-               </a>
-               ) – The snapshot to apply.
               </p>
              </dd>
             </dl>
@@ -2022,7 +1959,7 @@
            </dt>
            <dd>
             <p>
-             uint64_t
+             int
             </p>
             <p>
              Return the books update count.
@@ -2037,7 +1974,7 @@
              <dd class="field-odd">
               <p>
                <em>
-                uint64_t
+                int
                </em>
               </p>
              </dd>
@@ -2174,6 +2111,80 @@
               </ul>
              </dd>
             </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.OrderBook.fully_qualified_name">
+            <em class="property">
+             <span class="pre">
+              classmethod
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              fully_qualified_name
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               cls
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               str
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.OrderBook.fully_qualified_name" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the fully qualified name for the
+             <cite>
+              Data
+             </cite>
+             class.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                str
+               </em>
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             References
+            </p>
+            <p>
+             <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
+              https://www.python.org/dev/peps/pep-3155/
+             </a>
+            </p>
            </dd>
           </dl>
           <dl class="py attribute">
@@ -2413,7 +2424,7 @@
            </dt>
            <dd>
             <p>
-             uint64_t
+             int
             </p>
             <p>
              Return the last sequence number for the book.
@@ -2428,7 +2439,7 @@
              <dd class="field-odd">
               <p>
                <em>
-                uint64_t
+                int
                </em>
               </p>
              </dd>
@@ -2612,6 +2623,98 @@
            </dd>
           </dl>
           <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.OrderBook.ts_event">
+            <span class="sig-name descname">
+             <span class="pre">
+              ts_event
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.OrderBook.ts_event" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             int
+            </p>
+            <p>
+             The UNIX timestamp (nanoseconds) when the data event occurred.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                int
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBook.ts_event
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.OrderBook.ts_init">
+            <span class="sig-name descname">
+             <span class="pre">
+              ts_init
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.OrderBook.ts_init" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             int
+            </p>
+            <p>
+             The UNIX timestamp (nanoseconds) when the object was initialized.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                int
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBook.ts_init
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.OrderBook.ts_last">
             <span class="sig-name descname">
              <span class="pre">
@@ -2624,7 +2727,7 @@
            </dt>
            <dd>
             <p>
-             uint64_t
+             int
             </p>
             <p>
              Return the UNIX timestamp (nanoseconds) when the order book was last updated.
@@ -2639,7 +2742,7 @@
              <dd class="field-odd">
               <p>
                <em>
-                uint64_t
+                int
                </em>
               </p>
              </dd>

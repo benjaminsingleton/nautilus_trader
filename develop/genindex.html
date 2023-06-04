@@ -1818,11 +1818,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.apply_snapshot">
-             apply_snapshot() (OrderBook method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Money.as_decimal">
              as_decimal() (Money method)
             </a>
@@ -1886,11 +1881,6 @@
            <li>
             <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.ask_size">
              ask_size (QuoteTick attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.asks">
-             asks (OrderBookSnapshot attribute)
             </a>
            </li>
            <li>
@@ -2539,6 +2529,10 @@
              basis_points_as_percentage() (in module nautilus_trader.core.stats)
             </a>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.best_ask_price">
              best_ask_price() (OrderBook method)
@@ -2551,10 +2545,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.best_ask_size">
              best_ask_size() (OrderBook method)
@@ -2657,11 +2647,6 @@
            <li>
             <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.bid_size">
              bid_size (QuoteTick attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.bids">
-             bids (OrderBookSnapshot attribute)
             </a>
            </li>
            <li>
@@ -3889,9 +3874,21 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.clear">
-             clear() (OrderBook method)
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.clear">
+             clear() (BSPOrderBookDelta static method)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.clear">
+               (OrderBook method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.clear">
+               (OrderBookDelta static method)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.clear_actors">
@@ -7535,11 +7532,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.from_dict">
-               (OrderBookSnapshot static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderCanceled.from_dict">
                (OrderCanceled static method)
               </a>
@@ -8177,6 +8169,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.fully_qualified_name">
+               (OrderBook class method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.fully_qualified_name">
                (OrderBookDelta class method)
               </a>
@@ -8184,11 +8181,6 @@
              <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.fully_qualified_name">
                (OrderBookDeltas class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.fully_qualified_name">
-               (OrderBookSnapshot class method)
               </a>
              </li>
              <li>
@@ -11868,11 +11860,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.instrument_id">
-               (OrderBookSnapshot attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderCanceled.instrument_id">
                (OrderCanceled attribute)
               </a>
@@ -12188,6 +12175,18 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_add">
+             is_add (BSPOrderBookDelta attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.is_add">
+               (OrderBookDelta attribute)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.is_aggressive">
              is_aggressive (LimitIfTouchedOrder attribute)
             </a>
@@ -12435,6 +12434,18 @@
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_market.TrailingStopMarketOrder.is_child_order">
                (TrailingStopMarketOrder attribute)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_clear">
+             is_clear (BSPOrderBookDelta attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.is_clear">
+               (OrderBookDelta attribute)
               </a>
              </li>
             </ul>
@@ -12843,6 +12854,18 @@
          </td>
          <td style="width: 33%; vertical-align: top;">
           <ul>
+           <li>
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_delete">
+             is_delete (BSPOrderBookDelta attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.is_delete">
+               (OrderBookDelta attribute)
+              </a>
+             </li>
+            </ul>
+           </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.is_disposed">
              is_disposed (Actor attribute)
@@ -14362,6 +14385,18 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.is_snapshot">
+             is_snapshot (BSPOrderBookDeltas attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.is_snapshot">
+               (OrderBookDeltas attribute)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.is_spawned">
              is_spawned (LimitIfTouchedOrder attribute)
             </a>
@@ -14662,6 +14697,18 @@
              <li>
               <a href="api_reference/accounting.html#nautilus_trader.accounting.accounts.margin.MarginAccount.is_unleveraged">
                (MarginAccount method)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_update">
+             is_update (BSPOrderBookDelta attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.is_update">
+               (OrderBookDelta attribute)
               </a>
              </li>
             </ul>
@@ -22097,11 +22144,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot">
-             OrderBookSnapshot (class in nautilus_trader.model.data.book)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderCanceled">
              OrderCanceled (class in nautilus_trader.model.events.order)
             </a>
@@ -23059,10 +23101,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.engine.ExecutionEngine.position_id_count">
              position_id_count() (ExecutionEngine method)
@@ -23075,6 +23113,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.position_ids">
              position_ids() (Cache method)
@@ -23661,8 +23703,13 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.process_order_book">
-             process_order_book() (SimulatedExchange method)
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.process_order_book_delta">
+             process_order_book_delta() (SimulatedExchange method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.process_order_book_deltas">
+             process_order_book_deltas() (SimulatedExchange method)
             </a>
            </li>
            <li>
@@ -25961,11 +26008,6 @@
              <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.sequence">
                (OrderBookDeltas attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.sequence">
-               (OrderBookSnapshot attribute)
               </a>
              </li>
             </ul>
@@ -29761,11 +29803,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.to_dict">
-               (OrderBookSnapshot static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderCanceled.to_dict">
                (OrderCanceled static method)
               </a>
@@ -30868,6 +30905,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.ts_event">
+               (OrderBook attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.ts_event">
                (OrderBookDelta attribute)
               </a>
@@ -30875,11 +30917,6 @@
              <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.ts_event">
                (OrderBookDeltas attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.ts_event">
-               (OrderBookSnapshot attribute)
               </a>
              </li>
              <li>
@@ -31195,6 +31232,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.ts_init">
+               (OrderBook attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.ts_init">
                (OrderBookDelta attribute)
               </a>
@@ -31202,11 +31244,6 @@
              <li>
               <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.ts_init">
                (OrderBookDeltas attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot.ts_init">
-               (OrderBookSnapshot attribute)
               </a>
              </li>
              <li>
