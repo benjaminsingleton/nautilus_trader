@@ -1479,8 +1479,8 @@ risk monitoring.
              <cite>
               on_degrade()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                DEGRADING
@@ -1545,8 +1545,8 @@ then the component state will not change, and an error will be logged.
              <cite>
               on_dispose()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                DISPOSING
@@ -1712,16 +1712,16 @@ then the component state will not change, and an error will be logged.
              Fault the component.
             </p>
             <p>
-             This method is idempotent and irreversible. No other methods should be
-called after faulting.
+             Calling this method multiple times has the same effect as calling it once (it is idempotent).
+Once called, it cannot be reversed, and no other methods should be called on this instance.
             </p>
             <p>
              While executing
              <cite>
               on_fault()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                FAULTING
@@ -2534,8 +2534,8 @@ then the component state will not change, and an error will be logged.
              <cite>
               on_reset()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                RESETTING
@@ -2600,8 +2600,8 @@ then the component state will not change, and an error will be logged.
              <cite>
               on_resume()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                RESUMING
@@ -2906,8 +2906,8 @@ notional check.
              <cite>
               on_start()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                STARTING
@@ -3018,8 +3018,8 @@ then the component state will not change, and an error will be logged.
              <cite>
               on_stop()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                STOPPING
