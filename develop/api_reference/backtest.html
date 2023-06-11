@@ -11486,9 +11486,7 @@ generate new position IDs.
                  <em>
                   default False
                  </em>
-                 ) – If venue order and position IDs will use a random raw ID component.
-If True will use a random uint32 component, otherwise will be deterministically based on
-the order in which instruments are added to the exchange.
+                 ) – If venue order and position IDs will be randomly generated UUID4s.
                 </p>
                </li>
               </ul>
@@ -13665,9 +13663,7 @@ following the run iterations.
                <em>
                 default False
                </em>
-               ) – If venue order and position IDs will use a random raw ID component.
-If True will use a random uint32 component, otherwise will be deterministically based on
-the order in which instruments are added to the exchange.
+               ) – If venue order and position IDs will be randomly generated UUID4s.
               </p>
              </li>
             </ul>
@@ -13890,19 +13886,6 @@ the order in which instruments are added to the exchange.
                   instrument.id.venue
                  </cite>
                  is not equal to the venue ID.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  KeyError
-                 </strong>
-                 – If
-                 <cite>
-                  instrument
-                 </cite>
-                 is already contained within the venue.
-    This is to enforce correct internal identifier indexing.
                 </p>
                </li>
                <li>
@@ -16365,7 +16348,7 @@ the order in which instruments are added to the exchange.
            </dt>
            <dd>
             <p>
-             If venue order and position IDs will use a random raw ID component.
+             If venue order and position IDs will be randomly generated UUID4s.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
