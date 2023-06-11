@@ -2972,10 +2972,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_order_book_delta">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_order_book_deltas">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.handle_order_book_delta()
+                  FXRolloverInterestModule.handle_order_book_deltas()
                  </span>
                 </code>
                </a>
@@ -3242,10 +3242,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_order_book_delta">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_order_book_deltas">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.on_order_book_delta()
+                  FXRolloverInterestModule.on_order_book_deltas()
                  </span>
                 </code>
                </a>
@@ -3905,10 +3905,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.handle_order_book_delta">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.handle_order_book_deltas">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.handle_order_book_delta()
+                  SimulationModule.handle_order_book_deltas()
                  </span>
                 </code>
                </a>
@@ -4175,10 +4175,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.on_order_book_delta">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.on_order_book_deltas">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.on_order_book_delta()
+                  SimulationModule.on_order_book_deltas()
                  </span>
                 </code>
                </a>
@@ -23198,7 +23198,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             Handle the given order book snapshot.
+             Handle the given order book.
             </p>
             <p>
              Passes to
@@ -23246,10 +23246,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_order_book_delta">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_order_book_deltas">
             <span class="sig-name descname">
              <span class="pre">
-              handle_order_book_delta
+              handle_order_book_deltas
              </span>
             </span>
             <span class="sig-paren">
@@ -23266,10 +23266,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               Data
+               OrderBookDeltas
               </span>
               <span class="pre">
-               data
+               deltas
               </span>
              </span>
             </em>
@@ -23286,13 +23286,13 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_order_book_delta" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_order_book_deltas" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Handle the given order book data.
+             Handle the given order book deltas.
             </p>
             <p>
              Passes to
@@ -23317,23 +23317,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                delta
+                deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
-                <em>
-                 OrderBookDelta
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
                 <em>
                  OrderBookDeltas
                 </em>
                </a>
-               ) – The order book delta received.
+               ) – The order book deltas received.
               </p>
              </dd>
             </dl>
@@ -25343,7 +25335,7 @@ update.
            </dt>
            <dd>
             <p>
-             Actions to be performed when running and receives an order book snapshot.
+             Actions to be performed when running and receives an order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -25378,10 +25370,10 @@ update.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.on_order_book_delta">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.on_order_book_deltas">
             <span class="sig-name descname">
              <span class="pre">
-              on_order_book_delta
+              on_order_book_deltas
              </span>
             </span>
             <span class="sig-paren">
@@ -25398,10 +25390,10 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               Data
+               OrderBookDeltas
               </span>
               <span class="pre">
-               data
+               deltas
               </span>
              </span>
             </em>
@@ -25418,13 +25410,13 @@ update.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_order_book_delta" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_order_book_deltas" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Actions to be performed when running and receives order book data.
+             Actions to be performed when running and receives order book deltas.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -25436,23 +25428,15 @@ update.
              <dd class="field-odd">
               <p>
                <strong>
-                delta
+                deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
-                <em>
-                 OrderBookDelta
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
                 <em>
                  OrderBookDeltas
                 </em>
                </a>
-               ) – The order book data received.
+               ) – The order book deltas received.
               </p>
              </dd>
             </dl>
@@ -29276,7 +29260,7 @@ If
              <cite>
               OrderBook
              </cite>
-             snapshots for the given instrument ID.
+             snapshots at a specified interval, for the given instrument ID.
             </p>
             <p>
              The
@@ -30812,7 +30796,11 @@ If
            </dt>
            <dd>
             <p>
-             Unsubscribe from order book snapshots for the given instrument ID.
+             Unsubscribe from
+             <cite>
+              OrderBook
+             </cite>
+             snapshots, for the given instrument ID.
             </p>
             <p>
              The interval must match the previously subscribed interval.
@@ -32732,7 +32720,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             Handle the given order book snapshot.
+             Handle the given order book.
             </p>
             <p>
              Passes to
@@ -32780,10 +32768,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.handle_order_book_delta">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.handle_order_book_deltas">
             <span class="sig-name descname">
              <span class="pre">
-              handle_order_book_delta
+              handle_order_book_deltas
              </span>
             </span>
             <span class="sig-paren">
@@ -32800,10 +32788,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               Data
+               OrderBookDeltas
               </span>
               <span class="pre">
-               data
+               deltas
               </span>
              </span>
             </em>
@@ -32820,13 +32808,13 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.handle_order_book_delta" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.handle_order_book_deltas" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Handle the given order book data.
+             Handle the given order book deltas.
             </p>
             <p>
              Passes to
@@ -32851,23 +32839,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                delta
+                deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
-                <em>
-                 OrderBookDelta
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
                 <em>
                  OrderBookDeltas
                 </em>
                </a>
-               ) – The order book delta received.
+               ) – The order book deltas received.
               </p>
              </dd>
             </dl>
@@ -34851,7 +34831,7 @@ update.
            </dt>
            <dd>
             <p>
-             Actions to be performed when running and receives an order book snapshot.
+             Actions to be performed when running and receives an order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -34886,10 +34866,10 @@ update.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.on_order_book_delta">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.on_order_book_deltas">
             <span class="sig-name descname">
              <span class="pre">
-              on_order_book_delta
+              on_order_book_deltas
              </span>
             </span>
             <span class="sig-paren">
@@ -34906,10 +34886,10 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               Data
+               OrderBookDeltas
               </span>
               <span class="pre">
-               data
+               deltas
               </span>
              </span>
             </em>
@@ -34926,13 +34906,13 @@ update.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.on_order_book_delta" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.on_order_book_deltas" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Actions to be performed when running and receives order book data.
+             Actions to be performed when running and receives order book deltas.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -34944,23 +34924,15 @@ update.
              <dd class="field-odd">
               <p>
                <strong>
-                delta
+                deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
-                <em>
-                 OrderBookDelta
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
                 <em>
                  OrderBookDeltas
                 </em>
                </a>
-               ) – The order book data received.
+               ) – The order book deltas received.
               </p>
              </dd>
             </dl>
@@ -38767,7 +38739,7 @@ If
              <cite>
               OrderBook
              </cite>
-             snapshots for the given instrument ID.
+             snapshots at a specified interval, for the given instrument ID.
             </p>
             <p>
              The
@@ -40303,7 +40275,11 @@ If
            </dt>
            <dd>
             <p>
-             Unsubscribe from order book snapshots for the given instrument ID.
+             Unsubscribe from
+             <cite>
+              OrderBook
+             </cite>
+             snapshots, for the given instrument ID.
             </p>
             <p>
              The interval must match the previously subscribed interval.
