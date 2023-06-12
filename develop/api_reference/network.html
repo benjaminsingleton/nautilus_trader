@@ -3291,6 +3291,18 @@ return zero.
              <li>
               <p>
                <strong>
+                url
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The URL for the client connection.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
                 handler
                </strong>
                (
@@ -3319,18 +3331,6 @@ return zero.
                 ]
                </em>
                ) – The callback handler for message events.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                base_url
-               </strong>
-               (
-               <em>
-                str
-               </em>
-               ) – The base URL for the WebSocket connection.
               </p>
              </li>
              <li>
@@ -3389,7 +3389,7 @@ however the client will respond to ping frames with pongs.
                <em>
                 optional
                </em>
-               ) – The custom name for the client.
+               ) – The custom name for the client (used for logging).
               </p>
              </li>
             </ul>
@@ -3538,20 +3538,7 @@ however the client will respond to ping frames with pongs.
              <span class="w">
              </span>
              <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
               str
-             </span>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
              </span>
             </em>
             <a class="headerlink" href="#nautilus_trader.network.websocket.WebSocketClient.url" title="Permalink to this definition">
