@@ -27473,6 +27473,53 @@ then the component state will not change, and an error will be logged.
             </span>
            </span>
           </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             loop
+            </span>
+           </span>
+           <span class="p">
+            <span class="pre">
+             :
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="n">
+            <span class="pre">
+             Optional
+            </span>
+            <span class="p">
+             <span class="pre">
+              [
+             </span>
+            </span>
+            <span class="pre">
+             AbstractEventLoop
+            </span>
+            <span class="p">
+             <span class="pre">
+              ]
+             </span>
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="o">
+            <span class="pre">
+             =
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="default_value">
+            <span class="pre">
+             None
+            </span>
+           </span>
+          </em>
           <span class="sig-paren">
            )
           </span>
@@ -27500,24 +27547,47 @@ then the component state will not change, and an error will be logged.
             </span>
            </dt>
            <dd class="field-odd">
-            <p>
-             <strong>
-              config
-             </strong>
-             (
-             <a class="reference internal" href="config.html#nautilus_trader.config.live.TradingNodeConfig" title="nautilus_trader.config.live.TradingNodeConfig">
-              <em>
-               TradingNodeConfig
-              </em>
-             </a>
-             <em>
-              ,
-             </em>
-             <em>
-              optional
-             </em>
-             ) – The configuration for the instance.
-            </p>
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                config
+               </strong>
+               (
+               <a class="reference internal" href="config.html#nautilus_trader.config.live.TradingNodeConfig" title="nautilus_trader.config.live.TradingNodeConfig">
+                <em>
+                 TradingNodeConfig
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <em>
+                optional
+               </em>
+               ) – The configuration for the instance.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                loop
+               </strong>
+               (
+               <em>
+                asyncio.AbstractEventLoop
+               </em>
+               ) – The event loop for the node.
+If
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+               then will get the running event loop.
+              </p>
+             </li>
+            </ul>
            </dd>
           </dl>
           <dl class="py property">
