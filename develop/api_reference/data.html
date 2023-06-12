@@ -1923,6 +1923,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.connect">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataEngine.connect()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.data_count">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1963,6 +1972,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     DataEngine.deregister_client()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.disconnect">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataEngine.disconnect()
                    </span>
                   </code>
                  </a>
@@ -12401,6 +12419,46 @@ just need to override the
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.connect">
+             <span class="sig-name descname">
+              <span class="pre">
+               connect
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.connect" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Connect the engine by calling connect on all registered clients.
+             </p>
+            </dd>
+           </dl>
            <dl class="py attribute">
             <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.data_count">
              <span class="sig-name descname">
@@ -12648,6 +12706,46 @@ then the component state will not change, and an error will be logged.
                </p>
               </dd>
              </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.disconnect">
+             <span class="sig-name descname">
+              <span class="pre">
+               disconnect
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.disconnect" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Disconnect the engine by calling disconnect on all registered clients.
+             </p>
             </dd>
            </dl>
            <dl class="py method">

@@ -3140,6 +3140,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.engine.ExecutionEngine.connect">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecutionEngine.connect()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.engine.ExecutionEngine.debug">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -3171,6 +3180,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     ExecutionEngine.deregister_client()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.engine.ExecutionEngine.disconnect">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecutionEngine.disconnect()
                    </span>
                   </code>
                  </a>
@@ -3324,6 +3342,42 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     ExecutionEngine.process()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.engine.ExecutionEngine.reconcile_mass_status">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecutionEngine.reconcile_mass_status()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.engine.ExecutionEngine.reconcile_report">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecutionEngine.reconcile_report()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.engine.ExecutionEngine.reconcile_state">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecutionEngine.reconcile_state()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.engine.ExecutionEngine.reconciliation">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecutionEngine.reconciliation
                    </span>
                   </code>
                  </a>
@@ -32004,6 +32058,46 @@ trading commands and events.
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.engine.ExecutionEngine.connect">
+             <span class="sig-name descname">
+              <span class="pre">
+               connect
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.engine.ExecutionEngine.connect" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Connect the engine by calling connect on all registered clients.
+             </p>
+            </dd>
+           </dl>
            <dl class="py attribute">
             <dt class="sig sig-object py" id="nautilus_trader.execution.engine.ExecutionEngine.debug">
              <span class="sig-name descname">
@@ -32049,6 +32143,9 @@ trading commands and events.
             </dt>
             <dd>
              <p>
+              Optional[ClientId]
+             </p>
+             <p>
               Return the default execution client registered with the engine.
              </p>
              <dl class="field-list simple">
@@ -32060,9 +32157,23 @@ trading commands and events.
               </dt>
               <dd class="field-odd">
                <p>
-                <em>
-                 Optional[ClientId]
-                </em>
+                ClientId or
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                ExecutionEngine.default_client
                </p>
               </dd>
              </dl>
@@ -32223,6 +32334,46 @@ then the component state will not change, and an error will be logged.
                </p>
               </dd>
              </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.engine.ExecutionEngine.disconnect">
+             <span class="sig-name descname">
+              <span class="pre">
+               disconnect
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.engine.ExecutionEngine.disconnect" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Disconnect the engine by calling disconnect on all registered clients.
+             </p>
             </dd>
            </dl>
            <dl class="py method">
@@ -33219,6 +33370,343 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.engine.ExecutionEngine.reconcile_mass_status">
+             <span class="sig-name descname">
+              <span class="pre">
+               reconcile_mass_status
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecutionMassStatus
+               </span>
+               <span class="pre">
+                report:
+               </span>
+               <span class="pre">
+                ExecutionMassStatus
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.engine.ExecutionEngine.reconcile_mass_status" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Reconcile the given execution mass status report.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 report
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.execution.reports.ExecutionMassStatus" title="nautilus_trader.execution.reports.ExecutionMassStatus">
+                 <em>
+                  ExecutionMassStatus
+                 </em>
+                </a>
+                ) – The execution mass status report to reconcile.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.engine.ExecutionEngine.reconcile_report">
+             <span class="sig-name descname">
+              <span class="pre">
+               reconcile_report
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecutionReport
+               </span>
+               <span class="pre">
+                report:
+               </span>
+               <span class="pre">
+                ExecutionReport
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.engine.ExecutionEngine.reconcile_report" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Check the given execution report.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 report
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.execution.reports.ExecutionReport" title="nautilus_trader.execution.reports.ExecutionReport">
+                 <em>
+                  ExecutionReport
+                 </em>
+                </a>
+                ) – The execution report to check.
+               </p>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 bool
+                </em>
+                – True if reconciliation successful, else False.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.engine.ExecutionEngine.reconcile_state">
+             <em class="property">
+              <span class="pre">
+               async
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               reconcile_state
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                double
+               </span>
+               <span class="pre">
+                timeout_secs:
+               </span>
+               <span class="pre">
+                float
+               </span>
+               <span class="pre">
+                =
+               </span>
+               <span class="pre">
+                10.0
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.engine.ExecutionEngine.reconcile_state" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Reconcile the internal execution state with all execution clients (external state).
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 timeout_secs
+                </strong>
+                (
+                <em>
+                 double
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default 10.0
+                </em>
+                ) – The timeout (seconds) for reconciliation to complete.
+               </p>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 bool
+                </em>
+                – True if states reconcile within timeout, else False.
+               </p>
+              </dd>
+              <dt class="field-odd">
+               Raises
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 ValueError
+                </strong>
+                – If
+                <cite>
+                 timeout_secs
+                </cite>
+                is not positive (&gt; 0).
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.engine.ExecutionEngine.reconciliation">
+             <span class="sig-name descname">
+              <span class="pre">
+               reconciliation
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.engine.ExecutionEngine.reconciliation" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              bool
+             </p>
+             <p>
+              Return whether the reconciliation process will be run on start.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                ExecutionEngine.reconciliation
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.execution.engine.ExecutionEngine.register_client">
              <span class="sig-name descname">
               <span class="pre">
@@ -33679,6 +34167,9 @@ overwritten.
             </dt>
             <dd>
              <p>
+              list[ClientId]
+             </p>
+             <p>
               Return the execution clients registered with the engine.
              </p>
              <dl class="field-list simple">
@@ -33693,6 +34184,17 @@ overwritten.
                 <em>
                  list[ClientId]
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                ExecutionEngine.registered_clients
                </p>
               </dd>
              </dl>

@@ -13461,6 +13461,91 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
              </span>
             </span>
            </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_connection:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_reconciliation:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_portfolio:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_disconnection:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_post_stop:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
            <span class="sig-paren">
             )
            </span>
@@ -13773,6 +13858,111 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                  default False
                 </em>
                 ) – If the asyncio event loop should be in debug mode.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 timeout_connection
+                </strong>
+                (
+                <em>
+                 PositiveFloat
+                </em>
+                <em>
+                 (
+                </em>
+                <em>
+                 seconds
+                </em>
+                <em>
+                 )
+                </em>
+                ) – The timeout for all clients to connect and initialize.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 timeout_reconciliation
+                </strong>
+                (
+                <em>
+                 PositiveFloat
+                </em>
+                <em>
+                 (
+                </em>
+                <em>
+                 seconds
+                </em>
+                <em>
+                 )
+                </em>
+                ) – The timeout for execution state to reconcile.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 timeout_portfolio
+                </strong>
+                (
+                <em>
+                 PositiveFloat
+                </em>
+                <em>
+                 (
+                </em>
+                <em>
+                 seconds
+                </em>
+                <em>
+                 )
+                </em>
+                ) – The timeout for portfolio to initialize margins and unrealized PnLs.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 timeout_disconnection
+                </strong>
+                (
+                <em>
+                 PositiveFloat
+                </em>
+                <em>
+                 (
+                </em>
+                <em>
+                 seconds
+                </em>
+                <em>
+                 )
+                </em>
+                ) – The timeout for all engine clients to disconnect.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 timeout_post_stop
+                </strong>
+                (
+                <em>
+                 PositiveFloat
+                </em>
+                <em>
+                 (
+                </em>
+                <em>
+                 seconds
+                </em>
+                <em>
+                 )
+                </em>
+                ) – The timeout after stopping the node to await residual events before final shutdown.
                </p>
               </li>
              </ul>
@@ -17194,6 +17384,91 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
              </span>
              <span class="pre">
               None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_connection:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_reconciliation:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_portfolio:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_disconnection:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              timeout_post_stop:
+             </span>
+             <span class="pre">
+              float
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              10.0
              </span>
             </span>
            </em>
@@ -22633,56 +22908,6 @@ are colocated with the venue (to avoid the potential for race conditions).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              data_clients:
-             </span>
-             <span class="pre">
-              dict[str
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              nautilus_trader.config.live.LiveDataClientConfig]
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              &lt;factory&gt;
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              exec_clients:
-             </span>
-             <span class="pre">
-              dict[str
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              nautilus_trader.config.live.LiveExecClientConfig]
-             </span>
-             <span class="pre">
-              =
-             </span>
-             <span class="pre">
-              &lt;factory&gt;
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               timeout_connection:
              </span>
              <span class="pre">
@@ -22761,6 +22986,56 @@ are colocated with the venue (to avoid the potential for race conditions).
              </span>
              <span class="pre">
               10.0
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              data_clients:
+             </span>
+             <span class="pre">
+              dict[str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              nautilus_trader.config.live.LiveDataClientConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              &lt;factory&gt;
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              exec_clients:
+             </span>
+             <span class="pre">
+              dict[str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              nautilus_trader.config.live.LiveExecClientConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              &lt;factory&gt;
              </span>
             </span>
            </em>
@@ -23022,111 +23297,6 @@ are colocated with the venue (to avoid the potential for race conditions).
                  optional
                 </em>
                 ) – The execution client configurations.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 timeout_connection
-                </strong>
-                (
-                <em>
-                 PositiveFloat
-                </em>
-                <em>
-                 (
-                </em>
-                <em>
-                 seconds
-                </em>
-                <em>
-                 )
-                </em>
-                ) – The timeout for all clients to connect and initialize.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 timeout_reconciliation
-                </strong>
-                (
-                <em>
-                 PositiveFloat
-                </em>
-                <em>
-                 (
-                </em>
-                <em>
-                 seconds
-                </em>
-                <em>
-                 )
-                </em>
-                ) – The timeout for execution state to reconcile.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 timeout_portfolio
-                </strong>
-                (
-                <em>
-                 PositiveFloat
-                </em>
-                <em>
-                 (
-                </em>
-                <em>
-                 seconds
-                </em>
-                <em>
-                 )
-                </em>
-                ) – The timeout for portfolio to initialize margins and unrealized PnLs.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 timeout_disconnection
-                </strong>
-                (
-                <em>
-                 PositiveFloat
-                </em>
-                <em>
-                 (
-                </em>
-                <em>
-                 seconds
-                </em>
-                <em>
-                 )
-                </em>
-                ) – The timeout for all engine clients to disconnect.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 timeout_post_stop
-                </strong>
-                (
-                <em>
-                 PositiveFloat
-                </em>
-                <em>
-                 (
-                </em>
-                <em>
-                 seconds
-                </em>
-                <em>
-                 )
-                </em>
-                ) – The timeout after stopping the node to await residual events before final shutdown.
                </p>
               </li>
              </ul>

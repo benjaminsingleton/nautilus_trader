@@ -2561,6 +2561,15 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.reconciliation">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  LiveExecutionEngine.reconciliation
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.connect">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -21771,6 +21780,57 @@ then the component state will not change, and an error will be logged.
             </p>
            </dd>
           </dl>
+          <dl class="py property">
+           <dt class="sig sig-object py" id="nautilus_trader.live.execution_engine.LiveExecutionEngine.reconciliation">
+            <em class="property">
+             <span class="pre">
+              property
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              reconciliation
+             </span>
+            </span>
+            <em class="property">
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              bool
+             </span>
+            </em>
+            <a class="headerlink" href="#nautilus_trader.live.execution_engine.LiveExecutionEngine.reconciliation" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return whether the reconciliation process will be run on start.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
           <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.live.execution_engine.LiveExecutionEngine.connect">
             <span class="sig-name descname">
@@ -22977,6 +23037,9 @@ running on.
            </dt>
            <dd>
             <p>
+             Optional[ClientId]
+            </p>
+            <p>
              Return the default execution client registered with the engine.
             </p>
             <dl class="field-list simple">
@@ -22988,9 +23051,23 @@ running on.
              </dt>
              <dd class="field-odd">
               <p>
-               <em>
-                Optional[ClientId]
-               </em>
+               ClientId or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               ExecutionEngine.default_client
               </p>
              </dd>
             </dl>
@@ -24461,6 +24538,9 @@ overwritten.
            </dt>
            <dd>
             <p>
+             list[ClientId]
+            </p>
+            <p>
              Return the execution clients registered with the engine.
             </p>
             <dl class="field-list simple">
@@ -24475,6 +24555,17 @@ overwritten.
                <em>
                 list[ClientId]
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               ExecutionEngine.registered_clients
               </p>
              </dd>
             </dl>
