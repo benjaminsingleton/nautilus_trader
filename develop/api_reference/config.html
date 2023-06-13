@@ -6448,6 +6448,40 @@ The value should be a valid decimal format.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              filter_unclaimed_external_orders
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               debug
              </span>
             </span>
@@ -6548,6 +6582,24 @@ The value should be a valid decimal format.
                  default True
                 </em>
                 ) – If unleveraged spot/cash assets should generate positions.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 filter_unclaimed_external_orders
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If unclaimed order events with an EXTERNAL strategy ID should be filtered/dropped.
                </p>
               </li>
               <li>
@@ -17230,6 +17282,14 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              filter_unclaimed_external_orders=False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               debug=False)
              </span>
             </span>
@@ -20147,6 +20207,40 @@ external inputs of venues and data.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              filter_unclaimed_external_orders
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               debug
              </span>
             </span>
@@ -22700,6 +22794,14 @@ are colocated with the venue (to avoid the potential for race conditions).
             <span class="n">
              <span class="pre">
               allow_cash_positions=True
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              filter_unclaimed_external_orders=False
              </span>
             </span>
            </em>
