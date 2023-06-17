@@ -733,8 +733,8 @@
         </h1>
         <p>
          NautilusTrader offers an adapter for integrating with the Interactive Brokers Gateway via
-         <a class="reference external" href="https://github.com/erdewit/ib_insync">
-          ib_insync
+         <a class="reference external" href="https://github.com/nautechsystems/ibapi">
+          ibapi
          </a>
          .
         </p>
@@ -902,10 +902,10 @@ queries below for common use cases
            <pre><span></span><span class="n">config_node</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
     <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">"IB"</span><span class="p">:</span> <span class="n">InteractiveBrokersDataClientConfig</span><span class="p">(</span>
-            <span class="n">instrument_provider</span><span class="o">=</span><span class="n">InstrumentProviderConfig</span><span class="p">(</span>
-            <span class="n">load_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">filters</span><span class="o">=</span><span class="nb">tuple</span><span class="p">({</span><span class="s2">"secType"</span><span class="p">:</span> <span class="s2">"CASH"</span><span class="p">,</span> <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"EUR"</span><span class="p">,</span> <span class="s2">"currency"</span><span class="p">:</span> <span class="s2">"USD"</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-        <span class="p">)</span>
+            <span class="n">instrument_provider</span><span class="o">=</span><span class="n">InteractiveBrokersInstrumentProviderConfig</span><span class="p">(</span>
+                <span class="n">load_ids</span><span class="o">=</span><span class="p">{</span><span class="s2">"EUR/USD.IDEALPRO"</span><span class="p">,</span> <span class="s2">"AAPL.NASDAQ"</span><span class="p">},</span>
+                <span class="n">load_contracts</span><span class="o">=</span><span class="p">{</span><span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s2">"CONTFUT"</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s2">"CME"</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s2">"MES"</span><span class="p">)},</span>
+            <span class="p">)</span>
     <span class="p">),</span>
     <span class="o">...</span>
 <span class="p">)</span>
@@ -925,31 +925,16 @@ queries below for common use cases
              Stock:
              <code class="docutils literal notranslate">
               <span class="pre">
-               {"secType":
+               IBContract(secType='STK',
               </span>
               <span class="pre">
-               "STK",
+               exchange='SMART',
               </span>
               <span class="pre">
-               "symbol":
+               symbol='AMD',
               </span>
               <span class="pre">
-               "AMD",
-              </span>
-              <span class="pre">
-               "exchange":
-              </span>
-              <span class="pre">
-               "SMART",
-              </span>
-              <span class="pre">
-               "currency":
-              </span>
-              <span class="pre">
-               "USD"
-              </span>
-              <span class="pre">
-               }
+               currency='USD')
               </span>
              </code>
             </p>
@@ -959,34 +944,16 @@ queries below for common use cases
              Stock:
              <code class="docutils literal notranslate">
               <span class="pre">
-               {"secType":
+               IBContract(secType='STK',
               </span>
               <span class="pre">
-               "STK",
+               exchange='SMART',
               </span>
               <span class="pre">
-               "symbol":
+               primaryExchange='NASDAQ',
               </span>
               <span class="pre">
-               "INTC",
-              </span>
-              <span class="pre">
-               "exchange":
-              </span>
-              <span class="pre">
-               "SMART",
-              </span>
-              <span class="pre">
-               "primaryExchange":
-              </span>
-              <span class="pre">
-               "NASDAQ",
-              </span>
-              <span class="pre">
-               "currency":
-              </span>
-              <span class="pre">
-               "USD"}
+               symbol='INTC')
               </span>
              </code>
             </p>
@@ -996,25 +963,13 @@ queries below for common use cases
              Forex:
              <code class="docutils literal notranslate">
               <span class="pre">
-               {"secType":
+               InstrumentId('EUR/USD.IDEALPRO')
               </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
               <span class="pre">
-               "CASH",
-              </span>
-              <span class="pre">
-               "symbol":
-              </span>
-              <span class="pre">
-               "EUR","currency":
-              </span>
-              <span class="pre">
-               "USD",
-              </span>
-              <span class="pre">
-               "exchange":
-              </span>
-              <span class="pre">
-               "IDEALPRO"}
+               InstrumentId('USD/JPY.IDEALPRO')
               </span>
              </code>
             </p>
@@ -1024,16 +979,10 @@ queries below for common use cases
              CFD:
              <code class="docutils literal notranslate">
               <span class="pre">
-               {"secType":
+               IBContract(secType='CFD',
               </span>
               <span class="pre">
-               "CFD",
-              </span>
-              <span class="pre">
-               "symbol":
-              </span>
-              <span class="pre">
-               "IBUS30"}
+               symbol='IBUS30')
               </span>
              </code>
             </p>
@@ -1043,28 +992,40 @@ queries below for common use cases
              Future:
              <code class="docutils literal notranslate">
               <span class="pre">
-               {"secType":
+               InstrumentId("YMH24.CBOT")
+              </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InstrumentId("CLZ27.NYMEX")
+              </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InstrumentId("ESZ27.CME")
+              </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InstrumentId('ES.CME')
+              </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               IBContract(secType='CONTFUT',
               </span>
               <span class="pre">
-               "FUT",
+               exchange='CME',
               </span>
               <span class="pre">
-               "symbol":
+               symbol='ES',
               </span>
               <span class="pre">
-               "ES",
-              </span>
-              <span class="pre">
-               "exchange":
-              </span>
-              <span class="pre">
-               "GLOBEX",
-              </span>
-              <span class="pre">
-               "lastTradeDateOrContractMonth":
-              </span>
-              <span class="pre">
-               "20180921"}
+               build_futures_chain=True)
               </span>
              </code>
             </p>
@@ -1074,43 +1035,28 @@ queries below for common use cases
              Option:
              <code class="docutils literal notranslate">
               <span class="pre">
-               {"secType":
+               InstrumentId('SPY251219C00395000.SMART')
+              </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               IBContract(secType='STK',
               </span>
               <span class="pre">
-               "OPT",
+               exchange='SMART',
               </span>
               <span class="pre">
-               "symbol":
+               primaryExchange='ARCA',
               </span>
               <span class="pre">
-               "SPY",
+               symbol='SPY',
               </span>
               <span class="pre">
-               "exchange":
+               lastTradeDateOrContractMonth='20251219',
               </span>
               <span class="pre">
-               "SMART",
-              </span>
-              <span class="pre">
-               "lastTradeDateOrContractMonth":
-              </span>
-              <span class="pre">
-               "20170721",
-              </span>
-              <span class="pre">
-               "strike":
-              </span>
-              <span class="pre">
-               240,
-              </span>
-              <span class="pre">
-               "right":
-              </span>
-              <span class="pre">
-               "C"
-              </span>
-              <span class="pre">
-               }
+               build_options_chain=True)
               </span>
              </code>
             </p>
@@ -1120,22 +1066,13 @@ queries below for common use cases
              Bond:
              <code class="docutils literal notranslate">
               <span class="pre">
-               {"secType":
+               IBContract(secType='BOND',
               </span>
               <span class="pre">
-               "BOND",
+               secIdType='ISIN',
               </span>
               <span class="pre">
-               "secIdType":
-              </span>
-              <span class="pre">
-               'ISIN',
-              </span>
-              <span class="pre">
-               "secId":
-              </span>
-              <span class="pre">
-               'US03076KAA60'}
+               secId='US03076KAA60')
               </span>
              </code>
             </p>
@@ -1145,28 +1082,7 @@ queries below for common use cases
              Crypto:
              <code class="docutils literal notranslate">
               <span class="pre">
-               {"secType":
-              </span>
-              <span class="pre">
-               "CRYPTO",
-              </span>
-              <span class="pre">
-               "symbol":
-              </span>
-              <span class="pre">
-               "BTC",
-              </span>
-              <span class="pre">
-               "exchange":
-              </span>
-              <span class="pre">
-               "PAXOS",
-              </span>
-              <span class="pre">
-               "currency":
-              </span>
-              <span class="pre">
-               "USD"}
+               InstrumentId('BTC/USD.PAXOS')
               </span>
              </code>
             </p>

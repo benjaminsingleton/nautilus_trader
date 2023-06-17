@@ -854,10 +854,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.handle_order_book_delta">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.handle_order_book_deltas">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.handle_order_book_delta()
+                  Actor.handle_order_book_deltas()
                  </span>
                 </code>
                </a>
@@ -1115,10 +1115,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.on_order_book_delta">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.on_order_book_deltas">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.on_order_book_delta()
+                  Actor.on_order_book_deltas()
                  </span>
                 </code>
                </a>
@@ -4053,8 +4053,8 @@ fully “wired” into the platform. Exceptions will be raised if an
              <cite>
               on_degrade()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                DEGRADING
@@ -4190,8 +4190,8 @@ then the component state will not change, and an error will be logged.
              <cite>
               on_dispose()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                DISPOSING
@@ -4252,16 +4252,16 @@ then the component state will not change, and an error will be logged.
              Fault the component.
             </p>
             <p>
-             This method is idempotent and irreversible. No other methods should be
-called after faulting.
+             Calling this method multiple times has the same effect as calling it once (it is idempotent).
+Once called, it cannot be reversed, and no other methods should be called on this instance.
             </p>
             <p>
              While executing
              <cite>
               on_fault()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                FAULTING
@@ -4302,9 +4302,6 @@ then the component state will not change, and an error will be logged.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -5224,7 +5221,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             Handle the given order book snapshot.
+             Handle the given order book.
             </p>
             <p>
              Passes to
@@ -5272,10 +5269,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.handle_order_book_delta">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.handle_order_book_deltas">
             <span class="sig-name descname">
              <span class="pre">
-              handle_order_book_delta
+              handle_order_book_deltas
              </span>
             </span>
             <span class="sig-paren">
@@ -5292,10 +5289,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               Data
+               OrderBookDeltas
               </span>
               <span class="pre">
-               data
+               deltas
               </span>
              </span>
             </em>
@@ -5312,13 +5309,13 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.handle_order_book_delta" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.handle_order_book_deltas" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Handle the given order book data.
+             Handle the given order book deltas.
             </p>
             <p>
              Passes to
@@ -5343,31 +5340,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                delta
+                deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
-                <em>
-                 OrderBookDelta
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
                 <em>
                  OrderBookDeltas
                 </em>
                </a>
-               <em>
-                ,
-               </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
-                <em>
-                 OrderBookSnapshot
-                </em>
-               </a>
-               ) – The order book delta received.
+               ) – The order book deltas received.
               </p>
              </dd>
             </dl>
@@ -5982,6 +5963,9 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
+             bool
+            </p>
+            <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
               <span class="pre">
@@ -6004,6 +5988,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_degraded
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6019,6 +6014,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
@@ -6042,6 +6040,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_disposed
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6057,6 +6066,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
@@ -6080,6 +6092,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_faulted
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6095,6 +6118,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the component has been initialized (component.state &gt;=
              <code class="docutils literal notranslate">
@@ -6118,6 +6144,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_initialized
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6133,6 +6170,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
@@ -6156,6 +6196,17 @@ then the component state will not change, and an error will be logged.
                </em>
               </p>
              </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_running
+              </p>
+             </dd>
             </dl>
            </dd>
           </dl>
@@ -6171,6 +6222,9 @@ then the component state will not change, and an error will be logged.
             </a>
            </dt>
            <dd>
+            <p>
+             bool
+            </p>
             <p>
              Return whether the current component state is
              <code class="docutils literal notranslate">
@@ -6192,6 +6246,17 @@ then the component state will not change, and an error will be logged.
                <em>
                 bool
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.is_stopped
               </p>
              </dd>
             </dl>
@@ -7216,7 +7281,7 @@ update.
            </dt>
            <dd>
             <p>
-             Actions to be performed when running and receives an order book snapshot.
+             Actions to be performed when running and receives an order book.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -7251,10 +7316,10 @@ update.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.on_order_book_delta">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.on_order_book_deltas">
             <span class="sig-name descname">
              <span class="pre">
-              on_order_book_delta
+              on_order_book_deltas
              </span>
             </span>
             <span class="sig-paren">
@@ -7271,10 +7336,10 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               Data
+               OrderBookDeltas
               </span>
               <span class="pre">
-               data
+               deltas
               </span>
              </span>
             </em>
@@ -7291,13 +7356,13 @@ update.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.on_order_book_delta" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.on_order_book_deltas" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Actions to be performed when running and receives order book data.
+             Actions to be performed when running and receives order book deltas.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -7309,31 +7374,15 @@ update.
              <dd class="field-odd">
               <p>
                <strong>
-                delta
+                deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
-                <em>
-                 OrderBookDelta
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
                 <em>
                  OrderBookDeltas
                 </em>
                </a>
-               <em>
-                ,
-               </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookSnapshot" title="nautilus_trader.model.data.book.OrderBookSnapshot">
-                <em>
-                 OrderBookSnapshot
-                </em>
-               </a>
-               ) – The order book data received.
+               ) – The order book deltas received.
               </p>
              </dd>
             </dl>
@@ -9686,8 +9735,8 @@ If
              <cite>
               on_reset()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                RESETTING
@@ -9752,8 +9801,8 @@ then the component state will not change, and an error will be logged.
              <cite>
               on_resume()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                RESUMING
@@ -9893,8 +9942,8 @@ then the component state will not change, and an error will be logged.
              <cite>
               on_start()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                STARTING
@@ -9929,6 +9978,9 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
+             ComponentState
+            </p>
+            <p>
              Return the components current state.
             </p>
             <dl class="field-list simple">
@@ -9943,6 +9995,17 @@ then the component state will not change, and an error will be logged.
                <em>
                 ComponentState
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Component.state
               </p>
              </dd>
             </dl>
@@ -9991,8 +10054,8 @@ then the component state will not change, and an error will be logged.
              <cite>
               on_stop()
              </cite>
-             , any exception will be logged and reraised.
-The component will remain in a
+             any exception will be logged and reraised, then the component
+will remain in a
              <code class="docutils literal notranslate">
               <span class="pre">
                STOPPING
@@ -11031,7 +11094,7 @@ If
              <cite>
               OrderBook
              </cite>
-             snapshots for the given instrument ID.
+             snapshots at a specified interval, for the given instrument ID.
             </p>
             <p>
              The
@@ -12567,7 +12630,11 @@ If
            </dt>
            <dd>
             <p>
-             Unsubscribe from order book snapshots for the given instrument ID.
+             Unsubscribe from
+             <cite>
+              OrderBook
+             </cite>
+             snapshots, for the given instrument ID.
             </p>
             <p>
              The interval must match the previously subscribed interval.
@@ -14802,6 +14869,9 @@ then the default handler (if registered) will receive the
             </dt>
             <dd>
              <p>
+              int
+             </p>
+             <p>
               Return the count of
               <em>
                active
@@ -14822,6 +14892,17 @@ then the default handler (if registered) will receive the
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Clock.timer_count
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -14837,6 +14918,9 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              list[str]
+             </p>
              <p>
               Return the names of
               <em>
@@ -14856,6 +14940,17 @@ then the default handler (if registered) will receive the
                 <em>
                  list[str]
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Clock.timer_names
                </p>
               </dd>
              </dl>
@@ -16262,6 +16357,22 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              int
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                LiveClock.timer_count
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py attribute">
@@ -16276,6 +16387,22 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              list[str]
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                LiveClock.timer_names
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py method">
@@ -17735,6 +17862,22 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              int
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                TestClock.timer_count
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py attribute">
@@ -17749,6 +17892,22 @@ then the default handler (if registered) will receive the
              </a>
             </dt>
             <dd>
+             <p>
+              list[str]
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                TestClock.timer_names
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py method">
@@ -18295,8 +18454,8 @@ taken from
               <cite>
                on_degrade()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 DEGRADING
@@ -18361,8 +18520,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_dispose()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 DISPOSING
@@ -18423,16 +18582,16 @@ then the component state will not change, and an error will be logged.
               Fault the component.
              </p>
              <p>
-              This method is idempotent and irreversible. No other methods should be
-called after faulting.
+              Calling this method multiple times has the same effect as calling it once (it is idempotent).
+Once called, it cannot be reversed, and no other methods should be called on this instance.
              </p>
              <p>
               While executing
               <cite>
                on_fault()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 FAULTING
@@ -18473,9 +18632,6 @@ then the component state will not change, and an error will be logged.
              </span>
              <em class="sig-param">
               <span class="n">
-               <span class="pre">
-                type
-               </span>
                <span class="pre">
                 cls
                </span>
@@ -18572,6 +18728,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              bool
+             </p>
+             <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
                <span class="pre">
@@ -18594,6 +18753,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_degraded
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18609,6 +18779,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -18632,6 +18805,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_disposed
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18647,6 +18831,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -18670,6 +18857,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_faulted
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18685,6 +18883,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the component has been initialized (component.state &gt;=
               <code class="docutils literal notranslate">
@@ -18708,6 +18909,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_initialized
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18723,6 +18935,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -18746,6 +18961,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_running
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -18761,6 +18987,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -18782,6 +19011,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  bool
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_stopped
                </p>
               </dd>
              </dl>
@@ -18833,8 +19073,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_reset()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 RESETTING
@@ -18899,8 +19139,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_resume()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 RESUMING
@@ -18965,8 +19205,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_start()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 STARTING
@@ -19001,6 +19241,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              ComponentState
+             </p>
+             <p>
               Return the components current state.
              </p>
              <dl class="field-list simple">
@@ -19015,6 +19258,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  ComponentState
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.state
                </p>
               </dd>
              </dl>
@@ -19063,8 +19317,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_stop()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 STOPPING
@@ -19642,10 +19896,32 @@ then the component state will not change, and an error will be logged.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 TriggerType
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                trigger_instrument_id=None
                </span>
               </span>
              </em>
@@ -20076,6 +20352,18 @@ of
                 <li>
                  <p>
                   <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If order quantity is denominated in the quote currency.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    emulation_trigger
                   </strong>
                   (TriggerType, default
@@ -20085,6 +20373,36 @@ of
                    </span>
                   </code>
                   ) – The emulation trigger type for the entry, as well as the TP and SL bracket orders.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   trigger_instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The emulation trigger instrument ID for the order (if
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  then will be the
+                  <cite>
+                   instrument_id
+                  </cite>
+                  ).
                  </p>
                 </li>
                 <li>
@@ -20632,6 +20950,17 @@ of
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 Quantity
                </span>
                <span class="pre">
@@ -20647,6 +20976,17 @@ of
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                trigger_instrument_id=None
                </span>
               </span>
              </em>
@@ -20902,6 +21242,18 @@ of
                 <li>
                  <p>
                   <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    display_qty
                   </strong>
                   (
@@ -20931,6 +21283,36 @@ of
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   trigger_instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The emulation trigger instrument ID for the order (if
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  then will be the
+                  <cite>
+                   instrument_id
+                  </cite>
+                  ).
                  </p>
                 </li>
                 <li>
@@ -21214,6 +21596,17 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 Quantity
                </span>
                <span class="pre">
@@ -21229,6 +21622,17 @@ contain any arbitrary delimiter if required.
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                trigger_instrument_id=None
                </span>
               </span>
              </em>
@@ -21500,6 +21904,18 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    display_qty
                   </strong>
                   (
@@ -21529,6 +21945,36 @@ contain any arbitrary delimiter if required.
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   trigger_instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The emulation trigger instrument ID for the order (if
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  then will be the
+                  <cite>
+                   instrument_id
+                  </cite>
+                  ).
                  </p>
                 </li>
                 <li>
@@ -21799,6 +22245,17 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 ExecAlgorithmId
                </span>
                <span class="pre">
@@ -21980,6 +22437,18 @@ contain any arbitrary delimiter if required.
                    default False
                   </em>
                   ) – If the order carries the ‘reduce-only’ execution instruction.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
                  </p>
                 </li>
                 <li>
@@ -22221,10 +22690,32 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 TriggerType
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                trigger_instrument_id=None
                </span>
               </span>
              </em>
@@ -22464,6 +22955,18 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    emulation_trigger
                   </strong>
                   (TriggerType, default
@@ -22473,6 +22976,36 @@ contain any arbitrary delimiter if required.
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   trigger_instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The emulation trigger instrument ID for the order (if
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  then will be the
+                  <cite>
+                   instrument_id
+                  </cite>
+                  ).
                  </p>
                 </li>
                 <li>
@@ -22738,6 +23271,17 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 Quantity
                </span>
                <span class="pre">
@@ -22942,6 +23486,18 @@ contain any arbitrary delimiter if required.
                    default False
                   </em>
                   ) – If the order carries the ‘reduce-only’ execution instruction.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
                  </p>
                 </li>
                 <li>
@@ -23432,6 +23988,17 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 Quantity
                </span>
                <span class="pre">
@@ -23447,6 +24014,17 @@ contain any arbitrary delimiter if required.
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                trigger_instrument_id=None
                </span>
               </span>
              </em>
@@ -23718,6 +24296,18 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    display_qty
                   </strong>
                   (
@@ -23747,6 +24337,36 @@ contain any arbitrary delimiter if required.
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   trigger_instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The emulation trigger instrument ID for the order (if
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  then will be the
+                  <cite>
+                   instrument_id
+                  </cite>
+                  ).
                  </p>
                 </li>
                 <li>
@@ -24050,10 +24670,32 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 TriggerType
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                trigger_instrument_id=None
                </span>
               </span>
              </em>
@@ -24293,6 +24935,18 @@ contain any arbitrary delimiter if required.
                 <li>
                  <p>
                   <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    emulation_trigger
                   </strong>
                   (TriggerType, default
@@ -24302,6 +24956,36 @@ contain any arbitrary delimiter if required.
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   trigger_instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The emulation trigger instrument ID for the order (if
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  then will be the
+                  <cite>
+                   instrument_id
+                  </cite>
+                  ).
                  </p>
                 </li>
                 <li>
@@ -24708,6 +25392,17 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 Quantity
                </span>
                <span class="pre">
@@ -24723,6 +25418,17 @@ contain any arbitrary delimiter if required.
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                trigger_instrument_id=None
                </span>
               </span>
              </em>
@@ -25066,6 +25772,18 @@ to the delta of market price and
                 <li>
                  <p>
                   <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
                    display_qty
                   </strong>
                   (
@@ -25095,6 +25813,36 @@ to the delta of market price and
                    </span>
                   </code>
                   ) – The orders emulation trigger.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   trigger_instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The emulation trigger instrument ID for the order (if
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    None
+                   </span>
+                  </code>
+                  then will be the
+                  <cite>
+                   instrument_id
+                  </cite>
+                  ).
                  </p>
                 </li>
                 <li>
@@ -25438,10 +26186,32 @@ contain any arbitrary delimiter if required.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                quote_quantity=False
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
                 TriggerType
                </span>
                <span class="pre">
                 emulation_trigger=TriggerType.NO_TRIGGER
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                trigger_instrument_id=None
                </span>
               </span>
              </em>
@@ -25719,6 +26489,18 @@ to the delta of market price and
                    default False
                   </em>
                   ) – If the order carries the ‘reduce-only’ execution instruction.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   quote_quantity
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  ) – If the order quantity is denominated in the quote currency.
                  </p>
                 </li>
                 <li>
@@ -27769,6 +28551,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              UUID4
+             </p>
+             <p>
               Return the loggers system instance ID.
              </p>
              <dl class="field-list simple">
@@ -27783,6 +28568,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  UUID4
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Logger.instance_id
                </p>
               </dd>
              </dl>
@@ -27801,6 +28597,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              bool
+             </p>
+             <p>
               Return whether the logger is in bypass mode.
              </p>
              <dl class="field-list simple">
@@ -27815,6 +28614,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  bool
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Logger.is_bypassed
                </p>
               </dd>
              </dl>
@@ -27833,6 +28643,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return the loggers machine ID.
              </p>
              <dl class="field-list simple">
@@ -27847,6 +28660,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Logger.machine_id
                </p>
               </dd>
              </dl>
@@ -27865,6 +28689,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              TraderId
+             </p>
+             <p>
               Return the loggers trader ID.
              </p>
              <dl class="field-list simple">
@@ -27879,6 +28706,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  TraderId
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Logger.trader_id
                </p>
               </dd>
              </dl>
@@ -27994,6 +28832,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return the loggers component name.
              </p>
              <dl class="field-list simple">
@@ -28008,6 +28849,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.component
                </p>
               </dd>
              </dl>
@@ -28037,7 +28889,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 unicode
                </span>
                <span class="pre">
-                msg
+                message
                </span>
               </span>
              </em>
@@ -28096,13 +28948,13 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <li>
                  <p>
                   <strong>
-                   msg
+                   message
                   </strong>
                   (
                   <em>
                    str
                   </em>
-                  ) – The message to log.
+                  ) – The log message content.
                  </p>
                 </li>
                 <li>
@@ -28120,7 +28972,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                   <em>
                    optional
                   </em>
-                  ) – The color for the log record.
+                  ) – The log message color.
                  </p>
                 </li>
                 <li>
@@ -28185,7 +29037,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 unicode
                </span>
                <span class="pre">
-                msg
+                message
                </span>
               </span>
              </em>
@@ -28244,13 +29096,13 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <li>
                  <p>
                   <strong>
-                   msg
+                   message
                   </strong>
                   (
                   <em>
                    str
                   </em>
-                  ) – The message to log.
+                  ) – The log message content.
                  </p>
                 </li>
                 <li>
@@ -28268,7 +29120,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                   <em>
                    optional
                   </em>
-                  ) – The color for the log record.
+                  ) – The log message color.
                  </p>
                 </li>
                 <li>
@@ -28333,7 +29185,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 unicode
                </span>
                <span class="pre">
-                msg
+                message
                </span>
               </span>
              </em>
@@ -28392,13 +29244,13 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <li>
                  <p>
                   <strong>
-                   msg
+                   message
                   </strong>
                   (
                   <em>
                    str
                   </em>
-                  ) – The message to log.
+                  ) – The log message content.
                  </p>
                 </li>
                 <li>
@@ -28416,7 +29268,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                   <em>
                    optional
                   </em>
-                  ) – The color for the log record.
+                  ) – The log message color.
                  </p>
                 </li>
                 <li>
@@ -28481,7 +29333,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 unicode
                </span>
                <span class="pre">
-                msg
+                message
                </span>
               </span>
              </em>
@@ -28537,13 +29389,13 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <li>
                  <p>
                   <strong>
-                   msg
+                   message
                   </strong>
                   (
                   <em>
                    str
                   </em>
-                  ) – The message to log.
+                  ) – The log message content.
                  </p>
                 </li>
                 <li>
@@ -28677,7 +29529,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 unicode
                </span>
                <span class="pre">
-                msg
+                message
                </span>
               </span>
              </em>
@@ -28736,13 +29588,13 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <li>
                  <p>
                   <strong>
-                   msg
+                   message
                   </strong>
                   (
                   <em>
                    str
                   </em>
-                  ) – The message to log.
+                  ) – The log message content.
                  </p>
                 </li>
                 <li>
@@ -28760,7 +29612,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                   <em>
                    optional
                   </em>
-                  ) – The color for the log record.
+                  ) – The log message color.
                  </p>
                 </li>
                 <li>
@@ -28814,6 +29666,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              UUID4
+             </p>
+             <p>
               Return the loggers system instance ID.
              </p>
              <dl class="field-list simple">
@@ -28828,6 +29683,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  UUID4
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.instance_id
                </p>
               </dd>
              </dl>
@@ -28846,6 +29712,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return whether the logger is in bypass mode.
              </p>
              <dl class="field-list simple">
@@ -28860,6 +29729,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.is_bypassed
                </p>
               </dd>
              </dl>
@@ -28878,6 +29758,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return the loggers machine ID.
              </p>
              <dl class="field-list simple">
@@ -28892,6 +29775,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.machine_id
                </p>
               </dd>
              </dl>
@@ -28910,6 +29804,9 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
+              TraderId
+             </p>
+             <p>
               Return the loggers trader ID.
              </p>
              <dl class="field-list simple">
@@ -28924,6 +29821,17 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <em>
                  TraderId
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                LoggerAdapter.trader_id
                </p>
               </dd>
              </dl>
@@ -28953,7 +29861,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 unicode
                </span>
                <span class="pre">
-                msg
+                message
                </span>
               </span>
              </em>
@@ -29012,13 +29920,13 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 <li>
                  <p>
                   <strong>
-                   msg
+                   message
                   </strong>
                   (
                   <em>
                    str
                   </em>
-                  ) – The message to log.
+                  ) – The log message content.
                  </p>
                 </li>
                 <li>
@@ -29036,7 +29944,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                   <em>
                    optional
                   </em>
-                  ) – The color for the log record.
+                  ) – The log message color.
                  </p>
                 </li>
                 <li>
@@ -35032,6 +35940,9 @@ upstream.
             </dt>
             <dd>
              <p>
+              str
+             </p>
+             <p>
               Return the name of the time event.
              </p>
              <dl class="field-list simple">
@@ -35046,6 +35957,17 @@ upstream.
                 <em>
                  str
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                TimeEvent.name
                </p>
               </dd>
              </dl>

@@ -733,6 +733,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.betting.BettingInstrument.calculate_base_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BettingInstrument.calculate_base_quantity()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.instruments.betting.BettingInstrument.from_dict">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1112,6 +1121,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   CryptoPerpetual.base_to_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.crypto_perpetual.CryptoPerpetual.calculate_base_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CryptoPerpetual.calculate_base_quantity()
                  </span>
                 </code>
                </a>
@@ -1505,6 +1523,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   CryptoFuture.base_to_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.crypto_future.CryptoFuture.calculate_base_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CryptoFuture.calculate_base_quantity()
                  </span>
                 </code>
                </a>
@@ -1921,6 +1948,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.currency_pair.CurrencyPair.calculate_base_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CurrencyPair.calculate_base_quantity()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.instruments.currency_pair.CurrencyPair.from_dict">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2296,6 +2332,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.equity.Equity.calculate_base_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Equity.calculate_base_quantity()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.instruments.equity.Equity.from_dict">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2666,6 +2711,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Instrument.base_to_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.base.Instrument.calculate_base_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Instrument.calculate_base_quantity()
                  </span>
                 </code>
                </a>
@@ -3534,6 +3588,127 @@ on the asset class and asset type.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.betting.BettingInstrument.calculate_base_quantity">
+            <span class="sig-name descname">
+             <span class="pre">
+              calculate_base_quantity
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Quantity
+              </span>
+              <span class="pre">
+               quantity
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               last_px
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.betting.BettingInstrument.calculate_base_quantity" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Calculate the base asset quantity from the given quote asset
+             <cite>
+              quantity
+             </cite>
+             and last price.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  quantity
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                  <em>
+                   Quantity
+                  </em>
+                 </a>
+                 ) – The quantity to convert from.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  last_px
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                  <em>
+                   Price
+                  </em>
+                 </a>
+                 ) – The last price for the instrument.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Quantity
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.model.instruments.betting.BettingInstrument.from_dict">
             <em class="property">
              <span class="pre">
@@ -3652,9 +3827,6 @@ on the asset class and asset type.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -4896,7 +5068,7 @@ precision.
                bool
               </span>
               <span class="pre">
-               inverse_as_quote=False
+               use_quote_for_inverse=False
               </span>
              </span>
             </em>
@@ -6522,6 +6694,127 @@ Swap
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.crypto_perpetual.CryptoPerpetual.calculate_base_quantity">
+            <span class="sig-name descname">
+             <span class="pre">
+              calculate_base_quantity
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Quantity
+              </span>
+              <span class="pre">
+               quantity
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               last_px
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.crypto_perpetual.CryptoPerpetual.calculate_base_quantity" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Calculate the base asset quantity from the given quote asset
+             <cite>
+              quantity
+             </cite>
+             and last price.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  quantity
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                  <em>
+                   Quantity
+                  </em>
+                 </a>
+                 ) – The quantity to convert from.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  last_px
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                  <em>
+                   Price
+                  </em>
+                 </a>
+                 ) – The last price for the instrument.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Quantity
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.model.instruments.crypto_perpetual.CryptoPerpetual.from_dict">
             <em class="property">
              <span class="pre">
@@ -6640,9 +6933,6 @@ Swap
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -7913,7 +8203,7 @@ precision.
                bool
               </span>
               <span class="pre">
-               inverse_as_quote=False
+               use_quote_for_inverse=False
               </span>
              </span>
             </em>
@@ -7984,7 +8274,7 @@ currency for inverse instruments.
                <li>
                 <p>
                  <strong>
-                  inverse_as_quote
+                  use_quote_for_inverse
                  </strong>
                  (
                  <em>
@@ -9600,6 +9890,127 @@ as underlying and for settlement.
             </dl>
            </dd>
           </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.crypto_future.CryptoFuture.calculate_base_quantity">
+            <span class="sig-name descname">
+             <span class="pre">
+              calculate_base_quantity
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Quantity
+              </span>
+              <span class="pre">
+               quantity
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               last_px
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.crypto_future.CryptoFuture.calculate_base_quantity" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Calculate the base asset quantity from the given quote asset
+             <cite>
+              quantity
+             </cite>
+             and last price.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  quantity
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                  <em>
+                   Quantity
+                  </em>
+                 </a>
+                 ) – The quantity to convert from.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  last_px
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                  <em>
+                   Price
+                  </em>
+                 </a>
+                 ) – The last price for the instrument.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Quantity
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.model.instruments.crypto_future.CryptoFuture.expiry_date">
             <span class="sig-name descname">
@@ -9751,9 +10162,6 @@ as underlying and for settlement.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -10992,7 +11400,7 @@ precision.
                bool
               </span>
               <span class="pre">
-               inverse_as_quote=False
+               use_quote_for_inverse=False
               </span>
              </span>
             </em>
@@ -11063,7 +11471,7 @@ currency for inverse instruments.
                <li>
                 <p>
                  <strong>
-                  inverse_as_quote
+                  use_quote_for_inverse
                  </strong>
                  (
                  <em>
@@ -12773,6 +13181,127 @@ currency for inverse instruments.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.currency_pair.CurrencyPair.calculate_base_quantity">
+            <span class="sig-name descname">
+             <span class="pre">
+              calculate_base_quantity
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Quantity
+              </span>
+              <span class="pre">
+               quantity
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               last_px
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.currency_pair.CurrencyPair.calculate_base_quantity" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Calculate the base asset quantity from the given quote asset
+             <cite>
+              quantity
+             </cite>
+             and last price.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  quantity
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                  <em>
+                   Quantity
+                  </em>
+                 </a>
+                 ) – The quantity to convert from.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  last_px
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                  <em>
+                   Price
+                  </em>
+                 </a>
+                 ) – The last price for the instrument.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Quantity
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.model.instruments.currency_pair.CurrencyPair.from_dict">
             <em class="property">
              <span class="pre">
@@ -12891,9 +13420,6 @@ currency for inverse instruments.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -14132,7 +14658,7 @@ precision.
                bool
               </span>
               <span class="pre">
-               inverse_as_quote=False
+               use_quote_for_inverse=False
               </span>
              </span>
             </em>
@@ -14203,7 +14729,7 @@ currency for inverse instruments.
                <li>
                 <p>
                  <strong>
-                  inverse_as_quote
+                  use_quote_for_inverse
                  </strong>
                  (
                  <em>
@@ -14883,6 +15409,17 @@ currency for inverse instruments.
             </span>
            </span>
           </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             dict
+            </span>
+            <span class="pre">
+             info=None
+            </span>
+           </span>
+          </em>
           <span class="sig-paren">
            )
           </span>
@@ -15117,6 +15654,39 @@ currency for inverse instruments.
                 uint64_t
                </em>
                ) – The UNIX timestamp (nanoseconds) when the data object was initialized.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                info
+               </strong>
+               (
+               <em>
+                dict
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                str
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                object
+               </em>
+               <em>
+                ]
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                optional
+               </em>
+               ) – The additional instrument information.
               </p>
              </li>
             </ul>
@@ -15400,6 +15970,127 @@ currency for inverse instruments.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.equity.Equity.calculate_base_quantity">
+            <span class="sig-name descname">
+             <span class="pre">
+              calculate_base_quantity
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Quantity
+              </span>
+              <span class="pre">
+               quantity
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               last_px
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.equity.Equity.calculate_base_quantity" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Calculate the base asset quantity from the given quote asset
+             <cite>
+              quantity
+             </cite>
+             and last price.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  quantity
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                  <em>
+                   Quantity
+                  </em>
+                 </a>
+                 ) – The quantity to convert from.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  last_px
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                  <em>
+                   Price
+                  </em>
+                 </a>
+                 ) – The last price for the instrument.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Quantity
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.model.instruments.equity.Equity.from_dict">
             <em class="property">
              <span class="pre">
@@ -15518,9 +16209,6 @@ currency for inverse instruments.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -16762,7 +17450,7 @@ precision.
                bool
               </span>
               <span class="pre">
-               inverse_as_quote=False
+               use_quote_for_inverse=False
               </span>
              </span>
             </em>
@@ -16833,7 +17521,7 @@ currency for inverse instruments.
                <li>
                 <p>
                  <strong>
-                  inverse_as_quote
+                  use_quote_for_inverse
                  </strong>
                  (
                  <em>
@@ -18542,6 +19230,127 @@ define an instrument, or act as a parent class for more specific instruments.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.base.Instrument.calculate_base_quantity">
+            <span class="sig-name descname">
+             <span class="pre">
+              calculate_base_quantity
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Quantity
+              </span>
+              <span class="pre">
+               quantity
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               last_px
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.base.Instrument.calculate_base_quantity" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Calculate the base asset quantity from the given quote asset
+             <cite>
+              quantity
+             </cite>
+             and last price.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  quantity
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                  <em>
+                   Quantity
+                  </em>
+                 </a>
+                 ) – The quantity to convert from.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  last_px
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                  <em>
+                   Price
+                  </em>
+                 </a>
+                 ) – The last price for the instrument.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Quantity
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.model.instruments.base.Instrument.fully_qualified_name">
             <em class="property">
              <span class="pre">
@@ -18560,9 +19369,6 @@ define an instrument, or act as a parent class for more specific instruments.
             </span>
             <em class="sig-param">
              <span class="n">
-              <span class="pre">
-               type
-              </span>
               <span class="pre">
                cls
               </span>
@@ -19804,7 +20610,7 @@ precision.
                bool
               </span>
               <span class="pre">
-               inverse_as_quote=False
+               use_quote_for_inverse=False
               </span>
              </span>
             </em>
@@ -19875,7 +20681,7 @@ currency for inverse instruments.
                <li>
                 <p>
                  <strong>
-                  inverse_as_quote
+                  use_quote_for_inverse
                  </strong>
                  (
                  <em>

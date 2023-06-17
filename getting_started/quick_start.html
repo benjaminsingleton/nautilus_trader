@@ -960,11 +960,11 @@ registering indicators to receive certain data types, however in this example we
            <pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.core.message</span> <span class="kn">import</span> <span class="n">Event</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.indicators.macd</span> <span class="kn">import</span> <span class="n">MovingAverageConvergenceDivergence</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.model.data.tick</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">PriceType</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">PositionSide</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.model.events.position</span> <span class="kn">import</span> <span class="n">PositionOpened</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">PositionOpened</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.position</span> <span class="kn">import</span> <span class="n">Position</span>
@@ -1234,7 +1234,7 @@ adding the
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">BacktestDataConfig</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.model.data.tick</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">BacktestDataConfig</span><span class="p">(</span>
     <span class="n">catalog_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>

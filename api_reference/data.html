@@ -1923,6 +1923,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.connect">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataEngine.connect()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.data_count">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1963,6 +1972,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     DataEngine.deregister_client()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.disconnect">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DataEngine.disconnect()
                    </span>
                   </code>
                  </a>
@@ -5889,8 +5907,8 @@ specification, then a bar is created and sent to the handler.
               <cite>
                on_degrade()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 DEGRADING
@@ -5955,8 +5973,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_dispose()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 DISPOSING
@@ -6017,16 +6035,16 @@ then the component state will not change, and an error will be logged.
               Fault the component.
              </p>
              <p>
-              This method is idempotent and irreversible. No other methods should be
-called after faulting.
+              Calling this method multiple times has the same effect as calling it once (it is idempotent).
+Once called, it cannot be reversed, and no other methods should be called on this instance.
              </p>
              <p>
               While executing
               <cite>
                on_fault()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 FAULTING
@@ -6067,9 +6085,6 @@ then the component state will not change, and an error will be logged.
              </span>
              <em class="sig-param">
               <span class="n">
-               <span class="pre">
-                type
-               </span>
                <span class="pre">
                 cls
                </span>
@@ -6198,6 +6213,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              bool
+             </p>
+             <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
                <span class="pre">
@@ -6220,6 +6238,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_degraded
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -6235,6 +6264,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -6258,6 +6290,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_disposed
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -6273,6 +6316,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -6296,6 +6342,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_faulted
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -6311,6 +6368,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the component has been initialized (component.state &gt;=
               <code class="docutils literal notranslate">
@@ -6334,6 +6394,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_initialized
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -6349,6 +6420,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -6372,6 +6446,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_running
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -6387,6 +6472,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -6408,6 +6496,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  bool
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_stopped
                </p>
               </dd>
              </dl>
@@ -6561,8 +6660,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_reset()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 RESETTING
@@ -6627,8 +6726,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_resume()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 RESUMING
@@ -6693,8 +6792,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_start()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 STARTING
@@ -6729,6 +6828,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              ComponentState
+             </p>
+             <p>
               Return the components current state.
              </p>
              <dl class="field-list simple">
@@ -6743,6 +6845,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  ComponentState
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.state
                </p>
               </dd>
              </dl>
@@ -6791,8 +6904,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_stop()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 STOPPING
@@ -7434,8 +7547,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_degrade()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 DEGRADING
@@ -7500,8 +7613,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_dispose()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 DISPOSING
@@ -7562,16 +7675,16 @@ then the component state will not change, and an error will be logged.
               Fault the component.
              </p>
              <p>
-              This method is idempotent and irreversible. No other methods should be
-called after faulting.
+              Calling this method multiple times has the same effect as calling it once (it is idempotent).
+Once called, it cannot be reversed, and no other methods should be called on this instance.
              </p>
              <p>
               While executing
               <cite>
                on_fault()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 FAULTING
@@ -7612,9 +7725,6 @@ then the component state will not change, and an error will be logged.
              </span>
              <em class="sig-param">
               <span class="n">
-               <span class="pre">
-                type
-               </span>
                <span class="pre">
                 cls
                </span>
@@ -7743,6 +7853,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              bool
+             </p>
+             <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
                <span class="pre">
@@ -7765,6 +7878,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_degraded
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -7780,6 +7904,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -7803,6 +7930,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_disposed
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -7818,6 +7956,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -7841,6 +7982,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_faulted
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -7856,6 +8008,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the component has been initialized (component.state &gt;=
               <code class="docutils literal notranslate">
@@ -7879,6 +8034,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_initialized
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -7894,6 +8060,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -7917,6 +8086,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_running
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -7932,6 +8112,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -7953,6 +8136,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  bool
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_stopped
                </p>
               </dd>
              </dl>
@@ -8900,8 +9094,8 @@ to the current datetime.
               <cite>
                on_reset()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 RESETTING
@@ -8966,8 +9160,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_resume()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 RESUMING
@@ -9032,8 +9226,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_start()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 STARTING
@@ -9068,6 +9262,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              ComponentState
+             </p>
+             <p>
               Return the components current state.
              </p>
              <dl class="field-list simple">
@@ -9082,6 +9279,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  ComponentState
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.state
                </p>
               </dd>
              </dl>
@@ -9130,8 +9338,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_stop()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 STOPPING
@@ -9820,9 +10028,9 @@ then the component state will not change, and an error will be logged.
              <p>
               Subscribe to
               <cite>
-               OrderBookSnapshot
+               OrderBook
               </cite>
-              data for the given instrument ID.
+              snapshots data for the given instrument ID.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -11442,9 +11650,9 @@ then the component state will not change, and an error will be logged.
              <p>
               Unsubscribe from
               <cite>
-               OrderBookSnapshot
+               OrderBook
               </cite>
-              data for the given instrument ID.
+              snapshots data for the given instrument ID.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -12211,6 +12419,46 @@ just need to override the
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.connect">
+             <span class="sig-name descname">
+              <span class="pre">
+               connect
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.connect" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Connect the engine by calling connect on all registered clients.
+             </p>
+            </dd>
+           </dl>
            <dl class="py attribute">
             <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.data_count">
              <span class="sig-name descname">
@@ -12288,6 +12536,9 @@ just need to override the
             </dt>
             <dd>
              <p>
+              Optional[ClientId]
+             </p>
+             <p>
               Return the default data client registered with the engine.
              </p>
              <dl class="field-list simple">
@@ -12302,6 +12553,17 @@ just need to override the
                 <em>
                  Optional[ClientId]
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                DataEngine.default_client
                </p>
               </dd>
              </dl>
@@ -12350,8 +12612,8 @@ just need to override the
               <cite>
                on_degrade()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 DEGRADING
@@ -12447,6 +12709,46 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.disconnect">
+             <span class="sig-name descname">
+              <span class="pre">
+               disconnect
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.disconnect" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Disconnect the engine by calling disconnect on all registered clients.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.dispose">
              <span class="sig-name descname">
               <span class="pre">
@@ -12489,8 +12791,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_dispose()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 DISPOSING
@@ -12624,16 +12926,16 @@ then the component state will not change, and an error will be logged.
               Fault the component.
              </p>
              <p>
-              This method is idempotent and irreversible. No other methods should be
-called after faulting.
+              Calling this method multiple times has the same effect as calling it once (it is idempotent).
+Once called, it cannot be reversed, and no other methods should be called on this instance.
              </p>
              <p>
               While executing
               <cite>
                on_fault()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 FAULTING
@@ -12674,9 +12976,6 @@ then the component state will not change, and an error will be logged.
              </span>
              <em class="sig-param">
               <span class="n">
-               <span class="pre">
-                type
-               </span>
                <span class="pre">
                 cls
                </span>
@@ -12773,6 +13072,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              bool
+             </p>
+             <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
                <span class="pre">
@@ -12795,6 +13097,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_degraded
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -12810,6 +13123,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -12833,6 +13149,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_disposed
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -12848,6 +13175,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -12871,6 +13201,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_faulted
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -12886,6 +13227,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the component has been initialized (component.state &gt;=
               <code class="docutils literal notranslate">
@@ -12909,6 +13253,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_initialized
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -12924,6 +13279,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -12947,6 +13305,17 @@ then the component state will not change, and an error will be logged.
                 </em>
                </p>
               </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_running
+               </p>
+              </dd>
              </dl>
             </dd>
            </dl>
@@ -12962,6 +13331,9 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+             <p>
+              bool
+             </p>
              <p>
               Return whether the current component state is
               <code class="docutils literal notranslate">
@@ -12983,6 +13355,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  bool
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.is_stopped
                </p>
               </dd>
              </dl>
@@ -13430,6 +13813,9 @@ overwritten.
             </dt>
             <dd>
              <p>
+              list[ClientId]
+             </p>
+             <p>
               Return the execution clients registered with the engine.
              </p>
              <dl class="field-list simple">
@@ -13444,6 +13830,17 @@ overwritten.
                 <em>
                  list[ClientId]
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                DataEngine.registered_clients
                </p>
               </dd>
              </dl>
@@ -13600,8 +13997,8 @@ overwritten.
               <cite>
                on_reset()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 RESETTING
@@ -13771,8 +14168,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_resume()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 RESUMING
@@ -13837,8 +14234,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_start()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 STARTING
@@ -13873,6 +14270,9 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
+              ComponentState
+             </p>
+             <p>
               Return the components current state.
              </p>
              <dl class="field-list simple">
@@ -13887,6 +14287,17 @@ then the component state will not change, and an error will be logged.
                 <em>
                  ComponentState
                 </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                Component.state
                </p>
               </dd>
              </dl>
@@ -13935,8 +14346,8 @@ then the component state will not change, and an error will be logged.
               <cite>
                on_stop()
               </cite>
-              , any exception will be logged and reraised.
-The component will remain in a
+              any exception will be logged and reraised, then the component
+will remain in a
               <code class="docutils literal notranslate">
                <span class="pre">
                 STOPPING

@@ -1373,7 +1373,7 @@ configuration(s):
         <span class="s2">"BINANCE"</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">"api_key"</span><span class="p">:</span> <span class="s2">"YOUR_BINANCE_API_KEY"</span><span class="p">,</span>
             <span class="s2">"api_secret"</span><span class="p">:</span> <span class="s2">"YOUR_BINANCE_API_SECRET"</span><span class="p">,</span>
-            <span class="s2">"account_type"</span><span class="p">:</span> <span class="s2">"spot"</span><span class="p">,</span>  <span class="c1"># {spot, margin, futures_usdt, futures_coin}</span>
+            <span class="s2">"account_type"</span><span class="p">:</span> <span class="s2">"spot"</span><span class="p">,</span>  <span class="c1"># {spot, margin, usdt_future, coin_future}</span>
             <span class="s2">"base_url_http"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Override with custom endpoint</span>
             <span class="s2">"base_url_ws"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Override with custom endpoint</span>
             <span class="s2">"us"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># If client is for Binance US</span>
@@ -1383,7 +1383,7 @@ configuration(s):
         <span class="s2">"BINANCE"</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">"api_key"</span><span class="p">:</span> <span class="s2">"YOUR_BINANCE_API_KEY"</span><span class="p">,</span>
             <span class="s2">"api_secret"</span><span class="p">:</span> <span class="s2">"YOUR_BINANCE_API_SECRET"</span><span class="p">,</span>
-            <span class="s2">"account_type"</span><span class="p">:</span> <span class="s2">"spot"</span><span class="p">,</span>  <span class="c1"># {spot, margin, futures_usdt, futures_coin}</span>
+            <span class="s2">"account_type"</span><span class="p">:</span> <span class="s2">"spot"</span><span class="p">,</span>  <span class="c1"># {spot, margin, usdt_future, coin_future}</span>
             <span class="s2">"base_url_http"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Override with custom endpoint</span>
             <span class="s2">"base_url_ws"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Override with custom endpoint</span>
             <span class="s2">"us"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># If client is for Binance US</span>
@@ -1573,7 +1573,7 @@ credentials are valid and have trading permissions.
             <p>
              <code class="docutils literal notranslate">
               <span class="pre">
-               MARGIN_CROSS
+               MARGIN
               </span>
              </code>
              (Margin shared between open positions.)
@@ -1583,7 +1583,7 @@ credentials are valid and have trading permissions.
             <p>
              <code class="docutils literal notranslate">
               <span class="pre">
-               MARGIN_ISOLATED
+               ISOLATED_MARGIN
               </span>
              </code>
              (Margin assigned to a single position.)
@@ -1593,7 +1593,7 @@ credentials are valid and have trading permissions.
             <p>
              <code class="docutils literal notranslate">
               <span class="pre">
-               FUTURES_USDT
+               USDT_FUTURE
               </span>
              </code>
              (USDT or BUSD stablecoins as collateral)
@@ -1603,7 +1603,7 @@ credentials are valid and have trading permissions.
             <p>
              <code class="docutils literal notranslate">
               <span class="pre">
-               FUTURES_COIN
+               COIN_FUTURE
               </span>
              </code>
              (other cryptocurrency as collateral)
@@ -1692,7 +1692,7 @@ Simply set the
         <span class="s2">"BINANCE"</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">"api_key"</span><span class="p">:</span> <span class="s2">"YOUR_BINANCE_TESTNET_API_KEY"</span><span class="p">,</span>
             <span class="s2">"api_secret"</span><span class="p">:</span> <span class="s2">"YOUR_BINANCE_TESTNET_API_SECRET"</span><span class="p">,</span>
-            <span class="s2">"account_type"</span><span class="p">:</span> <span class="s2">"spot"</span><span class="p">,</span>  <span class="c1"># {spot, margin, futures_usdt}</span>
+            <span class="s2">"account_type"</span><span class="p">:</span> <span class="s2">"spot"</span><span class="p">,</span>  <span class="c1"># {spot, margin, usdt_future}</span>
             <span class="s2">"testnet"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># If client uses the testnet</span>
         <span class="p">},</span>
     <span class="p">},</span>
@@ -1700,7 +1700,7 @@ Simply set the
         <span class="s2">"BINANCE"</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">"api_key"</span><span class="p">:</span> <span class="s2">"YOUR_BINANCE_TESTNET_API_KEY"</span><span class="p">,</span>
             <span class="s2">"api_secret"</span><span class="p">:</span> <span class="s2">"YOUR_BINANCE_TESTNET_API_SECRET"</span><span class="p">,</span>
-            <span class="s2">"account_type"</span><span class="p">:</span> <span class="s2">"spot"</span><span class="p">,</span>  <span class="c1"># {spot, margin, futures_usdt}</span>
+            <span class="s2">"account_type"</span><span class="p">:</span> <span class="s2">"spot"</span><span class="p">,</span>  <span class="c1"># {spot, margin, usdt_future}</span>
             <span class="s2">"testnet"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># If client uses the testnet</span>
         <span class="p">},</span>
     <span class="p">},</span>

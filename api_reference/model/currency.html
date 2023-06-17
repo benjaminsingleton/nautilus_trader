@@ -715,6 +715,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.currency.Currency.from_internal_map">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Currency.from_internal_map()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.currency.Currency.from_str">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -919,7 +928,7 @@ decimal precision.
                </strong>
                (
                <em>
-                uint8
+                uint8_t
                </em>
                ) – The currency decimal precision.
               </p>
@@ -1034,6 +1043,9 @@ decimal precision.
            </dt>
            <dd>
             <p>
+             int
+            </p>
+            <p>
              Return the currency code.
             </p>
             <dl class="field-list simple">
@@ -1048,6 +1060,17 @@ decimal precision.
                <em>
                 str
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Currency.code
               </p>
              </dd>
             </dl>
@@ -1066,6 +1089,9 @@ decimal precision.
            </dt>
            <dd>
             <p>
+             CurrencyType
+            </p>
+            <p>
              Return the currency type.
             </p>
             <dl class="field-list simple">
@@ -1080,6 +1106,97 @@ decimal precision.
                <em>
                 CurrencyType
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Currency.currency_type
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.currency.Currency.from_internal_map">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_internal_map
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unicode
+              </span>
+              <span class="pre">
+               code
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.currency.Currency.from_internal_map" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the currency with the given
+             <cite>
+              code
+             </cite>
+             from the built-in internal map (if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                code
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The code of the currency.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Currency or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
               </p>
              </dd>
             </dl>
@@ -1432,6 +1549,9 @@ be a Cryptocurrency, so for robustness will then return a new
            </dt>
            <dd>
             <p>
+             int
+            </p>
+            <p>
              Return the currency ISO 4217 code.
             </p>
             <dl class="field-list simple">
@@ -1446,6 +1566,17 @@ be a Cryptocurrency, so for robustness will then return a new
                <em>
                 str
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Currency.iso4217
               </p>
              </dd>
             </dl>
@@ -1464,6 +1595,9 @@ be a Cryptocurrency, so for robustness will then return a new
            </dt>
            <dd>
             <p>
+             int
+            </p>
+            <p>
              Return the currency name.
             </p>
             <dl class="field-list simple">
@@ -1478,6 +1612,17 @@ be a Cryptocurrency, so for robustness will then return a new
                <em>
                 str
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Currency.name
               </p>
              </dd>
             </dl>
@@ -1496,6 +1641,9 @@ be a Cryptocurrency, so for robustness will then return a new
            </dt>
            <dd>
             <p>
+             int
+            </p>
+            <p>
              Return the currency decimal precision.
             </p>
             <dl class="field-list simple">
@@ -1510,6 +1658,17 @@ be a Cryptocurrency, so for robustness will then return a new
                <em>
                 uint8
                </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Currency.precision
               </p>
              </dd>
             </dl>
