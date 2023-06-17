@@ -1,0 +1,3713 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="Docutils 0.19: https://docutils.sourceforge.io/" name="generator"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" referrerpolicy="no-referrer" rel="stylesheet"/>
+  <link href="../_static/stylesheets/application.css" rel="stylesheet"/>
+  <link href="../_static/stylesheets/application-palette.css" rel="stylesheet"/>
+  <link href="../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+  <link href="../_static/fonts/material-icons.css" rel="stylesheet"/>
+  <meta content="#282f38" name="theme-color"/>
+  <script src="../_static/javascripts/modernizr.js">
+  </script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX">
+  </script>
+  <script>
+   window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-XXXXX');
+  </script>
+  <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
+  <title>
+   Infrastructure
+  </title>
+  <link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+  <link href="../_static/material.css" rel="stylesheet" type="text/css"/>
+  <link href="../_static/togglebutton.css" rel="stylesheet" type="text/css"/>
+  <link href="../_static/copybutton.css" rel="stylesheet" type="text/css"/>
+  <link href="../_static/custom.css" rel="stylesheet" type="text/css"/>
+  <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js">
+  </script>
+  <script src="../_static/jquery.js">
+  </script>
+  <script src="../_static/underscore.js">
+  </script>
+  <script src="../_static/_sphinx_javascript_frameworks_compat.js">
+  </script>
+  <script src="../_static/doctools.js">
+  </script>
+  <script src="../_static/sphinx_highlight.js">
+  </script>
+  <script src="../_static/clipboard.min.js">
+  </script>
+  <script src="../_static/copybutton.js">
+  </script>
+  <script>
+   let toggleHintShow = 'Click to show';
+  </script>
+  <script>
+   let toggleHintHide = 'Click to hide';
+  </script>
+  <script>
+   let toggleOpenOnPrint = 'true';
+  </script>
+  <script src="../_static/togglebutton.js">
+  </script>
+  <script>
+   var togglebuttonSelector = '.toggle, .admonition.dropdown';
+  </script>
+  <script src="../_static/script.js">
+  </script>
+  <link href="../_static/favicon-32x32.png" rel="shortcut icon"/>
+  <link href="../genindex.html" rel="index" title="Index"/>
+  <link href="../search.html" rel="search" title="Search"/>
+  <link href="live.html" rel="next" title="Live"/>
+  <link href="indicators.html" rel="prev" title="Indicators"/>
+  <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
+ </head>
+ <body data-md-color-accent="#282f38" data-md-color-primary="#282f38" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#api_reference/infrastructure" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a class="md-header-nav__button md-logo" href="../index.html" title="">
+       <img alt=" logo" height="26" src="../_static/nt-white.png"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer">
+      </label>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+       <span class="md-header-nav__topic">
+       </span>
+       <span class="md-header-nav__topic">
+        Infrastructure
+       </span>
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="Search" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <div class="md-header-nav__source">
+       <a class="md-source" data-md-source="github" href="https://github.com/nautechsystems/nautilus_trader" title="Go to repository">
+        <div class="md-source__icon test">
+         <svg fill="#fff" viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg">
+          <!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.-->
+          <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z">
+          </path>
+         </svg>
+        </div>
+        <div class="md-source__repository">
+         nautilus_trader
+        </div>
+       </a>
+      </div>
+     </div>
+     <script src="../_static/javascripts/version_dropdown.js">
+     </script>
+     <script>
+      var json_loc = "../_static/version.json",
+        target_loc = "../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+     </script>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <div class="md-hero" data-md-component="hero">
+    <div class="md-hero__inner md-grid">
+    </div>
+   </div>
+   <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+     <ul class="md-tabs__list">
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="/getting_started/index.html">
+        Getting Started
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="/user_guide/index.html">
+        User Guide
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="/api_reference/index.html">
+        API Reference
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="/integrations/index.html">
+        Integrations
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="/developer_guide/index.html">
+        Developer Guide
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="https://github.com/nautechsystems/nautilus_trader/releases">
+        Releases ⬀
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="https://nautilustrader.io/">
+        nautilustrader.io ⬀
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="index.html">
+        API Reference
+       </a>
+      </li>
+     </ul>
+    </div>
+   </nav>
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <label class="md-nav__title md-nav__title--site" for="__drawer">
+          <a class="md-nav__button md-logo" href="../index.html" title="">
+           <img alt=" logo" height="48" src="../_static/nt-white.png" width="48"/>
+          </a>
+          <a href="../index.html" title="">
+          </a>
+         </label>
+         <div class="md-nav__source">
+          <a class="md-source" data-md-source="github" href="https://github.com/nautechsystems/nautilus_trader" title="Go to repository">
+           <div class="md-source__icon test">
+            <svg fill="#fff" viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg">
+             <!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.-->
+             <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z">
+             </path>
+            </svg>
+           </div>
+           <div class="md-source__repository">
+            nautilus_trader
+           </div>
+          </a>
+         </div>
+         <div id="menu">
+          <ul class="md-nav__list">
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../getting_started/index.html">
+             Getting Started
+            </a>
+            <span class="arrow">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </span>
+            <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../getting_started/installation.html">
+               Installation
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../getting_started/quick_start.html">
+               Quick Start
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../concepts/index.html">
+             Concepts
+            </a>
+            <span class="arrow">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </span>
+            <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/architecture.html">
+               Architecture
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/strategies.html">
+               Strategies
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/instruments.html">
+               Instruments
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/adapters.html">
+               Adapters
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/orders.html">
+               Orders
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/execution.html">
+               Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/logging.html">
+               Logging
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/advanced/index.html">
+               Advanced
+              </a>
+              <span class="arrow">
+               <i class="fa-solid fa-chevron-right">
+               </i>
+              </span>
+              <ul class="submenu">
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/data.html">
+                 Data
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/advanced_orders.html">
+                 Advanced Orders
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/emulated_orders.html">
+                 Emulated Orders
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/portfolio_statistics.html">
+                 Portfolio Statistics
+                </a>
+               </li>
+              </ul>
+             </li>
+            </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../guides/index.html">
+             Guides
+            </a>
+            <span class="arrow">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </span>
+            <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../guides/backtest_example.html">
+               Complete Backtest Example
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../guides/loading_external_data.html">
+               Loading External Data
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../integrations/index.html">
+             Integrations
+            </a>
+            <span class="arrow">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </span>
+            <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../integrations/betfair.html">
+               Betfair
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../integrations/binance.html">
+               Binance
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../integrations/ib.html">
+               Interactive Brokers
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="index.html">
+             API Reference
+            </a>
+            <span class="arrow">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </span>
+            <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="accounting.html">
+               Accounting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="adapters/index.html">
+               Adapters
+              </a>
+              <span class="arrow">
+               <i class="fa-solid fa-chevron-right">
+               </i>
+              </span>
+              <ul class="submenu">
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="adapters/betfair.html">
+                 Betfair
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="adapters/binance.html">
+                 Binance
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="adapters/interactive_brokers.html">
+                 Interactive Brokers
+                </a>
+               </li>
+              </ul>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="analysis.html">
+               Analysis
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="backtest.html">
+               Backtest
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="cache.html">
+               Cache
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="common.html">
+               Common
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="config.html">
+               Config
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="core.html">
+               Core
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="execution.html">
+               Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="indicators.html">
+               Indicators
+              </a>
+             </li>
+             <li class="md-nav__item md-nav__link--active">
+              <a class="md-nav__link" href="#">
+               Infrastructure
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="live.html">
+               Live
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="model/index.html">
+               Model
+              </a>
+              <span class="arrow">
+               <i class="fa-solid fa-chevron-right">
+               </i>
+              </span>
+              <ul class="submenu">
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/currency.html">
+                 Currency
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/data.html">
+                 Data
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/events.html">
+                 Events
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/identifiers.html">
+                 Identifiers
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/instruments.html">
+                 Instruments
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/objects.html">
+                 Objects
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/orderbook.html">
+                 Order Book
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/orders.html">
+                 Orders
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/position.html">
+                 Position
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="model/tick_scheme.html">
+                 Tick Scheme
+                </a>
+               </li>
+              </ul>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="msgbus.html">
+               Message Bus
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="network.html">
+               Network
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="persistence.html">
+               Persistence
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="portfolio.html">
+               Portfolio
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="risk.html">
+               Risk
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="serialization.html">
+               Serialization
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="system.html">
+               System
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="trading.html">
+               Trading
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../developer_guide/index.html">
+             Developer Guide
+            </a>
+            <span class="arrow">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </span>
+            <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../developer_guide/environment_setup.html">
+               Environment Setup
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../developer_guide/coding_standards.html">
+               Coding Standards
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../developer_guide/cython.html">
+               Cython
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../developer_guide/rust.html">
+               Rust
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../developer_guide/testing.html">
+               Testing
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../developer_guide/packaged_data.html">
+               Packaged Data
+              </a>
+             </li>
+            </ul>
+           </li>
+          </ul>
+         </div>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          Contents
+         </label>
+         <ul class="md-nav__list" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#api-reference-infrastructure--page-root">
+            Infrastructure
+           </a>
+           <span class="arrow">
+            <i class="fa-solid fa-chevron-right">
+            </i>
+           </span>
+           <ul class="submenu">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase">
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                RedisCacheDatabase
+               </span>
+              </code>
+             </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_account">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add_account()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_currency">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add_currency()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_instrument">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add_instrument()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_order">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add_order()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_position">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add_position()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_submit_order_command">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add_submit_order_command()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_submit_order_list_command">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add_submit_order_list_command()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.delete_actor">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.delete_actor()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.delete_strategy">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.delete_strategy()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.flush">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.flush()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_account">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_account()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_accounts">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_accounts()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_actor">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_actor()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_currencies">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_currencies()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_currency">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_currency()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_instrument">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_instrument()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_instruments">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_instruments()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_order">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_order()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_orders">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_orders()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_position">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_position()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_positions">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_positions()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_strategy">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_strategy()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_command">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_submit_order_command()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_commands">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_submit_order_commands()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_list_command">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_submit_order_list_command()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_list_commands">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_submit_order_list_commands()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_account">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.update_account()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_actor">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.update_actor()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_order">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.update_order()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_position">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.update_position()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_strategy">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.update_strategy()
+                 </span>
+                </code>
+               </a>
+              </li>
+             </ul>
+            </li>
+           </ul>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section class="tex2jax_ignore mathjax_ignore" id="module-nautilus_trader.infrastructure">
+        <span id="infrastructure">
+        </span>
+        <h1 id="api-reference-infrastructure--page-root">
+         Infrastructure
+         <a class="headerlink" href="#api-reference-infrastructure--page-root" title="Permalink to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         The
+         <cite>
+          infrastructure
+         </cite>
+         subpackage provides technology specific infrastructure implementations.
+        </p>
+        <p>
+         Out of the box a
+         <a class="reference external" href="https://redis.io/">
+          Redis
+         </a>
+         backed cache is implemented.
+        </p>
+        <span class="target" id="module-nautilus_trader.infrastructure.cache">
+        </span>
+        <dl class="py class">
+         <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase">
+          <em class="property">
+           <span class="pre">
+            class
+           </span>
+           <span class="w">
+           </span>
+          </em>
+          <span class="sig-name descname">
+           <span class="pre">
+            RedisCacheDatabase
+           </span>
+          </span>
+          <span class="sig-paren">
+           (
+          </span>
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TraderId
+            </span>
+            <span class="pre">
+             trader_id
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Logger
+            </span>
+            <span class="pre">
+             logger
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Serializer
+            </span>
+            <span class="pre">
+             serializer
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             config:
+            </span>
+            <span class="pre">
+             Optional[CacheDatabaseConfig]
+            </span>
+            <span class="pre">
+             =
+            </span>
+            <span class="pre">
+             None
+            </span>
+           </span>
+          </em>
+          <span class="sig-paren">
+           )
+          </span>
+          <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase" title="Permalink to this definition">
+           ¶
+          </a>
+         </dt>
+         <dd>
+          <p>
+           Bases:
+           <a class="reference internal" href="cache.html#nautilus_trader.cache.database.CacheDatabase" title="nautilus_trader.cache.database.CacheDatabase">
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              CacheDatabase
+             </span>
+            </code>
+           </a>
+          </p>
+          <p>
+           Provides a cache database backed by Redis.
+          </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                trader_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.TraderId" title="nautilus_trader.model.identifiers.TraderId">
+                <em>
+                 TraderId
+                </em>
+               </a>
+               ) – The trader ID for the database.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                logger
+               </strong>
+               (
+               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
+                <em>
+                 Logger
+                </em>
+               </a>
+               ) – The logger for the database.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                serializer
+               </strong>
+               (
+               <a class="reference internal" href="serialization.html#nautilus_trader.serialization.base.Serializer" title="nautilus_trader.serialization.base.Serializer">
+                <em>
+                 Serializer
+                </em>
+               </a>
+               ) – The serializer for database operations.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                config
+               </strong>
+               (
+               <a class="reference internal" href="config.html#nautilus_trader.config.common.CacheDatabaseConfig" title="nautilus_trader.config.common.CacheDatabaseConfig">
+                <em>
+                 CacheDatabaseConfig
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <em>
+                optional
+               </em>
+               ) – The configuration for the instance.
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <p>
+             <strong>
+              TypeError
+             </strong>
+             – If
+             <cite>
+              config
+             </cite>
+             is not of type
+             <cite>
+              CacheDatabaseConfig
+             </cite>
+             .
+            </p>
+           </dd>
+          </dl>
+          <div class="admonition warning">
+           <p class="admonition-title">
+            Warning
+           </p>
+           <p>
+            Redis can only accurately store int64 types to 17 digits of precision.
+Therefore nanosecond timestamp int64’s with 19 digits will lose 2 digits of
+precision when persisted. One way to solve this is to ensure the serializer
+converts timestamp int64’s to strings on the way into Redis, and converts
+timestamp strings back to int64’s on the way out. One way to achieve this is
+to set the
+            <cite>
+             timestamps_as_str
+            </cite>
+            flag to true for the
+            <cite>
+             MsgPackSerializer
+            </cite>
+            , as
+per the default implementations for both
+            <cite>
+             TradingNode
+            </cite>
+            and
+            <cite>
+             BacktestEngine
+            </cite>
+            .
+           </p>
+          </div>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add">
+            <span class="sig-name descname">
+             <span class="pre">
+              add
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unicode
+              </span>
+              <span class="pre">
+               key
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bytes
+              </span>
+              <span class="pre">
+               value
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given general object value to the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  key
+                 </strong>
+                 (
+                 <em>
+                  str
+                 </em>
+                 ) – The key to write to.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  value
+                 </strong>
+                 (
+                 <em>
+                  bytes
+                 </em>
+                 ) – The object value.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_account">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_account
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Account
+              </span>
+              <span class="pre">
+               account
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_account" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given account to the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                account
+               </strong>
+               (
+               <em>
+                Account
+               </em>
+               ) – The account to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_currency">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_currency
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Currency
+              </span>
+              <span class="pre">
+               currency
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_currency" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given currency to the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                currency
+               </strong>
+               (
+               <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                <em>
+                 Currency
+                </em>
+               </a>
+               ) – The currency to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_instrument">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_instrument
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Instrument
+              </span>
+              <span class="pre">
+               instrument
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_instrument" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given instrument to the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                instrument
+               </strong>
+               (
+               <a class="reference internal" href="model/instruments.html#nautilus_trader.model.instruments.base.Instrument" title="nautilus_trader.model.instruments.base.Instrument">
+                <em>
+                 Instrument
+                </em>
+               </a>
+               ) – The instrument to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_order">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_order
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Order
+              </span>
+              <span class="pre">
+               order
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_order" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given order to the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                order
+               </strong>
+               (
+               <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+                <em>
+                 Order
+                </em>
+               </a>
+               ) – The order to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_position">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_position
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Position
+              </span>
+              <span class="pre">
+               position
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_position" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given position associated with the given strategy ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                position
+               </strong>
+               (
+               <a class="reference internal" href="model/position.html#nautilus_trader.model.position.Position" title="nautilus_trader.model.position.Position">
+                <em>
+                 Position
+                </em>
+               </a>
+               ) – The position to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_submit_order_command">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_submit_order_command
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SubmitOrder
+              </span>
+              <span class="pre">
+               command
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_submit_order_command" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given submit order command to the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                command
+               </strong>
+               (
+               <a class="reference internal" href="execution.html#nautilus_trader.execution.messages.SubmitOrder" title="nautilus_trader.execution.messages.SubmitOrder">
+                <em>
+                 SubmitOrder
+                </em>
+               </a>
+               ) – The command to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_submit_order_list_command">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_submit_order_list_command
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SubmitOrderList
+              </span>
+              <span class="pre">
+               command
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_submit_order_list_command" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given submit order list command to the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                command
+               </strong>
+               (
+               <a class="reference internal" href="execution.html#nautilus_trader.execution.messages.SubmitOrderList" title="nautilus_trader.execution.messages.SubmitOrderList">
+                <em>
+                 SubmitOrderList
+                </em>
+               </a>
+               ) – The command to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.delete_actor">
+            <span class="sig-name descname">
+             <span class="pre">
+              delete_actor
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ComponentId
+              </span>
+              <span class="pre">
+               component_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.delete_actor" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Delete the given actor from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                component_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ComponentId" title="nautilus_trader.model.identifiers.ComponentId">
+                <em>
+                 ComponentId
+                </em>
+               </a>
+               ) – The ID of the actor state dictionary to delete.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.delete_strategy">
+            <span class="sig-name descname">
+             <span class="pre">
+              delete_strategy
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               StrategyId
+              </span>
+              <span class="pre">
+               strategy_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.delete_strategy" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Delete the given strategy from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                strategy_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
+                <em>
+                 StrategyId
+                </em>
+               </a>
+               ) – The ID of the strategy state dictionary to delete.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.flush">
+            <span class="sig-name descname">
+             <span class="pre">
+              flush
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.flush" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Flush the database which clears all data.
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load">
+            <span class="sig-name descname">
+             <span class="pre">
+              load
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all general objects from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[str, bytes]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_account">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_account
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               AccountId
+              </span>
+              <span class="pre">
+               account_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               Account
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_account" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the account associated with the given account ID (if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                account_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.AccountId" title="nautilus_trader.model.identifiers.AccountId">
+                <em>
+                 AccountId
+                </em>
+               </a>
+               ) – The account ID to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Account or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_accounts">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_accounts
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_accounts" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all accounts from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[AccountId, Account]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_actor">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_actor
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ComponentId
+              </span>
+              <span class="pre">
+               component_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_actor" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the state for the given actor.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                component_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ComponentId" title="nautilus_trader.model.identifiers.ComponentId">
+                <em>
+                 ComponentId
+                </em>
+               </a>
+               ) – The ID of the actor state dictionary to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                dict[str, bytes]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_currencies">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_currencies
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_currencies" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all currencies from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[str, Currency]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_currency">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_currency
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unicode
+              </span>
+              <span class="pre">
+               code
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <span class="pre">
+                Currency
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_currency" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the currency associated with the given currency code (if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                code
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The currency code to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Currency or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_instrument">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_instrument
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/instruments.html#nautilus_trader.model.instruments.base.Instrument" title="nautilus_trader.model.instruments.base.Instrument">
+               <span class="pre">
+                Instrument
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_instrument" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the instrument associated with the given instrument ID
+(if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                instrument_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                <em>
+                 InstrumentId
+                </em>
+               </a>
+               ) – The instrument ID to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Instrument or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_instruments">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_instruments
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_instruments" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all instruments from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[InstrumentId, Instrument]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_order">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_order
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               client_order_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+               <span class="pre">
+                Order
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_order" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the order associated with the given client order ID (if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                client_order_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
+                <em>
+                 ClientOrderId
+                </em>
+               </a>
+               ) – The client order ID to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Order or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_orders">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_orders
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_orders" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all orders from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[ClientOrderId, Order]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_position">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_position
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               PositionId
+              </span>
+              <span class="pre">
+               position_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/position.html#nautilus_trader.model.position.Position" title="nautilus_trader.model.position.Position">
+               <span class="pre">
+                Position
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_position" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the position associated with the given ID (if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                position_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.PositionId" title="nautilus_trader.model.identifiers.PositionId">
+                <em>
+                 PositionId
+                </em>
+               </a>
+               ) – The position ID to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Position or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_positions">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_positions
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_positions" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all positions from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[PositionId, Position]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_strategy">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_strategy
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               StrategyId
+              </span>
+              <span class="pre">
+               strategy_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_strategy" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the state for the given strategy.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                strategy_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
+                <em>
+                 StrategyId
+                </em>
+               </a>
+               ) – The ID of the strategy state dictionary to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                dict[str, bytes]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_command">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_submit_order_command
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               client_order_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="execution.html#nautilus_trader.execution.messages.SubmitOrder" title="nautilus_trader.execution.messages.SubmitOrder">
+               <span class="pre">
+                SubmitOrder
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_command" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the command associated with the given client order ID (if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                client_order_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
+                <em>
+                 ClientOrderId
+                </em>
+               </a>
+               ) – The client order ID for the command to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SubmitOrder or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_commands">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_submit_order_commands
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_commands" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all submit order commands from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[ClientOrderId, SubmitOrder]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_list_command">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_submit_order_list_command
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               OrderListId
+              </span>
+              <span class="pre">
+               order_list_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="execution.html#nautilus_trader.execution.messages.SubmitOrderList" title="nautilus_trader.execution.messages.SubmitOrderList">
+               <span class="pre">
+                SubmitOrderList
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_list_command" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the command associated with the given order list ID (if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                order_list_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.OrderListId" title="nautilus_trader.model.identifiers.OrderListId">
+                <em>
+                 OrderListId
+                </em>
+               </a>
+               ) – The order list ID for the command to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SubmitOrderList or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_list_commands">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_submit_order_list_commands
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_submit_order_list_commands" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all submit order list commands from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[OrderListId, SubmitOrderList]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_account">
+            <span class="sig-name descname">
+             <span class="pre">
+              update_account
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Account
+              </span>
+              <span class="pre">
+               account
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_account" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Update the given account in the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                account
+               </strong>
+               (
+               <em>
+                The account to update
+               </em>
+               <em>
+                (
+               </em>
+               <em>
+                from last event
+               </em>
+               <em>
+                )
+               </em>
+               <em>
+                .
+               </em>
+               ) –
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_actor">
+            <span class="sig-name descname">
+             <span class="pre">
+              update_actor
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Actor
+              </span>
+              <span class="pre">
+               actor
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_actor" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Update the given actor state in the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                actor
+               </strong>
+               (
+               <a class="reference internal" href="common.html#nautilus_trader.common.actor.Actor" title="nautilus_trader.common.actor.Actor">
+                <em>
+                 Actor
+                </em>
+               </a>
+               ) – The actor to update.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_order">
+            <span class="sig-name descname">
+             <span class="pre">
+              update_order
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Order
+              </span>
+              <span class="pre">
+               order
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_order" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Update the given order in the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                order
+               </strong>
+               (
+               <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+                <em>
+                 Order
+                </em>
+               </a>
+               ) – The order to update (from last event).
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_position">
+            <span class="sig-name descname">
+             <span class="pre">
+              update_position
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Position
+              </span>
+              <span class="pre">
+               position
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_position" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Update the given position in the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                position
+               </strong>
+               (
+               <a class="reference internal" href="model/position.html#nautilus_trader.model.position.Position" title="nautilus_trader.model.position.Position">
+                <em>
+                 Position
+                </em>
+               </a>
+               ) – The position to update (from last event).
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_strategy">
+            <span class="sig-name descname">
+             <span class="pre">
+              update_strategy
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Strategy
+              </span>
+              <span class="pre">
+               strategy
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.update_strategy" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Update the given strategy state in the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                strategy
+               </strong>
+               (
+               <a class="reference internal" href="trading.html#nautilus_trader.trading.strategy.Strategy" title="nautilus_trader.trading.strategy.Strategy">
+                <em>
+                 Strategy
+                </em>
+               </a>
+               ) – The strategy to update.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+         </dd>
+        </dl>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="indicators.html" rel="prev" title="Indicators">
+      <div class="md-flex__cell md-flex__cell--shrink">
+       <i class="md-icon md-icon--arrow-back md-footer-nav__button">
+       </i>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+       <span class="md-flex__ellipsis">
+        <span class="md-footer-nav__direction">
+         Previous
+        </span>
+        Indicators
+       </span>
+      </div>
+     </a>
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="live.html" rel="next" title="Live">
+      <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+       <span class="md-flex__ellipsis">
+        <span class="md-footer-nav__direction">
+         Next
+        </span>
+        Live
+       </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+       <i class="md-icon md-icon--arrow-forward md-footer-nav__button">
+       </i>
+      </div>
+     </a>
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2015-2023 Nautech Systems Pty Ltd.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script crossorigin="anonymous" integrity="sha512-yFjZbTYRCJodnuyGlsKamNE/LlEaEAxSUDe5+u61mV8zzqJVFOH7TnULE2/PP/l5vKWpUNnF4VGVkXh3MjgLsg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js">
+  </script>
+  <script src="../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>
