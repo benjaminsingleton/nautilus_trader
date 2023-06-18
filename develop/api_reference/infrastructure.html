@@ -764,6 +764,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.add_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.delete_actor">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -939,6 +948,24 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   RedisCacheDatabase.load_submit_order_list_commands()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_synthetics">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  RedisCacheDatabase.load_synthetics()
                  </span>
                 </code>
                </a>
@@ -1839,6 +1866,77 @@ per the default implementations for both
                 </em>
                </a>
                ) – The command to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+              <span class="pre">
+               synthetic
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given synthetic instrument to the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                synthetic
+               </strong>
+               (
+               <em>
+                SyntheticInstrument
+               </em>
+               ) – The synthetic instrument to add.
               </p>
              </dd>
             </dl>
@@ -3270,6 +3368,169 @@ per the default implementations for both
               <p>
                <em>
                 dict[OrderListId, SubmitOrderList]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the synthetic instrument associated with the given synthetic instrument ID
+(if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                instrument_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                <em>
+                 InstrumentId
+                </em>
+               </a>
+               ) – The synthetic instrument ID to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                instrument_id
+               </cite>
+               is not for a synthetic instrument.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_synthetics">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_synthetics
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.infrastructure.cache.RedisCacheDatabase.load_synthetics" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load all synthetic instruments from the database.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[InstrumentId, SyntheticInstrument]
                </em>
               </p>
              </dd>

@@ -877,6 +877,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.identifiers.InstrumentId.is_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  InstrumentId.is_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.identifiers.InstrumentId.symbol">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1089,6 +1098,15 @@
               </i>
              </span>
              <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.identifiers.Venue.is_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Venue.is_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.identifiers.Venue.value">
                 <code class="docutils literal notranslate">
@@ -2323,6 +2341,61 @@ period.
               <p>
                <em>
                 InstrumentId
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.identifiers.InstrumentId.is_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              is_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.identifiers.InstrumentId.is_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return whether the instrument ID is a synthetic instrument (with venue of ‘SYNTH’).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
                </em>
               </p>
              </dd>
@@ -3599,6 +3672,61 @@ do not collide with those from another node instance.
              </cite>
              is not a valid string.
             </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.identifiers.Venue.is_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              is_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.identifiers.Venue.is_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return whether the venue is synthetic (‘SYNTH’).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py attribute">

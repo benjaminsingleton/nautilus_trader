@@ -872,6 +872,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.add_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.add_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.add_ticker">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1020,6 +1029,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Cache.cache_positions()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.cache_synthetics">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.cache_synthetics()
                  </span>
                 </code>
                </a>
@@ -1353,6 +1371,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Cache.load_submit_order_list_command()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.load_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.load_synthetic()
                  </span>
                 </code>
                </a>
@@ -1745,6 +1772,33 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.synthetic_ids">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.synthetic_ids()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.synthetics">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.synthetics()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.tick_capacity">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1949,6 +2003,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.database.CacheDatabase.add_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheDatabase.add_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.cache.database.CacheDatabase.delete_actor">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2124,6 +2187,24 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   CacheDatabase.load_submit_order_list_commands()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.database.CacheDatabase.load_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheDatabase.load_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.database.CacheDatabase.load_synthetics">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheDatabase.load_synthetics()
                  </span>
                 </code>
                </a>
@@ -2850,6 +2931,33 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   CacheFacade.strategy_ids()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.synthetic_ids">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.synthetic_ids()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.synthetics">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.synthetics()
                  </span>
                 </code>
                </a>
@@ -4898,6 +5006,77 @@ being released and transformed into another type.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.add_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+              <span class="pre">
+               synthetic
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.add_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the given synthetic instrument to the cache.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                synthetic
+               </strong>
+               (
+               <em>
+                SyntheticInstrument
+               </em>
+               ) – The synthetic instrument to add.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.add_ticker">
             <span class="sig-name descname">
              <span class="pre">
@@ -5920,6 +6099,47 @@ database.
            <dd>
             <p>
              Clear the current positions cache and load positions from the cache
+database.
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.cache_synthetics">
+            <span class="sig-name descname">
+             <span class="pre">
+              cache_synthetics
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.cache_synthetics" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Clear the current synthetic instruments cache and load synthetic instruments from the cache
 database.
             </p>
            </dd>
@@ -8994,7 +9214,7 @@ and is open.
              </dt>
              <dd class="field-even">
               <p>
-               Account or
+               Instrument or
                <code class="docutils literal notranslate">
                 <span class="pre">
                  None
@@ -9437,6 +9657,117 @@ and is open.
                  None
                 </span>
                </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.load_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.load_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Load the synthetic instrument associated with the given
+             <cite>
+              instrument_id
+             </cite>
+             (if found).
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                instrument_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                <em>
+                 InstrumentId
+                </em>
+               </a>
+               ) – The synthetic instrument ID to load.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                instrument_id
+               </cite>
+               is not a synthetic instrument ID.
               </p>
              </dd>
             </dl>
@@ -15040,6 +15371,137 @@ and is open.
             </dl>
            </dd>
           </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.synthetic_ids">
+            <span class="sig-name descname">
+             <span class="pre">
+              synthetic_ids
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.synthetic_ids" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.synthetics">
+            <span class="sig-name descname">
+             <span class="pre">
+              synthetics
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.synthetics" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.tick_capacity">
             <span class="sig-name descname">
@@ -16642,6 +17104,57 @@ and is open.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.database.CacheDatabase.add_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+              <span class="pre">
+               synthetic
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.database.CacheDatabase.add_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.cache.database.CacheDatabase.delete_actor">
             <span class="sig-name descname">
              <span class="pre">
@@ -17565,6 +18078,97 @@ and is open.
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.database.CacheDatabase.load_submit_order_list_commands" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.database.CacheDatabase.load_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.database.CacheDatabase.load_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.database.CacheDatabase.load_synthetics">
+            <span class="sig-name descname">
+             <span class="pre">
+              load_synthetics
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.database.CacheDatabase.load_synthetics" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -22463,6 +23067,137 @@ and is open.
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.strategy_ids" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.synthetic_ids">
+            <span class="sig-name descname">
+             <span class="pre">
+              synthetic_ids
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.synthetic_ids" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.synthetics">
+            <span class="sig-name descname">
+             <span class="pre">
+              synthetics
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.synthetics" title="Permalink to this definition">
              ¶
             </a>
            </dt>
