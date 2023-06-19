@@ -15418,8 +15418,64 @@ and is open.
            </dt>
            <dd>
             <p>
-             Abstract method (implement in subclass).
+             Return the synthetic instrument corresponding to the given instrument ID.
             </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                instrument_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                <em>
+                 InstrumentId
+                </em>
+               </a>
+               ) – The instrument ID of the synthetic instrument to return.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                instrument_id
+               </cite>
+               is not a synthetic instrument ID.
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py method">
@@ -15458,8 +15514,23 @@ and is open.
            </dt>
            <dd>
             <p>
-             Abstract method (implement in subclass).
+             Return all synthetic instrument IDs held by the cache.
             </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                list[InstrumentId]
+               </em>
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py method">
@@ -15498,8 +15569,23 @@ and is open.
            </dt>
            <dd>
             <p>
-             Abstract method (implement in subclass).
+             Return all synthetic instruments held by the cache.
             </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                list[SyntheticInstrument]
+               </em>
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py attribute">

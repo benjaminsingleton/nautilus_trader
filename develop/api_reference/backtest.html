@@ -2837,6 +2837,15 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.add_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.add_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.cache">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -3754,6 +3763,15 @@
                 </code>
                </a>
               </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.update_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.update_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
              </ul>
             </li>
             <li class="md-nav__item">
@@ -3769,6 +3787,15 @@
               </i>
              </span>
              <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.add_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.add_synthetic()
+                 </span>
+                </code>
+               </a>
+              </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.cache">
                 <code class="docutils literal notranslate">
@@ -4683,6 +4710,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   SimulationModule.unsubscribe_venue_status_updates()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.update_synthetic">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.update_synthetic()
                  </span>
                 </code>
                </a>
@@ -22038,6 +22074,105 @@ of fills and slippage by order type.
             </p>
            </dd>
           </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.add_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+              <span class="pre">
+               synthetic
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.add_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the created synthetic instrument to the cache.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                synthetic
+               </strong>
+               (
+               <em>
+                SyntheticInstrument
+               </em>
+               ) – The synthetic instrument to add to the cache.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                KeyError
+               </strong>
+               – If
+               <cite>
+                synthetic
+               </cite>
+               is already in the cache.
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <p>
+             If you are updating the synthetic instrument then you should use the
+             <cite>
+              update_synthetic
+             </cite>
+             method.
+            </p>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.cache">
             <span class="sig-name descname">
@@ -31491,6 +31626,105 @@ If
             </dl>
            </dd>
           </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.update_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              update_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+              <span class="pre">
+               synthetic
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.update_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Update the synthetic instrument in the cache.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                synthetic
+               </strong>
+               (
+               <em>
+                SyntheticInstrument
+               </em>
+               ) – The synthetic instrument to update in the cache.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                KeyError
+               </strong>
+               – If
+               <cite>
+                synthetic
+               </cite>
+               does not already exist in the cache.
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <p>
+             If you are adding a new synthetic instrument then you should use the
+             <cite>
+              add_synthetic
+             </cite>
+             method.
+            </p>
+           </dd>
+          </dl>
          </dd>
         </dl>
         <dl class="py class">
@@ -31560,6 +31794,105 @@ If
             This class should not be used directly, but through a concrete subclass.
            </p>
           </div>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.add_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              add_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+              <span class="pre">
+               synthetic
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.add_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Add the created synthetic instrument to the cache.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                synthetic
+               </strong>
+               (
+               <em>
+                SyntheticInstrument
+               </em>
+               ) – The synthetic instrument to add to the cache.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                KeyError
+               </strong>
+               – If
+               <cite>
+                synthetic
+               </cite>
+               is already in the cache.
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <p>
+             If you are updating the synthetic instrument then you should use the
+             <cite>
+              update_synthetic
+             </cite>
+             method.
+            </p>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.cache">
             <span class="sig-name descname">
@@ -40968,6 +41301,105 @@ If
               </ul>
              </dd>
             </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.update_synthetic">
+            <span class="sig-name descname">
+             <span class="pre">
+              update_synthetic
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+              <span class="pre">
+               synthetic
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.update_synthetic" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Update the synthetic instrument in the cache.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                synthetic
+               </strong>
+               (
+               <em>
+                SyntheticInstrument
+               </em>
+               ) – The synthetic instrument to update in the cache.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                KeyError
+               </strong>
+               – If
+               <cite>
+                synthetic
+               </cite>
+               does not already exist in the cache.
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <p>
+             If you are adding a new synthetic instrument then you should use the
+             <cite>
+              add_synthetic
+             </cite>
+             method.
+            </p>
            </dd>
           </dl>
          </dd>
