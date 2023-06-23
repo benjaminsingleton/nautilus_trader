@@ -583,11 +583,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../network.html">
-               Network
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../persistence.html">
                Persistence
               </a>
@@ -683,6 +678,64 @@
             </i>
            </span>
            <ul class="submenu">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#module-nautilus_trader.adapters.betfair.client">
+              Client
+             </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BetfairHttpClient
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient.keep_alive">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairHttpClient.keep_alive()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient.list_navigation">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairHttpClient.list_navigation()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient.list_market_catalogue">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairHttpClient.list_market_catalogue()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#module-nautilus_trader.adapters.betfair.common">
+              Common
+             </a>
+            </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#module-nautilus_trader.adapters.betfair.config">
               Config
@@ -2742,6 +2795,479 @@
         <p>
          Provides an API integration for the Betfair spots betting exchange.
         </p>
+        <section id="module-nautilus_trader.adapters.betfair.client">
+         <span id="client">
+         </span>
+         <h2 id="module-nautilus_trader.adapters.betfair.client">
+          Client
+          <a class="headerlink" href="#module-nautilus_trader.adapters.betfair.client" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             BetfairHttpClient
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              username
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              password
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              app_key
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              logger
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <a class="reference internal" href="../common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
+              <span class="pre">
+               Logger
+              </span>
+             </a>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <a class="headerlink" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              object
+             </span>
+            </code>
+           </p>
+           <p>
+            Provides a HTTP client for
+            <cite>
+             Betfair
+            </cite>
+            .
+           </p>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.client.BetfairHttpClient.keep_alive">
+             <em class="property">
+              <span class="pre">
+               async
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               keep_alive
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient.keep_alive" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Renew authentication.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.client.BetfairHttpClient.list_navigation">
+             <em class="property">
+              <span class="pre">
+               async
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               list_navigation
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                Navigation
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient.list_navigation" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              List the tree (navigation) of all betfair markets.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.client.BetfairHttpClient.list_market_catalogue">
+             <em class="property">
+              <span class="pre">
+               async
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               list_market_catalogue
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                filter_
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                MarketFilter
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                market_projection
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                Optional
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                list
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                betfair_parser.spec.betting.enums.MarketProjection
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="o">
+               <span class="pre">
+                =
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="default_value">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                sort
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                Optional
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                MarketSort
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="o">
+               <span class="pre">
+                =
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="default_value">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                max_results
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                int
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="o">
+               <span class="pre">
+                =
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="default_value">
+               <span class="pre">
+                1000
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                locale
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                Optional
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                str
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="o">
+               <span class="pre">
+                =
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="default_value">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                list
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                betfair_parser.spec.betting.type_definitions.MarketCatalogue
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient.list_market_catalogue" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return specific data about markets.
+             </p>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
+        </section>
+        <section id="module-nautilus_trader.adapters.betfair.common">
+         <span id="common">
+         </span>
+         <h2 id="module-nautilus_trader.adapters.betfair.common">
+          Common
+          <a class="headerlink" href="#module-nautilus_trader.adapters.betfair.common" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+        </section>
         <section id="module-nautilus_trader.adapters.betfair.config">
          <span id="config">
          </span>
@@ -4468,9 +4994,11 @@
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              BetfairHttpClient
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+              <span class="pre">
+               BetfairHttpClient
+              </span>
+             </a>
             </span>
            </em>
            ,
@@ -12059,7 +12587,20 @@ then the component state will not change, and an error will be logged.
             </span>
             <span class="n">
              <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
               float
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
              </span>
             </span>
             <span class="w">
@@ -12363,9 +12904,11 @@ then the component state will not change, and an error will be logged.
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              BetfairHttpClient
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+              <span class="pre">
+               BetfairHttpClient
+              </span>
+             </a>
             </span>
            </em>
            ,
@@ -12568,9 +13111,11 @@ then the component state will not change, and an error will be logged.
                  client
                 </strong>
                 (
-                <em>
-                 BetfairHttpClient
-                </em>
+                <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+                 <em>
+                  BetfairHttpClient
+                 </em>
+                </a>
                 ) – The Betfair HttpClient.
                </p>
               </li>
@@ -13041,11 +13586,24 @@ then the component state will not change, and an error will be logged.
               <span class="w">
               </span>
               <span class="n">
+               <span class="pre">
+                Optional
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
                <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
                 <span class="pre">
                  InstrumentId
                 </span>
                </a>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
               </span>
               <span class="w">
               </span>
@@ -13367,11 +13925,24 @@ then the component state will not change, and an error will be logged.
               <span class="w">
               </span>
               <span class="n">
+               <span class="pre">
+                Optional
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
                <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
                 <span class="pre">
                  InstrumentId
                 </span>
                </a>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
               </span>
               <span class="w">
               </span>
@@ -13403,11 +13974,24 @@ then the component state will not change, and an error will be logged.
               <span class="w">
               </span>
               <span class="n">
+               <span class="pre">
+                Optional
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
                <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.VenueOrderId" title="nautilus_trader.model.identifiers.VenueOrderId">
                 <span class="pre">
                  VenueOrderId
                 </span>
                </a>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
               </span>
               <span class="w">
               </span>
@@ -13697,11 +14281,24 @@ then the component state will not change, and an error will be logged.
               <span class="w">
               </span>
               <span class="n">
+               <span class="pre">
+                Optional
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
                <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
                 <span class="pre">
                  InstrumentId
                 </span>
                </a>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
               </span>
               <span class="w">
               </span>
@@ -18987,9 +19584,11 @@ then the component state will not change, and an error will be logged.
              →
             </span>
             <span class="sig-return-typehint">
-             <span class="pre">
-              BetfairHttpClient
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+              <span class="pre">
+               BetfairHttpClient
+              </span>
+             </a>
             </span>
            </span>
            <a class="headerlink" href="#nautilus_trader.adapters.betfair.factories.get_cached_betfair_client" title="Permalink to this definition">
@@ -19150,9 +19749,11 @@ If None then will source from the
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              BetfairHttpClient
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+              <span class="pre">
+               BetfairHttpClient
+              </span>
+             </a>
             </span>
            </em>
            ,
@@ -20037,9 +20638,11 @@ If None then will source from the
                [
               </span>
              </span>
-             <span class="pre">
-              BetfairHttpClient
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+              <span class="pre">
+               BetfairHttpClient
+              </span>
+             </a>
              <span class="p">
               <span class="pre">
                ]
@@ -22237,9 +22840,11 @@ the given filters.
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              BetfairHttpClient
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+              <span class="pre">
+               BetfairHttpClient
+              </span>
+             </a>
             </span>
            </em>
            ,
@@ -22269,6 +22874,51 @@ the given filters.
             <span class="n">
              <span class="pre">
               message_handler
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Callable
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              bytes
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ,
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              None
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
              </span>
             </span>
            </em>
@@ -22586,9 +23236,11 @@ the given filters.
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              BetfairHttpClient
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+              <span class="pre">
+               BetfairHttpClient
+              </span>
+             </a>
             </span>
            </em>
            ,
@@ -22890,9 +23542,11 @@ the given filters.
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              BetfairHttpClient
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.client.BetfairHttpClient" title="nautilus_trader.adapters.betfair.client.BetfairHttpClient">
+              <span class="pre">
+               BetfairHttpClient
+              </span>
+             </a>
             </span>
            </em>
            ,

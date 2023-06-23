@@ -583,11 +583,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../network.html">
-               Network
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../persistence.html">
                Persistence
               </a>
@@ -953,39 +948,6 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OrderBook.update_trade_tick()
-                 </span>
-                </code>
-               </a>
-              </li>
-             </ul>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.model.orderbook.error.BookIntegrityError">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                BookIntegrityError
-               </span>
-              </code>
-             </a>
-             <span class="arrow">
-              <i class="fa-solid fa-chevron-right">
-              </i>
-             </span>
-             <ul class="submenu">
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.error.BookIntegrityError.add_note">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  BookIntegrityError.add_note()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.error.BookIntegrityError.with_traceback">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  BookIntegrityError.with_traceback()
                  </span>
                 </code>
                </a>
@@ -1740,24 +1702,6 @@
              For all order books:
 - The bid side price should not be greater than the ask side price.
             </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <a class="reference internal" href="#nautilus_trader.model.orderbook.error.BookIntegrityError" title="nautilus_trader.model.orderbook.error.BookIntegrityError">
-                <strong>
-                 BookIntegrityError
-                </strong>
-               </a>
-               – If any check fails.
-              </p>
-             </dd>
-            </dl>
            </dd>
           </dl>
           <dl class="py method">
@@ -3025,88 +2969,6 @@
               </p>
              </dd>
             </dl>
-           </dd>
-          </dl>
-         </dd>
-        </dl>
-        <span class="target" id="module-nautilus_trader.model.orderbook.error">
-        </span>
-        <dl class="py exception">
-         <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.error.BookIntegrityError">
-          <em class="property">
-           <span class="pre">
-            exception
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            BookIntegrityError
-           </span>
-          </span>
-          <a class="headerlink" href="#nautilus_trader.model.orderbook.error.BookIntegrityError" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <code class="xref py py-class docutils literal notranslate">
-            <span class="pre">
-             Exception
-            </span>
-           </code>
-          </p>
-          <p>
-           Represents an error condition where the order books integrity has been lost.
-          </p>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.error.BookIntegrityError.add_note">
-            <span class="sig-name descname">
-             <span class="pre">
-              add_note
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <span class="sig-paren">
-             )
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.orderbook.error.BookIntegrityError.add_note" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Exception.add_note(note) –
-add a note to the exception
-            </p>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.error.BookIntegrityError.with_traceback">
-            <span class="sig-name descname">
-             <span class="pre">
-              with_traceback
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <span class="sig-paren">
-             )
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.orderbook.error.BookIntegrityError.with_traceback" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Exception.with_traceback(tb) –
-set self.__traceback__ to tb and return self.
-            </p>
            </dd>
           </dl>
          </dd>
