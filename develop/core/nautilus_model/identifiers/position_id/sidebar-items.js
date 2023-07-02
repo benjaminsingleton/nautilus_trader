@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["position_id_clone","position_id_drop","position_id_eq","position_id_hash","position_id_new","position_id_to_cstr"],"struct":["PositionId"]};

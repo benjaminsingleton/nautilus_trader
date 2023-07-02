@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["component_id_clone","component_id_drop","component_id_eq","component_id_hash","component_id_new","component_id_to_cstr"],"struct":["ComponentId"]};

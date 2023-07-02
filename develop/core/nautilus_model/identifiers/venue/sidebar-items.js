@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["SYNTHETIC_VENUE"],"fn":["venue_clone","venue_drop","venue_eq","venue_hash","venue_is_synthetic","venue_new","venue_to_cstr"],"struct":["Venue"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["venue_order_id_clone","venue_order_id_drop","venue_order_id_eq","venue_order_id_hash","venue_order_id_new","venue_order_id_to_cstr"],"struct":["VenueOrderId"]};

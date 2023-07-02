@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["account_id_clone","account_id_drop","account_id_eq","account_id_hash","account_id_new","account_id_to_cstr"],"struct":["AccountId"]};
