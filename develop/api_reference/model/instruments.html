@@ -366,6 +366,11 @@
                 </a>
                </li>
                <li class="md-nav__item">
+                <a class="md-nav__link" href="../../concepts/advanced/synthetic_instruments.html">
+                 Synthetic instruments
+                </a>
+               </li>
+               <li class="md-nav__item">
                 <a class="md-nav__link" href="../../concepts/advanced/portfolio_statistics.html">
                  Portfolio Statistics
                 </a>
@@ -3450,6 +3455,129 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OptionsContract.venue
+                 </span>
+                </code>
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument">
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                SyntheticInstrument
+               </span>
+              </code>
+             </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.calculate">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.calculate()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.change_formula">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.change_formula()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.components">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.components
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.formula">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.formula
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.from_dict">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.from_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.fully_qualified_name">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.fully_qualified_name()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.id">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.id
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.price_increment">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.price_increment
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.price_precision">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.price_precision
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.to_dict">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.to_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.ts_event">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.ts_event
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.ts_init">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SyntheticInstrument.ts_init
                  </span>
                 </code>
                </a>
@@ -24322,6 +24450,1113 @@ currency for inverse instruments.
                <em>
                 Venue
                </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+         </dd>
+        </dl>
+        <span class="target" id="module-nautilus_trader.model.instruments.synthetic">
+        </span>
+        <dl class="py class">
+         <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument">
+          <em class="property">
+           <span class="pre">
+            class
+           </span>
+           <span class="w">
+           </span>
+          </em>
+          <span class="sig-name descname">
+           <span class="pre">
+            SyntheticInstrument
+           </span>
+          </span>
+          <span class="sig-paren">
+           (
+          </span>
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Symbol
+            </span>
+            <span class="pre">
+             symbol
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             uint8_t
+            </span>
+            <span class="pre">
+             price_precision
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             list
+            </span>
+            <span class="pre">
+             components
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             unicode
+            </span>
+            <span class="pre">
+             formula
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             uint64_t
+            </span>
+            <span class="pre">
+             ts_event
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             uint64_t
+            </span>
+            <span class="pre">
+             ts_init
+            </span>
+           </span>
+          </em>
+          <span class="sig-paren">
+           )
+          </span>
+          <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument" title="Permalink to this definition">
+           ¶
+          </a>
+         </dt>
+         <dd>
+          <p>
+           Bases:
+           <code class="xref py py-class docutils literal notranslate">
+            <span class="pre">
+             Data
+            </span>
+           </code>
+          </p>
+          <p>
+           Represents a synthetic instrument with prices derived from component instruments using a
+formula.
+          </p>
+          <p>
+           The
+           <cite>
+            id
+           </cite>
+           for the synthetic will become {symbol}.{SYNTH}.
+          </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                symbol
+               </strong>
+               (
+               <a class="reference internal" href="identifiers.html#nautilus_trader.model.identifiers.Symbol" title="nautilus_trader.model.identifiers.Symbol">
+                <em>
+                 Symbol
+                </em>
+               </a>
+               ) – The symbol for the synethic instrument.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                price_precision
+               </strong>
+               (
+               <em>
+                uint8_t
+               </em>
+               ) – The price precision for the synthetic instrument.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                components
+               </strong>
+               (
+               <em>
+                list
+               </em>
+               <em>
+                [
+               </em>
+               <a class="reference internal" href="identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                <em>
+                 InstrumentId
+                </em>
+               </a>
+               <em>
+                ]
+               </em>
+               ) – The component instruments for the synthetic instrument.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                formula
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The derivation formula for the synthetic instrument.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ts_event
+               </strong>
+               (
+               <em>
+                uint64_t
+               </em>
+               ) – The UNIX timestamp (nanoseconds) when the data event occurred.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ts_init
+               </strong>
+               (
+               <em>
+                uint64_t
+               </em>
+               ) – The UNIX timestamp (nanoseconds) when the data object was initialized.
+              </p>
+             </li>
+            </ul>
+           </dd>
+           <dt class="field-even">
+            Raises
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-even">
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                price_precision
+               </cite>
+               is greater than 9.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                OverflowError
+               </strong>
+               – If
+               <cite>
+                price_precision
+               </cite>
+               is negative (&lt; 0).
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If the
+               <cite>
+                components
+               </cite>
+               list does not contain at least 2 instrument IDs.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If the
+               <cite>
+                formula
+               </cite>
+               is not a valid string.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If the
+               <cite>
+                formula
+               </cite>
+               is not a valid expression.
+              </p>
+             </li>
+            </ul>
+           </dd>
+          </dl>
+          <div class="admonition warning">
+           <p class="admonition-title">
+            Warning
+           </p>
+           <p>
+            All component instruments should already be defined and exist in the cache prior to defining
+a new synthetic instrument.
+           </p>
+          </div>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.calculate">
+            <span class="sig-name descname">
+             <span class="pre">
+              calculate
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               list
+              </span>
+              <span class="pre">
+               inputs
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+               <span class="pre">
+                Price
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.calculate" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Calculate the price of the synthetic instrument from the given
+             <cite>
+              inputs
+             </cite>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                inputs
+               </strong>
+               (
+               <em>
+                list
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                double
+               </em>
+               <em>
+                ]
+               </em>
+               ) –
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Price
+               </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If
+                 <cite>
+                  inputs
+                 </cite>
+                 is empty, contains a NaN value, or length is different from components count.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  RuntimeError
+                 </strong>
+                 – If an internal error occurs when calculating the price.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.change_formula">
+            <span class="sig-name descname">
+             <span class="pre">
+              change_formula
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unicode
+              </span>
+              <span class="pre">
+               formula
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.change_formula" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Change the internal derivation formula for the synthetic instrument.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                formula
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The derivation formula to change to.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If the
+                 <cite>
+                  formula
+                 </cite>
+                 is not a valid string.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If the
+                 <cite>
+                  formula
+                 </cite>
+                 is not a valid expression.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.components">
+            <span class="sig-name descname">
+             <span class="pre">
+              components
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.components" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             list[InstrumentId]
+            </p>
+            <p>
+             Return the components of the synthetic instrument.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                list[InstrumentId]
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument.components
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.formula">
+            <span class="sig-name descname">
+             <span class="pre">
+              formula
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.formula" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             str
+            </p>
+            <p>
+             Return the synthetic instrument internal derivation formula.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                str
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument.formula
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.from_dict">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_dict
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               dict
+              </span>
+              <span class="pre">
+               values
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument" title="nautilus_trader.model.instruments.synthetic.SyntheticInstrument">
+               <span class="pre">
+                SyntheticInstrument
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.from_dict" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return an instrument from the given initialization values.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                values
+               </strong>
+               (
+               <em>
+                dict
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                str
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                object
+               </em>
+               <em>
+                ]
+               </em>
+               ) – The values to initialize the instrument with.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                SyntheticInstrument
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.fully_qualified_name">
+            <em class="property">
+             <span class="pre">
+              classmethod
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              fully_qualified_name
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               cls
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               str
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.fully_qualified_name" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the fully qualified name for the
+             <cite>
+              Data
+             </cite>
+             class.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                str
+               </em>
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             References
+            </p>
+            <p>
+             <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
+              https://www.python.org/dev/peps/pep-3155/
+             </a>
+            </p>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.id">
+            <span class="sig-name descname">
+             <span class="pre">
+              id
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.id" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             InstrumentId
+            </p>
+            <p>
+             Return the synthetic instruments ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                InstrumentId
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument.id
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.price_increment">
+            <span class="sig-name descname">
+             <span class="pre">
+              price_increment
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.price_increment" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Price
+            </p>
+            <p>
+             Return the minimum price increment (tick size) for the synthetic instrument.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                Price
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument.price_increment
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.price_precision">
+            <span class="sig-name descname">
+             <span class="pre">
+              price_precision
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.price_precision" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             int
+            </p>
+            <p>
+             Return the precision for the synthetic instrument.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                int
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument.price_precision
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.to_dict">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              to_dict
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               SyntheticInstrument
+              </span>
+              <span class="pre">
+               obj
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               dict
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               str
+              </span>
+              <span class="p">
+               <span class="pre">
+                ,
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="pre">
+               object
+              </span>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.to_dict" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return a dictionary representation of this object.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                dict[str, object]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.ts_event">
+            <span class="sig-name descname">
+             <span class="pre">
+              ts_event
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.ts_event" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             int
+            </p>
+            <p>
+             The UNIX timestamp (nanoseconds) when the data event occurred.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                int
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument.ts_event
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.synthetic.SyntheticInstrument.ts_init">
+            <span class="sig-name descname">
+             <span class="pre">
+              ts_init
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.ts_init" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             int
+            </p>
+            <p>
+             The UNIX timestamp (nanoseconds) when the object was initialized.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                int
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               SyntheticInstrument.ts_init
               </p>
              </dd>
             </dl>
