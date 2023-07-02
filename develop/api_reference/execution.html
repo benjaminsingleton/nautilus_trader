@@ -3636,6 +3636,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.matching_core.MatchingCore.instrument_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    MatchingCore.instrument_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.matching_core.MatchingCore.is_limit_matched">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -3739,6 +3748,24 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     MatchingCore.order_exists()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.matching_core.MatchingCore.price_increment">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    MatchingCore.price_increment
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.matching_core.MatchingCore.price_precision">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    MatchingCore.price_precision
                    </span>
                   </code>
                  </a>
@@ -22337,10 +22364,21 @@ then the component state will not change, and an error will be logged.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                Instrument
+                InstrumentId
                </span>
                <span class="pre">
-                instrument
+                instrument_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Price
+               </span>
+               <span class="pre">
+                price_increment
                </span>
               </span>
              </em>
@@ -22379,18 +22417,36 @@ then the component state will not change, and an error will be logged.
                </span>
               </dt>
               <dd class="field-odd">
-               <p>
-                <strong>
-                 instrument
-                </strong>
-                (
-                <a class="reference internal" href="model/instruments.html#nautilus_trader.model.instruments.base.Instrument" title="nautilus_trader.model.instruments.base.Instrument">
-                 <em>
-                  Instrument
-                 </em>
-                </a>
-                ) – The instrument for the matching core.
-               </p>
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  ) – The instrument ID for the matching core.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   price_increment
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                   <em>
+                    Price
+                   </em>
+                  </a>
+                  ) – The minimum price increment (tick size) for the matching core.
+                 </p>
+                </li>
+               </ul>
               </dd>
               <dt class="field-even">
                Returns
@@ -22418,7 +22474,7 @@ then the component state will not change, and an error will be logged.
                 </strong>
                 – If a matching core for the given
                 <cite>
-                 instrument
+                 instrument_id
                 </cite>
                 already exists.
                </p>
@@ -35104,10 +35160,21 @@ then the component state will not change, and an error will be logged.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              Instrument
+              InstrumentId
              </span>
              <span class="pre">
-              instrument
+              instrument_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              Price
+             </span>
+             <span class="pre">
+              price_increment
              </span>
             </span>
            </em>
@@ -35175,15 +35242,29 @@ then the component state will not change, and an error will be logged.
               <li>
                <p>
                 <strong>
-                 instrument
+                 instrument_id
                 </strong>
                 (
-                <a class="reference internal" href="model/instruments.html#nautilus_trader.model.instruments.base.Instrument" title="nautilus_trader.model.instruments.base.Instrument">
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
                  <em>
-                  Instrument
+                  InstrumentId
                  </em>
                 </a>
-                ) – The instrument for the matching core.
+                ) – The instrument ID for the matching core.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 price_increment
+                </strong>
+                (
+                <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                 <em>
+                  Price
+                 </em>
+                </a>
+                ) – The minimum price increment (tick size) for the matching core.
                </p>
               </li>
               <li>
@@ -35647,6 +35728,52 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.matching_core.MatchingCore.instrument_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.matching_core.MatchingCore.instrument_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              InstrumentId
+             </p>
+             <p>
+              Return the instrument ID for the matching core.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 InstrumentId
+                </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                MatchingCore.instrument_id
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py method">
@@ -36359,6 +36486,98 @@ then the component state will not change, and an error will be logged.
              </a>
             </dt>
             <dd>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.matching_core.MatchingCore.price_increment">
+             <span class="sig-name descname">
+              <span class="pre">
+               price_increment
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.matching_core.MatchingCore.price_increment" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Price
+             </p>
+             <p>
+              Return the instruments minimum price increment (tick size) for the matching core.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 Price
+                </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                MatchingCore.price_increment
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.matching_core.MatchingCore.price_precision">
+             <span class="sig-name descname">
+              <span class="pre">
+               price_precision
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.matching_core.MatchingCore.price_precision" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              int
+             </p>
+             <p>
+              Return the instruments price precision for the matching core.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 int
+                </em>
+               </p>
+              </dd>
+              <dt class="field-even">
+               Type
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                MatchingCore.price_precision
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
            <dl class="py method">
