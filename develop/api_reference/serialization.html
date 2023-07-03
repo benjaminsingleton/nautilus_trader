@@ -710,6 +710,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.serialization.msgpack.serializer.MsgPackSerializer.timestamps_as_iso8601">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  MsgPackSerializer.timestamps_as_iso8601
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.serialization.msgpack.serializer.MsgPackSerializer.timestamps_as_str">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -898,6 +907,17 @@ beside the built-in specification serializers.
             </span>
            </span>
           </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             timestamps_as_iso8601=False
+            </span>
+           </span>
+          </em>
           <span class="sig-paren">
            )
           </span>
@@ -931,29 +951,62 @@ beside the built-in specification serializers.
             </span>
            </dt>
            <dd class="field-odd">
-            <p>
-             <strong>
-              timestamps_as_str
-             </strong>
-             (
-             <em>
-              bool
-             </em>
-             ) – If the serializer converts
-             <cite>
-              int64_t
-             </cite>
-             timestamps to
-             <cite>
-              str
-             </cite>
-             on serialization,
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                timestamps_as_str
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default False
+               </em>
+               ) – If the serializer converts
+               <cite>
+                uint64_t
+               </cite>
+               timestamps to integer strings on serialization,
 and back to
-             <cite>
-              int64_t
-             </cite>
-             on deserialization.
-            </p>
+               <cite>
+                uint64_t
+               </cite>
+               on deserialization.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                timestamps_as_iso8601
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default False
+               </em>
+               ) – If the serializer converts
+               <cite>
+                uint64_t
+               </cite>
+               timestamps to ISO 8601 strings on serialization,
+and back to
+               <cite>
+                uint64_t
+               </cite>
+               on deserialization.
+              </p>
+             </li>
+            </ul>
            </dd>
           </dl>
           <dl class="py method">
@@ -1156,6 +1209,42 @@ and back to
            </dd>
           </dl>
           <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.serialization.msgpack.serializer.MsgPackSerializer.timestamps_as_iso8601">
+            <span class="sig-name descname">
+             <span class="pre">
+              timestamps_as_iso8601
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.serialization.msgpack.serializer.MsgPackSerializer.timestamps_as_iso8601" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             If the serializer converts timestamp
+             <cite>
+              int64_t
+             </cite>
+             to ISO 8601 strings.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <cite>
+                bool
+               </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.serialization.msgpack.serializer.MsgPackSerializer.timestamps_as_str">
             <span class="sig-name descname">
              <span class="pre">
@@ -1168,7 +1257,11 @@ and back to
            </dt>
            <dd>
             <p>
-             If the serializer converts timestamp int64_t to str.
+             If the serializer converts timestamp
+             <cite>
+              int64_t
+             </cite>
+             to integer strings.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
