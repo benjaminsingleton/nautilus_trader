@@ -48,9 +48,9 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">pub mod </span>backend;
+</span><span class="kw">pub mod </span>arrow;
+<span class="kw">pub mod </span>backend;
 <span class="kw">mod </span>kmerge_batch;
-<span class="kw">pub mod </span>parquet;
 <span class="kw">pub mod </span>wranglers;
 
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
@@ -58,6 +58,7 @@
 <span class="doccomment">/// Loaded as nautilus_pyo3.persistence
 </span><span class="attr">#[pymodule]
 </span><span class="kw">pub fn </span>persistence(<span class="kw">_</span>: Python&lt;<span class="lifetime">&#39;_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
+    m.add_class::&lt;arrow::NautilusDataType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;backend::session::DataBackendSession&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;backend::transformer::DataTransformer&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;backend::query::DataQueryResult&gt;()<span class="question-mark">?</span>;
@@ -65,7 +66,6 @@
     m.add_class::&lt;wranglers::delta::OrderBookDeltaDataWrangler&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;wranglers::quote::QuoteTickDataWrangler&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;wranglers::trade::TradeTickDataWrangler&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;parquet::NautilusDataType&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

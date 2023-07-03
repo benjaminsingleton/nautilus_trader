@@ -328,11 +328,11 @@
 
 <span class="kw">use </span><span class="kw">super</span>::query::DataQueryResult;
 <span class="kw">use crate</span>::{
-    kmerge_batch::{KMerge, PeekElementBatchStream},
-    parquet::{
-        DataStreamingError, DecodeFromRecordBatch, EncodeToRecordBatch, NautilusDataType,
+    arrow::{
+        DataStreamingError, DecodeDataFromRecordBatch, EncodeToRecordBatch, NautilusDataType,
         WriteStream,
     },
+    kmerge_batch::{KMerge, PeekElementBatchStream},
 };
 
 <span class="attr">#[derive(Debug, Default)]
@@ -404,7 +404,7 @@
         file_path: <span class="kw-2">&amp;</span>str,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
-        </span>T: DecodeFromRecordBatch + Into&lt;Data&gt;,
+        </span>T: DecodeDataFromRecordBatch + Into&lt;Data&gt;,
     {
         <span class="kw">let </span>parquet_options = ParquetReadOptions::&lt;<span class="lifetime">&#39;_</span>&gt; {
             skip_metadata: <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
@@ -438,7 +438,7 @@
         sql_query: <span class="kw-2">&amp;</span>str,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
-        </span>T: DecodeFromRecordBatch + Into&lt;Data&gt;,
+        </span>T: DecodeDataFromRecordBatch + Into&lt;Data&gt;,
     {
         <span class="kw">let </span>parquet_options = ParquetReadOptions::&lt;<span class="lifetime">&#39;_</span>&gt; {
             skip_metadata: <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
@@ -461,17 +461,17 @@
 
     <span class="kw">fn </span>add_batch_stream&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, stream: SendableRecordBatchStream)
     <span class="kw">where
-        </span>T: DecodeFromRecordBatch + Into&lt;Data&gt;,
+        </span>T: DecodeDataFromRecordBatch + Into&lt;Data&gt;,
     {
         <span class="kw">let </span>transform = stream.map(|result| <span class="kw">match </span>result {
-            <span class="prelude-val">Ok</span>(batch) =&gt; T::decode_batch(batch.schema().metadata(), batch).into_iter(),
+            <span class="prelude-val">Ok</span>(batch) =&gt; T::decode_data_batch(batch.schema().metadata(), batch).into_iter(),
             <span class="prelude-val">Err</span>(_err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Error getting next batch from RecordBatchStream&quot;</span>),
         });
 
         <span class="self">self</span>.batch_streams.push(Box::new(transform));
     }
 
-    <span class="comment">// Consumes the registered queries and returns a [QueryResult].
+    <span class="comment">// Consumes the registered queries and returns a [`QueryResult].
     // Passes the output of the query though the a KMerge which sorts the
     // queries in ascending order of `ts_init`.
     // QueryResult is an iterator that return Vec&lt;Data&gt;.

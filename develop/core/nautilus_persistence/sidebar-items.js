@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["persistence"],"mod":["backend","parquet","wranglers"]};
+window.SIDEBAR_ITEMS = {"fn":["persistence"],"mod":["arrow","backend","wranglers"]};
