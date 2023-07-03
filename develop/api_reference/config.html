@@ -6502,40 +6502,6 @@ The value should be a valid decimal format.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              filter_unclaimed_external_orders
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              bool
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               debug
              </span>
             </span>
@@ -6636,24 +6602,6 @@ The value should be a valid decimal format.
                  default True
                 </em>
                 ) – If unleveraged spot/cash assets should generate positions.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 filter_unclaimed_external_orders
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default False
-                </em>
-                ) – If unclaimed order events with an EXTERNAL strategy ID should be filtered/dropped.
                </p>
               </li>
               <li>
@@ -10215,6 +10163,7 @@ how the
                  optional
                 </em>
                 ) – The external order claim instrument IDs.
+External orders for matching instrument IDs will be associated with (claimed by) the strategy.
                </p>
               </li>
              </ul>
@@ -17337,14 +17286,6 @@ client).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              filter_unclaimed_external_orders=False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               debug=False)
              </span>
             </span>
@@ -20262,40 +20203,6 @@ external inputs of venues and data.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              filter_unclaimed_external_orders
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              bool
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               debug
              </span>
             </span>
@@ -20404,6 +20311,74 @@ external inputs of venues and data.
             <span class="default_value">
              <span class="pre">
               None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              filter_unclaimed_external_orders
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              filter_position_reports
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
              </span>
             </span>
            </em>
@@ -20591,6 +20566,50 @@ If
                  </span>
                 </code>
                 or 0 then will use the maximum lookback available from the venues.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 filter_unclaimed_external_orders
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If unclaimed order events with an EXTERNAL strategy ID should be filtered/dropped.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 filter_position_reports
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If
+                <a href="#id1">
+                 <span class="problematic" id="id2">
+                  `
+                 </span>
+                </a>
+                PositionStatusReport`s are filtered from reconciliation.
+This may be applicable when other nodes are trading the same instrument(s), on the same
+account - which could cause conflicts in position status.
                </p>
               </li>
               <li>
@@ -22856,14 +22875,6 @@ are colocated with the venue (to avoid the potential for race conditions).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              filter_unclaimed_external_orders=False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               debug=False
              </span>
             </span>
@@ -22881,6 +22892,22 @@ are colocated with the venue (to avoid the potential for race conditions).
             <span class="n">
              <span class="pre">
               reconciliation_lookback_mins=None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              filter_unclaimed_external_orders=False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              filter_position_reports=False
              </span>
             </span>
            </em>
