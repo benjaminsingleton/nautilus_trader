@@ -26,6 +26,8 @@ from ib_insync import Contract
 from ib_insync import HistoricalTickBidAsk
 from ib_insync import HistoricalTickLast
 
+from nautilus_trader.adapters.interactive_brokers.common import IBContract
+from nautilus_trader.adapters.interactive_brokers.common import IBContractDetails
 from nautilus_trader.adapters.interactive_brokers.parsing.data import generate_trade_id
 from nautilus_trader.adapters.interactive_brokers.parsing.instruments import parse_instrument
 from nautilus_trader.core.datetime import dt_to_unix_nanos
@@ -92,9 +94,14 @@ def back_fill_catalog(
         - A bar specification, i.e. BARS-1-MINUTE-LAST or BARS-5-SECOND-MID
 
     """
-    for date in pd.bdate_range(start_date, end_date, tz=tz_name):
+    for date in pd.date_range(start_date, end_date, tz=tz_name):
         for contract in contracts:
-            [details] = ib.reqContractDetails(contract=contract)
+            try:
+                [details] = ib.reqContractDetails(contract=contract)
+            except ValueError:
+                raise RuntimeError("IB did not return contract details for the contract requested.")
+            details.contract = IBContract(**details.contract.__dict__)
+            details = IBContractDetails(**details.__dict__)
             instrument = parse_instrument(contract_details=details)
 
             # Check if this instrument exists in the catalog, if not, write it.
@@ -128,7 +135,7 @@ def back_fill_catalog(
 def request_data(
     contract: Contract,
     instrument: Instrument,
-    date: datetime.date,
+    date: Optional[datetime.date],
     kind: str,
     tz_name: str,
     ib: Optional[IB] = None,
@@ -166,7 +173,7 @@ def request_tick_data(
     date: datetime.date,
     kind: str,
     tz_name: str,
-    ib=None,
+    ib: Optional[IB] = None,
 ) -> list:
     assert kind in ("TRADES", "BID_ASK")
     data: list = []
@@ -213,10 +220,10 @@ def request_tick_data(
 
 def request_bar_data(
     contract: Contract,
-    date: datetime.date,
+    date: Optional[datetime.date],
     tz_name: str,
     bar_spec: BarSpecification,
-    ib=None,
+    ib: Optional[IB] = None,
 ) -> list:
     data: list = []
 
@@ -229,7 +236,9 @@ def request_bar_data(
         bar_data_list: BarDataList = _request_historical_bars(
             ib=ib,
             contract=contract,
-            end_time=end_time.strftime("%Y%m%d %H:%M:%S %Z"),
+            # You can also provide yyyymmddd-hh:mm:ss time is in UTC. 
+            # Note that there is a dash between the date and time in UTC notation.
+            end_time=end_time.strftime("%Y%m%d-%H:%M:%S"),
             bar_spec=bar_spec,
         )
 
@@ -284,15 +293,18 @@ def _bar_spec_to_hist_data_request(bar_spec: BarSpecification) -> dict[str, str]
     price_mapping = {"MID": "MIDPOINT", "LAST": "TRADES"}
     what_to_show = price_mapping.get(price_type, price_type)
 
-    size_mapping = {"SECOND": "sec", "MINUTE": "min", "HOUR": "hour"}
+    size_mapping = {"SECOND": "sec", "MINUTE": "min", "HOUR": "hour", "DAY": "day", "WEEK": "week", "MONTH": "month"}
     suffix = "" if bar_spec.step == 1 and aggregation != "SECOND" else "s"
     bar_size = size_mapping.get(aggregation, aggregation)
     bar_size_setting = f"{bar_spec.step} {bar_size + suffix}"
     return {"durationStr": "1 D", "barSizeSetting": bar_size_setting, "whatToShow": what_to_show}
 
 
-def _request_historical_bars(ib: IB, contract: Contract, end_time: str, bar_spec: BarSpecification):
+def _request_historical_bars(ib: IB, contract: Contract, end_time: Optional[str], bar_spec: BarSpecification):
     spec = _bar_spec_to_hist_data_request(bar_spec=bar_spec)
+    if end_time is None:
+        end_time = ""
+        spec["durationStr"] = "10 Y"
     return ib.reqHistoricalData(
         contract=contract,
         endDateTime=end_time,
@@ -398,7 +410,7 @@ def parse_historic_bars(
             high=Price(bar.high, precision),
             low=Price(bar.low, precision),
             close=Price(bar.close, precision),
-            volume=Quantity(bar.volume, instrument.size_precision),
+            volume=Quantity(bar.volume if bar.volume >= 0 else 0, instrument.size_precision),
             ts_init=ts_init,
             ts_event=ts_init,
         )
