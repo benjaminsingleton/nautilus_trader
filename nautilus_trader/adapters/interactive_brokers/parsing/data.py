@@ -15,6 +15,7 @@
 
 import datetime
 from decimal import Decimal
+import math
 
 # fmt: off
 from nautilus_trader.core.datetime import nanos_to_secs
@@ -81,12 +82,12 @@ def bar_spec_to_bar_size(bar_spec: BarSpecification) -> str:
 
 def timedelta_to_duration_str(duration: datetime.timedelta) -> str:
     if duration.days >= 365:
-        return f"{duration.days / 365:.0f} Y"
+        return f"{math.ceil(duration.days / 365)} Y"
     elif duration.days >= 30:
-        return f"{duration.days / 30:.0f} M"
+        return f"{math.ceil(duration.days / 30)} M"
     elif duration.days >= 7:
-        return f"{duration.days / 7:.0f} W"
+        return f"{math.ceil(duration.days / 7)} W"
     elif duration.days >= 1:
-        return f"{duration.days:.0f} D"
+        return f"{math.ceil(duration.days)} D"
     else:
-        return f"{max(30, duration.total_seconds()):.0f} S"
+        return f"{math.ceil(duration.total_seconds())} S"
