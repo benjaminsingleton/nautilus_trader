@@ -21,6 +21,8 @@ from typing import Union
 
 import msgspec
 
+from ib_insync.contract import ContractDetails
+
 # fmt: off
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
 from nautilus_trader.adapters.interactive_brokers.common import IBContractDetails
@@ -118,7 +120,7 @@ def sec_type_to_asset_class(sec_type: str):
 
 
 def parse_instrument(
-    contract_details: IBContractDetails,
+    contract_details: Union[IBContractDetails, ContractDetails],
 ) -> Instrument:
     security_type = contract_details.contract.secType
     if security_type == "STK":
