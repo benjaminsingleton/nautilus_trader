@@ -32,6 +32,7 @@ from nautilus_trader.adapters.interactive_brokers.parsing.instruments import par
 from nautilus_trader.core.datetime import dt_to_unix_nanos
 from nautilus_trader.model.data import Bar
 from nautilus_trader.model.data import BarSpecification
+from nautilus_trader.model.data import BarAggregation
 from nautilus_trader.model.data import BarType
 from nautilus_trader.model.data import QuoteTick
 from nautilus_trader.model.data import TradeTick
@@ -39,6 +40,7 @@ from nautilus_trader.model.enums import AggregationSource
 from nautilus_trader.model.enums import AggressorSide
 from nautilus_trader.model.enums import bar_aggregation_to_str
 from nautilus_trader.model.enums import price_type_to_str
+from nautilus_trader.model.enums import PriceType
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.instruments import Instrument
 from nautilus_trader.model.objects import Price
@@ -232,61 +234,42 @@ def request_tick_data(
 
 
 def request_bar_data(
-    contract: Contract,
-    date: datetime.date,
-    duration: datetime.timedelta,
-    tz_name: str,
-    bar_spec: BarSpecification,
     ib: IB,
+    contract: Contract,
+    end_date: datetime.date = datetime.datetime.utcnow().date(),
+    duration: datetime.timedelta = datetime.timedelta(days=365 * 5),
+    tz_name: str = "UTC",
+    bar_spec: BarSpecification = BarSpecification(
+        step=1,
+        aggregation=BarAggregation.DAY,
+        price_type=PriceType.LAST
+    )
 ) -> list:
-    data: list = []
 
-    start_time = pd.Timestamp(date).tz_localize(tz_name).tz_convert("UTC")
-    end_time = start_time + datetime.timedelta(days=1)
-    duration_str = timedelta_to_duration_str(duration)
+    if tz_name not in pytz.all_timezones:
+        raise ValueError(f"{tz_name} is not a valid timezone.")
 
-    while True:
-        logger.debug(f"Using end_time: {end_time}")
+    end_date = pd.Timestamp(end_date).tz_localize(tz_name)
 
-        bar_data_list: BarDataList = _request_historical_bars(
-            ib=ib,
-            contract=contract,
-            end_time=end_time.strftime("%Y%m%d %H:%M:%S %Z"),
-            duration_str=duration_str,
-            bar_spec=bar_spec,
-        )
+    bar_data_list: BarDataList = _request_historical_bars(
+        ib=ib,
+        contract=contract,
+        end_time=end_date.strftime("%Y%m%d %H:%M:%S %Z"),
+        duration_str=timedelta_to_duration_str(duration),
+        bar_spec=bar_spec,
+    )
 
-        bars = [bar for bar in bar_data_list if bar not in data and bar.volume != 0]
+    bars = [bar for bar in bar_data_list if bar.volume != 0]
 
-        if not bars:
-            break
+    logger.info(f"Received {len(bars)} bars")
 
-        logger.info(f"Received {len(bars)} bars between {bars[0].date} and {bars[-1].date}")
+    return bars
 
-        # We're requesting from end_date backwards, set our timestamp to the earliest timestamp
-        first_timestamp = pd.Timestamp(bars[0].date).tz_convert(tz_name)
-        first_date = first_timestamp.date()
-
-        if first_date != date:
-            # May contain data from next date, filter this out
-            data.extend(
-                [
-                    bar
-                    for bar in bars
-                    if parse_response_datetime(bar.date, tz_name=tz_name).date() == date
-                ],
-            )
-            break
-        else:
-            data.extend(bars)
-
-        end_time = first_timestamp
-
-    return data
 
 def _request_contract_details(ib: IB, contract: Contract):
     [details] = ib.reqContractDetails(contract=contract)
     return details
+
 
 def instrument_from_contract(ib: IB, contract: Contract) -> Instrument:
     details = _request_contract_details(ib, contract)
@@ -311,30 +294,38 @@ def _bar_spec_to_hist_data_request(bar_spec: BarSpecification) -> dict[str, str]
     if aggregation not in accepted_aggregations:
         raise RuntimeError(f"Historic bars only supports the following bar aggregations: {accepted_aggregations}")
 
-    size_mapping = {"SECOND": "sec", "MINUTE": "min", "HOUR": "hour", "DAY": "day", "WEEK": "week", "MONTH": "month"}
-    bar_size = size_mapping.get(aggregation, aggregation)
+    size_mapping = {
+        "SECOND": "sec",
+        "MINUTE": "min",
+        "HOUR": "hour",
+        "DAY": "day",
+        "WEEK": "week",
+        "MONTH": "month"
+    }
+    bar_size = size_mapping[aggregation]
     suffix = "" if bar_spec.step == 1 and aggregation != "SECOND" else "s"
     bar_size_setting = f"{bar_spec.step} {bar_size + suffix}"
 
     price_type = price_type_to_str(bar_spec.price_type)
     historical_data_type_mapping = {"MID": "MIDPOINT", "LAST": "TRADES"}
-    what_to_show = historical_data_type_mapping.get(price_type, price_type)
+    what_to_show = historical_data_type_mapping[price_type]
 
     return {"barSizeSetting": bar_size_setting, "whatToShow": what_to_show}
 
 
 def _request_historical_bars(
-    ib: IB, 
-    contract: Contract, 
-    end_time: str, 
-    duration_str: str, 
+    ib: IB,
+    contract: Contract,
+    end_date: datetime.date,
+    duration: datetime.timedelta,
     bar_spec: BarSpecification
 ) -> BarDataList:
+    end_datetime = datetime.datetime.combine(end_date, datetime.time())
     spec = _bar_spec_to_hist_data_request(bar_spec=bar_spec)
     return ib.reqHistoricalData(
         contract=contract,
-        endDateTime=end_time,
-        durationStr=duration_str,
+        endDateTime=end_datetime.strftime(""),
+        durationStr=timedelta_to_duration_str(duration),
         barSizeSetting=spec["barSizeSetting"],
         whatToShow=spec["whatToShow"],
         useRTH=False,
