@@ -19,7 +19,7 @@ from abc import ABC
 from abc import abstractmethod
 from collections.abc import Callable
 from decimal import Decimal
-from typing import Annotated, Any, NamedTuple
+from typing import Annotated, Any, Generic, NamedTuple, TypeVar, cast
 
 import msgspec
 from ibapi.client import EClient
@@ -37,20 +37,67 @@ from nautilus_trader.model.identifiers import InstrumentId
 
 
 class AccountOrderRef(NamedTuple):
+    """
+    A reference to an order in an account.
+
+    Parameters
+    ----------
+    account_id : str
+        The account identifier.
+    order_id : str
+        The order identifier within the account.
+
+    """
+
     account_id: str
     order_id: str
 
 
 class IBPosition(NamedTuple):
+    """
+    A position in an Interactive Brokers account.
+
+    Parameters
+    ----------
+    account_id : str
+        The account identifier.
+    contract : IBContract
+        The contract for the position.
+    quantity : Decimal
+        The quantity of the position.
+    avg_cost : float
+        The average cost of the position.
+
+    """
+
     account_id: str
     contract: IBContract
     quantity: Decimal
     avg_cost: float
 
 
+T = TypeVar("T")
+
+
 class Request(msgspec.Struct, frozen=True):
     """
-    Container for Data request details.
+    Container for data request details.
+
+    Parameters
+    ----------
+    req_id : int
+        The request identifier.
+    name : str | tuple
+        The name or identifier for the request.
+    handle : Callable
+        The function that handles the request.
+    cancel : Callable
+        The function that cancels the request.
+    future : asyncio.Future
+        The future that will be resolved when the request completes.
+    result : list[Any]
+        The results of the request.
+
     """
 
     req_id: Annotated[int, msgspec.Meta(gt=0)]
@@ -66,7 +113,21 @@ class Request(msgspec.Struct, frozen=True):
 
 class Subscription(msgspec.Struct, frozen=True):
     """
-    Container for Subscription details.
+    Container for subscription details.
+
+    Parameters
+    ----------
+    req_id : int
+        The request identifier.
+    name : str | tuple
+        The name or identifier for the subscription.
+    handle : functools.partial | Callable
+        The function that handles subscription updates.
+    cancel : Callable
+        The function that cancels the subscription.
+    last : Any
+        The last data received for this subscription.
+
     """
 
     req_id: Annotated[int, msgspec.Meta(gt=0)]
@@ -79,19 +140,29 @@ class Subscription(msgspec.Struct, frozen=True):
         return hash((self.req_id, self.name))
 
 
-class Base(ABC):
+class ResourceManager(Generic[T], ABC):
     """
-    Abstract base class to maintain Request Id mapping for subscriptions and data
-    requests.
+    Abstract base class for managing request and subscription resources.
+
+    This class provides common functionality for tracking resources by request ID and
+    name, and for adding, removing, and retrieving resources.
+
     """
 
     def __init__(self) -> None:
+        """
+        Initialize the resource manager.
+        """
         self._req_id_to_name: dict[int, str | tuple] = {}
         self._req_id_to_handle: dict[int, Callable] = {}
         self._req_id_to_cancel: dict[int, Callable] = {}
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}:\n{[self.get(req_id=k) for k in self._req_id_to_name]!r}"
+        """
+        Return a string representation of the resource manager.
+        """
+        resources = [self.get(req_id=k) for k in self._req_id_to_name]
+        return f"{self.__class__.__name__}(resources={resources!r})"
 
     def _name_to_req_id(self, name: Any) -> int | None:
         """
@@ -104,7 +175,8 @@ class Base(ABC):
 
         Returns
         -------
-        str
+        int or None
+            The request ID if found, None otherwise.
 
         """
         for req_id, req_name in self._req_id_to_name.items():
@@ -158,6 +230,11 @@ class Base(ABC):
         cancel : Callable
             The cancel callback function for the request.
 
+        Raises
+        ------
+        KeyError
+            If the request ID or name is already in use.
+
         """
         self._validation_check(req_id, name)
         self._req_id_to_name[req_id] = name
@@ -166,7 +243,7 @@ class Base(ABC):
 
     def remove_req_id(self, req_id: int) -> None:
         """
-        Remove a request ID and its associated mappings from the class.
+        Remove a request ID and its associated mappings from the manager.
 
         Parameters
         ----------
@@ -181,17 +258,16 @@ class Base(ABC):
     def remove(
         self,
         req_id: int | None = None,
-        name: InstrumentId | (BarType | str) | None = None,
+        name: InstrumentId | BarType | str | None = None,
     ) -> None:
         """
-        Remove a request ID and its associated mappings, identified either by request ID
-        or name.
+        Remove a resource identified by either its request ID or name.
 
         Parameters
         ----------
         req_id : int, optional
             The request ID to remove. If None, name is used to determine the request ID.
-        name : InstrumentId | (BarType | str), optional
+        name : InstrumentId | BarType | str, optional
             The name associated with the request ID.
 
         """
@@ -204,19 +280,21 @@ class Base(ABC):
         self._req_id_to_handle.pop(req_id, None)
         self._req_id_to_cancel.pop(req_id, None)
 
-    def get_all(self) -> list[Request | Subscription]:
+    def get_all(self) -> list[T]:
         """
-        Retrieve all stored mappings as a list of their respective request or
-        subscription objects.
+        Retrieve all stored mappings as a list of their respective resource objects.
 
         Returns
         -------
-        list[Request | Subscription]
+        list[T]
+            A list of resource objects.
 
         """
-        result: list = []
+        result: list[T] = []
         for req_id in self._req_id_to_name:
-            result.append(self.get(req_id=req_id))
+            resource = self.get(req_id=req_id)
+            if resource is not None:
+                result.append(cast(T, resource))
         return result
 
     @abstractmethod
@@ -224,32 +302,39 @@ class Base(ABC):
         self,
         req_id: int | None = None,
         name: str | tuple | None = None,
-    ) -> Request | Subscription | None:
+    ) -> T | None:
         """
-        Abstract method to retrieve a Request or Subscription object based on the
-        request ID or name.
+        Retrieve a resource based on the request ID or name.
 
         Parameters
         ----------
-        req_id : int
-            The request ID of the object to retrieve. If None, name is used.
+        req_id : int, optional
+            The request ID of the resource to retrieve. If None, name is used.
         name : str | tuple, optional
             The name associated with the request ID.
 
         Returns
         -------
-        Request | Subscription | ``None``
+        T or None
+            The resource if found, None otherwise.
 
         """
 
 
-class Subscriptions(Base):
+class Subscriptions(ResourceManager[Subscription]):
     """
     Manages and stores Subscriptions which are identified and accessed using request
     IDs.
+
+    This class extends ResourceManager to provide functionality specific to subscription
+    management.
+
     """
 
     def __init__(self) -> None:
+        """
+        Initialize the subscription manager.
+        """
         super().__init__()
         self._req_id_to_last: dict[int, Any] = {}
 
@@ -262,9 +347,7 @@ class Subscriptions(Base):
     ) -> Subscription | None:
         """
         Add a new subscription with the given request ID, name, handle, and optional
-        cancel callback. This method stores the subscription details and initializes its
-        'last' value to None. If a subscription with the given request ID already
-        exists, it is overwritten.
+        cancel callback.
 
         Parameters
         ----------
@@ -279,7 +362,13 @@ class Subscriptions(Base):
 
         Returns
         -------
-        Subscription | ``None``
+        Subscription or None
+            The created subscription, or None if creation failed.
+
+        Raises
+        ------
+        KeyError
+            If the request ID or name is already in use.
 
         """
         super().add_req_id(req_id, name, handle, cancel)
@@ -288,10 +377,7 @@ class Subscriptions(Base):
 
     def remove(self, req_id: int | None = None, name: str | tuple | None = None) -> None:
         """
-        Remove a subscription identified by either its request ID or name. If the
-        subscription is identified by name, the corresponding request ID is first
-        determined. If neither req_id nor name is provided, or if the specified
-        subscription is not found, no action is taken.
+        Remove a subscription identified by either its request ID or name.
 
         Parameters
         ----------
@@ -301,9 +387,9 @@ class Subscriptions(Base):
             The name of the subscription to remove.
 
         """
-        if not req_id:
+        if req_id is None:
             req_id = self._name_to_req_id(name)
-        if req_id:
+        if req_id is not None:
             super().remove_req_id(req_id)
             self._req_id_to_last.pop(req_id, None)
 
@@ -324,16 +410,22 @@ class Subscriptions(Base):
 
         Returns
         -------
-        Subscription | ``None``
+        Subscription or None
+            The subscription if found, None otherwise.
 
         """
-        if not req_id:
+        if req_id is None:
             req_id = self._name_to_req_id(name)
-        if not req_id or not (name := self._req_id_to_name.get(req_id, None)):
+        if req_id is None or req_id not in self._req_id_to_name:
             return None
+
+        subscription_name = self._req_id_to_name.get(req_id)
+        if subscription_name is None:
+            return None
+
         return Subscription(
             req_id=req_id,
-            name=name,
+            name=subscription_name,
             last=self._req_id_to_last[req_id],
             handle=self._req_id_to_handle[req_id],
             cancel=self._req_id_to_cancel[req_id],
@@ -354,19 +446,22 @@ class Subscriptions(Base):
         self._req_id_to_last[req_id] = value
 
 
-class Requests(Base):
+class Requests(ResourceManager[Request]):
     """
-    Manages and stores data requests, inheriting common functionalities from the Base
-    class.
+    Manages and stores data requests, inheriting common functionalities from the
+    ResourceManager class.
 
     Requests are identified and accessed using request IDs.
 
     """
 
     def __init__(self) -> None:
+        """
+        Initialize the request manager.
+        """
         super().__init__()
         self._req_id_to_future: dict[int, asyncio.Future] = {}
-        self._req_id_to_result: dict[int, Any] = {}
+        self._req_id_to_result: dict[int, list] = {}
 
     def get_futures(self) -> list[asyncio.Future]:
         """
@@ -375,6 +470,7 @@ class Requests(Base):
         Returns
         -------
         list[asyncio.Future]
+            List of futures for all active requests.
 
         """
         return list(self._req_id_to_future.values())
@@ -388,9 +484,7 @@ class Requests(Base):
     ) -> Request | None:
         """
         Add a new data request with the specified request ID, name, handle, and an
-        optional cancel callback. This method stores the data request details and
-        initializes its future and result. If a data request with the given request ID
-        already exists, it is overwritten.
+        optional cancel callback.
 
         Parameters
         ----------
@@ -405,7 +499,13 @@ class Requests(Base):
 
         Returns
         -------
-        Request | ``None``
+        Request or None
+            The created request, or None if creation failed.
+
+        Raises
+        ------
+        KeyError
+            If the request ID or name is already in use.
 
         """
         super().add_req_id(req_id, name, handle, cancel)
@@ -415,11 +515,7 @@ class Requests(Base):
 
     def remove(self, req_id: int | None = None, name: str | tuple | None = None) -> None:
         """
-        Remove a data request identified by either its request ID or name. This method
-        removes the data request details from the internal storage. If the data request
-        is identified by name, the corresponding request ID is first determined. If
-        neither req_id nor name is provided, or if the specified data request is not
-        found, no action is taken.
+        Remove a data request identified by either its request ID or name.
 
         Parameters
         ----------
@@ -429,9 +525,9 @@ class Requests(Base):
             The name of the data request to remove.
 
         """
-        if not req_id:
+        if req_id is None:
             req_id = self._name_to_req_id(name)
-        if req_id:
+        if req_id is not None:
             super().remove_req_id(req_id)
             self._req_id_to_future.pop(req_id, None)
             self._req_id_to_result.pop(req_id, None)
@@ -453,16 +549,22 @@ class Requests(Base):
 
         Returns
         -------
-        Request | ``None``
+        Request or None
+            The request if found, None otherwise.
 
         """
-        if not req_id:
+        if req_id is None:
             req_id = self._name_to_req_id(name)
-        if not req_id or not (name := self._req_id_to_name.get(req_id, None)):
+        if req_id is None or req_id not in self._req_id_to_name:
             return None
+
+        request_name = self._req_id_to_name.get(req_id)
+        if request_name is None:
+            return None
+
         return Request(
             req_id=req_id,
-            name=name,
+            name=request_name,
             handle=self._req_id_to_handle[req_id],
             cancel=self._req_id_to_cancel[req_id],
             future=self._req_id_to_future[req_id],
@@ -473,6 +575,10 @@ class Requests(Base):
 class BaseMixin:
     """
     Provide type hints for InteractiveBrokerClient Mixins.
+
+    This class defines the shared attributes and methods that are used by the various
+    mixin classes in the InteractiveBrokersClient.
+
     """
 
     # Client

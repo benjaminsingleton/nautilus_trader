@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2021 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2025 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,11 +13,38 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+import functools
+from collections.abc import Callable
+from enum import IntEnum
 from inspect import iscoroutinefunction
-from typing import Final
+from typing import Any, Final, TypeVar, cast
 
 from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin
 from nautilus_trader.common.enums import LogColor
+
+
+class ErrorSeverity(IntEnum):
+    """
+    Enum defining error severity levels for categorization and handling.
+    """
+
+    DEBUG = 0  # Informational message, not affecting operation
+    WARNING = 1  # Warning that may require attention but doesn't stop operation
+    ERROR = 2  # Error that affects a specific operation but not the overall connection
+    CRITICAL = 3  # Critical error affecting the connection or client operation
+
+
+class ErrorCategory(IntEnum):
+    """
+    Enum defining error categories for better organization and handling.
+    """
+
+    GENERAL = 0  # General errors
+    CONNECTION = 1  # Connection-related errors
+    REQUEST = 2  # Request-related errors
+    ORDER = 3  # Order-related errors
+    SUBSCRIPTION = 4  # Subscription-related errors
+    DATA = 5  # Data-related errors
 
 
 class InteractiveBrokersClientErrorMixin(BaseMixin):
@@ -29,26 +56,112 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
     categorizes different error codes and manages appropriate responses, including
     logging and state updates.
 
+    The error codes are documented in the Interactive Brokers API documentation:
     https://ibkrcampus.com/ibkr-api-page/tws-api-error-codes/#understanding-error-codes
 
     """
 
-    WARNING_CODES: Final[set[int]] = {1101, 1102, 110, 165, 202, 399, 404, 434, 492, 10167}
-    CLIENT_ERRORS: Final[set[int]] = {502, 503, 504, 10038, 10182, 1100, 2110}
-    CONNECTIVITY_LOST_CODES: Final[set[int]] = {1100, 1300, 2110}
-    CONNECTIVITY_RESTORED_CODES: Final[set[int]] = {1101, 1102}
-    ORDER_REJECTION_CODES: Final[set[int]] = {201, 203, 321, 10289, 10293}
-    SUPPRESS_ERROR_LOGGING_CODES: Final[set[int]] = {200}
+    # Error code classifications - organized for better readability and maintenance
+    WARNING_CODES: Final[set[int]] = {
+        1101,
+        1102,  # Connectivity restored codes
+        110,  # News feed has been reset
+        165,  # Historical market data farm connection is OK
+        202,  # Order canceled
+        399,  # Order message
+        404,  # Order not found
+        434,  # The order size cannot be zero
+        492,  # Request market data streaming for this contract has been disabled
+        10167,  # Login failed: reason given
+    }
+
+    CLIENT_ERRORS: Final[set[int]] = {
+        502,  # Couldn't connect to TWS
+        503,  # The TWS is out of date and must be upgraded
+        504,  # Not connected
+        10038,  # Requested market data has been switched between frozen and real-time market data
+        10182,  # Requested market data has been halted
+        1100,  # Connectivity between IB and TWS has been lost
+        2110,  # Connectivity between TWS and server is broken. It will be restored automatically.
+    }
+
+    CONNECTIVITY_LOST_CODES: Final[set[int]] = {
+        1100,  # Connectivity between IB and TWS has been lost
+        1300,  # Socket port has been reset
+        2110,  # Connectivity between TWS and server is broken
+    }
+
+    CONNECTIVITY_RESTORED_CODES: Final[set[int]] = {
+        1101,  # Connectivity between IB and TWS has been restored
+        1102,  # Connectivity between TWS and server has been restored
+    }
+
+    ORDER_REJECTION_CODES: Final[set[int]] = {
+        201,  # Order rejected
+        203,  # Security not found
+        321,  # Cannot change to Pending because order is not pending
+        10289,  # Failed to request real-time bars
+        10293,  # Market data farm is not connected
+    }
+
+    SUPPRESS_ERROR_LOGGING_CODES: Final[set[int]] = {
+        200,  # No security definition found
+    }
+
+    def classify_error(self, error_code: int) -> tuple[ErrorSeverity, ErrorCategory]:
+        """
+        Classify an error code into a severity and category.
+
+        Parameters
+        ----------
+        error_code : int
+            The error code to classify.
+
+        Returns
+        -------
+        tuple[ErrorSeverity, ErrorCategory]
+            A tuple containing the error severity and category.
+
+        """
+        # Determine severity
+        if error_code in self.WARNING_CODES or 2100 <= error_code < 2200:
+            severity = ErrorSeverity.WARNING
+        elif error_code in self.CLIENT_ERRORS or error_code in self.CONNECTIVITY_LOST_CODES:
+            severity = ErrorSeverity.CRITICAL
+        elif error_code in self.ORDER_REJECTION_CODES:
+            severity = ErrorSeverity.ERROR
+        else:
+            severity = ErrorSeverity.ERROR
+
+        # Determine category
+        if (
+            error_code in self.CONNECTIVITY_LOST_CODES
+            or error_code in self.CONNECTIVITY_RESTORED_CODES
+        ):
+            category = ErrorCategory.CONNECTION
+        elif error_code in self.ORDER_REJECTION_CODES:
+            category = ErrorCategory.ORDER
+        elif 300 <= error_code < 400:
+            category = ErrorCategory.ORDER
+        elif 100 <= error_code < 200:
+            category = ErrorCategory.DATA
+        elif 500 <= error_code < 600:
+            category = ErrorCategory.CONNECTION
+        else:
+            category = ErrorCategory.GENERAL
+
+        return severity, category
 
     async def _log_message(
         self,
         error_code: int,
         req_id: int,
         error_string: str,
-        is_warning: bool,
+        severity: ErrorSeverity,
+        category: ErrorCategory,
     ) -> None:
         """
-        Log the provided error or warning message.
+        Log an error or warning message with appropriate severity.
 
         Parameters
         ----------
@@ -58,15 +171,24 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
             The request ID associated with the error or warning.
         error_string : str
             The error or warning message string.
-        is_warning : bool
-            Indicates whether the message is a warning or an error.
+        severity : ErrorSeverity
+            The severity level of the error.
+        category : ErrorCategory
+            The category of the error.
 
         """
-        msg = f"{error_string} (code: {error_code}, {req_id=})."
+        msg = f"{error_string} (code: {error_code}, req_id={req_id}, category={ErrorCategory(category).name})."
+
         if error_code in self.SUPPRESS_ERROR_LOGGING_CODES:
             self._log.debug(msg)
+        elif severity == ErrorSeverity.WARNING:
+            self._log.warning(msg)
+        elif severity == ErrorSeverity.ERROR:
+            self._log.error(msg)
+        elif severity == ErrorSeverity.CRITICAL:
+            self._log.error(f"CRITICAL: {msg}")
         else:
-            self._log.warning(msg) if is_warning else self._log.error(msg)
+            self._log.debug(msg)
 
     async def process_error(
         self,
@@ -89,14 +211,15 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
             The error code.
         error_string : str
             The error message string.
-        advanced_order_reject_json : str
+        advanced_order_reject_json : str, optional
             The JSON string for advanced order rejection.
 
         """
-        is_warning = error_code in self.WARNING_CODES or 2100 <= error_code < 2200
+        severity, category = self.classify_error(error_code)
         error_string = error_string.replace("\n", " ")
-        await self._log_message(error_code, req_id, error_string, is_warning)
+        await self._log_message(error_code, req_id, error_string, severity, category)
 
+        # Handle specific request or subscription errors
         if req_id != -1:
             if self._subscriptions.get(req_id=req_id):
                 await self._handle_subscription_error(req_id, error_code, error_string)
@@ -106,15 +229,18 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
                 await self._handle_order_error(req_id, error_code, error_string)
             else:
                 self._log.warning(f"Unhandled error: {error_code} for req_id {req_id}")
-        elif error_code in self.CLIENT_ERRORS or error_code in self.CONNECTIVITY_LOST_CODES:
-            if self._is_ib_connected.is_set():
+        # Handle general client errors
+        elif category == ErrorCategory.CONNECTION:
+            if error_code in self.CONNECTIVITY_LOST_CODES and self._is_ib_connected.is_set():
                 self._log.debug(
                     f"`_is_ib_connected` unset by code {error_code} in `_process_error`.",
                     LogColor.BLUE,
                 )
                 self._is_ib_connected.clear()
-        elif error_code in self.CONNECTIVITY_RESTORED_CODES:
-            if not self._is_ib_connected.is_set():
+            elif (
+                error_code in self.CONNECTIVITY_RESTORED_CODES
+                and not self._is_ib_connected.is_set()
+            ):
                 self._log.debug(
                     f"`_is_ib_connected` set by code {error_code} in `_process_error`.",
                     LogColor.BLUE,
@@ -128,9 +254,10 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
         error_string: str,
     ) -> None:
         """
-        Handle errors specific to data subscriptions. Processes subscription-related
-        errors and takes appropriate actions, such as canceling the subscription or
-        clearing flags.
+        Handle errors specific to data subscriptions.
+
+        Processes subscription-related errors and takes appropriate actions, such as
+        canceling the subscription or clearing flags.
 
         Parameters
         ----------
@@ -145,17 +272,23 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
         subscription = self._subscriptions.get(req_id=req_id)
         if not subscription:
             return
+
+        # Handle specific subscription error codes
         if error_code in [10189, 366, 102]:
-            # Handle specific subscription-related error codes
+            # 10189: Failed to request real-time bars
+            # 366: No market data
+            # 102: Duplicate ticker ID
             self._log.warning(f"{error_code}: {error_string}")
+            # Try to cancel and then restart the subscription
             subscription.cancel()
             if iscoroutinefunction(subscription.handle):
                 self._create_task(subscription.handle())
             else:
                 subscription.handle()
         elif error_code == 10182:
-            # Handle disconnection error
+            # 10182: Requested market data has been halted
             self._log.warning(f"{error_code}: {error_string}")
+            # Handle disconnection by clearing the connected flag
             if self._is_ib_connected.is_set():
                 self._log.info(
                     f"`_is_ib_connected` unset by {subscription.name} in `_handle_subscription_error`.",
@@ -169,8 +302,9 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
 
     async def _handle_request_error(self, req_id: int, error_code: int, error_string: str) -> None:
         """
-        Handle errors related to general requests. Logs the error and ends the request
-        associated with the given request ID.
+        Handle errors related to general requests.
+
+        Logs the error and ends the request associated with the given request ID.
 
         Parameters
         ----------
@@ -183,16 +317,25 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
 
         """
         request = self._requests.get(req_id=req_id)
+        if not request:
+            self._log.warning(f"Request not found for req_id {req_id}")
+            return
+
         if error_code == 200:
+            # 200: No security definition found
             self._log.debug(f"{error_code}: {error_string}, {request}")
         else:
             self._log.warning(f"{error_code}: {error_string}, {request}")
+
+        # End the request as failed
         self._end_request(req_id, success=False)
 
     async def _handle_order_error(self, req_id: int, error_code: int, error_string: str) -> None:
         """
-        Handle errors related to orders. Manages various order-related errors, including
-        rejections and cancellations, and logs or forwards them as appropriate.
+        Handle errors related to orders.
+
+        Manages various order-related errors, including rejections and cancellations,
+        and logs or forwards them as appropriate.
 
         Parameters
         ----------
@@ -216,13 +359,78 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
             # Handle various order rejections
             if handler:
                 handler(order_ref=order_ref.order_id, order_status="Rejected", reason=error_string)
+            else:
+                self._log.warning(f"No handler for order rejection: {error_code}, {error_string}")
         elif error_code == 202:
-            # Handle order cancellation warning
+            # Handle order cancellation (202: Order canceled)
             if handler:
                 handler(order_ref=order_ref.order_id, order_status="Cancelled", reason=error_string)
+            else:
+                self._log.warning(
+                    f"No handler for order cancellation: {error_code}, {error_string}",
+                )
         else:
             # Log unknown order warnings / errors
             self._log.warning(
                 f"Unhandled order warning or error code: {error_code} (req_id {req_id}) - "
                 f"{error_string}",
             )
+
+
+# -- Error Handling Decorator ---------------------------------------------------------------------
+
+F = TypeVar("F", bound=Callable[..., Any])
+
+
+def handle_ib_error(func: F) -> F:
+    """
+    Standardize error handling for Interactive Brokers API methods.
+
+    This decorator wraps a method to catch and properly handle IB API errors,
+    providing consistent error logging and propagation.
+
+    Parameters
+    ----------
+    func : Callable
+        The function to decorate.
+
+    Returns
+    -------
+    Callable
+        The decorated function.
+
+    Example
+    -------
+    @handle_ib_error
+    async def get_contract_details(self, contract: IBContract) -> list[IBContractDetails]:
+        # Function implementation
+
+    """
+    if iscoroutinefunction(func):
+
+        @functools.wraps(func)
+        async def async_wrapper(self, *args: Any, **kwargs: Any) -> Any:
+            try:
+                return await func(self, *args, **kwargs)
+            except TimeoutError as e:
+                self._log.error(f"Timeout in {func.__name__}: {e}")
+                # Handle timeout more gracefully
+                raise
+            except Exception as e:
+                self._log.error(f"Error in {func.__name__}: {e}")
+                # Propagate the exception after logging
+                raise
+
+        return cast(F, async_wrapper)
+    else:
+
+        @functools.wraps(func)
+        def sync_wrapper(self, *args: Any, **kwargs: Any) -> Any:
+            try:
+                return func(self, *args, **kwargs)
+            except Exception as e:
+                self._log.error(f"Error in {func.__name__}: {e}")
+                # Propagate the exception after logging
+                raise
+
+        return cast(F, sync_wrapper)
