@@ -19,6 +19,7 @@ import os
 import weakref
 from collections.abc import Callable
 from collections.abc import Coroutine
+from contextlib import suppress
 from inspect import iscoroutinefunction
 from typing import Any
 
@@ -76,6 +77,290 @@ class ClientState(enum.Enum):
     STOPPING = 8  # In the process of shutting down
     STOPPED = 9  # Fully stopped
     DISPOSED = 10  # Resources released, object no longer usable
+
+
+class StateMachine:
+    """
+    State machine for managing the client lifecycle.
+
+    This implements a state machine pattern to enforce correct state transitions and
+    validate operations in different states.
+
+    """
+
+    def __init__(self, initial_state: ClientState, logger):
+        self._current_state = initial_state
+        self._log = logger
+        self._state_changed_callbacks: dict[ClientState, list] = {}
+
+    @property
+    def current_state(self) -> ClientState:
+        """
+        The current state of the client.
+        """
+        return self._current_state
+
+    def register_state_changed_callback(self, state: ClientState, callback: Callable) -> None:
+        """
+        Register a callback to be called when the state changes to the specified state.
+
+        Parameters
+        ----------
+        state : ClientState
+            The state to watch for.
+        callback : Callable
+            The callback to call when the state changes to the specified state.
+
+        """
+        if state not in self._state_changed_callbacks:
+            self._state_changed_callbacks[state] = []
+
+        self._state_changed_callbacks[state].append(callback)
+
+    def transition_to(self, new_state: ClientState) -> bool:
+        """
+        Transition to a new state if the transition is valid.
+
+        Parameters
+        ----------
+        new_state : ClientState
+            The new state to transition to.
+
+        Returns
+        -------
+        bool
+            True if the transition was successful, False otherwise.
+
+        """
+        if not self._is_valid_transition(self._current_state, new_state):
+            self._log.warning(
+                f"Invalid state transition attempted: {self._current_state} -> {new_state}",
+            )
+            return False
+
+        old_state = self._current_state
+        self._current_state = new_state
+        self._log.debug(f"State transition: {old_state} -> {new_state}")
+
+        # Call registered callbacks for this state
+        if new_state in self._state_changed_callbacks:
+            for callback in self._state_changed_callbacks[new_state]:
+                try:
+                    callback()
+                except Exception as e:
+                    self._log.exception(f"Error in state change callback: {e}")
+
+        return True
+
+    def _is_valid_transition(self, from_state: ClientState, to_state: ClientState) -> bool:
+        """
+        Check if a state transition is valid.
+
+        Parameters
+        ----------
+        from_state : ClientState
+            The current state.
+        to_state : ClientState
+            The target state.
+
+        Returns
+        -------
+        bool
+            True if the transition is valid, False otherwise.
+
+        """
+        # Define valid state transitions
+        valid_transitions = {
+            ClientState.CREATED: {ClientState.CONNECTING, ClientState.STOPPING},
+            ClientState.CONNECTING: {
+                ClientState.CONNECTED,
+                ClientState.RECONNECTING,
+                ClientState.STOPPING,
+            },
+            ClientState.CONNECTED: {
+                ClientState.STARTING,
+                ClientState.DEGRADED,
+                ClientState.RECONNECTING,
+                ClientState.STOPPING,
+            },
+            ClientState.STARTING: {
+                ClientState.WAITING_API,
+                ClientState.DEGRADED,
+                ClientState.RECONNECTING,
+                ClientState.STOPPING,
+            },
+            ClientState.WAITING_API: {
+                ClientState.READY,
+                ClientState.DEGRADED,
+                ClientState.RECONNECTING,
+                ClientState.STOPPING,
+            },
+            ClientState.READY: {
+                ClientState.DEGRADED,
+                ClientState.RECONNECTING,
+                ClientState.STOPPING,
+            },
+            ClientState.DEGRADED: {
+                ClientState.RECONNECTING,
+                ClientState.READY,
+                ClientState.STOPPING,
+            },
+            ClientState.RECONNECTING: {ClientState.CONNECTING, ClientState.STOPPING},
+            ClientState.STOPPING: {ClientState.STOPPED},
+            ClientState.STOPPED: {ClientState.DISPOSED, ClientState.CONNECTING},
+            ClientState.DISPOSED: set(),  # No valid transitions from DISPOSED
+        }
+
+        # Check if the transition is valid
+        return to_state in valid_transitions.get(from_state, set())
+
+
+class TaskRegistry:
+    """
+    Registry for managing asynchronous tasks.
+
+    This class provides centralized tracking and management of asyncio tasks, ensuring
+    proper cleanup and preventing resource leaks.
+
+    """
+
+    def __init__(self, logger):
+        self._tasks: dict[str, asyncio.Task] = {}
+        self._log = logger
+
+    def create_task(
+        self,
+        coro: Coroutine,
+        name: str,
+        on_done: Callable | None = None,
+    ) -> asyncio.Task:
+        """
+        Create and register a new task.
+
+        Parameters
+        ----------
+        coro : Coroutine
+            The coroutine to run as a task.
+        name : str
+            A unique name for the task.
+        on_done : Callable, optional
+            A callback to run when the task completes.
+
+        Returns
+        -------
+        asyncio.Task
+            The created task.
+
+        """
+        # Cancel existing task with the same name if it exists
+        self.cancel_task(name)
+
+        # Create a new task
+        task = asyncio.create_task(coro, name=name)
+
+        # Store the task
+        self._tasks[name] = task
+
+        # Add completion callback
+        task.add_done_callback(lambda t: self._on_task_done(t, name, on_done))
+
+        self._log.debug(f"Task created: {name}")
+        return task
+
+    def cancel_task(self, name: str) -> bool:
+        """
+        Cancel a task by name.
+
+        Parameters
+        ----------
+        name : str
+            The name of the task to cancel.
+
+        Returns
+        -------
+        bool
+            True if a task was found and cancelled, False otherwise.
+
+        """
+        if name in self._tasks:
+            task = self._tasks[name]
+            if not task.done():
+                task.cancel()
+                self._log.debug(f"Task cancelled: {name}")
+            return True
+        return False
+
+    def cancel_all_tasks(self) -> None:
+        """
+        Cancel all registered tasks.
+        """
+        for name in list(self._tasks.keys()):
+            self.cancel_task(name)
+
+    def _on_task_done(self, task: asyncio.Task, name: str, on_done: Callable | None) -> None:
+        """
+        Handle task completion.
+
+        Parameters
+        ----------
+        task : asyncio.Task
+            The completed task.
+        name : str
+            The name of the task.
+        on_done : Callable, optional
+            A callback to run when the task completes.
+
+        """
+        # Remove the task from the registry
+        self._tasks.pop(name, None)
+
+        # Check for exceptions
+        if not task.cancelled():
+            exception = task.exception()
+            if exception:
+                self._log.error(f"Task {name} failed with exception: {exception}")
+            elif on_done:
+                try:
+                    on_done()
+                except Exception as e:
+                    self._log.error(f"Error in task completion callback: {e}")
+
+        self._log.debug(f"Task completed: {name}")
+
+    def get_task(self, name: str) -> asyncio.Task | None:
+        """
+        Get a task by name.
+
+        Parameters
+        ----------
+        name : str
+            The name of the task to get.
+
+        Returns
+        -------
+        asyncio.Task or None
+            The task if found, None otherwise.
+
+        """
+        return self._tasks.get(name)
+
+    def is_running(self, name: str) -> bool:
+        """
+        Check if a task is currently running.
+
+        Parameters
+        ----------
+        name : str
+            The name of the task to check.
+
+        Returns
+        -------
+        bool
+            True if the task exists and is not done, False otherwise.
+
+        """
+        task = self.get_task(name)
+        return task is not None and not task.done()
 
 
 class InteractiveBrokersClient(
@@ -137,7 +422,19 @@ class InteractiveBrokersClient(
         self._host = host
         self._port = port
         self._client_id = client_id
-        self._state = ClientState.CREATED
+
+        # State management
+        self._state_machine = StateMachine(ClientState.CREATED, self._log)
+
+        # Register state change callbacks
+        self._state_machine.register_state_changed_callback(
+            ClientState.READY,
+            lambda: self._is_client_ready.set(),
+        )
+        self._state_machine.register_state_changed_callback(
+            ClientState.STOPPING,
+            lambda: self._is_client_ready.clear(),
+        )
 
         # TWS API
         self._eclient: EClient = EClient(
@@ -151,13 +448,9 @@ class InteractiveBrokersClient(
         self._eclient.sendMsg = self.sendMsg
         self._eclient.logRequest = self.logRequest
 
-        # Tasks
-        self._active_tasks: set[asyncio.Task] = set()
-        self._connection_watchdog_task: asyncio.Task | None = None
-        self._tws_incoming_msg_reader_task: asyncio.Task | None = None
-        self._internal_msg_queue_processor_task: asyncio.Task | None = None
+        # Task management
+        self._task_registry = TaskRegistry(self._log)
         self._internal_msg_queue: asyncio.Queue = asyncio.Queue()
-        self._msg_handler_processor_task: asyncio.Task | None = None
         self._msg_handler_task_queue: asyncio.Queue = asyncio.Queue()
 
         # Event flags
@@ -179,7 +472,9 @@ class InteractiveBrokersClient(
         self._connection_attempts: int = 0
         self._max_connection_attempts: int = int(os.getenv("IB_MAX_CONNECTION_ATTEMPTS", "0"))
         self._indefinite_reconnect: bool = False if self._max_connection_attempts else True
-        self._reconnect_delay: int = 5  # seconds
+        self._reconnect_delay: int = int(os.getenv("IB_RECONNECT_DELAY", "5"))  # seconds
+        self._last_heartbeat_time: float = 0
+        self._heartbeat_interval: float = float(os.getenv("IB_HEARTBEAT_INTERVAL", "30"))  # seconds
 
         # MarketDataMixin
         self._bar_type_to_last_bar: dict[str, BarData | None] = {}
@@ -198,6 +493,30 @@ class InteractiveBrokersClient(
         # Use weak references to allow proper garbage collection
         self._weakref = weakref.ref(self)
 
+    @property
+    def state(self) -> ClientState:
+        """
+        The current state of the client.
+        """
+        return self._state_machine.current_state
+
+    def is_in_state(self, *states: ClientState) -> bool:
+        """
+        Check if the client is in one of the specified states.
+
+        Parameters
+        ----------
+        *states : ClientState
+            The states to check against.
+
+        Returns
+        -------
+        bool
+            True if the client is in one of the specified states, False otherwise.
+
+        """
+        return self.state in states
+
     def _start(self) -> None:
         """
         Start the client.
@@ -210,7 +529,10 @@ class InteractiveBrokersClient(
             self._log.warning("Started when loop is not running")
             self._loop.run_until_complete(self._start_async())
         else:
-            self._create_task(self._start_async())
+            self._task_registry.create_task(
+                self._start_async(),
+                "client_start",
+            )
 
     @handle_ib_error
     async def _start_async(self) -> None:
@@ -223,33 +545,37 @@ class InteractiveBrokersClient(
 
         """
         self._log.info(f"Starting InteractiveBrokersClient ({self._client_id})...")
-        self._state = ClientState.CONNECTING
 
-        while self._state not in (ClientState.READY, ClientState.STOPPED, ClientState.DISPOSED):
+        # Initialize state to CONNECTING
+        if not self._state_machine.transition_to(ClientState.CONNECTING):
+            self._log.error(f"Failed to transition to CONNECTING state from {self.state}")
+            return
+
+        while not self.is_in_state(ClientState.READY, ClientState.STOPPED, ClientState.DISPOSED):
             try:
-                if self._state == ClientState.CONNECTING:
+                if self.is_in_state(ClientState.CONNECTING):
                     await self._handle_connecting_state()
 
-                elif self._state == ClientState.CONNECTED:
+                elif self.is_in_state(ClientState.CONNECTED):
                     self._handle_connected_state()
 
-                elif self._state == ClientState.WAITING_API:
+                elif self.is_in_state(ClientState.WAITING_API):
                     await self._handle_waiting_api_state()
 
             except TimeoutError:
                 self._log.error("Client failed to initialize. Connection timeout.")
-                self._state = ClientState.CONNECTING
+                # Ensure we retry connection
+                self._state_machine.transition_to(ClientState.CONNECTING)
             except Exception as e:
                 self._log.exception("Unhandled exception in client startup", e)
-                self._state = ClientState.STOPPED
+                self._state_machine.transition_to(ClientState.STOPPING)
                 await self._stop_async()
 
-        if self._state == ClientState.READY:
-            self._is_client_ready.set()
+        if self.is_in_state(ClientState.READY):
             self._log.debug("`_is_client_ready` set by `_start_async`.", LogColor.BLUE)
             self._connection_attempts = 0
         else:
-            self._log.warning(f"Client startup ended in state {self._state}")
+            self._log.warning(f"Client startup ended in state {self.state}")
 
     @handle_ib_error
     async def _handle_connecting_state(self) -> None:
@@ -266,8 +592,10 @@ class InteractiveBrokersClient(
             not self._indefinite_reconnect
             and self._connection_attempts > self._max_connection_attempts
         ):
-            self._log.error("Max connection attempts reached, connection failed")
-            self._state = ClientState.STOPPED
+            self._log.error(
+                f"Max connection attempts ({self._max_connection_attempts}) reached, connection failed",
+            )
+            self._state_machine.transition_to(ClientState.STOPPING)
             await self._stop_async()
             return
 
@@ -280,8 +608,12 @@ class InteractiveBrokersClient(
             await asyncio.sleep(self._reconnect_delay)
 
         # Establish socket connection
-        await self._connect()
-        self._state = ClientState.CONNECTED
+        try:
+            await self._connect()
+            self._state_machine.transition_to(ClientState.CONNECTED)
+        except Exception as e:
+            self._log.error(f"Connection failed: {e}")
+            # Don't change state, we'll retry in the next iteration
 
     def _handle_connected_state(self) -> None:
         """
@@ -294,7 +626,7 @@ class InteractiveBrokersClient(
         self._start_tws_incoming_msg_reader()
         self._start_internal_msg_queue_processor()
         self._eclient.startApi()
-        self._state = ClientState.WAITING_API
+        self._state_machine.transition_to(ClientState.WAITING_API)
 
     @handle_ib_error
     async def _handle_waiting_api_state(self) -> None:
@@ -308,11 +640,12 @@ class InteractiveBrokersClient(
         try:
             await asyncio.wait_for(self._is_ib_connected.wait(), 15)
             self._start_connection_watchdog()
-            self._state = ClientState.READY
+            self._start_heartbeat_monitor()
+            self._state_machine.transition_to(ClientState.READY)
         except TimeoutError:
             self._log.error("Timeout waiting for managed accounts message")
             # Return to connecting state for retry
-            self._state = ClientState.CONNECTING
+            self._state_machine.transition_to(ClientState.CONNECTING)
 
     def _start_tws_incoming_msg_reader(self) -> None:
         """
@@ -322,15 +655,10 @@ class InteractiveBrokersClient(
         message queue for processing.
 
         """
-        if self._tws_incoming_msg_reader_task:
-            self._tws_incoming_msg_reader_task.cancel()
-            self._active_tasks.discard(self._tws_incoming_msg_reader_task)
-
-        self._tws_incoming_msg_reader_task = self._create_task(
+        self._task_registry.create_task(
             self._run_tws_incoming_msg_reader(),
-            "TWS incoming message reader",
+            "tws_incoming_msg_reader",
         )
-        self._active_tasks.add(self._tws_incoming_msg_reader_task)
 
     def _start_internal_msg_queue_processor(self) -> None:
         """
@@ -340,25 +668,15 @@ class InteractiveBrokersClient(
         appropriate handlers.
 
         """
-        if self._internal_msg_queue_processor_task:
-            self._internal_msg_queue_processor_task.cancel()
-            self._active_tasks.discard(self._internal_msg_queue_processor_task)
-
-        self._internal_msg_queue_processor_task = self._create_task(
+        self._task_registry.create_task(
             self._run_internal_msg_queue_processor(),
-            "Internal message queue processor",
+            "internal_msg_queue_processor",
         )
-        self._active_tasks.add(self._internal_msg_queue_processor_task)
 
-        if self._msg_handler_processor_task:
-            self._msg_handler_processor_task.cancel()
-            self._active_tasks.discard(self._msg_handler_processor_task)
-
-        self._msg_handler_processor_task = self._create_task(
+        self._task_registry.create_task(
             self._run_msg_handler_processor(),
-            "Message handler processor",
+            "msg_handler_processor",
         )
-        self._active_tasks.add(self._msg_handler_processor_task)
 
     def _start_connection_watchdog(self) -> None:
         """
@@ -368,15 +686,23 @@ class InteractiveBrokersClient(
         the connection is lost.
 
         """
-        if self._connection_watchdog_task:
-            self._connection_watchdog_task.cancel()
-            self._active_tasks.discard(self._connection_watchdog_task)
-
-        self._connection_watchdog_task = self._create_task(
+        self._task_registry.create_task(
             self._run_connection_watchdog(),
-            "Connection watchdog",
+            "connection_watchdog",
         )
-        self._active_tasks.add(self._connection_watchdog_task)
+
+    def _start_heartbeat_monitor(self) -> None:
+        """
+        Start the heartbeat monitor task.
+
+        This task sends periodic heartbeat messages to TWS/Gateway to detect connection
+        issues even when there's no other activity.
+
+        """
+        self._task_registry.create_task(
+            self._run_heartbeat_monitor(),
+            "heartbeat_monitor",
+        )
 
     def _stop(self) -> None:
         """
@@ -385,8 +711,8 @@ class InteractiveBrokersClient(
         This method initiates the client shutdown process.
 
         """
-        self._state = ClientState.STOPPING
-        self._create_task(self._stop_async())
+        self._state_machine.transition_to(ClientState.STOPPING)
+        self._task_registry.create_task(self._stop_async(), "client_stop")
 
     @handle_ib_error
     async def _stop_async(self) -> None:
@@ -403,45 +729,17 @@ class InteractiveBrokersClient(
             self._is_client_ready.clear()
             self._log.debug("`_is_client_ready` unset by `_stop_async`.", LogColor.BLUE)
 
-        # Cancel specific tasks
-        specific_tasks = [
-            self._connection_watchdog_task,
-            self._tws_incoming_msg_reader_task,
-            self._internal_msg_queue_processor_task,
-            self._msg_handler_processor_task,
-        ]
-
-        for task in specific_tasks:
-            if task and not task.cancelled():
-                task.cancel()
-                self._active_tasks.discard(task)
-
-        # Cancel any remaining tasks
-        remaining_tasks = set(
-            self._active_tasks,
-        )  # Create a copy to avoid modification during iteration
-        for task in remaining_tasks:
-            if not task.cancelled():
-                task.cancel()
-                self._active_tasks.discard(task)
-
-        # Wait for all tasks to complete
-        if self._active_tasks:
-            try:
-                await asyncio.gather(*self._active_tasks, return_exceptions=True)
-                self._log.info("All tasks canceled successfully.")
-            except Exception as e:
-                self._log.exception(f"Error occurred while canceling tasks: {e}", e)
-            finally:
-                self._active_tasks.clear()
+        # Cancel all tasks
+        self._task_registry.cancel_all_tasks()
 
         # Disconnect from TWS/Gateway
-        self._eclient.disconnect()
+        with suppress(Exception):
+            self._eclient.disconnect()
 
         # Clear state
         self._account_ids = set()
         self.registered_nautilus_clients = set()
-        self._state = ClientState.STOPPED
+        self._state_machine.transition_to(ClientState.STOPPED)
 
     def _reset(self) -> None:
         """
@@ -450,7 +748,7 @@ class InteractiveBrokersClient(
         This method stops and then restarts the client.
 
         """
-        self._create_task(self._reset_async())
+        self._task_registry.create_task(self._reset_async(), "client_reset")
 
     @handle_ib_error
     async def _reset_async(self) -> None:
@@ -471,7 +769,7 @@ class InteractiveBrokersClient(
         This method is called after a reconnection to restore subscriptions.
 
         """
-        self._create_task(self._resume_async())
+        self._task_registry.create_task(self._resume_async(), "client_resume")
 
     @handle_ib_error
     async def _resume_async(self) -> None:
@@ -493,11 +791,11 @@ class InteractiveBrokersClient(
         information but not fully stopping the client.
 
         """
-        if self._state != ClientState.DEGRADED:
+        if not self.is_in_state(ClientState.DEGRADED):
             self._log.info(f"Degrading InteractiveBrokersClient ({self._client_id})...")
             self._is_client_ready.clear()
             self._account_ids = set()
-            self._state = ClientState.DEGRADED
+            self._state_machine.transition_to(ClientState.DEGRADED)
 
     @handle_ib_error
     async def _resubscribe_all(self) -> None:
@@ -548,6 +846,42 @@ class InteractiveBrokersClient(
             raise TimeoutError(f"Client is not ready after {timeout} seconds.") from e
 
     @handle_ib_error
+    async def _run_heartbeat_monitor(self) -> None:
+        """
+        Run a heartbeat monitor to periodically check connection health.
+
+        Sends a lightweight request to TWS/Gateway periodically to ensure the connection
+        is still alive and responsive.
+
+        """
+        try:
+            while not self.is_in_state(
+                ClientState.STOPPING,
+                ClientState.STOPPED,
+                ClientState.DISPOSED,
+            ):
+                await asyncio.sleep(self._heartbeat_interval)
+
+                if self.is_in_state(ClientState.READY):
+                    try:
+                        # Use reqCurrentTime as a lightweight heartbeat
+                        self._eclient.reqCurrentTime()
+                        self._last_heartbeat_time = self._clock.timestamp()
+                    except Exception as e:
+                        self._log.warning(f"Heartbeat check failed: {e}")
+                        if self._is_ib_connected.is_set():
+                            self._log.debug(
+                                "`_is_ib_connected` unset by heartbeat failure",
+                                LogColor.BLUE,
+                            )
+                            self._is_ib_connected.clear()
+                            await self._handle_disconnection()
+        except asyncio.CancelledError:
+            self._log.debug("Heartbeat monitor task was canceled.")
+        except Exception as e:
+            self._log.exception(f"Error in heartbeat monitor: {e}")
+
+    @handle_ib_error
     async def _run_connection_watchdog(self) -> None:
         """
         Run a watchdog to monitor and manage the health of the socket connection.
@@ -557,19 +891,32 @@ class InteractiveBrokersClient(
 
         """
         try:
-            while self._state not in (
+            while not self.is_in_state(
                 ClientState.STOPPING,
                 ClientState.STOPPED,
                 ClientState.DISPOSED,
             ):
                 await asyncio.sleep(1)
+
                 if not self._is_ib_connected.is_set() or not self._eclient.isConnected():
-                    self._log.error(
-                        "Connection watchdog detects connection lost.",
-                    )
+                    self._log.error("Connection watchdog detects connection lost.")
                     await self._handle_disconnection()
+                elif self.is_in_state(ClientState.READY):
+                    # Check for heartbeat timeout if in READY state
+                    current_time = self._clock.timestamp()
+                    if (
+                        self._last_heartbeat_time > 0
+                        and current_time - self._last_heartbeat_time > self._heartbeat_interval * 2
+                    ):
+                        self._log.error(
+                            f"Connection watchdog detected heartbeat timeout. Last heartbeat: "
+                            f"{current_time - self._last_heartbeat_time:.1f}s ago",
+                        )
+                        await self._handle_disconnection()
         except asyncio.CancelledError:
             self._log.debug("Client connection watchdog task was canceled.")
+        except Exception as e:
+            self._log.exception(f"Error in connection watchdog: {e}")
 
     async def _handle_disconnection(self) -> None:
         """
@@ -578,7 +925,7 @@ class InteractiveBrokersClient(
         This method degrades the client state and initiates reconnection after a delay.
 
         """
-        if self._state in (ClientState.READY, ClientState.CONNECTED, ClientState.WAITING_API):
+        if self.is_in_state(ClientState.READY, ClientState.CONNECTED, ClientState.WAITING_API):
             self._degrade()
 
         if self._is_ib_connected.is_set():
@@ -589,8 +936,8 @@ class InteractiveBrokersClient(
         await asyncio.sleep(5)
 
         # Only attempt reconnection if we're not in a stopping state
-        if self._state not in (ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
-            self._state = ClientState.RECONNECTING
+        if not self.is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
+            self._state_machine.transition_to(ClientState.RECONNECTING)
             self._connection_attempts = 0  # Reset connection attempts for fresh reconnection
             await self._start_async()
 
