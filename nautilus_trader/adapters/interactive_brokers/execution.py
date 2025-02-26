@@ -34,7 +34,6 @@ from nautilus_trader.adapters.interactive_brokers.common import IBOrderTags
 from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersExecClientConfig
 from nautilus_trader.adapters.interactive_brokers.config import SymbologyMethod
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_ORDER_ACTION
-from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_ORDER_FIELDS
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_ORDER_STATUS
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_ORDER_TYPE
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_TIME_IN_FORCE
@@ -42,6 +41,7 @@ from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_T
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import ORDER_SIDE_TO_ORDER_ACTION
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import timestring_to_timestamp
 from nautilus_trader.adapters.interactive_brokers.providers import InteractiveBrokersInstrumentProvider
+from nautilus_trader.adapters.interactive_brokers.utils.order_transformer import OrderTransformerFactory
 from nautilus_trader.cache.cache import Cache
 from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
@@ -66,9 +66,7 @@ from nautilus_trader.model.enums import OrderStatus
 from nautilus_trader.model.enums import OrderType
 from nautilus_trader.model.enums import PositionSide
 from nautilus_trader.model.enums import TimeInForce
-from nautilus_trader.model.enums import TrailingOffsetType
 from nautilus_trader.model.enums import TriggerType
-from nautilus_trader.model.enums import trailing_offset_type_to_str
 from nautilus_trader.model.identifiers import AccountId
 from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.model.identifiers import ClientOrderId
@@ -82,12 +80,6 @@ from nautilus_trader.model.objects import Money
 from nautilus_trader.model.objects import Price
 from nautilus_trader.model.objects import Quantity
 from nautilus_trader.model.orders.base import Order
-from nautilus_trader.model.orders.limit_if_touched import LimitIfTouchedOrder
-from nautilus_trader.model.orders.market_if_touched import MarketIfTouchedOrder
-from nautilus_trader.model.orders.stop_limit import StopLimitOrder
-from nautilus_trader.model.orders.stop_market import StopMarketOrder
-from nautilus_trader.model.orders.trailing_stop_limit import TrailingStopLimitOrder
-from nautilus_trader.model.orders.trailing_stop_market import TrailingStopMarketOrder
 
 
 # fmt: on
@@ -523,50 +515,33 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
 
         return report
 
-    def _transform_order_to_ib_order(self, order: Order) -> IBOrder:  # noqa: C901 11 > 10
-        if order.is_post_only:
-            raise ValueError("`post_only` not supported by Interactive Brokers")
+    def _transform_order_to_ib_order(self, order: Order) -> IBOrder:
+        """
+        Transform a Nautilus order to an Interactive Brokers order.
 
-        ib_order = IBOrder()
-        time_in_force = order.time_in_force
-        for key, field, fn in MAP_ORDER_FIELDS:
-            if value := getattr(order, key, None):
-                if key == "order_type" and time_in_force == TimeInForce.AT_THE_CLOSE:
-                    setattr(ib_order, field, fn((value, time_in_force)))
-                else:
-                    setattr(ib_order, field, fn(value))
+        Parameters
+        ----------
+        order : Order
+            The Nautilus order to transform.
 
-        if self.instrument_provider.find(order.instrument_id).is_inverse:
-            ib_order.cashQty = int(ib_order.totalQuantity)
-            ib_order.totalQuantity = 0
+        Returns
+        -------
+        IBOrder
+            The transformed Interactive Brokers order.
 
-        if isinstance(order, TrailingStopLimitOrder | TrailingStopMarketOrder):
-            if order.trailing_offset_type != TrailingOffsetType.PRICE:
-                raise ValueError(
-                    f"`TrailingOffsetType` {trailing_offset_type_to_str(order.trailing_offset_type)} is not supported",
-                )
+        Raises
+        ------
+        ValueError
+            If the order type is not supported or if required order
+            properties are missing or invalid.
 
-            ib_order.auxPrice = float(order.trailing_offset)
-            if order.trigger_price:
-                ib_order.trailStopPrice = order.trigger_price.as_double()
-                ib_order.triggerMethod = MAP_TRIGGER_METHOD[order.trigger_type]
-        elif (
-            isinstance(
-                order,
-                MarketIfTouchedOrder | LimitIfTouchedOrder | StopLimitOrder | StopMarketOrder,
-            )
-        ) and order.trigger_price:
-            ib_order.auxPrice = order.trigger_price.as_double()
+        """
+        # Ensure a transformer factory exists
+        if not hasattr(self, "_order_transformer_factory"):
+            self._order_transformer_factory = OrderTransformerFactory(self)
 
-        details = self.instrument_provider.contract_details[order.instrument_id.value]
-        ib_order.contract = details.contract
-        ib_order.account = self.account_id.get_id()
-        ib_order.clearingAccount = self.account_id.get_id()
-
-        if order.tags:
-            return self._attach_order_tags(ib_order, order)
-        else:
-            return ib_order
+        # Transform the order using the appropriate transformer
+        return self._order_transformer_factory.transform_order(order)
 
     def _attach_order_tags(self, ib_order: IBOrder, order: Order) -> IBOrder:
         tags: dict = {}
