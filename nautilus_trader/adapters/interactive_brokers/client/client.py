@@ -593,17 +593,23 @@ class InteractiveBrokersClient(
         InteractiveBrokersClientErrorMixin.__init__(self)
 
         # Register state change callbacks
+        def _on_ready_state() -> None:
+            asyncio.create_task(
+                self._connection_manager.set_ready(True, "State machine entered READY state"),
+            )
+
+        def _on_stopping_state() -> None:
+            asyncio.create_task(
+                self._connection_manager.set_ready(False, "State machine entered STOPPING state"),
+            )
+
         self._state_machine.register_state_changed_callback(
             ClientState.READY,
-            lambda: asyncio.create_task(
-                self._connection_manager.set_ready(True, "State machine entered READY state"),
-            ),
+            _on_ready_state,
         )
         self._state_machine.register_state_changed_callback(
             ClientState.STOPPING,
-            lambda: asyncio.create_task(
-                self._connection_manager.set_ready(False, "State machine entered STOPPING state"),
-            ),
+            _on_stopping_state,
         )
 
         # TWS API
@@ -699,12 +705,7 @@ class InteractiveBrokersClient(
             self._log.warning("Started when loop is not running")
             self._loop.run_until_complete(self._start_async())
         else:
-            task = asyncio.create_task(
-                self._task_registry.create_task(
-                    self._start_async(),
-                    "client_start",
-                ),
-            )
+            task = asyncio.create_task(self._start_async())
             self._background_tasks.add(task)
             task.add_done_callback(self._background_tasks.discard)
 
@@ -764,7 +765,6 @@ class InteractiveBrokersClient(
 
         """
         # Add random jitter to prevent reconnection storms
-
         jitter = random.uniform(0, self._reconnect_max_jitter)  # noqa: S311
         # Apply exponential backoff up to a maximum
         backoff_factor = min(self._connection_attempts, 5)  # Cap at 5 to avoid excessive waits
@@ -853,6 +853,11 @@ class InteractiveBrokersClient(
         This task reads messages from the TWS socket and places them in the internal
         message queue for processing.
 
+        Returns
+        -------
+        asyncio.Task
+            The created task.
+
         """
         task = await self._task_registry.create_task(
             self._run_tws_incoming_msg_reader(),
@@ -860,12 +865,17 @@ class InteractiveBrokersClient(
         )
         return task
 
-    async def _start_internal_msg_queue_processor(self) -> asyncio.Task:
+    async def _start_internal_msg_queue_processor(self) -> tuple[asyncio.Task, asyncio.Task]:
         """
         Start the internal message queue processing task.
 
         This task processes messages from the internal queue and dispatches them to the
         appropriate handlers.
+
+        Returns
+        -------
+        tuple[asyncio.Task, asyncio.Task]
+            The created tasks.
 
         """
         task1 = await self._task_registry.create_task(
@@ -886,6 +896,11 @@ class InteractiveBrokersClient(
         This task monitors the connection to TWS/Gateway and initiates reconnection if
         the connection is lost.
 
+        Returns
+        -------
+        asyncio.Task
+            The created task.
+
         """
         task = await self._task_registry.create_task(
             self._run_connection_watchdog(),
@@ -899,6 +914,11 @@ class InteractiveBrokersClient(
 
         This task sends periodic heartbeat messages to TWS/Gateway to detect connection
         issues even when there's no other activity.
+
+        Returns
+        -------
+        asyncio.Task
+            The created task.
 
         """
         task = await self._task_registry.create_task(
@@ -926,7 +946,11 @@ class InteractiveBrokersClient(
         ready_task.add_done_callback(self._background_tasks.discard)
 
         # Use the task registry for the main stop task
-        self._task_registry.create_task(self._stop_async(), "client_stop")
+        stop_task = asyncio.create_task(
+            self._task_registry.create_task(self._stop_async(), "client_stop"),
+        )
+        self._background_tasks.add(stop_task)
+        stop_task.add_done_callback(self._background_tasks.discard)
 
     @handle_ib_error
     async def _stop_async(self) -> None:
@@ -975,9 +999,7 @@ class InteractiveBrokersClient(
         This method stops and then restarts the client.
 
         """
-        task = asyncio.create_task(
-            self._task_registry.create_task(self._reset_async(), "client_reset"),
-        )
+        task = asyncio.create_task(self._reset_async())
         self._background_tasks.add(task)
         task.add_done_callback(self._background_tasks.discard)
 
@@ -1000,9 +1022,7 @@ class InteractiveBrokersClient(
         This method is called after a reconnection to restore subscriptions.
 
         """
-        task = asyncio.create_task(
-            self._task_registry.create_task(self._resume_async(), "client_resume"),
-        )
+        task = asyncio.create_task(self._resume_async())
         self._background_tasks.add(task)
         task.add_done_callback(self._background_tasks.discard)
 
