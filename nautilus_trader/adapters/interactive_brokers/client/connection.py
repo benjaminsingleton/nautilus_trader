@@ -16,6 +16,7 @@
 import asyncio
 import enum
 import functools
+from typing import cast
 
 from ibapi import comm
 from ibapi import decoder
@@ -28,7 +29,6 @@ from ibapi.server_versions import MIN_CLIENT_VER
 
 from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin
 from nautilus_trader.adapters.interactive_brokers.client.error import handle_ib_error
-from nautilus_trader.common.enums import LogColor
 
 
 class ConnectionState(enum.Enum):
@@ -46,19 +46,40 @@ class ConnectionState(enum.Enum):
     DISCONNECTING = 4  # In the process of disconnecting
 
 
+class ConnectionResult:
+    """
+    Represents the result of a connection attempt.
+
+    This class encapsulates the success/failure status of a connection attempt along
+    with any relevant error information.
+
+    """
+
+    def __init__(self, success: bool, error: Exception | None = None, message: str = ""):
+        self.success = success
+        self.error = error
+        self.message = message
+
+    def __bool__(self) -> bool:
+        return self.success
+
+    def __str__(self) -> str:
+        if self.success:
+            return f"ConnectionResult(success=True, message='{self.message}')"
+        return f"ConnectionResult(success=False, error='{self.error}', message='{self.message}')"
+
+
 class InteractiveBrokersClientConnectionMixin(BaseMixin):
     """
     Manages the connection to TWS/Gateway for the InteractiveBrokersClient.
 
     This class is responsible for establishing and maintaining the socket connection,
     handling server communication, monitoring the connection's health, and managing
-    reconnections. When a connection is established and the client finishes initializing,
-    the `_is_ib_connected` event is set, and if the connection is lost, the
-    `_is_ib_connected` event is cleared.
+    reconnections.
 
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize connection state.
 
@@ -70,7 +91,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         self._conn_state = ConnectionState.DISCONNECTED
         self._socket_connect_timeout = 10  # seconds
         self._handshake_timeout = 5  # seconds
-        self._reconnect_jitter = 2.0  # seconds of random jitter to add to reconnect delay
+        self._connection_lock = asyncio.Lock()  # Lock for connection operations
 
     @handle_ib_error
     async def _connect(self) -> None:
@@ -89,68 +110,77 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
             If connection steps timeout.
 
         """
-        try:
-            self._conn_state = ConnectionState.CONNECTING
-            self._initialize_connection_params()
+        async with self._connection_lock:  # Ensure only one connection attempt at a time
+            try:
+                self._conn_state = ConnectionState.CONNECTING
+                self._initialize_connection_params()
 
-            await self._connect_socket()
+                # Connect socket
+                conn_result = await self._connect_socket()
+                if not conn_result.success:
+                    raise ConnectionError(conn_result.message)
 
-            self._conn_state = ConnectionState.HANDSHAKING
-            self._eclient.setConnState(EClient.CONNECTING)
+                self._conn_state = ConnectionState.HANDSHAKING
+                self._eclient.setConnState(EClient.CONNECTING)
 
-            await self._send_version_info()
+                # Send version info
+                version_result = await self._send_version_info()
+                if not version_result.success:
+                    raise ConnectionError(version_result.message)
 
-            self._eclient.decoder = decoder.Decoder(
-                wrapper=self._eclient.wrapper,
-                serverVersion=self._eclient.serverVersion(),
-            )
-
-            await self._receive_server_info()
-
-            self._conn_state = ConnectionState.CONNECTED
-            self._eclient.setConnState(EClient.CONNECTED)
-
-            self._log.info(
-                f"Connected to Interactive Brokers (v{self._eclient.serverVersion_}) "
-                f"at {self._eclient.connTime.decode()} from {self._host}:{self._port} "
-                f"with client id: {self._client_id}.",
-            )
-        except asyncio.CancelledError:
-            self._log.info("Connection cancelled.")
-            await self._disconnect()
-        except Exception as e:
-            self._log.error(f"Connection failed: {e}")
-            self._conn_state = ConnectionState.DISCONNECTED
-
-            if self._eclient.wrapper:
-                self._eclient.wrapper.error(
-                    NO_VALID_ID,
-                    CONNECT_FAIL.code(),
-                    f"{CONNECT_FAIL.msg()}: {e!s}",
+                # Initialize decoder
+                self._eclient.decoder = decoder.Decoder(
+                    wrapper=self._eclient.wrapper,
+                    serverVersion=self._eclient.serverVersion(),
                 )
 
-            # Re-raise for proper handling in calling code
-            raise ConnectionError(f"Failed to connect to IB: {e}") from e
+                # Receive server info
+                server_result = await self._receive_server_info()
+                if not server_result.success:
+                    raise ConnectionError(server_result.message)
+
+                self._conn_state = ConnectionState.CONNECTED
+                self._eclient.setConnState(EClient.CONNECTED)
+
+                self._log.info(
+                    f"Connected to Interactive Brokers (v{self._eclient.serverVersion_}) "
+                    f"at {self._eclient.connTime.decode()} from {self._host}:{self._port} "
+                    f"with client id: {self._client_id}.",
+                )
+            except asyncio.CancelledError:
+                self._log.info("Connection cancelled.")
+                await self._disconnect()
+                raise
+            except Exception as e:
+                self._log.error(f"Connection failed: {e}")
+                self._conn_state = ConnectionState.DISCONNECTED
+
+                if self._eclient.wrapper:
+                    self._eclient.wrapper.error(
+                        NO_VALID_ID,
+                        CONNECT_FAIL.code(),
+                        f"{CONNECT_FAIL.msg()}: {e!s}",
+                    )
+
+                # Re-raise for proper handling in calling code
+                raise ConnectionError(f"Failed to connect to IB: {e}") from e
 
     async def _disconnect(self) -> None:
         """
-        Disconnect from TWS/Gateway and clear the `_is_ib_connected` flag.
+        Disconnect from TWS/Gateway and clear the connection flags.
         """
-        try:
-            self._conn_state = ConnectionState.DISCONNECTING
+        async with self._connection_lock:
+            try:
+                self._conn_state = ConnectionState.DISCONNECTING
 
-            if hasattr(self._eclient, "conn") and self._eclient.conn:
-                self._eclient.disconnect()
+                if hasattr(self._eclient, "conn") and self._eclient.conn:
+                    self._eclient.disconnect()
 
-            if self._is_ib_connected.is_set():
-                self._log.debug("`_is_ib_connected` unset by `_disconnect`.", LogColor.BLUE)
-                self._is_ib_connected.clear()
-
-            self._conn_state = ConnectionState.DISCONNECTED
-            self._log.info("Disconnected from Interactive Brokers API.")
-        except Exception as e:
-            self._log.error(f"Disconnection failed: {e}")
-            self._conn_state = ConnectionState.DISCONNECTED
+                self._conn_state = ConnectionState.DISCONNECTED
+                self._log.info("Disconnected from Interactive Brokers API.")
+            except Exception as e:
+                self._log.error(f"Disconnection failed: {e}")
+                self._conn_state = ConnectionState.DISCONNECTED
 
     def _initialize_connection_params(self) -> None:
         """
@@ -165,7 +195,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         self._eclient._port = self._port
         self._eclient.clientId = self._client_id
 
-    async def _connect_socket(self) -> None:
+    async def _connect_socket(self) -> ConnectionResult:
         """
         Connect the socket to TWS / Gateway and change the connection state to
         CONNECTING.
@@ -173,12 +203,10 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         It is an asynchronous method that runs within the event loop executor with
         a timeout to prevent hanging if the server is unreachable.
 
-        Raises
-        ------
-        TimeoutError
-            If the socket connection takes too long to establish.
-        ConnectionError
-            If the socket connection cannot be established.
+        Returns
+        -------
+        ConnectionResult
+            The result of the connection attempt.
 
         """
         self._log.info(
@@ -188,26 +216,43 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         try:
             self._eclient.conn = Connection(self._host, self._port)
 
+            # This call will raise a socket error if connection fails
             await asyncio.wait_for(
                 asyncio.to_thread(self._eclient.conn.connect),
                 timeout=self._socket_connect_timeout,
             )
 
-            # Verify connection was successful
-            raise ConnectionError(f"Failed to connect to {self._host}:{self._port}")
+            # If we reach here, connection was successful
+            # Check if socket is actually connected
+            if (
+                self._eclient.conn
+                and self._eclient.conn.socket
+                and self._eclient.conn.socket.fileno() != -1
+            ):
+                return ConnectionResult(
+                    success=True,
+                    message=f"Socket connected to {self._host}:{self._port}",
+                )
+            else:
+                return ConnectionResult(
+                    success=False,
+                    message=f"Socket connection status check failed for {self._host}:{self._port}",
+                )
 
         except TimeoutError as e:
-            raise TimeoutError(
-                f"Connection to {self._host}:{self._port} timed out after {self._socket_connect_timeout}s",
-            ) from e
-        except ConnectionError:
-            # Re-raise connection errors
-            raise
+            return ConnectionResult(
+                success=False,
+                error=e,
+                message=f"Connection to {self._host}:{self._port} timed out after {self._socket_connect_timeout}s",
+            )
         except Exception as e:
-            # Wrap other exceptions
-            raise ConnectionError(f"Socket connection failed: {e}") from e
+            return ConnectionResult(
+                success=False,
+                error=e,
+                message=f"Socket connection failed: {e}",
+            )
 
-    async def _send_version_info(self) -> None:
+    async def _send_version_info(self) -> ConnectionResult:
         """
         Send the API version information to TWS / Gateway.
 
@@ -215,10 +260,10 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         range supported by the client. This is part of the initial handshake process
         with the server.
 
-        Raises
-        ------
-        ConnectionError
-            If sending version info fails.
+        Returns
+        -------
+        ConnectionResult
+            The result of sending the version info.
 
         """
         try:
@@ -232,38 +277,59 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
             msg2 = str.encode(v100prefix, "ascii") + msg
 
             await asyncio.to_thread(functools.partial(self._eclient.conn.sendMsg, msg2))
+            return ConnectionResult(success=True, message="Version info sent successfully")
         except Exception as e:
-            raise ConnectionError(f"Failed to send version info: {e}") from e
+            return ConnectionResult(
+                success=False,
+                error=e,
+                message=f"Failed to send version info: {e}",
+            )
 
-    async def _receive_server_info(self) -> None:
+    async def _receive_server_info(self) -> ConnectionResult:
         """
         Receive and process the server version information.
 
         Waits for the server to send its version information and connection time.
         Retries receiving this information up to a specified number of attempts.
 
-        Raises
-        ------
-        ConnectionError
-            If the server version information is not received within the allotted retries.
-        TimeoutError
-            If receiving server info times out.
+        Returns
+        -------
+        ConnectionResult
+            The result of receiving server info.
 
         """
         retries_remaining = 5
-        fields = []
+        fields: list[str] = []  # Type annotation added here
 
         try:
             # Use a timeout for the entire operation
             async with asyncio.timeout(self._handshake_timeout):
                 while retries_remaining > 0 and len(fields) < 2:
                     buf = await asyncio.to_thread(self._eclient.conn.recvMsg)
-                    if len(buf) > 0:
-                        _, msg, _ = comm.read_msg(buf)
-                        fields.extend(comm.read_fields(msg))
-                    else:
-                        self._log.debug("Received empty buffer.")
 
+                    # Check for empty buffer which might indicate connection issues
+                    if not buf:
+                        retries_remaining -= 1
+                        self._log.warning(
+                            f"Received empty buffer. Retries remaining: {retries_remaining}.",
+                        )
+                        await asyncio.sleep(0.5)
+                        continue
+
+                    # Process the received buffer
+                    try:
+                        _, msg, _ = comm.read_msg(buf)
+                        if msg:
+                            new_fields = comm.read_fields(msg)
+                            fields.extend(
+                                cast(list[str], new_fields),
+                            )  # Explicit cast for type checker
+                        else:
+                            self._log.debug("Incomplete message received.")
+                    except Exception as e:
+                        self._log.warning(f"Error processing server message: {e}")
+
+                    # Check if we need more data
                     if len(fields) < 2:
                         retries_remaining -= 1
                         self._log.warning(
@@ -273,18 +339,30 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                         await asyncio.sleep(0.5)  # Short wait between retries
 
                 if len(fields) < 2:
-                    raise ConnectionError(
-                        "Failed to receive complete server version information after multiple attempts.",
+                    return ConnectionResult(
+                        success=False,
+                        message="Failed to receive complete server version information after multiple attempts.",
                     )
 
                 # Process the received fields
                 self._process_server_version(fields)
+                return ConnectionResult(
+                    success=True,
+                    message=f"Successfully received server version {self._eclient.serverVersion_}",
+                )
+
         except TimeoutError as e:
-            raise TimeoutError(
-                f"Timeout receiving server version information after {self._handshake_timeout}s",
-            ) from e
+            return ConnectionResult(
+                success=False,
+                error=e,
+                message=f"Timeout receiving server version information after {self._handshake_timeout}s",
+            )
         except Exception as e:
-            raise ConnectionError(f"Error receiving server information: {e}") from e
+            return ConnectionResult(
+                success=False,
+                error=e,
+                message=f"Error receiving server information: {e}",
+            )
 
     def _process_server_version(self, fields: list[str]) -> None:
         """
@@ -311,9 +389,47 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         automatically but must be triggered by API client code.
 
         """
+        # Set futures to exception state to unblock any pending requests
         for future in self._requests.get_futures():
             if not future.done():
                 future.set_exception(ConnectionError("Socket disconnected."))
-        if self._is_ib_connected.is_set():
-            self._log.debug("`_is_ib_connected` unset by `connectionClosed`.", LogColor.BLUE)
-            self._is_ib_connected.clear()
+
+        # Update connection status through main client class
+        # Store the task to prevent garbage collection
+        task = asyncio.create_task(
+            self._notify_connection_closed(),
+        )
+        # Add handlers to ensure proper cleanup
+        task.add_done_callback(
+            lambda t: self._log.debug("Connection closed notification completed"),
+        )
+
+    async def _notify_connection_closed(self) -> None:
+        """
+        Notify the main client that the connection has been closed.
+
+        This method is called by process_connection_closed to update the connection
+        status asynchronously.
+
+        """
+        try:
+            # This relies on the main client having a connection manager
+            await self._set_disconnected("Connection closed by TWS/Gateway")
+        except Exception as e:
+            self._log.error(f"Error notifying connection closed: {e}")
+
+    async def _set_disconnected(self, reason: str) -> None:
+        """
+        Set the disconnected state.
+
+        This is a placeholder method that should be overridden by the main client
+        class to provide the actual implementation.
+
+        Parameters
+        ----------
+        reason : str
+            The reason for disconnection.
+
+        """
+        # This will be overridden by the main client class
+        self._log.debug(f"Connection closed: {reason}")
