@@ -555,9 +555,11 @@ class ConnectionManager:
             True if the client is ready, False if the timeout was reached.
 
         """
-        if not await self._connection_manager.wait_until_ready(timeout):
-            raise TimeoutError(f"Client not ready after {timeout}s")
-        return True
+        try:
+            await asyncio.wait_for(self._is_ready.wait(), timeout)
+            return True
+        except TimeoutError:
+            return False
 
 
 class InteractiveBrokersClient(
@@ -647,15 +649,11 @@ class InteractiveBrokersClient(
         # Register state change callbacks
         self._state_machine.register_state_changed_callback(
             ClientState.READY,
-            lambda: asyncio.create_task(
-                self._connection_manager.set_ready(True, "State machine entered READY state"),
-            ),
+            self._on_ready_state_entered,
         )
         self._state_machine.register_state_changed_callback(
             ClientState.STOPPING,
-            lambda: asyncio.create_task(
-                self._connection_manager.set_ready(False, "State machine entered STOPPING state"),
-            ),
+            self._on_stopping_state_entered,
         )
 
         # TWS API
@@ -735,6 +733,24 @@ class InteractiveBrokersClient(
         """
         return self.state in states
 
+    def _on_ready_state_entered(self) -> None:
+        """
+        Handle transition to READY state.
+        """
+        # Create the async task but don't return it
+        asyncio.create_task(
+            self._connection_manager.set_ready(True, "State machine entered READY state"),
+        )
+
+    def _on_stopping_state_entered(self) -> None:
+        """
+        Handle transition to STOPPING state.
+        """
+        # Create the async task but don't return it
+        asyncio.create_task(
+            self._connection_manager.set_ready(False, "State machine entered STOPPING state"),
+        )
+
     def _start(self) -> None:
         """
         Start the client.
@@ -747,7 +763,7 @@ class InteractiveBrokersClient(
             self._log.warning("Started when loop is not running")
             self._loop.run_until_complete(self._start_async())
         else:
-            self._task_registry.create_task(self._start_async(), "start_client")
+            task = await self._task_registry.create_task(self._start_async(), "start_client")
 
     @handle_ib_error
     async def _start_async(self) -> None:

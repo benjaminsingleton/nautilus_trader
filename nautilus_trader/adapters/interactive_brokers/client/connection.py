@@ -83,7 +83,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
 
     """
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         """
         Initialize connection state.
 
@@ -92,9 +92,13 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         will be initialized in the main class that inherits from this mixin.
 
         """
-        super().__init__()
-        self._socket_connect_timeout = self.SOCKET_CONNECT_TIMEOUT
-        self._handshake_timeout = self.HANDSHAKE_TIMEOUT
+        # Pass kwargs to super to handle Component initialization
+        super().__init__(**kwargs)
+
+        # Get timeout values from constants defined in main class
+        # or use defaults if not available
+        self._socket_connect_timeout = getattr(self, "SOCKET_CONNECT_TIMEOUT", 10.0)
+        self._handshake_timeout = getattr(self, "HANDSHAKE_TIMEOUT", 5.0)
         self._connection_lock = asyncio.Lock()
 
     def _initialize_connection_params(self) -> None:

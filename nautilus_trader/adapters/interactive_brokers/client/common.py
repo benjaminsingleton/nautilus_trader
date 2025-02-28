@@ -55,6 +55,7 @@ class ClientState(enum.Enum):
     STOPPING = 7  # In the process of shutting down
     STOPPED = 8  # Fully stopped
     DISPOSED = 9  # Resources released, object no longer usable
+    DISCONNECTED = 10  # Connection is closed or lost
 
 
 class AccountOrderRef(NamedTuple):
@@ -629,6 +630,15 @@ class BaseMixin:
     _resubscribe_all: Callable
     _create_task: Callable
     logAnswer: Callable
+
+    # State management
+    _state_machine: Any  # StateMachine type
+    is_in_state: Callable
+    _connection_manager: Any  # ConnectionManager type
+
+    # Connection constants
+    SOCKET_CONNECT_TIMEOUT: float
+    HANDSHAKE_TIMEOUT: float
 
     # Account
     accounts: Callable
