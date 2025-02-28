@@ -14,6 +14,7 @@
 # -------------------------------------------------------------------------------------------------
 
 import asyncio
+import enum
 import functools
 from abc import ABC
 from abc import abstractmethod
@@ -34,6 +35,26 @@ from nautilus_trader.common.component import Logger
 from nautilus_trader.common.component import MessageBus
 from nautilus_trader.model.data import BarType
 from nautilus_trader.model.identifiers import InstrumentId
+
+
+class ClientState(enum.Enum):
+    """
+    Defines the possible states of the Interactive Brokers client.
+
+    These states are used to track and manage the client lifecycle.
+
+    """
+
+    CREATED = 0  # Initial state after creation
+    CONNECTING = 1  # Attempting to connect to TWS/Gateway
+    CONNECTED = 2  # Successfully connected to TWS/Gateway
+    WAITING_API = 3  # Waiting for API initialization (account info, etc.)
+    READY = 4  # Fully operational and ready for requests
+    DEGRADED = 5  # Connected but with limited functionality
+    RECONNECTING = 6  # Attempting to reconnect after failure
+    STOPPING = 7  # In the process of shutting down
+    STOPPED = 8  # Fully stopped
+    DISPOSED = 9  # Resources released, object no longer usable
 
 
 class AccountOrderRef(NamedTuple):
