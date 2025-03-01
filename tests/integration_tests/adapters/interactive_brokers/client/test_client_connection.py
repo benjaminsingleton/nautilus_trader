@@ -72,6 +72,10 @@ async def test_reconnect_success(ib_client):
     """
     Test case for a successful reconnection.
     """
+    # Mock _calculate_reconnect_delay to return a minimal delay (0.001 seconds)
+    # This significantly speeds up the test by avoiding the real delay calculation
+    ib_client._calculate_reconnect_delay = MagicMock(return_value=0.001)
+    
     # Mocking the connection manager and state machine
     ib_client._connection_manager = MagicMock()
     # Make set_ready an AsyncMock to fix the TypeError when awaited
@@ -100,6 +104,10 @@ async def test_reconnect_fail(ib_client):
     """
     Test case for a failed reconnection.
     """
+    # Mock _calculate_reconnect_delay to return a minimal delay (0.001 seconds)
+    # This significantly speeds up the test by avoiding the real delay calculation
+    ib_client._calculate_reconnect_delay = MagicMock(return_value=0.001)
+    
     # Mocking the connection manager and state machine
     ib_client._connection_manager = MagicMock()
     # Make set_ready an AsyncMock to fix the TypeError when awaited

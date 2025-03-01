@@ -13,6 +13,33 @@ from nautilus_trader.adapters.interactive_brokers.client.common import ClientSta
 from nautilus_trader.test_kit.functions import eventually
 
 
+@pytest.fixture
+def mock_coroutines(ib_client):
+    """Mock coroutine methods to prevent 'coroutine never awaited' warnings."""
+    # Mock the coroutines that would normally be passed to create_task
+    ib_client._run_tws_incoming_msg_reader = MagicMock(return_value=None)
+    ib_client._run_internal_msg_queue_processor = MagicMock(return_value=None)
+    ib_client._run_msg_handler_processor = MagicMock(return_value=None)
+    ib_client._run_connection_watchdog = MagicMock(return_value=None)
+    ib_client._run_heartbeat_monitor = MagicMock(return_value=None)
+    
+    # Save original methods to restore if needed
+    original_methods = {
+        "_run_tws_incoming_msg_reader": getattr(ib_client, "_run_tws_incoming_msg_reader", None),
+        "_run_internal_msg_queue_processor": getattr(ib_client, "_run_internal_msg_queue_processor", None),
+        "_run_msg_handler_processor": getattr(ib_client, "_run_msg_handler_processor", None),
+        "_run_connection_watchdog": getattr(ib_client, "_run_connection_watchdog", None),
+        "_run_heartbeat_monitor": getattr(ib_client, "_run_heartbeat_monitor", None),
+    }
+    
+    yield
+    
+    # Restore original methods if needed
+    for name, method in original_methods.items():
+        if method is not None:
+            setattr(ib_client, name, method)
+
+
 @pytest.mark.asyncio
 async def test_start(event_loop, ib_client):
     # Arrange
@@ -78,7 +105,7 @@ async def test_start(event_loop, ib_client):
 
 
 @pytest.mark.asyncio
-async def test_start_tasks(ib_client):
+async def test_start_tasks(ib_client, mock_coroutines):
     # Arrange
     ib_client._eclient = MagicMock()
     ib_client._task_registry = MagicMock()
@@ -167,7 +194,7 @@ async def test_reset(event_loop, ib_client):
 
 
 @pytest.mark.asyncio
-async def test_resume(event_loop, ib_client):
+async def test_resume(event_loop, ib_client, mock_coroutines):
     # Setup state machine with mock
     ib_client._state_machine = MagicMock()
     ib_client._state_machine.transition_to = AsyncMock(return_value=True)
@@ -189,7 +216,7 @@ async def test_resume(event_loop, ib_client):
 
 
 @pytest.mark.asyncio
-async def test_degrade(event_loop, ib_client):
+async def test_degrade(event_loop, ib_client, mock_coroutines):
     # Setup state machine with mock
     ib_client._state_machine = MagicMock()
     ib_client._state_machine.transition_to = AsyncMock(return_value=True)
@@ -209,7 +236,7 @@ async def test_degrade(event_loop, ib_client):
 
 
 @pytest.mark.asyncio
-async def test_wait_until_ready(event_loop, ib_client):
+async def test_wait_until_ready(event_loop, ib_client, mock_coroutines):
     # Setup connection manager mock to return True for wait_until_ready
     ib_client._connection_manager = MagicMock()
     ib_client._connection_manager.wait_until_ready = AsyncMock(return_value=True)
@@ -223,7 +250,7 @@ async def test_wait_until_ready(event_loop, ib_client):
 
 
 @pytest.mark.asyncio
-async def test_run_connection_watchdog_reconnect(ib_client):
+async def test_run_connection_watchdog_reconnect(ib_client, mock_coroutines):
     # Arrange
     # Set up the state to trigger reconnection
     ib_client._connection_manager = MagicMock()

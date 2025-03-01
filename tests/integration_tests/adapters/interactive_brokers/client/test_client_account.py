@@ -56,6 +56,11 @@ async def test_process_account_id(ib_client):
     # Create task registry mock to properly handle starting tasks
     ib_client._task_registry = MagicMock()
     ib_client._task_registry.create_task = AsyncMock()
+    
+    # Mock the coroutines that would normally be passed to create_task to prevent warnings
+    ib_client._run_tws_incoming_msg_reader = MagicMock(return_value=None)
+    ib_client._run_internal_msg_queue_processor = MagicMock(return_value=None)
+    ib_client._run_msg_handler_processor = MagicMock(return_value=None)
 
     test_messages = [
         b"15\x001\x00DU1234567\x00",
@@ -68,9 +73,9 @@ async def test_process_account_id(ib_client):
     ]
     with patch("ibapi.comm.read_msg", side_effect=[(None, msg, b"") for msg in test_messages]):
         # We'll simulate message processing by directly adding the account ID
-        # Act
-        ib_client._start_tws_incoming_msg_reader()
-        ib_client._start_internal_msg_queue_processor()
+        # Act - use await to properly handle the coroutines
+        await ib_client._start_tws_incoming_msg_reader()
+        await ib_client._start_internal_msg_queue_processor()
         
         # Directly process the managed accounts message
         await ib_client.process_managed_accounts(accounts_list="DU1234567")
