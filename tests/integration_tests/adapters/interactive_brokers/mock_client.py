@@ -147,19 +147,23 @@ class MockInteractiveBrokersClient(InteractiveBrokersClient):
         )
 
     async def _start_async(self):
-        self._start_tws_incoming_msg_reader()
-        self._start_internal_msg_queue_processor()
-        self._start_connection_watchdog()
+        await self._start_tws_incoming_msg_reader()
+        await self._start_internal_msg_queue_processor()
+        await self._start_connection_watchdog()
         self._eclient.startApi()
 
-        # Configure connection state for mock
+        # Configure connection manager for mock
         if not hasattr(self, "_connection_manager"):
             self._connection_manager = MagicMock()
             self._connection_manager.is_connected = True
-            self._connection_manager.set_connected = MagicMock()
+            self._connection_manager.set_connected = AsyncMock()
+            self._connection_manager.set_ready = AsyncMock()
 
         # Transition to READY state
         await self._state_machine.transition_to(ClientState.READY)
-        self._is_client_ready.set()
-        self._log.debug("`_is_client_ready` set by `_start_async`.", LogColor.BLUE)
+        
+        # Update the connection manager
+        await self._connection_manager.set_ready(True, "Client ready")
+        
+        self._log.debug("Client ready", LogColor.BLUE)
         self._connection_attempts = 0

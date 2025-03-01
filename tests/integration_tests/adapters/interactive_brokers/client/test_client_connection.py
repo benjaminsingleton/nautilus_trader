@@ -13,12 +13,11 @@ from nautilus_trader.adapters.interactive_brokers.client.common import ClientSta
 async def test_connect_success(ib_client):
     ib_client._initialize_connection_params = MagicMock()
     ib_client._connect_socket = AsyncMock()
-    ib_client._send_version_info = AsyncMock()
-    ib_client._receive_server_info = AsyncMock()
+    ib_client._perform_handshake = AsyncMock(return_value=MagicMock(success=True))
     ib_client._eclient.connTime = MagicMock()
     ib_client._eclient.setConnState = MagicMock()
     ib_client._connection_manager = MagicMock()
-    ib_client._connection_manager.set_connected = MagicMock()
+    ib_client._connection_manager.set_connected = AsyncMock()
     ib_client._state_machine = MagicMock()
     ib_client._state_machine.transition_to = AsyncMock()
 
@@ -26,11 +25,9 @@ async def test_connect_success(ib_client):
 
     ib_client._initialize_connection_params.assert_called_once()
     ib_client._connect_socket.assert_awaited_once()
-    ib_client._send_version_info.assert_awaited_once()
-    ib_client._receive_server_info.assert_awaited_once()
+    ib_client._state_machine.transition_to.assert_any_call(ClientState.CONNECTED)
+    ib_client._connection_manager.set_connected.assert_awaited_once_with(True, "Socket connected successfully")
     ib_client._eclient.setConnState.assert_called_with(ib_client._eclient.CONNECTED)
-    ib_client._connection_manager.set_connected.assert_called_once()
-    ib_client._state_machine.transition_to.assert_called_with(ClientState.CONNECTED)
 
 
 @pytest.mark.asyncio

@@ -80,8 +80,7 @@ async def test_process_connection_error():
     error_mixin._state_machine.current_state = ClientState.CONNECTING
     error_mixin._connection_manager = MagicMock()
     error_mixin._connection_manager.set_connected = AsyncMock()
-    error_mixin._is_ib_connected = MagicMock()
-    error_mixin._is_ib_connected.is_set.return_value = True
+    error_mixin._connection_manager.is_connected = True
     error_mixin._requests = MagicMock()
     error_mixin._requests.get = MagicMock(return_value=None)
     error_mixin._subscriptions = MagicMock()
@@ -97,7 +96,9 @@ async def test_process_connection_error():
     )
 
     # Assert - should handle the connectivity lost error correctly
-    error_mixin._is_ib_connected.clear.assert_called_once()
+    error_mixin._connection_manager.set_connected.assert_awaited_once_with(
+        False, "Connection error 1100: Connectivity lost"
+    )
 
 
 @pytest.mark.asyncio

@@ -21,6 +21,7 @@ import pytest
 # fmt: off
 from nautilus_trader.adapters.interactive_brokers.client import InteractiveBrokersClient
 from nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
+from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
 from nautilus_trader.adapters.interactive_brokers.config import DockerizedIBGatewayConfig
 from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersDataClientConfig
 from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersExecClientConfig
@@ -140,10 +141,10 @@ def ib_client_running(ib_client):
     ib_client._task_registry = task_registry
     
     # Set necessary account data
-    ib_client._account_ids = {"DU123456,"}
+    ib_client._account_ids = {"DU123456"}
     
-    # Skip actual start by directly setting the state for testing
-    ib_client._state = "READY"
+    # Set the state for testing
+    ib_client._state_machine.current_state = ClientState.READY
     
     # Return the configured client
     yield ib_client
