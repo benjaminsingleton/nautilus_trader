@@ -19,7 +19,8 @@ from enum import IntEnum
 from inspect import iscoroutinefunction
 from typing import Any, Final, TypeVar, cast
 
-from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin
+from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin, ClientState
+
 from nautilus_trader.common.enums import LogColor
 
 

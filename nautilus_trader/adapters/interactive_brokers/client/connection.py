@@ -156,6 +156,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                 # Ensure transition to CONNECTED state happens before setting connState
                 # to avoid race conditions between state machine and EClient state
                 await self._state_machine.transition_to(ClientState.CONNECTED)
+                await self._connection_manager.set_connected(True, "Socket connected successfully")
                 self._eclient.setConnState(EClient.CONNECTED)
                 self._log.info(
                     f"Connected to IB (v{self._eclient.serverVersion_}) at "
