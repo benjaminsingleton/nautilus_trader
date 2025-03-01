@@ -18,12 +18,12 @@ from unittest.mock import Mock
 
 import pytest
 
-from nautilus_trader.adapters.interactive_brokers.client.common import Base
 from nautilus_trader.adapters.interactive_brokers.client.common import Requests
+from nautilus_trader.adapters.interactive_brokers.client.common import ResourceManager
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscriptions
 
 
-class ConcreteBase(Base):
+class ConcreteBase(ResourceManager):
     def get(self, req_id=None, name=None):
         return "mocked get response"
 
