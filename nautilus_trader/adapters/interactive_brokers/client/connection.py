@@ -153,8 +153,10 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                 if not handshake_result.success:
                     raise ConnectionError(handshake_result.message)
 
-                self._eclient.setConnState(EClient.CONNECTED)
+                # Ensure transition to CONNECTED state happens before setting connState
+                # to avoid race conditions between state machine and EClient state
                 await self._state_machine.transition_to(ClientState.CONNECTED)
+                self._eclient.setConnState(EClient.CONNECTED)
                 self._log.info(
                     f"Connected to IB (v{self._eclient.serverVersion_}) at "
                     f"{self._eclient.connTime.decode()} from {self._host}:{self._port} "
@@ -168,7 +170,8 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                         CONNECT_FAIL.code(),
                         f"{CONNECT_FAIL.msg()}: {e}",
                     )
-                await self._state_machine.transition_to(ClientState.DISCONNECTED)
+                # Use correct ClientState since DISCONNECTED is not in the valid_transitions
+                await self._state_machine.transition_to(ClientState.STOPPING)
                 raise ConnectionError(f"Failed to connect: {e}") from e
 
     async def _perform_handshake(self) -> ConnectionResult:
@@ -353,21 +356,28 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                 self._log.info("Client is stopping or stopped, skipping disconnection")
                 return
             try:
+                # First transition state to STOPPING before disconnecting
+                # to ensure other components know we're disconnecting intentionally
+                await self._state_machine.transition_to(ClientState.STOPPING)
                 if hasattr(self._eclient, "conn") and self._eclient.conn:
                     self._eclient.disconnect()
-                await self._state_machine.transition_to(ClientState.DISCONNECTED)
+                await self._state_machine.transition_to(ClientState.STOPPED)
                 self._log.info("Disconnected from Interactive Brokers API")
             except Exception as e:
                 self._log.error(f"Disconnection failed: {e}")
-                await self._state_machine.transition_to(ClientState.DISCONNECTED)
+                # Ensure we still transition to STOPPED state even on failure
+                if not self.is_in_state(ClientState.STOPPED):
+                    await self._state_machine.transition_to(ClientState.STOPPED)
 
     def process_connection_closed(self) -> None:
         for future in self._requests.get_futures():
             if not future.done():
                 future.set_exception(ConnectionError("Socket disconnected"))
-        task = asyncio.create_task(self._notify_connection_closed())
-        task.add_done_callback(
-            lambda t: self._log.debug("Connection closed notification completed"),
+        
+        # Use _create_task to ensure proper task management
+        self._create_task(
+            self._notify_connection_closed(),
+            log_msg="Connection closed notification",
         )
 
     async def _notify_connection_closed(self) -> None:
@@ -381,5 +391,24 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         await self._set_disconnected("Connection closed by TWS/Gateway")
 
     async def _set_disconnected(self, reason: str) -> None:
+        """
+        Update connection state when connection is lost.
+
+        This method ensures proper synchronization between the connection manager and
+        the state machine.
+
+        """
+        # First update connection manager to ensure callbacks are triggered
         await self._connection_manager.set_connected(False, reason)
-        await self._state_machine.transition_to(ClientState.DISCONNECTED)
+
+        # Then update state machine if in a state that allows transition to RECONNECTING
+        if self.is_in_state(
+            ClientState.CONNECTED,
+            ClientState.WAITING_API,
+            ClientState.READY,
+            ClientState.DEGRADED,
+        ):
+            await self._state_machine.transition_to(ClientState.RECONNECTING)
+        elif not self.is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
+            # If unexpected state, go to STOPPING to allow proper shutdown
+            await self._state_machine.transition_to(ClientState.STOPPING)

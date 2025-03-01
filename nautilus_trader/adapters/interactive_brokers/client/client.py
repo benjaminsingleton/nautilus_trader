@@ -196,7 +196,7 @@ class TaskRegistry:
             self._log.debug(f"Task created: {name}")
             return task
 
-    async def cancel_task(self, name: str) -> bool:
+    async def cancel_task(self, name: str, timeout: float = 1.0) -> bool:
         """
         Cancel a task by name.
 
@@ -204,6 +204,8 @@ class TaskRegistry:
         ----------
         name : str
             The name of the task to cancel.
+        timeout : float, default 1.0
+            Maximum time to wait for the task to cancel, in seconds.
 
         Returns
         -------
@@ -216,9 +218,12 @@ class TaskRegistry:
                 task = self._tasks[name]
                 if not task.done():
                     task.cancel()
-                    # Wait for task to actually cancel
-                    with suppress(asyncio.CancelledError):
-                        await task
+                    # Wait for task to actually cancel with timeout
+                    try:
+                        with suppress(asyncio.CancelledError):
+                            await asyncio.wait_for(task, timeout=timeout)
+                    except asyncio.TimeoutError:
+                        self._log.warning(f"Task {name} did not cancel within {timeout}s timeout")
                     self._log.debug(f"Task cancelled: {name}")
                 return True
             return False
@@ -298,7 +303,10 @@ class TaskRegistry:
                         if iscoroutinefunction(on_done):
                             await on_done()
                         else:
-                            on_done()
+                            result = on_done()
+                            # Ensure any coroutine result is properly awaited
+                            if result is not None and asyncio.iscoroutine(result):
+                                await result
                     except Exception as e:
                         self._log.error(f"Error in on_done callback for task {name}: {e}")
             except asyncio.CancelledError:
@@ -737,18 +745,36 @@ class InteractiveBrokersClient(
         """
         Handle transition to READY state.
         """
-        # Create the async task but don't return it
-        asyncio.create_task(
+        # Create a properly managed task that won't be orphaned
+        task = asyncio.create_task(self._handle_ready_state_entered())
+        # Prevent the task from being garbage collected
+        self._active_tasks.add(task)
+
+    async def _handle_ready_state_entered(self) -> None:
+        """
+        Process the READY state transition asynchronously.
+        """
+        await self._task_registry.create_task(
             self._connection_manager.set_ready(True, "State machine entered READY state"),
+            "set_ready_on_ready_state",
         )
 
     def _on_stopping_state_entered(self) -> None:
         """
         Handle transition to STOPPING state.
         """
-        # Create the async task but don't return it
-        asyncio.create_task(
+        # Create a properly managed task that won't be orphaned
+        task = asyncio.create_task(self._handle_stopping_state_entered())
+        # Prevent the task from being garbage collected
+        self._active_tasks.add(task)
+
+    async def _handle_stopping_state_entered(self) -> None:
+        """
+        Process the STOPPING state transition asynchronously.
+        """
+        await self._task_registry.create_task(
             self._connection_manager.set_ready(False, "State machine entered STOPPING state"),
+            "set_not_ready_on_stopping_state",
         )
 
     def _start(self) -> None:
@@ -763,7 +789,16 @@ class InteractiveBrokersClient(
             self._log.warning("Started when loop is not running")
             self._loop.run_until_complete(self._start_async())
         else:
-            task = await self._task_registry.create_task(self._start_async(), "start_client")
+            asyncio.run_coroutine_threadsafe(
+                self._create_start_task(),
+                self._loop,
+            )
+
+    async def _create_start_task(self) -> None:
+        """
+        Create a start task in the event loop.
+        """
+        await self._task_registry.create_task(self._start_async(), "start_client")
 
     @handle_ib_error
     async def _start_async(self) -> None:
@@ -973,7 +1008,15 @@ class InteractiveBrokersClient(
         This method initiates the client shutdown process.
 
         """
-        self._task_registry.create_task(self._stop_async(), "stop_client")
+        task = asyncio.create_task(self._create_stop_task())
+        # Prevent the task from being garbage collected
+        self._active_tasks.add(task)
+
+    async def _create_stop_task(self) -> None:
+        """
+        Create a stop task in the event loop.
+        """
+        await self._task_registry.create_task(self._stop_async(), "stop_client")
 
     @handle_ib_error
     async def _stop_async(self) -> None:
@@ -988,9 +1031,23 @@ class InteractiveBrokersClient(
         if not self.is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
             await self._state_machine.transition_to(ClientState.STOPPING)
 
+        # First wait for tasks to complete naturally
         shutdown_timeout = float(os.getenv("IB_SHUTDOWN_TIMEOUT", "5.0"))
-        await self._task_registry.wait_for_all_tasks(timeout=shutdown_timeout)
-        await self._task_registry.cancel_all_tasks()
+        tasks_completed = await self._task_registry.wait_for_all_tasks(timeout=shutdown_timeout)
+        
+        # Then cancel remaining tasks with timeout to prevent hangs
+        if not tasks_completed:
+            self._log.warning(
+                f"Some tasks did not complete within {shutdown_timeout}s, cancelling remaining tasks"
+            )
+            try:
+                # Add a timeout to cancel_all_tasks to prevent hanging
+                await asyncio.wait_for(
+                    self._task_registry.cancel_all_tasks(),
+                    timeout=3.0,  # Shorter timeout for cancellation
+                )
+            except asyncio.TimeoutError:
+                self._log.warning("Task cancellation timed out, continuing with shutdown")
 
         try:
             if hasattr(self._eclient, "conn") and self._eclient.conn:
@@ -1034,8 +1091,8 @@ class InteractiveBrokersClient(
 
         """
         task = asyncio.create_task(self._resume_async())
-        self._background_tasks.add(task)
-        task.add_done_callback(self._background_tasks.discard)
+        self._active_tasks.add(task)
+        task.add_done_callback(self._active_tasks.discard)
 
     @handle_ib_error
     async def _resume_async(self) -> None:
@@ -1176,20 +1233,35 @@ class InteractiveBrokersClient(
         Handle the disconnection of the client from TWS/Gateway.
 
         This method degrades the client state and initiates reconnection after a delay.
+        It ensures proper synchronization between various state objects.
 
         """
         if self.is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
             self._log.info("Client is stopping or stopped, not attempting to reconnect")
             return
 
-        if self.is_in_state(ClientState.READY, ClientState.CONNECTED, ClientState.WAITING_API):
-            await self._degrade()
-        if self._connection_manager.is_connected:
-            await self._connection_manager.set_connected(False, "Disconnected")
-        await asyncio.sleep(self._calculate_reconnect_delay())
-        await self._state_machine.transition_to(ClientState.RECONNECTING)
-        self._connection_attempts = 0
-        await self._start_async()
+        # Lock to ensure state transitions happen atomically
+        async with self._state_machine._transition_lock:
+            # Update connection status first if needed
+            if self._connection_manager.is_connected:
+                await self._connection_manager.set_connected(False, "Disconnected")
+
+            # Degrade state if in an operational state
+            if self.is_in_state(ClientState.READY, ClientState.CONNECTED, ClientState.WAITING_API):
+                await self._degrade()
+
+            # Wait before reconnecting
+            await asyncio.sleep(self._calculate_reconnect_delay())
+
+            # Ensure we're in RECONNECTING state before starting reconnection
+            if not self.is_in_state(ClientState.RECONNECTING):
+                await self._state_machine.transition_to(ClientState.RECONNECTING)
+
+            # Reset connection attempts counter
+            self._connection_attempts = 0
+
+            # Start reconnection process
+            await self._start_async()
 
     @handle_ib_error
     async def _initiate_reconnection(self) -> None:

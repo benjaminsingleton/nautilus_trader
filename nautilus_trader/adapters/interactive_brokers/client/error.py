@@ -86,12 +86,15 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
     }
 
     CONNECTIVITY_LOST_CODES: Final[set[int]] = {
+        502,  # Couldn't connect to TWS
+        504,  # Not connected
         1100,  # Connectivity between IB and TWS has been lost
         1300,  # Socket port has been reset
         2110,  # Connectivity between TWS and server is broken
     }
 
     CONNECTIVITY_RESTORED_CODES: Final[set[int]] = {
+        501,  # Already connected
         1101,  # Connectivity between IB and TWS has been restored
         1102,  # Connectivity between TWS and server has been restored
     }
@@ -190,6 +193,29 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
         else:
             self._log.debug(msg)
 
+    # Compatibility wrapper for old tests - IBAPI uses error method
+    async def error(self, reqId: int, errorCode: int, errorString: str) -> None:
+        """
+        Process an error message from Interactive Brokers API.
+        
+        This is a compatibility wrapper for the original IB API error method.
+        It delegates to the more detailed process_error method.
+        
+        Parameters
+        ----------
+        reqId : int
+            The request ID associated with the error.
+        errorCode : int
+            The error code.
+        errorString : str
+            The error message string.
+        """
+        await self.process_error(
+            req_id=reqId,
+            error_code=errorCode,
+            error_string=errorString,
+        )
+
     async def process_error(
         self,
         *,
@@ -219,6 +245,14 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
         error_string = error_string.replace("\n", " ")
         await self._log_message(error_code, req_id, error_string, severity, category)
 
+        # First check for specific connection-related error codes
+        if error_code in self.CONNECTIVITY_LOST_CODES:
+            await self._handle_connection_error(error_code, error_string)
+            return
+        elif error_code in self.CONNECTIVITY_RESTORED_CODES:
+            await self._handle_connection_restored(error_code, error_string)
+            return
+
         # Handle specific request or subscription errors
         if req_id != -1:
             if self._subscriptions.get(req_id=req_id):
@@ -231,21 +265,8 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
                 self._log.warning(f"Unhandled error: {error_code} for req_id {req_id}")
         # Handle general client errors
         elif category == ErrorCategory.CONNECTION:
-            if error_code in self.CONNECTIVITY_LOST_CODES and self._is_ib_connected.is_set():
-                self._log.debug(
-                    f"`_is_ib_connected` unset by code {error_code} in `_process_error`.",
-                    LogColor.BLUE,
-                )
-                self._is_ib_connected.clear()
-            elif (
-                error_code in self.CONNECTIVITY_RESTORED_CODES
-                and not self._is_ib_connected.is_set()
-            ):
-                self._log.debug(
-                    f"`_is_ib_connected` set by code {error_code} in `_process_error`.",
-                    LogColor.BLUE,
-                )
-                self._is_ib_connected.set()
+            # Most specific connection errors should be caught above
+            self._log.warning(f"Unhandled connection error: {error_code} - {error_string}")
 
     async def _handle_subscription_error(
         self,
@@ -288,12 +309,8 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
         elif error_code == 10182:
             # 10182: Requested market data has been halted
             self._log.warning(f"{error_code}: {error_string}")
-            # Handle disconnection by clearing the connected flag
-            if self._is_ib_connected.is_set():
-                self._log.info(
-                    f"`_is_ib_connected` unset by {subscription.name} in `_handle_subscription_error`.",
-                )
-                self._is_ib_connected.clear()
+            # Handle disconnection by updating connection manager
+            await self._connection_manager.set_connected(False, f"Market data halted: {error_string}")
         else:
             # Log unknown subscription errors
             self._log.warning(
@@ -330,6 +347,47 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
         # End the request as failed
         self._end_request(req_id, success=False)
 
+    async def _handle_connection_error(self, error_code: int, error_string: str) -> None:
+        """
+        Handle connection loss errors.
+
+        Parameters
+        ----------
+        error_code : int
+            The error code associated with the connection error.
+        error_string : str
+            The error message string.
+        """
+        self._log.debug(
+            f"Connection error: {error_code} - {error_string}",
+            LogColor.BLUE,
+        )
+        # Update connection manager
+        await self._connection_manager.set_connected(False, f"Connection error {error_code}: {error_string}")
+        
+        # Transition state if appropriate
+        if self._state_machine.current_state in (ClientState.CONNECTED, ClientState.WAITING_API, ClientState.READY):
+            await self._state_machine.transition_to(ClientState.RECONNECTING)
+        
+    async def _handle_connection_restored(self, error_code: int, error_string: str) -> None:
+        """
+        Handle connection restored notifications.
+
+        Parameters
+        ----------
+        error_code : int
+            The error code associated with the connection restoration.
+        error_string : str
+            The error message string.
+        """
+        self._log.debug(
+            f"Connection restored: {error_code} - {error_string}",
+            LogColor.BLUE,
+        )
+        # Update connection manager
+        if self._state_machine.current_state == ClientState.CONNECTED:
+            await self._connection_manager.set_connected(True, f"Connection restored {error_code}: {error_string}")
+        
     async def _handle_order_error(self, req_id: int, error_code: int, error_string: str) -> None:
         """
         Handle errors related to orders.

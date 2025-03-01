@@ -1,10 +1,12 @@
 import asyncio
 from collections.abc import Callable
+from unittest.mock import MagicMock
 
 from ibapi.client import EClient
 
 # fmt: off
 from nautilus_trader.adapters.interactive_brokers.client.client import InteractiveBrokersClient
+from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
 from nautilus_trader.adapters.interactive_brokers.client.wrapper import InteractiveBrokersEWrapper
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
 from nautilus_trader.adapters.interactive_brokers.parsing.instruments import ib_contract_to_instrument_id
@@ -147,8 +149,17 @@ class MockInteractiveBrokersClient(InteractiveBrokersClient):
     async def _start_async(self):
         self._start_tws_incoming_msg_reader()
         self._start_internal_msg_queue_processor()
+        self._start_connection_watchdog()
         self._eclient.startApi()
 
+        # Configure connection state for mock
+        if not hasattr(self, "_connection_manager"):
+            self._connection_manager = MagicMock()
+            self._connection_manager.is_connected = True
+            self._connection_manager.set_connected = MagicMock()
+
+        # Transition to READY state
+        await self._state_machine.transition_to(ClientState.READY)
         self._is_client_ready.set()
         self._log.debug("`_is_client_ready` set by `_start_async`.", LogColor.BLUE)
         self._connection_attempts = 0

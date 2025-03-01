@@ -41,7 +41,9 @@ class ClientState(enum.Enum):
     """
     Defines the possible states of the Interactive Brokers client.
 
-    These states are used to track and manage the client lifecycle.
+    These states are used to track and manage the client lifecycle. The state
+    transitions are defined in the StateMachine class and these values must be kept in
+    sync with the valid_transitions in that class.
 
     """
 
@@ -55,7 +57,9 @@ class ClientState(enum.Enum):
     STOPPING = 7  # In the process of shutting down
     STOPPED = 8  # Fully stopped
     DISPOSED = 9  # Resources released, object no longer usable
-    DISCONNECTED = 10  # Connection is closed or lost
+
+    # Note: DISCONNECTED state was removed as it was causing state machine transition issues.
+    # The connection status is now tracked separately by ConnectionManager.
 
 
 class AccountOrderRef(NamedTuple):

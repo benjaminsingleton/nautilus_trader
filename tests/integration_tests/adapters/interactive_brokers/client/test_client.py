@@ -21,6 +21,7 @@ from unittest.mock import patch
 
 import pytest
 
+from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
 from nautilus_trader.test_kit.functions import eventually
 
 
@@ -29,13 +30,18 @@ async def test_start(event_loop, ib_client):
     # Arrange
     ib_client.connect = AsyncMock()
     ib_client._eclient = MagicMock()
-    ib_client._eclient.startApi = MagicMock(side_effect=ib_client._is_ib_connected.set)
+    ib_client._eclient.startApi = MagicMock()
+    ib_client._connection_manager = MagicMock()
+    ib_client._connection_manager.is_connected = True
+    ib_client._connection_manager.set_connected = MagicMock()
+    ib_client._state_machine.transition_to = AsyncMock()
 
     # Act
     await ib_client._start_async()
 
     # Assert
     assert ib_client._is_client_ready.is_set()
+    ib_client._state_machine.transition_to.assert_called_with(ClientState.READY)
 
 
 def test_start_tasks(ib_client):
@@ -178,10 +184,12 @@ async def test_wait_until_ready(ib_client_running):
 @pytest.mark.asyncio
 async def test_run_connection_watchdog_reconnect(ib_client):
     # Arrange
-    ib_client._is_ib_connected.clear()
+    ib_client._connection_manager = MagicMock()
+    ib_client._connection_manager.is_connected = False
     ib_client._eclient = MagicMock()
     ib_client._eclient.isConnected.return_value = False
     ib_client._handle_disconnection = AsyncMock(side_effect=asyncio.CancelledError)
+    ib_client._state_machine.current_state = ClientState.CONNECTED
 
     # Act
     await ib_client._run_connection_watchdog()
