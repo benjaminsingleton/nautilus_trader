@@ -178,16 +178,17 @@ async def test_load_instrument_using_contract_id(mocker, instrument_provider):
     assert fx.price_precision == 5
 
 
-@pytest.mark.skip(reason="Scope of test not clear!")
 @pytest.mark.asyncio()
 async def test_none_filters(instrument_provider):
+    """Test that load_all with None filter doesn't raise exceptions."""
     # Act, Arrange, Assert
-    instrument_provider.load_all(None)
+    instrument_provider.load_all(None)  # load_all is not an async method
+    # No assertion needed - just checking it doesn't raise an exception
 
 
-@pytest.mark.skip(reason="Scope of test not clear!")
 @pytest.mark.asyncio()
 async def test_instrument_filter_callable_none(mocker, instrument_provider):
+    """Test that instrument provider can load a contract when no filter is applied."""
     # Arrange
     mock_ib_contract_calls(
         mocker=mocker,
@@ -204,9 +205,9 @@ async def test_instrument_filter_callable_none(mocker, instrument_provider):
     assert len(instrument_provider.get_all()) == 1
 
 
-@pytest.mark.skip(reason="Scope of test not clear!")
 @pytest.mark.asyncio()
 async def test_instrument_filter_callable_option_filter(mocker, instrument_provider):
+    """Test that instrument provider filter can exclude option instruments."""
     # Arrange
     mock_ib_contract_calls(
         mocker=mocker,
@@ -220,7 +221,9 @@ async def test_instrument_filter_callable_option_filter(mocker, instrument_provi
         instrument_provider.config,
         filter_callable=new_cb,
     )
-    await instrument_provider.load_async(instrument_id=None)
+    await instrument_provider.load_async(
+        IBContract(secType="OPT", symbol="TSLA230120C00100000", exchange="MIAX"),
+    )
     option_instruments = instrument_provider.get_all()
 
     # Assert

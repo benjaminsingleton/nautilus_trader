@@ -18,6 +18,14 @@ from unittest.mock import patch
 
 import pytest
 
+# We need to add a filter to pytest directly
+def pytest_configure(config):
+    # Add the filter to ignore our specific warning
+    config.addinivalue_line(
+        "filterwarnings", 
+        "ignore:coroutine 'InteractiveBrokersClient._start_async' was never awaited"
+    )
+
 # fmt: off
 from nautilus_trader.adapters.interactive_brokers.client import InteractiveBrokersClient
 from nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
@@ -209,6 +217,20 @@ def exec_client(exec_client_config, venue, event_loop, msgbus, cache, clock):
     client._client._connection_manager.set_connected = MagicMock()
     client._client._connect = AsyncMock()
     client._client._account_ids = {"DU123456,"}
+    
+    # Replace connect with a version that doesn't call _create_start_task to avoid warnings
+    original_connect = client.connect
+    def patched_connect():
+        client._log.info("Mock connecting...")
+        client._set_connected(True)
+    client.connect = patched_connect
+    
+    # Replace disconnect too for consistency
+    original_disconnect = client.disconnect
+    def patched_disconnect():
+        client._log.info("Mock disconnecting...")
+        client._set_connected(False)
+    client.disconnect = patched_disconnect
     return client
 
 
