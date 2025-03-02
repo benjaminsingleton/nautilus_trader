@@ -55,7 +55,9 @@ async def test_error_classification():
     error_mixin = InteractiveBrokersClientErrorMixin()
 
     # Test connectivity lost error code
-    severity, category = error_mixin.classify_error(1100)  # Connectivity between IB and TWS has been lost
+    severity, category = error_mixin.classify_error(
+        1100,
+    )  # Connectivity between IB and TWS has been lost
     assert severity == ErrorSeverity.CRITICAL
     assert category == ErrorCategory.CONNECTION
 
@@ -97,7 +99,8 @@ async def test_process_connection_error():
 
     # Assert - should handle the connectivity lost error correctly
     error_mixin._connection_manager.set_connected.assert_awaited_once_with(
-        False, "Connection error 1100: Connectivity lost"
+        False,
+        "Connection error 1100: Connectivity lost",
     )
 
 

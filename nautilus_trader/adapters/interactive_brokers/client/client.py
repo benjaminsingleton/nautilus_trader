@@ -40,7 +40,7 @@ from nautilus_trader.adapters.interactive_brokers.client.common import ClientSta
 from nautilus_trader.adapters.interactive_brokers.client.common import Request
 from nautilus_trader.adapters.interactive_brokers.client.common import Requests
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscriptions
-from nautilus_trader.adapters.interactive_brokers.client.connection import InteractiveBrokersClientConnectionMixin
+from nautilus_trader.adapters.interactive_brokers.client.connection import ConnectionService
 from nautilus_trader.adapters.interactive_brokers.client.contract import InteractiveBrokersClientContractMixin
 from nautilus_trader.adapters.interactive_brokers.client.error import InteractiveBrokersClientErrorMixin
 from nautilus_trader.adapters.interactive_brokers.client.error import handle_ib_error
@@ -222,7 +222,7 @@ class TaskRegistry:
                     try:
                         with suppress(asyncio.CancelledError):
                             await asyncio.wait_for(task, timeout=timeout)
-                    except asyncio.TimeoutError:
+                    except TimeoutError:
                         self._log.warning(f"Task {name} did not cancel within {timeout}s timeout")
                     self._log.debug(f"Task cancelled: {name}")
                 return True
@@ -572,7 +572,6 @@ class ConnectionManager:
 
 class InteractiveBrokersClient(
     Component,
-    InteractiveBrokersClientConnectionMixin,
     InteractiveBrokersClientAccountMixin,
     InteractiveBrokersClientMarketDataMixin,
     InteractiveBrokersClientOrderMixin,
@@ -646,24 +645,6 @@ class InteractiveBrokersClient(
         self._connection_manager = ConnectionManager(self._log)
         self._task_registry = TaskRegistry(self._log)
 
-        # Initialize all mixins with appropriate parameters
-        InteractiveBrokersClientConnectionMixin.__init__(self)
-        InteractiveBrokersClientAccountMixin.__init__(self)
-        InteractiveBrokersClientMarketDataMixin.__init__(self)
-        InteractiveBrokersClientOrderMixin.__init__(self)
-        InteractiveBrokersClientContractMixin.__init__(self)
-        InteractiveBrokersClientErrorMixin.__init__(self)
-
-        # Register state change callbacks
-        self._state_machine.register_state_changed_callback(
-            ClientState.READY,
-            self._on_ready_state_entered,
-        )
-        self._state_machine.register_state_changed_callback(
-            ClientState.STOPPING,
-            self._on_stopping_state_entered,
-        )
-
         # TWS API
         self._eclient: EClient = EClient(
             wrapper=InteractiveBrokersEWrapper(
@@ -688,6 +669,39 @@ class InteractiveBrokersClient(
         # Subscriptions
         self._requests = Requests()
         self._subscriptions = Subscriptions()
+
+        # Initialize all mixins with appropriate parameters
+        InteractiveBrokersClientAccountMixin.__init__(self)
+        InteractiveBrokersClientMarketDataMixin.__init__(self)
+        InteractiveBrokersClientOrderMixin.__init__(self)
+        InteractiveBrokersClientContractMixin.__init__(self)
+        InteractiveBrokersClientErrorMixin.__init__(self)
+
+        # Create connection service
+        self._connection_service = ConnectionService(
+            log=self._log,
+            host=self._host,
+            port=self._port,
+            client_id=self._client_id,
+            eclient=self._eclient,
+            state_machine=self._state_machine,
+            connection_manager=self._connection_manager,
+            requests=self._requests,
+            create_task_func=self._create_task,
+            is_in_state_func=self.is_in_state,
+            socket_connect_timeout=self.SOCKET_CONNECT_TIMEOUT,
+            handshake_timeout=self.HANDSHAKE_TIMEOUT,
+        )
+
+        # Register state change callbacks
+        self._state_machine.register_state_changed_callback(
+            ClientState.READY,
+            self._on_ready_state_entered,
+        )
+        self._state_machine.register_state_changed_callback(
+            ClientState.STOPPING,
+            self._on_stopping_state_entered,
+        )
 
         # AccountMixin
         self._account_ids: set[str] = set()
@@ -887,9 +901,8 @@ class InteractiveBrokersClient(
             self._log.info(f"Attempt {self._connection_attempts}: Reconnecting in {delay:.1f}s")
             await asyncio.sleep(delay)
 
-        await self._connect()
-        await self._connection_manager.set_connected(True, "Socket connected")
-        await self._state_machine.transition_to(ClientState.CONNECTED)
+        await self._connection_service.connect()
+        # No need for set_connected and state transition as it's handled in the service
 
     @handle_ib_error
     async def _handle_connected_state(self) -> None:
@@ -1034,11 +1047,11 @@ class InteractiveBrokersClient(
         # First wait for tasks to complete naturally
         shutdown_timeout = float(os.getenv("IB_SHUTDOWN_TIMEOUT", "5.0"))
         tasks_completed = await self._task_registry.wait_for_all_tasks(timeout=shutdown_timeout)
-        
+
         # Then cancel remaining tasks with timeout to prevent hangs
         if not tasks_completed:
             self._log.warning(
-                f"Some tasks did not complete within {shutdown_timeout}s, cancelling remaining tasks"
+                f"Some tasks did not complete within {shutdown_timeout}s, cancelling remaining tasks",
             )
             try:
                 # Add a timeout to cancel_all_tasks to prevent hanging
@@ -1046,13 +1059,12 @@ class InteractiveBrokersClient(
                     self._task_registry.cancel_all_tasks(),
                     timeout=3.0,  # Shorter timeout for cancellation
                 )
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 self._log.warning("Task cancellation timed out, continuing with shutdown")
 
         try:
-            if hasattr(self._eclient, "conn") and self._eclient.conn:
-                self._eclient.disconnect()
-                self._log.info("Disconnected from Interactive Brokers")
+            # Use connection service for proper disconnection
+            await self._connection_service.disconnect()
         except Exception as e:
             self._log.error(f"Error during disconnection: {e}")
 
@@ -1242,9 +1254,8 @@ class InteractiveBrokersClient(
 
         # Lock to ensure state transitions happen atomically
         async with self._state_machine._transition_lock:
-            # Update connection status first if needed
-            if self._connection_manager.is_connected:
-                await self._connection_manager.set_connected(False, "Disconnected")
+            # Use the connection service to set the disconnected state
+            await self._connection_service.set_disconnected("Disconnected by watchdog")
 
             # Degrade state if in an operational state
             if self.is_in_state(ClientState.READY, ClientState.CONNECTED, ClientState.WAITING_API):

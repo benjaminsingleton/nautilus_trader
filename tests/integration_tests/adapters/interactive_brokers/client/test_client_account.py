@@ -24,7 +24,6 @@ import pytest
 from ibapi import decoder
 
 from nautilus_trader.adapters.interactive_brokers.client.common import IBPosition
-from nautilus_trader.test_kit.functions import eventually
 from tests.integration_tests.adapters.interactive_brokers.test_kit import IBTestContractStubs
 
 
@@ -56,7 +55,7 @@ async def test_process_account_id(ib_client):
     # Create task registry mock to properly handle starting tasks
     ib_client._task_registry = MagicMock()
     ib_client._task_registry.create_task = AsyncMock()
-    
+
     # Mock the coroutines that would normally be passed to create_task to prevent warnings
     ib_client._run_tws_incoming_msg_reader = MagicMock(return_value=None)
     ib_client._run_internal_msg_queue_processor = MagicMock(return_value=None)
@@ -76,7 +75,7 @@ async def test_process_account_id(ib_client):
         # Act - use await to properly handle the coroutines
         await ib_client._start_tws_incoming_msg_reader()
         await ib_client._start_internal_msg_queue_processor()
-        
+
         # Directly process the managed accounts message
         await ib_client.process_managed_accounts(accounts_list="DU1234567")
 

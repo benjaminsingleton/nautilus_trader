@@ -39,10 +39,10 @@ async def test_callback_thread_safety():
         def __init__(self):
             self._internal_msg_queue = asyncio.Queue()
             self._loop = asyncio.get_event_loop()
-            
+
     # Create a client for testing
     client = MockClient()
-    
+
     # Set up a queue to receive callback results
     callback_results = []
     callback_lock = threading.Lock()
@@ -63,7 +63,7 @@ async def test_callback_thread_safety():
         # Put message in the internal queue using thread-safe method
         client._loop.call_soon_threadsafe(
             client._internal_msg_queue.put_nowait,
-            message
+            message,
         )
 
     # Create a task to process messages from the queue
@@ -74,12 +74,12 @@ async def test_callback_thread_safety():
                 message = await asyncio.wait_for(client._internal_msg_queue.get(), 0.1)
                 await process_message(message)
                 client._internal_msg_queue.task_done()
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 continue
 
     # Start the message processor
     processor_task = asyncio.create_task(process_queue())
-    
+
     # Start ThreadPoolExecutor to simulate multiple threads calling callbacks
     with ThreadPoolExecutor(max_workers=3) as executor:
         # Submit multiple tasks to be executed in thread pool
@@ -90,9 +90,9 @@ async def test_callback_thread_safety():
     # Wait for all callbacks to be processed
     try:
         await asyncio.wait_for(test_complete.wait(), timeout=2.0)
-    except asyncio.TimeoutError:
+    except TimeoutError:
         pytest.fail("Timed out waiting for callbacks to complete")
-        
+
     # Clean up
     processor_task.cancel()
     with suppress(asyncio.CancelledError):
@@ -110,10 +110,10 @@ async def test_request_concurrency():
     completed_requests = 0
     completion_lock = asyncio.Lock()
     all_completed = asyncio.Event()
-    
+
     # Create a request ID generator
     request_id_counter = 0
-    
+
     def next_req_id():
         nonlocal request_id_counter
         request_id_counter += 1
@@ -146,7 +146,7 @@ async def test_request_concurrency():
     # Wait for all requests to complete or timeout
     try:
         await asyncio.wait_for(all_completed.wait(), timeout=1.0)
-    except asyncio.TimeoutError:
+    except TimeoutError:
         pytest.fail("Timed out waiting for requests to complete")
 
     # Assert - all requests should have completed successfully
@@ -168,7 +168,7 @@ async def test_state_machine_concurrent_callbacks(event_loop):
 
     # Track callback executions
     callback_execution_count = 0
-    callback_lock = asyncio.Lock()
+    _ = asyncio.Lock()
 
     # Register multiple callbacks for the same state
     def state_callback_1():

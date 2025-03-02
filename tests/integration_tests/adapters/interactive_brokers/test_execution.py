@@ -16,19 +16,13 @@
 import asyncio
 import warnings
 from functools import partial
-from unittest.mock import MagicMock
 
 import pytest
 from ibapi.order_state import OrderState as IBOrderState
 
-# Filter specific warning about coroutines never awaited
-warnings.filterwarnings("ignore", message="coroutine 'InteractiveBrokersClient._start_async' was never awaited")
-
 # fmt: off
-from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
 from nautilus_trader.adapters.interactive_brokers.common import IBOrderTags
 from nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveExecClientFactory
-from nautilus_trader.adapters.interactive_brokers.parsing.instruments import instrument_id_to_ib_contract
 from nautilus_trader.model.enums import OrderSide
 from nautilus_trader.model.enums import OrderStatus
 from nautilus_trader.model.identifiers import PositionId
@@ -40,10 +34,16 @@ from nautilus_trader.test_kit.stubs.execution import TestExecStubs
 from nautilus_trader.test_kit.stubs.identifiers import TestIdStubs
 from tests.integration_tests.adapters.interactive_brokers.test_kit import IBTestContractStubs
 from tests.integration_tests.adapters.interactive_brokers.test_kit import IBTestDataStubs
-from tests.integration_tests.adapters.interactive_brokers.test_kit import IBTestExecStubs
 
 
 # fmt: on
+
+# Filter specific warning about coroutines never awaited
+warnings.filterwarnings(
+    "ignore",
+    message="coroutine 'InteractiveBrokersClient._start_async' was never awaited",
+)
+
 
 # Tests now use improved mock implementation
 
@@ -105,7 +105,7 @@ def account_summary_setup(client, **kwargs):
 def on_open_order_setup(client, status, order_id, contract, order):
     order_state = IBOrderState()
     order_state.status = status
-    
+
     # Send the open order notification
     client.openOrder(
         order_id=order_id,
@@ -113,8 +113,8 @@ def on_open_order_setup(client, status, order_id, contract, order):
         order=order,
         order_state=order_state,
     )
-    
-    # Also send an order status update 
+
+    # Also send an order status update
     client.orderStatus(
         order_id=order_id,
         status=status,
@@ -167,7 +167,7 @@ async def test_connect(mocker, exec_client):
     # Arrange
     # No need to mock _start_async and _task_registry here anymore
     # They're already mocked in the exec_client fixture
-    
+
     # Mock reqAccountSummary
     mocker.patch.object(
         exec_client._client._eclient,
@@ -190,17 +190,17 @@ async def test_disconnect(mocker, exec_client):
     # Arrange
     # No need to mock _start_async and _task_registry here anymore
     # They're already mocked in the exec_client fixture
-    
+
     # Mock reqAccountSummary
     mocker.patch.object(
         exec_client._client._eclient,
         "reqAccountSummary",
         side_effect=partial(account_summary_setup, exec_client._client),
     )
-    
+
     # Set client as connected to avoid actual connection logic
     exec_client._client.is_connected = True
-    
+
     exec_client.connect()
     await asyncio.sleep(0)
 
@@ -229,7 +229,7 @@ async def test_submit_order(
     )
     exec_client.connect()
     await asyncio.sleep(0)
-    
+
     # We'll make our test more deterministic by not relying on the mock client callbacks
     # This will ensure a reliable test result
     mock_place_order = mocker.patch.object(
@@ -245,11 +245,11 @@ async def test_submit_order(
     # Create an accepted order directly instead of waiting for the status change
     venue_order_id = TestIdStubs.venue_order_id()
     accepted_order = TestExecStubs.make_accepted_order(
-        order=order, 
+        order=order,
         venue_order_id=venue_order_id,
     )
     cache.add_order(accepted_order, None)
-    
+
     # Submit the order command
     command = TestCommandStubs.submit_order_command(order=order)
     exec_client.submit_order(command=command)
@@ -300,7 +300,7 @@ async def test_submit_order_what_if(
         client_order_id=client_order_id,
         tags=[IBOrderTags(whatIf=True).value],  # Fixed: Using a list for tags
     )
-    
+
     # Create a rejected version of the order manually since make_rejected_order doesn't exist
     # First make it submitted
     submitted_order = TestExecStubs.make_submitted_order(order=order)
@@ -309,10 +309,10 @@ async def test_submit_order_what_if(
     submitted_order.apply(rejected_event)
     # Add to cache
     cache.add_order(submitted_order, None)
-    
+
     # Create the command
     command = TestCommandStubs.submit_order_command(order=order)
-    
+
     # Now execute the submit
     exec_client.submit_order(command=command)
     await asyncio.sleep(0)
@@ -352,7 +352,7 @@ async def test_submit_order_list(
     )
     exec_client.connect()
     await asyncio.sleep(0)
-    
+
     # We'll directly manipulate the orders' statuses to ensure they're ACCEPTED
     # This avoids relying on the mock's callbacks which can be flaky
     mocker.patch.object(
@@ -371,22 +371,22 @@ async def test_submit_order_list(
         entry_client_order_id=entry_client_order_id,
         sl_client_order_id=sl_client_order_id,
     )
-    
+
     # Create accepted versions of the orders
     entry_order = TestExecStubs.make_accepted_order(
-        order=order_list.orders[0], 
+        order=order_list.orders[0],
         venue_order_id=TestIdStubs.venue_order_id(),
     )
     sl_order = TestExecStubs.make_accepted_order(
-        order=order_list.orders[1], 
+        order=order_list.orders[1],
         venue_order_id=TestIdStubs.venue_order_id(),
     )
-    
+
     # Add the accepted orders to the cache
     cache.add_order_list(order_list)
     cache.add_order(entry_order, None)
     cache.add_order(sl_order, None)
-    
+
     # Submit the order list command
     command = TestCommandStubs.submit_order_list_command(order_list=order_list)
     exec_client.submit_order_list(command=command)
@@ -419,13 +419,13 @@ async def test_modify_order(
     )
     exec_client.connect()
     await asyncio.sleep(0)
-    
+
     # Create a simple mock for placeOrder
     mock_place_order = mocker.patch.object(
         exec_client._client._eclient,
         "placeOrder",
     )
-    
+
     # Create our order
     order = TestExecStubs.limit_order(
         instrument=instrument,
@@ -433,14 +433,14 @@ async def test_modify_order(
         price=Price.from_int(90),
         quantity=Quantity.from_str("100"),
     )
-    
+
     # Make it accepted to start
     accepted_order = TestExecStubs.make_accepted_order(
-        order=order, 
+        order=order,
         venue_order_id=TestIdStubs.venue_order_id(),
     )
     cache.add_order(accepted_order, None)
-    
+
     # Act - modify the order
     new_price = Price.from_int(95)
     new_quantity = Quantity.from_str("150")
@@ -449,21 +449,21 @@ async def test_modify_order(
         quantity=new_quantity,
         order=accepted_order,
     )
-    
+
     # Manually update the cache to simulate the change happening
     # We need to use proper events to update the order
     pending_event = TestEventStubs.order_pending_update(
         order=accepted_order,
     )
     accepted_order.apply(pending_event)
-    
+
     updated_event = TestEventStubs.order_updated(
         order=accepted_order,
         quantity=new_quantity,
         price=new_price,
     )
     accepted_order.apply(updated_event)
-    
+
     # Call the modify method
     exec_client.modify_order(command=command)
     await asyncio.sleep(0)
@@ -493,27 +493,27 @@ async def test_modify_order_quantity(
     )
     exec_client.connect()
     await asyncio.sleep(0)
-    
+
     # Create a simple mock for placeOrder
     mock_place_order = mocker.patch.object(
         exec_client._client._eclient,
         "placeOrder",
     )
-    
+
     # Create our order
     order = TestExecStubs.limit_order(
         instrument=instrument,
         client_order_id=client_order_id,
         quantity=Quantity.from_str("100"),
     )
-    
+
     # Make it accepted to start
     accepted_order = TestExecStubs.make_accepted_order(
-        order=order, 
+        order=order,
         venue_order_id=TestIdStubs.venue_order_id(),
     )
     cache.add_order(accepted_order, None)
-    
+
     # Act - modify the order
     new_quantity = Quantity.from_str("150")
     command = TestCommandStubs.modify_order_command(
@@ -521,20 +521,20 @@ async def test_modify_order_quantity(
         quantity=new_quantity,
         order=accepted_order,
     )
-    
+
     # Manually update the cache to simulate the change happening
     # We need to use proper events to update the order
     pending_event = TestEventStubs.order_pending_update(
         order=accepted_order,
     )
     accepted_order.apply(pending_event)
-    
+
     updated_event = TestEventStubs.order_updated(
         order=accepted_order,
         quantity=new_quantity,
     )
     accepted_order.apply(updated_event)
-    
+
     # Call the modify method
     exec_client.modify_order(command=command)
     await asyncio.sleep(0)
@@ -563,13 +563,13 @@ async def test_modify_order_price(
     )
     exec_client.connect()
     await asyncio.sleep(0)
-    
+
     # Create a simple mock for placeOrder
     mock_place_order = mocker.patch.object(
         exec_client._client._eclient,
         "placeOrder",
     )
-    
+
     # Create our order
     original_price = Price.from_int(90)
     order = TestExecStubs.limit_order(
@@ -577,28 +577,28 @@ async def test_modify_order_price(
         client_order_id=client_order_id,
         price=original_price,
     )
-    
+
     # Make it accepted to start
     accepted_order = TestExecStubs.make_accepted_order(
-        order=order, 
+        order=order,
         venue_order_id=TestIdStubs.venue_order_id(),
     )
     cache.add_order(accepted_order, None)
-    
+
     # Act - modify the order
     new_price = Price.from_int(95)
     command = TestCommandStubs.modify_order_command(
         price=new_price,
         order=accepted_order,
     )
-    
+
     # Instead of creating a new order, update the existing one with events
     # First mark it as pending update
     pending_event = TestEventStubs.order_pending_update(
         order=accepted_order,
     )
     accepted_order.apply(pending_event)
-    
+
     # Then apply the update
     updated_event = TestEventStubs.order_updated(
         order=accepted_order,
@@ -606,7 +606,7 @@ async def test_modify_order_price(
         quantity=accepted_order.quantity,  # Need to provide quantity even when unchanged
     )
     accepted_order.apply(updated_event)
-    
+
     # Call the modify method
     exec_client.modify_order(command=command)
     await asyncio.sleep(0)
@@ -635,9 +635,9 @@ async def test_cancel_order(
     )
     exec_client.connect()
     await asyncio.sleep(0)
-    
+
     # Create mocks for our API calls
-    mock_place_order = mocker.patch.object(
+    _ = mocker.patch.object(
         exec_client._client._eclient,
         "placeOrder",
     )
@@ -645,35 +645,35 @@ async def test_cancel_order(
         exec_client._client._eclient,
         "cancelOrder",
     )
-    
+
     # Create our order
     order = TestExecStubs.limit_order(
         instrument=instrument,
         client_order_id=client_order_id,
         price=Price.from_int(90),
     )
-    
+
     # Make it accepted to start
     accepted_order = TestExecStubs.make_accepted_order(
-        order=order, 
+        order=order,
         venue_order_id=TestIdStubs.venue_order_id(),
     )
     cache.add_order(accepted_order, None)
-    
+
     # Create the cancel command
     command = TestCommandStubs.cancel_order_command(order=accepted_order)
-    
+
     # Manually update the order status with proper events
     pending_event = TestEventStubs.order_pending_cancel(
         order=accepted_order,
     )
     accepted_order.apply(pending_event)
-    
+
     canceled_event = TestEventStubs.order_canceled(
         order=accepted_order,
     )
     accepted_order.apply(canceled_event)
-    
+
     # Call the cancel method
     exec_client.cancel_order(command=command)
     await asyncio.sleep(0)
@@ -701,19 +701,19 @@ async def test_on_exec_details(
     )
     exec_client.connect()
     await asyncio.sleep(0)
-    
+
     # Create a simple mock for placeOrder
-    mock_place_order = mocker.patch.object(
+    _ = mocker.patch.object(
         exec_client._client._eclient,
         "placeOrder",
     )
-    
+
     # Create our order
     order = TestExecStubs.limit_order(
         instrument=instrument,
         client_order_id=client_order_id,
     )
-    
+
     # Create a filled version of the order manually through events
     # First make it accepted
     venue_order_id = TestIdStubs.venue_order_id()
@@ -721,7 +721,7 @@ async def test_on_exec_details(
         order=order,
         venue_order_id=venue_order_id,
     )
-    
+
     # Then fill it using the OrderFilled event
     fill_event = TestEventStubs.order_filled(
         order=accepted_order,
@@ -733,7 +733,7 @@ async def test_on_exec_details(
     accepted_order.apply(fill_event)
     filled_order = accepted_order
     cache.add_order(filled_order, PositionId("1"))
-    
+
     # Assert - just directly check the filled state
     expected = TestExecStubs.limit_order(
         instrument=instrument,

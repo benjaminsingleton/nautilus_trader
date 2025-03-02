@@ -180,7 +180,9 @@ async def test_load_instrument_using_contract_id(mocker, instrument_provider):
 
 @pytest.mark.asyncio()
 async def test_none_filters(instrument_provider):
-    """Test that load_all with None filter doesn't raise exceptions."""
+    """
+    Test that load_all with None filter doesn't raise exceptions.
+    """
     # Act, Arrange, Assert
     instrument_provider.load_all(None)  # load_all is not an async method
     # No assertion needed - just checking it doesn't raise an exception
@@ -188,7 +190,9 @@ async def test_none_filters(instrument_provider):
 
 @pytest.mark.asyncio()
 async def test_instrument_filter_callable_none(mocker, instrument_provider):
-    """Test that instrument provider can load a contract when no filter is applied."""
+    """
+    Test that instrument provider can load a contract when no filter is applied.
+    """
     # Arrange
     mock_ib_contract_calls(
         mocker=mocker,
@@ -207,7 +211,9 @@ async def test_instrument_filter_callable_none(mocker, instrument_provider):
 
 @pytest.mark.asyncio()
 async def test_instrument_filter_callable_option_filter(mocker, instrument_provider):
-    """Test that instrument provider filter can exclude option instruments."""
+    """
+    Test that instrument provider filter can exclude option instruments.
+    """
     # Arrange
     mock_ib_contract_calls(
         mocker=mocker,

@@ -16,7 +16,7 @@
 import asyncio
 import enum
 import functools
-from typing import cast
+from typing import Any, cast
 
 from ibapi import comm
 from ibapi import decoder
@@ -27,9 +27,10 @@ from ibapi.errors import CONNECT_FAIL
 from ibapi.server_versions import MAX_CLIENT_VER
 from ibapi.server_versions import MIN_CLIENT_VER
 
-from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin
 from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
+from nautilus_trader.adapters.interactive_brokers.client.common import Requests
 from nautilus_trader.adapters.interactive_brokers.client.error import handle_ib_error
+from nautilus_trader.common.component import Logger
 
 
 class ConnectionState(enum.Enum):
@@ -73,41 +74,87 @@ class ConnectionResult:
         return f"ConnectionResult(success={self.success}, error='{self.error}', message='{self.message}')"
 
 
-class InteractiveBrokersClientConnectionMixin(BaseMixin):
+class ConnectionService:
     """
-    Manages the connection to TWS/Gateway for the InteractiveBrokersClient.
+    Service that manages the connection to TWS/Gateway for the InteractiveBrokersClient.
 
     This class is responsible for establishing and maintaining the socket connection,
     handling server communication, monitoring the connection's health, and managing
     reconnections.
 
+    Parameters
+    ----------
+    log : Logger
+        The logger for the service.
+    host : str
+        The hostname or IP address of the TWS/Gateway.
+    port : int
+        The port of the TWS/Gateway.
+    client_id : int
+        The client ID for the connection.
+    eclient : EClient
+        The EClient instance.
+    state_machine : Any
+        The state machine for managing client state.
+    connection_manager : Any
+        The connection manager for the client.
+    requests : Requests
+        The requests manager.
+    socket_connect_timeout : float
+        The timeout for socket connection in seconds.
+    handshake_timeout : float
+        The timeout for handshake in seconds.
+
     """
 
-    def __init__(self, **kwargs) -> None:
-        """
-        Initialize connection state.
-
-        Note: This is not actually called directly as a constructor, but is used
-        for IDE type hinting and documentation. The attributes defined here
-        will be initialized in the main class that inherits from this mixin.
-
-        """
-        # Pass kwargs to super to handle Component initialization
-        super().__init__(**kwargs)
-
-        # Get timeout values from constants defined in main class
-        # or use defaults if not available
-        self._socket_connect_timeout = getattr(self, "SOCKET_CONNECT_TIMEOUT", 10.0)
-        self._handshake_timeout = getattr(self, "HANDSHAKE_TIMEOUT", 5.0)
+    def __init__(
+        self,
+        log: Logger,
+        host: str,
+        port: int,
+        client_id: int,
+        eclient: EClient,
+        state_machine: Any,
+        connection_manager: Any,
+        requests: Requests,
+        create_task_func: Any,
+        is_in_state_func: Any,
+        socket_connect_timeout: float = 10.0,
+        handshake_timeout: float = 5.0,
+    ) -> None:
+        self._log = log
+        self._host = host
+        self._port = port
+        self._client_id = client_id
+        self._eclient = eclient
+        self._state_machine = state_machine
+        self._connection_manager = connection_manager
+        self._requests = requests
+        self._create_task = create_task_func
+        self._is_in_state = is_in_state_func
+        self._socket_connect_timeout = socket_connect_timeout
+        self._handshake_timeout = handshake_timeout
         self._connection_lock = asyncio.Lock()
 
-    def _initialize_connection_params(self) -> None:
+    def initialize_connection_params(self) -> None:
+        """
+        Initialize the connection parameters in the EClient.
+        """
         self._eclient.reset()
         self._eclient._host = self._host
         self._eclient._port = self._port
         self._eclient.clientId = self._client_id
 
-    async def _send_version_info(self) -> ConnectionResult:
+    async def send_version_info(self) -> ConnectionResult:
+        """
+        Send version information to the TWS/Gateway.
+
+        Returns
+        -------
+        ConnectionResult
+            The result of sending version information.
+
+        """
         try:
             v100prefix = "API\0"
             v100version = f"v{MIN_CLIENT_VER}..{MAX_CLIENT_VER}"
@@ -125,7 +172,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
             )
 
     @handle_ib_error
-    async def _connect(self) -> None:
+    async def connect(self) -> None:
         """
         Establish the socket connection with TWS/Gateway.
 
@@ -143,13 +190,13 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         """
         async with self._connection_lock:
             try:
-                self._initialize_connection_params()
-                conn_result = await self._connect_socket()
+                self.initialize_connection_params()
+                conn_result = await self.connect_socket()
                 if not conn_result.success:
                     raise ConnectionError(conn_result.message)
 
                 self._eclient.setConnState(EClient.CONNECTING)
-                handshake_result = await self._perform_handshake()
+                handshake_result = await self.perform_handshake()
                 if not handshake_result.success:
                     raise ConnectionError(handshake_result.message)
 
@@ -175,12 +222,18 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                 await self._state_machine.transition_to(ClientState.STOPPING)
                 raise ConnectionError(f"Failed to connect: {e}") from e
 
-    async def _perform_handshake(self) -> ConnectionResult:
+    async def perform_handshake(self) -> ConnectionResult:
         """
         Handle the handshake process with the IB server.
+
+        Returns
+        -------
+        ConnectionResult
+            The result of the handshake.
+
         """
         try:
-            version_result = await self._send_version_info()
+            version_result = await self.send_version_info()
             if not version_result.success:
                 return version_result
 
@@ -188,7 +241,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                 wrapper=self._eclient.wrapper,
                 serverVersion=self._eclient.serverVersion(),
             )
-            server_result = await self._receive_server_info()
+            server_result = await self.receive_server_info()
             return server_result
         except Exception as e:
             return ConnectionResult(
@@ -197,7 +250,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                 message=f"Handshake failed: {e}",
             )
 
-    async def _connect_socket(self) -> ConnectionResult:
+    async def connect_socket(self) -> ConnectionResult:
         """
         Connect the socket to TWS / Gateway and change the connection state to
         CONNECTING.
@@ -253,7 +306,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                 message=f"Unexpected error during socket connection: {e}",
             )
 
-    async def _receive_server_info(self) -> ConnectionResult:
+    async def receive_server_info(self) -> ConnectionResult:
         """
         Receive and process the server version information.
 
@@ -313,7 +366,7 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                     )
 
                 # Process the received fields
-                self._process_server_version(fields)
+                self.process_server_version(fields)
                 return ConnectionResult(
                     success=True,
                     message=f"Successfully received server version {self._eclient.serverVersion_}",
@@ -331,11 +384,12 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
                 message=f"Error receiving server information: {e}",
             )
 
-    def _process_server_version(self, fields: list[str]) -> None:
+    def process_server_version(self, fields: list[str]) -> None:
         """
-        Process and log the server version information. Extracts and sets the server
-        version and connection time from the received fields. Logs the server version
-        and connection time.
+        Process and log the server version information.
+
+        Extracts and sets the server version and connection time from the received fields.
+        Logs the server version and connection time.
 
         Parameters
         ----------
@@ -348,12 +402,12 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
         self._eclient.serverVersion_ = server_version
         self._eclient.decoder.serverVersion = server_version
 
-    async def _disconnect(self) -> None:
+    async def disconnect(self) -> None:
         """
         Disconnect from TWS/Gateway and clear the connection flags.
         """
         async with self._connection_lock:
-            if self.is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
+            if self._is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
                 self._log.info("Client is stopping or stopped, skipping disconnection")
                 return
             try:
@@ -367,49 +421,60 @@ class InteractiveBrokersClientConnectionMixin(BaseMixin):
             except Exception as e:
                 self._log.error(f"Disconnection failed: {e}")
                 # Ensure we still transition to STOPPED state even on failure
-                if not self.is_in_state(ClientState.STOPPED):
+                if not self._is_in_state(ClientState.STOPPED):
                     await self._state_machine.transition_to(ClientState.STOPPED)
 
-    def process_connection_closed(self) -> None:
+    def handle_connection_closed(self) -> None:
+        """
+        Handle when the connection is closed by TWS/Gateway.
+
+        Sets the pending requests to fail with ConnectionError.
+
+        """
         for future in self._requests.get_futures():
             if not future.done():
                 future.set_exception(ConnectionError("Socket disconnected"))
-        
+
         # Use _create_task to ensure proper task management
         self._create_task(
-            self._notify_connection_closed(),
+            self.notify_connection_closed(),
             log_msg="Connection closed notification",
         )
 
-    async def _notify_connection_closed(self) -> None:
+    async def notify_connection_closed(self) -> None:
         """
         Notify the main client that the connection has been closed.
 
-        This method is called by process_connection_closed to update the connection
+        This method is called by handle_connection_closed to update the connection
         status asynchronously.
 
         """
-        await self._set_disconnected("Connection closed by TWS/Gateway")
+        await self.set_disconnected("Connection closed by TWS/Gateway")
 
-    async def _set_disconnected(self, reason: str) -> None:
+    async def set_disconnected(self, reason: str) -> None:
         """
         Update connection state when connection is lost.
 
         This method ensures proper synchronization between the connection manager and
         the state machine.
 
+        Parameters
+        ----------
+        reason : str
+            The reason for the disconnection.
+
         """
         # First update connection manager to ensure callbacks are triggered
         await self._connection_manager.set_connected(False, reason)
 
         # Then update state machine if in a state that allows transition to RECONNECTING
-        if self.is_in_state(
+        if self._is_in_state(
             ClientState.CONNECTED,
             ClientState.WAITING_API,
             ClientState.READY,
             ClientState.DEGRADED,
         ):
             await self._state_machine.transition_to(ClientState.RECONNECTING)
-        elif not self.is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
+        elif not self._is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
             # If unexpected state, go to STOPPING to allow proper shutdown
             await self._state_machine.transition_to(ClientState.STOPPING)

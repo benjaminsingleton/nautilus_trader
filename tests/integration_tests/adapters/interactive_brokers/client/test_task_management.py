@@ -15,18 +15,15 @@
 
 import asyncio
 import gc
-import time
 import weakref
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
 # fmt: off
-from nautilus_trader.adapters.interactive_brokers.client.client import InteractiveBrokersClient
 from nautilus_trader.adapters.interactive_brokers.client.client import TaskRegistry
-from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
-from nautilus_trader.common.component import LiveClock, MessageBus
-from nautilus_trader.common.enums import LogColor
+
+
 # fmt: on
 
 
@@ -66,9 +63,11 @@ async def test_task_registry_cancel_all(event_loop):
 
     # For this test, we'll mock the cancel_task method to ensure it properly cancels
     original_cancel_task = task_registry.cancel_task
-    
+
     async def mocked_cancel_task(name: str, timeout: float = 1.0) -> bool:
-        """Mock implementation that ensures tasks are actually cancelled"""
+        """
+        Mock implementation that ensures tasks are actually cancelled.
+        """
         # Get the task to cancel
         if name in task_registry._tasks:
             task = task_registry._tasks[name]
@@ -77,40 +76,41 @@ async def test_task_registry_cancel_all(event_loop):
                 task.cancel()
             return True
         return False
-        
+
     # Replace with our mock
     task_registry.cancel_task = mocked_cancel_task
-    
+
     # Create empty task list
     tasks = []
-    
+
     # Create 5 simple tasks
     for i in range(5):
+
         async def simple_task():
             await asyncio.sleep(10)  # Long-running task
-            
+
         task = event_loop.create_task(simple_task())
         task_registry._tasks[f"task_{i}"] = task
         tasks.append(task)
-    
+
     # Act - Call cancel_all_tasks directly
     await task_registry.cancel_all_tasks()
-    
+
     # Manual cancel - this is what our patched cancel_task would do
     for task in tasks:
         if not task.done():
             task.cancel()
-    
+
     # Wait for a short time for cancellations to process
     await asyncio.sleep(0.1)
-    
+
     # Assert all tasks are cancelled
     for i, task in enumerate(tasks):
         assert task.cancelled(), f"Task {i} was not cancelled"
-    
+
     # Restore the original method after the test
     task_registry.cancel_task = original_cancel_task
-    
+
     # Clean up
     task_registry._tasks.clear()
     assert len(task_registry._tasks) == 0
@@ -182,15 +182,15 @@ async def test_task_registry_gc_protection(event_loop):
 @pytest.mark.asyncio
 async def test_client_stop_cleans_up_tasks(event_loop):
     """
-    This test verifies that our cancel_task method with timeout works properly.
+    Verify that our cancel_task method with timeout works properly.
     """
     # Create a simple logger and task registry
     mock_logger = MagicMock()
     task_registry = TaskRegistry(logger=mock_logger)
-    
-    # Rather than testing cancel_all_tasks which uses an async lock that can 
+
+    # Rather than testing cancel_all_tasks which uses an async lock that can
     # cause test issues, we'll directly test the individual cancel_task method
-    
+
     # Create a long-running task
     async def long_task():
         try:
@@ -198,7 +198,7 @@ async def test_client_stop_cleans_up_tasks(event_loop):
         except asyncio.CancelledError:
             # Properly handle cancellation
             pass
-    
+
     # Create a problematic task that ignores cancellation initially
     async def problematic_task():
         try:
@@ -209,28 +209,28 @@ async def test_client_stop_cleans_up_tasks(event_loop):
                 await asyncio.sleep(0.2)
             except asyncio.CancelledError:
                 pass
-    
+
     # Set up the tasks
     long_task_obj = event_loop.create_task(long_task())
     task_registry._tasks["long_task"] = long_task_obj
-    
+
     prob_task_obj = event_loop.create_task(problematic_task())
     task_registry._tasks["problematic_task"] = prob_task_obj
-    
+
     # Verify tasks are registered
     assert len(task_registry._tasks) == 2
-    
+
     # Cancel tasks individually
     await task_registry.cancel_task("long_task")
     await task_registry.cancel_task("problematic_task")
-    
+
     # Give a moment for cancellations to fully process
     await asyncio.sleep(0.1)
-    
+
     # Verify all tasks are cancelled or done
     assert long_task_obj.cancelled() or long_task_obj.done(), "Long task not cancelled"
     assert prob_task_obj.cancelled() or prob_task_obj.done(), "Problematic task not cancelled"
-    
+
     # Clean up
     task_registry._tasks.clear()
     assert len(task_registry._tasks) == 0
@@ -239,42 +239,43 @@ async def test_client_stop_cleans_up_tasks(event_loop):
 @pytest.mark.asyncio
 async def test_cancel_task_timeout_handling(event_loop):
     """
-    Test that cancel_task properly handles timeouts when a task doesn't exit quickly on cancellation.
+    Test that cancel_task properly handles timeouts when a task doesn't exit quickly on
+    cancellation.
     """
     # Create a simple logger and task registry
     mock_logger = MagicMock()
     task_registry = TaskRegistry(logger=mock_logger)
-    
+
     # Create a custom mock for wait_for that will always timeout
     original_wait_for = asyncio.wait_for
-    
+
     async def mock_wait_for(task, timeout):
         # Cancel the task but then raise timeout
-        if hasattr(task, 'cancel'):
+        if hasattr(task, "cancel"):
             task.cancel()
-        raise asyncio.TimeoutError("Mock timeout")
-    
+        raise TimeoutError("Mock timeout")
+
     # Patch asyncio.wait_for for our test
     asyncio.wait_for = mock_wait_for
-    
+
     try:
         # Create a task that takes a long time to respond to cancellation
         async def very_slow_to_cancel_task():
             await asyncio.sleep(10)  # This won't actually run long since we mock the timeout
             return "Done"
-        
+
         # Set up the task
         slow_task = event_loop.create_task(very_slow_to_cancel_task())
         task_registry._tasks["slow_task"] = slow_task
-        
+
         # Set a timeout - our mock will force it to timeout
         await task_registry.cancel_task("slow_task", timeout=0.01)
-        
+
         # Verify warning was logged about timeout
         mock_logger.warning.assert_called_once()
         warning_message = mock_logger.warning.call_args[0][0]
         assert "timeout" in warning_message.lower(), "No timeout warning was logged"
-        
+
         # Clean up
         task_registry._tasks.clear()
     finally:

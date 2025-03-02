@@ -13,13 +13,11 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
-import functools
-from unittest.mock import Mock
 from unittest.mock import AsyncMock
-
 from unittest.mock import MagicMock
 
 import pytest
+
 from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
 
 
@@ -40,8 +38,8 @@ async def test_ib_is_ready_by_notification_1101(ib_client):
 
     # Assert
     ib_client._connection_manager.set_connected.assert_called_with(
-        True, 
-        "Connection restored 1101: Connectivity between IB and Trader Workstation has been restored"
+        True,
+        "Connection restored 1101: Connectivity between IB and Trader Workstation has been restored",
     )
 
 
@@ -62,8 +60,8 @@ async def test_ib_is_ready_by_notification_1102(ib_client):
 
     # Assert
     ib_client._connection_manager.set_connected.assert_called_with(
-        True, 
-        "Connection restored 1102: Connectivity between IB and Trader Workstation has been restored"
+        True,
+        "Connection restored 1102: Connectivity between IB and Trader Workstation has been restored",
     )
 
 
@@ -85,6 +83,6 @@ async def test_ib_is_not_ready_by_error_10182(ib_client):
 
     # Assert
     ib_client._connection_manager.set_connected.assert_called_with(
-        False, 
-        "Market data halted: Failed to request live updates (disconnected)."
+        False,
+        "Market data halted: Failed to request live updates (disconnected).",
     )

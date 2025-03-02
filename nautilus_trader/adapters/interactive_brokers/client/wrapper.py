@@ -339,7 +339,7 @@ class InteractiveBrokersEWrapper(EWrapper):
         control, or when TWS is shut down.
         """
         self.logAnswer(current_fn_name(), vars())
-        self._client.process_connection_closed()
+        self._client._connection_service.handle_connection_closed()
 
     def updateAccountValue(
         self,

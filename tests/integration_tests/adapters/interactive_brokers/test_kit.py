@@ -544,18 +544,20 @@ class IBTestDataStubs:
         except FileNotFoundError:
             # If file doesn't exist, generate synthetic bars
             return IBTestDataStubs.historical_bars()
-            
+
     @staticmethod
     def historical_bars():
-        """Generate synthetic bars for testing when actual data files aren't available."""
+        """
+        Generate synthetic bars for testing when actual data files aren't available.
+        """
         current_time = dt.datetime.now()
         bars = []
-        
+
         # Generate 10 bars, one per day going back from current time
         for i in range(10):
             bar_date = current_time - dt.timedelta(days=i)
             bar = BarData()
-            
+
             # Set bar data attributes
             bar.date = bar_date.strftime("%Y%m%d")
             bar.open = 100.0 + i
@@ -565,9 +567,9 @@ class IBTestDataStubs:
             bar.volume = 1000 * (i + 1)
             bar.wap = 101.0 + i
             bar.count = 100 + i
-            
+
             bars.append(bar)
-            
+
         return bars
 
 
@@ -768,10 +770,12 @@ class IBTestExecStubs:
             params["commission"] = 1.8
             params["commissionCurrency"] = "USD"
         return set_attributes(IBOrderState(), params)
-        
+
     @staticmethod
     def order_state(state: str = "PreSubmitted"):
-        """Alternative name for ib_order_state to make it more consistent with the API."""
+        """
+        Alternative name for ib_order_state to make it more consistent with the API.
+        """
         return IBTestExecStubs.ib_order_state(state)
 
     @staticmethod

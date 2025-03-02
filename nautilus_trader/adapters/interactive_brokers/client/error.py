@@ -19,8 +19,8 @@ from enum import IntEnum
 from inspect import iscoroutinefunction
 from typing import Any, Final, TypeVar, cast
 
-from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin, ClientState
-
+from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin
+from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
 from nautilus_trader.common.enums import LogColor
 
 
@@ -198,10 +198,10 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
     async def error(self, reqId: int, errorCode: int, errorString: str) -> None:
         """
         Process an error message from Interactive Brokers API.
-        
+
         This is a compatibility wrapper for the original IB API error method.
         It delegates to the more detailed process_error method.
-        
+
         Parameters
         ----------
         reqId : int
@@ -210,6 +210,7 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
             The error code.
         errorString : str
             The error message string.
+
         """
         await self.process_error(
             req_id=reqId,
@@ -311,7 +312,10 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
             # 10182: Requested market data has been halted
             self._log.warning(f"{error_code}: {error_string}")
             # Handle disconnection by updating connection manager
-            await self._connection_manager.set_connected(False, f"Market data halted: {error_string}")
+            await self._connection_manager.set_connected(
+                False,
+                f"Market data halted: {error_string}",
+            )
         else:
             # Log unknown subscription errors
             self._log.warning(
@@ -358,18 +362,26 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
             The error code associated with the connection error.
         error_string : str
             The error message string.
+
         """
         self._log.debug(
             f"Connection error: {error_code} - {error_string}",
             LogColor.BLUE,
         )
         # Update connection manager
-        await self._connection_manager.set_connected(False, f"Connection error {error_code}: {error_string}")
-        
+        await self._connection_manager.set_connected(
+            False,
+            f"Connection error {error_code}: {error_string}",
+        )
+
         # Transition state if appropriate
-        if self._state_machine.current_state in (ClientState.CONNECTED, ClientState.WAITING_API, ClientState.READY):
+        if self._state_machine.current_state in (
+            ClientState.CONNECTED,
+            ClientState.WAITING_API,
+            ClientState.READY,
+        ):
             await self._state_machine.transition_to(ClientState.RECONNECTING)
-        
+
     async def _handle_connection_restored(self, error_code: int, error_string: str) -> None:
         """
         Handle connection restored notifications.
@@ -380,6 +392,7 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
             The error code associated with the connection restoration.
         error_string : str
             The error message string.
+
         """
         self._log.debug(
             f"Connection restored: {error_code} - {error_string}",
@@ -387,8 +400,11 @@ class InteractiveBrokersClientErrorMixin(BaseMixin):
         )
         # Update connection manager
         if self._state_machine.current_state == ClientState.CONNECTED:
-            await self._connection_manager.set_connected(True, f"Connection restored {error_code}: {error_string}")
-        
+            await self._connection_manager.set_connected(
+                True,
+                f"Connection restored {error_code}: {error_string}",
+            )
+
     async def _handle_order_error(self, req_id: int, error_code: int, error_string: str) -> None:
         """
         Handle errors related to orders.

@@ -18,9 +18,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from nautilus_trader.adapters.interactive_brokers.client.client import ConnectionManager
 from nautilus_trader.adapters.interactive_brokers.client.client import StateMachine
 from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
-from nautilus_trader.adapters.interactive_brokers.client.client import ConnectionManager
 
 
 @pytest.mark.asyncio

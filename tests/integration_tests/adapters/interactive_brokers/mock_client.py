@@ -1,11 +1,9 @@
 import asyncio
 from collections.abc import Callable
-from unittest.mock import MagicMock
 from unittest.mock import AsyncMock
+from unittest.mock import MagicMock
 
 from ibapi.client import EClient
-from ibapi.order import Order as IBOrder
-from ibapi.contract import Contract as IBContract
 
 # fmt: off
 from nautilus_trader.adapters.interactive_brokers.client.client import InteractiveBrokersClient
@@ -36,26 +34,26 @@ class MockEClient(EClient):
         self._next_valid_req_id = 1
         self._next_valid_ticker_id = 1
         self._order_map = {}  # client_order_id -> IB Order ID
-        
+
     def _handle_task(self, handler: Callable, **kwargs):
         loop = asyncio.get_event_loop()
         if loop.is_running():
             loop.create_task(handler(**kwargs))  # noqa: RUF006
         else:
             loop.run_until_complete(handler(**kwargs))
-    
+
     def nextValidId(self, order_id: int):
         self._next_valid_order_id = order_id
         self._handle_task(
             self.wrapper._client.process_next_valid_id,
             order_id=order_id,
         )
-    
+
     def _get_next_valid_order_id(self):
         current_id = self._next_valid_order_id
         self._next_valid_order_id += 1
         return current_id
-    
+
     def _get_next_valid_req_id(self):
         current_id = self._next_valid_req_id
         self._next_valid_req_id += 1
@@ -69,7 +67,7 @@ class MockEClient(EClient):
     #########################################################################
     ################## Market Data
     #########################################################################
-    
+
     def reqMktData(self, req_id, contract, generic_tick_list, snapshot, regulatory_snapshot, mkt_data_options):
         # Simulate returning market data
         self._handle_task(
@@ -122,11 +120,11 @@ class MockEClient(EClient):
     #########################################################################
     ################## Orders
     #########################################################################
-    
+
     def placeOrder(self, order_id, contract, order):
         # Store the order information for later reference
         self._order_map[order.clientId] = order_id
-        
+
         # Notify about order placement
         self._handle_task(
             self.wrapper._client.process_open_order,
@@ -135,7 +133,7 @@ class MockEClient(EClient):
             order=order,
             order_state=IBTestExecStubs.order_state("Submitted"),
         )
-        
+
         # Update order status
         self._handle_task(
             self.wrapper._client.process_order_status,
@@ -151,7 +149,7 @@ class MockEClient(EClient):
             why_held="",
             mkt_cap_price=0.0,
         )
-        
+
         # If this is a whatIf order, simulate a pre-submitted status
         if hasattr(order, "whatIf") and order.whatIf:
             self._handle_task(
@@ -184,7 +182,7 @@ class MockEClient(EClient):
                 why_held="",
                 mkt_cap_price=0.0,
             )
-    
+
     def cancelOrder(self, order_id, manual_cancel_order_time=""):
         # Simulate order cancellation
         self._handle_task(
@@ -205,7 +203,7 @@ class MockEClient(EClient):
     #########################################################################
     ################## Account and Portfolio
     #########################################################################
-    
+
     def reqAccountSummary(self, req_id, group_name, tags):
         account_values = IBTestDataStubs.account_values()
         for summary in account_values:
@@ -217,7 +215,7 @@ class MockEClient(EClient):
                 value=summary["value"],
                 currency=summary["currency"],
             )
-        
+
         self._handle_task(
             self.wrapper._client.process_account_summary_end,
             req_id=req_id,
@@ -240,7 +238,7 @@ class MockEClient(EClient):
 
     def reqContractDetails(self, reqId: int, contract: NautilusIBContract):
         instrument_id = ib_contract_to_instrument_id(contract)
-        
+
         # Handle known contract types
         match instrument_id.value:
             case "AAPL.NASDAQ":
@@ -290,14 +288,14 @@ class MockEClient(EClient):
             495512572: IBTestContractStubs.aapl_equity_contract_details(),
             553946872: IBTestContractStubs.tsla_option_contract_details(),
         }
-        
+
         if contract_id in contract_map:
             self._handle_task(
                 self.wrapper._client.process_contract_details,
                 req_id=reqId,
                 contract_details=contract_map[contract_id],
             )
-        
+
         self._handle_task(
             self.wrapper._client.process_contract_details_end,
             req_id=reqId,
@@ -323,19 +321,19 @@ class MockEClient(EClient):
     #########################################################################
     ################## Historical Data
     #########################################################################
-    
+
     def reqHistoricalData(
-        self, 
-        req_id, 
-        contract, 
-        end_date_time, 
-        duration_str, 
-        bar_size_setting, 
-        what_to_show, 
-        use_rth, 
-        format_date, 
-        keep_up_to_date, 
-        chart_options
+        self,
+        req_id,
+        contract,
+        end_date_time,
+        duration_str,
+        bar_size_setting,
+        what_to_show,
+        use_rth,
+        format_date,
+        keep_up_to_date,
+        chart_options,
     ):
         # Simulate sending some historical data
         bars = IBTestDataStubs.historical_bars()
@@ -345,7 +343,7 @@ class MockEClient(EClient):
                 req_id=req_id,
                 bar=bar,
             )
-        
+
         self._handle_task(
             self.wrapper._client.process_historical_data_end,
             req_id=req_id,
@@ -379,8 +377,9 @@ class MockInteractiveBrokersClient(InteractiveBrokersClient):
     MockInteractiveBrokersClient is a subclass of InteractiveBrokersClient used for
     simulating client operations.
 
-    This class initializes the EClient with a mocked version for testing purposes.
-    It overrides several async methods to make them more reliable in a testing context.
+    This class initializes the EClient with a mocked version for testing purposes. It
+    overrides several async methods to make them more reliable in a testing context.
+
     """
 
     def __init__(self, *args, **kwargs):
@@ -393,64 +392,76 @@ class MockInteractiveBrokersClient(InteractiveBrokersClient):
                 client=self,
             ),
         )
-        
+
         # Configure connection manager for mock
         self._connection_manager = MagicMock()
         self._connection_manager.is_connected = True
         self._connection_manager.set_connected = AsyncMock()
         self._connection_manager.set_ready = AsyncMock()
-        
+
         # Mock task registry to avoid actual task creation/cancellation issues
         self._task_registry = MagicMock()
         self._task_registry.create_task = AsyncMock()
         self._task_registry.cancel_task = AsyncMock()
         self._task_registry.cancel_all_tasks = AsyncMock()
         self._task_registry.wait_for_all_tasks = AsyncMock(return_value=True)
-        
+
         # Pre-set some account IDs for testing
         self._account_ids = {"DU1234567"}
 
     async def _start_async(self):
-        """Override to avoid actual async operations and simulate immediate startup."""
+        """
+        Override to avoid actual async operations and simulate immediate startup.
+        """
         self._eclient.startApi()
         self._eclient.nextValidId(1)  # Initialize with order ID 1
-        
+
         # Transition to READY state immediately
         await self._state_machine.transition_to(ClientState.READY)
-        
+
         # Update the connection manager
         await self._connection_manager.set_ready(True, "Client ready")
-        
+
         self._log.debug("Client ready", LogColor.BLUE)
         self._connection_attempts = 0
-    
+
     async def _connect(self):
-        """Override to avoid actual connection attempts."""
+        """
+        Override to avoid actual connection attempts.
+        """
         # Just set the state to ready without actual connection logic
         await self._state_machine.transition_to(ClientState.READY)
         return True
-    
+
     async def _disconnect(self):
-        """Override to avoid actual disconnection attempts."""
+        """
+        Override to avoid actual disconnection attempts.
+        """
         await self._state_machine.transition_to(ClientState.DISCONNECTED)
         return True
-    
+
     async def _await_request(self, req_id, timeout=0.1):
         """
         Override to avoid long timeouts in tests.
+
         Returns immediately to speed up tests.
+
         """
         # Just return True immediately instead of waiting
         return True
-    
+
     async def _calculate_reconnect_delay(self):
-        """Override to avoid long reconnection delays in tests."""
+        """
+        Override to avoid long reconnection delays in tests.
+        """
         return 0.001  # Very short delay for testing purposes
-    
+
     async def get_contract_details(self, contract):
-        """Override to avoid actual API calls and return test data synchronously."""
+        """
+        Override to avoid actual API calls and return test data synchronously.
+        """
         instrument_id = ib_contract_to_instrument_id(contract)
-        
+
         # Map known instrument IDs to contract details
         if "AAPL.NASDAQ" in instrument_id.value:
             return [IBTestContractStubs.aapl_equity_contract_details()]
@@ -463,9 +474,11 @@ class MockInteractiveBrokersClient(InteractiveBrokersClient):
         else:
             # Default to AAPL for unknown contracts
             return [IBTestContractStubs.aapl_equity_contract_details()]
-    
+
     async def get_contract_details_by_id(self, contract_id):
-        """Override to avoid actual API calls and return test data synchronously."""
+        """
+        Override to avoid actual API calls and return test data synchronously.
+        """
         # Map common contract IDs to contract details
         contract_map = {
             12087792: [IBTestContractStubs.eurusd_forex_contract_details()],
@@ -473,7 +486,7 @@ class MockInteractiveBrokersClient(InteractiveBrokersClient):
             495512572: [IBTestContractStubs.aapl_equity_contract_details()],
             553946872: [IBTestContractStubs.tsla_option_contract_details()],
         }
-        
+
         if contract_id in contract_map:
             return contract_map[contract_id]
         else:

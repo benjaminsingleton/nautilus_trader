@@ -14,7 +14,6 @@
 # -------------------------------------------------------------------------------------------------
 
 import pytest
-from docker.models.containers import ContainerCollection
 
 from nautilus_trader.adapters.interactive_brokers.config import DockerizedIBGatewayConfig
 from nautilus_trader.adapters.interactive_brokers.gateway import DockerizedIBGateway
@@ -23,6 +22,8 @@ from nautilus_trader.adapters.interactive_brokers.gateway import DockerizedIBGat
 # Docker integration tests
 
 pytestmark = pytest.mark.skip(reason="Skip due docker dependency")
+
+
 def test_gateway_start_no_container(mocker):
     # Arrange
     # Mock the Docker module to avoid actual docker connections
@@ -31,10 +32,10 @@ def test_gateway_start_no_container(mocker):
     mock_containers.list.return_value = []
     mock_containers.run = mocker.MagicMock()
     mock_docker_client.containers = mock_containers
-    
+
     # Mock the docker.from_env() call
-    docker_from_env = mocker.patch('docker.from_env', return_value=mock_docker_client)
-    
+    _ = mocker.patch("docker.from_env", return_value=mock_docker_client)
+
     config = DockerizedIBGatewayConfig(
         username="test",
         password="test",
@@ -48,7 +49,7 @@ def test_gateway_start_no_container(mocker):
     # Verify that the docker client's run method was called with the correct args
     call_args = mock_containers.run.call_args
     kwargs = call_args.kwargs
-    
+
     # Check that the essential parameters were passed correctly
     assert kwargs["image"] == "ghcr.io/unusualalpha/ib-gateway"
     assert kwargs["name"] == f"{DockerizedIBGateway.CONTAINER_NAME}-4002"
