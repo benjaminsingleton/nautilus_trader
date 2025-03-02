@@ -141,7 +141,12 @@ async def test_get_positions_simulates_two_positions(ib_client):
         Decimal(10),
         20.0,
     )
-    ib_client._await_request = AsyncMock(return_value=[position_1, position_2, position_3])
+
+    # Mock the account service's get_positions method directly
+    ib_client._account_service.get_positions = AsyncMock()
+    ib_client._account_service.get_positions.side_effect = lambda account_id: (
+        [position_1] if account_id == "DU1234567" else [position_2, position_3]
+    )
 
     # Act
     results_1 = await ib_client.get_positions("DU1234567")
@@ -150,4 +155,4 @@ async def test_get_positions_simulates_two_positions(ib_client):
     # Assert
     assert Counter(results_1) == Counter([position_1])
     assert Counter(results_2) == Counter([position_2, position_3])
-    ib_client._eclient.reqPositions.assert_called()
+    ib_client._account_service.get_positions.assert_called()

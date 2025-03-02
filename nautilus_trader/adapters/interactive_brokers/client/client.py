@@ -20,6 +20,7 @@ import weakref
 from collections.abc import Callable
 from collections.abc import Coroutine
 from contextlib import suppress
+from decimal import Decimal
 from inspect import iscoroutinefunction
 from typing import Any
 
@@ -34,9 +35,10 @@ from ibapi.execution import Execution
 from ibapi.utils import current_fn_name
 
 # fmt: off
-from nautilus_trader.adapters.interactive_brokers.client.account import InteractiveBrokersClientAccountMixin
+from nautilus_trader.adapters.interactive_brokers.client.account import AccountService
 from nautilus_trader.adapters.interactive_brokers.client.common import AccountOrderRef
 from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
+from nautilus_trader.adapters.interactive_brokers.client.common import IBPosition
 from nautilus_trader.adapters.interactive_brokers.client.common import Request
 from nautilus_trader.adapters.interactive_brokers.client.common import Requests
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscriptions
@@ -48,6 +50,7 @@ from nautilus_trader.adapters.interactive_brokers.client.market_data import Inte
 from nautilus_trader.adapters.interactive_brokers.client.order import InteractiveBrokersClientOrderMixin
 from nautilus_trader.adapters.interactive_brokers.client.wrapper import InteractiveBrokersEWrapper
 from nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
+from nautilus_trader.adapters.interactive_brokers.common import IBContract
 from nautilus_trader.cache.cache import Cache
 from nautilus_trader.common.component import Component
 from nautilus_trader.common.component import LiveClock
@@ -572,7 +575,6 @@ class ConnectionManager:
 
 class InteractiveBrokersClient(
     Component,
-    InteractiveBrokersClientAccountMixin,
     InteractiveBrokersClientMarketDataMixin,
     InteractiveBrokersClientOrderMixin,
     InteractiveBrokersClientContractMixin,
@@ -671,13 +673,12 @@ class InteractiveBrokersClient(
         self._subscriptions = Subscriptions()
 
         # Initialize all mixins with appropriate parameters
-        InteractiveBrokersClientAccountMixin.__init__(self)
         InteractiveBrokersClientMarketDataMixin.__init__(self)
         InteractiveBrokersClientOrderMixin.__init__(self)
         InteractiveBrokersClientContractMixin.__init__(self)
         InteractiveBrokersClientErrorMixin.__init__(self)
 
-        # Create connection service
+        # Create services
         self._connection_service = ConnectionService(
             log=self._log,
             host=self._host,
@@ -693,6 +694,21 @@ class InteractiveBrokersClient(
             handshake_timeout=self.HANDSHAKE_TIMEOUT,
         )
 
+        self._is_ib_connected = asyncio.Event()  # This was in the account mixin
+
+        # Create account service
+        self._account_service = AccountService(
+            log=self._log,
+            eclient=self._eclient,
+            requests=self._requests,
+            subscriptions=self._subscriptions,
+            event_subscriptions=self._event_subscriptions,
+            is_ib_connected=self._is_ib_connected,
+            next_req_id_func=self._next_req_id,
+            await_request_func=self._await_request,
+            end_request_func=self._end_request,
+        )
+
         # Register state change callbacks
         self._state_machine.register_state_changed_callback(
             ClientState.READY,
@@ -702,9 +718,6 @@ class InteractiveBrokersClient(
             ClientState.STOPPING,
             self._on_stopping_state_entered,
         )
-
-        # AccountMixin
-        self._account_ids: set[str] = set()
 
         # ConnectionMixin
         self._connection_attempts: int = 0
@@ -777,10 +790,13 @@ class InteractiveBrokersClient(
         """
         Handle transition to STOPPING state.
         """
-        # Create a properly managed task that won't be orphaned
-        task = asyncio.create_task(self._handle_stopping_state_entered())
-        # Prevent the task from being garbage collected
-        self._active_tasks.add(task)
+        try:
+            # Create a properly managed task that won't be orphaned
+            task = asyncio.create_task(self._handle_stopping_state_entered())
+            # Prevent the task from being garbage collected
+            self._active_tasks.add(task)
+        except Exception as e:
+            self._log.warning(f"Error creating task for stopping state: {e}")
 
     async def _handle_stopping_state_entered(self) -> None:
         """
@@ -1031,6 +1047,169 @@ class InteractiveBrokersClient(
         """
         await self._task_registry.create_task(self._stop_async(), "stop_client")
 
+    # Account service passthrough methods
+    def accounts(self) -> set[str]:
+        """
+        Return a set of account identifiers managed by this instance.
+
+        Returns
+        -------
+        set[str]
+            The set of account identifiers.
+
+        """
+        return self._account_service.accounts()
+
+    @property
+    def _account_ids(self) -> set[str]:
+        """
+        Return a set of account identifiers managed by this instance.
+
+        This property is needed for compatibility with tests that directly access the field.
+
+        Returns
+        -------
+        set[str]
+            The set of account identifiers.
+
+        """
+        return self._account_service.account_ids
+
+    @_account_ids.setter
+    def _account_ids(self, value: set[str]) -> None:
+        """
+        Set the account identifiers. For test compatibility.
+
+        Parameters
+        ----------
+        value : set[str]
+            The account identifiers to set.
+
+        """
+        self._account_service._account_ids = value
+
+    def subscribe_account_summary(self) -> None:
+        """
+        Subscribe to the account summary for all accounts.
+        """
+        self._account_service.subscribe_account_summary()
+
+    def unsubscribe_account_summary(self, account_id: str) -> None:
+        """
+        Unsubscribe from the account summary for the specified account.
+
+        Parameters
+        ----------
+        account_id : str
+            The identifier of the account to unsubscribe from.
+
+        """
+        self._account_service.unsubscribe_account_summary(account_id)
+
+    async def get_positions(self, account_id: str) -> list[IBPosition]:
+        """
+        Fetch open positions for a specified account.
+
+        Parameters
+        ----------
+        account_id: str
+            The account identifier for which to fetch positions.
+
+        Returns
+        -------
+        list[IBPosition]
+            The list of positions for the account. May be empty if no positions found.
+
+        """
+        # Make sure we're getting the exact positions from the AccountService
+        # and returning them to the caller without modifications
+        positions = await self._account_service.get_positions(account_id)
+        return positions
+
+    async def process_account_summary(
+        self,
+        *,
+        req_id: int,
+        account_id: str,
+        tag: str,
+        value: str,
+        currency: str,
+    ) -> None:
+        """
+        Receive account information.
+
+        Parameters
+        ----------
+        req_id : int
+            The request ID.
+        account_id : str
+            The account ID.
+        tag : str
+            The account summary tag.
+        value : str
+            The tag value.
+        currency : str
+            The currency of the value.
+
+        """
+        await self._account_service.process_account_summary(
+            req_id=req_id,
+            account_id=account_id,
+            tag=tag,
+            value=value,
+            currency=currency,
+        )
+
+    async def process_managed_accounts(self, *, accounts_list: str) -> None:
+        """
+        Receive a comma-separated string with the managed account ids.
+
+        Occurs automatically on initial API client connection.
+
+        Parameters
+        ----------
+        accounts_list : str
+            Comma-separated string of account IDs.
+
+        """
+        await self._account_service.process_managed_accounts(accounts_list=accounts_list)
+
+    async def process_position(
+        self,
+        *,
+        account_id: str,
+        contract: IBContract,
+        position: Decimal,
+        avg_cost: float,
+    ) -> None:
+        """
+        Provide the portfolio's open positions.
+
+        Parameters
+        ----------
+        account_id : str
+            The account ID.
+        contract : IBContract
+            The contract information.
+        position : Decimal
+            The position quantity.
+        avg_cost : float
+            The average cost of the position.
+
+        """
+        await self._account_service.process_position(
+            account_id=account_id,
+            contract=contract,
+            position=position,
+            avg_cost=avg_cost,
+        )
+
+    async def process_position_end(self) -> None:
+        """
+        Indicate that all the positions have been transmitted.
+        """
+        await self._account_service.process_position_end()
+
     @handle_ib_error
     async def _stop_async(self) -> None:
         """
@@ -1068,7 +1247,8 @@ class InteractiveBrokersClient(
         except Exception as e:
             self._log.error(f"Error during disconnection: {e}")
 
-        self._account_ids.clear()
+        # Clear account IDs (for compatibility with tests)
+        self._account_service._account_ids.clear()
         self.registered_nautilus_clients.clear()
         await self._connection_manager.set_connected(False, "Client stopped")
         await self._state_machine.transition_to(ClientState.STOPPED)
