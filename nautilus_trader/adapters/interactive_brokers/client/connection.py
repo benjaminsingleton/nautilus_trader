@@ -121,6 +121,10 @@ class ConnectionService:
         is_in_state_func: Any,
         socket_connect_timeout: float = 10.0,
         handshake_timeout: float = 5.0,
+        max_connection_attempts: int = 0,
+        reconnect_delay: int = 5,
+        reconnect_max_jitter: float = 2.0,
+        heartbeat_interval: float = 30.0,
     ) -> None:
         self._log = log
         self._host = host
@@ -136,6 +140,14 @@ class ConnectionService:
         self._handshake_timeout = handshake_timeout
         self._connection_lock = asyncio.Lock()
 
+        # Connection attempt tracking
+        self._connection_attempts: int = 0
+        self._max_connection_attempts: int = max_connection_attempts
+        self._indefinite_reconnect: bool = self._max_connection_attempts <= 0
+        self._reconnect_delay: int = reconnect_delay
+        self._reconnect_max_jitter: float = reconnect_max_jitter
+        self._heartbeat_interval: float = heartbeat_interval
+
     def initialize_connection_params(self) -> None:
         """
         Initialize the connection parameters in the EClient.
@@ -144,6 +156,56 @@ class ConnectionService:
         self._eclient._host = self._host
         self._eclient._port = self._port
         self._eclient.clientId = self._client_id
+
+    def get_connection_attempts(self) -> int:
+        """
+        Get the current number of connection attempts.
+
+        Returns
+        -------
+        int
+            The current number of connection attempts.
+
+        """
+        return self._connection_attempts
+
+    def reset_connection_attempts(self) -> None:
+        """
+        Reset the connection attempts counter to zero.
+        """
+        self._connection_attempts = 0
+
+    def get_heartbeat_interval(self) -> float:
+        """
+        Get the heartbeat interval.
+
+        Returns
+        -------
+        float
+            The heartbeat interval in seconds.
+
+        """
+        return self._heartbeat_interval
+
+    def calculate_reconnect_delay(self) -> float:
+        """
+        Calculate the delay before attempting to reconnect.
+
+        Returns a base delay plus random jitter to prevent thundering herd problems.
+        Uses exponential backoff with capped maximum delay.
+
+        Returns
+        -------
+        float
+            The delay in seconds before attempting to reconnect.
+
+        """
+        import random
+
+        jitter = random.uniform(0, self._reconnect_max_jitter)  # noqa: S311
+        backoff_factor = min(self._connection_attempts, 5)
+        delay = self._reconnect_delay * (2 ** (backoff_factor - 1)) + jitter
+        return min(delay, 60)
 
     async def send_version_info(self) -> ConnectionResult:
         """
@@ -183,12 +245,15 @@ class ConnectionService:
         Raises
         ------
         ConnectionError
-            If connection fails at any step.
+            If connection fails at any step or max connection attempts are reached.
         TimeoutError
             If connection steps timeout.
 
         """
         async with self._connection_lock:
+            # Track connection attempt and check limits
+            await self._track_connection_attempt()
+
             try:
                 self.initialize_connection_params()
                 conn_result = await self.connect_socket()
@@ -382,6 +447,27 @@ class ConnectionService:
                 success=False,
                 error=e,
                 message=f"Error receiving server information: {e}",
+            )
+
+    async def _track_connection_attempt(self) -> None:
+        """
+        Track a connection attempt and check if maximum attempts have been reached.
+
+        Raises
+        ------
+        ConnectionError
+            If maximum connection attempts have been reached.
+
+        """
+        self._connection_attempts += 1
+        if (
+            not self._indefinite_reconnect
+            and self._connection_attempts > self._max_connection_attempts
+        ):
+            self._log.error(f"Max connection attempts ({self._max_connection_attempts}) reached")
+            await self._state_machine.transition_to(ClientState.STOPPING)
+            raise ConnectionError(
+                f"Max connection attempts ({self._max_connection_attempts}) reached",
             )
 
     def process_server_version(self, fields: list[str]) -> None:

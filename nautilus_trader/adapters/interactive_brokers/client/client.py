@@ -15,7 +15,6 @@
 
 import asyncio
 import os
-import random
 import weakref
 from collections.abc import Callable
 from collections.abc import Coroutine
@@ -692,6 +691,10 @@ class InteractiveBrokersClient(
             is_in_state_func=self.is_in_state,
             socket_connect_timeout=self.SOCKET_CONNECT_TIMEOUT,
             handshake_timeout=self.HANDSHAKE_TIMEOUT,
+            max_connection_attempts=self.MAX_CONNECTION_ATTEMPTS,
+            reconnect_delay=self.RECONNECT_DELAY,
+            reconnect_max_jitter=self.MAX_RECONNECT_JITTER,
+            heartbeat_interval=self.HEARTBEAT_INTERVAL,
         )
 
         self._is_ib_connected = asyncio.Event()  # This was in the account mixin
@@ -719,13 +722,7 @@ class InteractiveBrokersClient(
             self._on_stopping_state_entered,
         )
 
-        # ConnectionMixin
-        self._connection_attempts: int = 0
-        self._max_connection_attempts: int = self.MAX_CONNECTION_ATTEMPTS
-        self._indefinite_reconnect: bool = self._max_connection_attempts <= 0
-        self._reconnect_delay: int = self.RECONNECT_DELAY
-        self._reconnect_max_jitter: float = self.MAX_RECONNECT_JITTER
-        self._heartbeat_interval: float = self.HEARTBEAT_INTERVAL
+        # Connection management is fully delegated to ConnectionService
 
         # MarketDataMixin
         self._bar_type_to_last_bar: dict[str, BarData | None] = {}
@@ -871,7 +868,7 @@ class InteractiveBrokersClient(
                 await asyncio.sleep(0.1)  # Short sleep, to be replaced with event in future
 
         if self.is_in_state(ClientState.READY):
-            self._connection_attempts = 0
+            self._connection_service.reset_connection_attempts()
         else:
             self._log.warning(f"Startup ended in state {self.state}")
 
@@ -879,8 +876,7 @@ class InteractiveBrokersClient(
         """
         Calculate the delay before attempting to reconnect.
 
-        Returns a base delay plus random jitter to prevent thundering herd problems.
-        Uses exponential backoff with capped maximum delay.
+        Delegates to the ConnectionService for the calculation.
 
         Returns
         -------
@@ -888,33 +884,25 @@ class InteractiveBrokersClient(
             The delay in seconds before attempting to reconnect.
 
         """
-        jitter = random.uniform(0, self._reconnect_max_jitter)  # noqa: S311
-        backoff_factor = min(self._connection_attempts, 5)
-        delay = self._reconnect_delay * (2 ** (backoff_factor - 1)) + jitter
-        return min(delay, 60)
+        return self._connection_service.calculate_reconnect_delay()
 
     @handle_ib_error
     async def _handle_connecting_state(self) -> None:
         """
         Handle the CONNECTING state of the client startup process.
 
-        Manages connection attempt limits, reconnection delay, and establishing the
-        socket connection.
+        Delegates to the ConnectionService for connection handling.
+
+        Note: Connection attempt tracking and reconnection delay calculation
+        are now handled by the ConnectionService.
 
         """
-        self._connection_attempts += 1
-        if (
-            not self._indefinite_reconnect
-            and self._connection_attempts > self._max_connection_attempts
-        ):
-            self._log.error(f"Max connection attempts ({self._max_connection_attempts}) reached")
-            await self._state_machine.transition_to(ClientState.STOPPING)
-            await self._stop_async()
-            return
-
-        if self._connection_attempts > 1:
+        # Let the connection service handle the connection process
+        # We only need to log the attempt for visibility
+        attempt_count = self._connection_service.get_connection_attempts()
+        if attempt_count > 0:
             delay = self._calculate_reconnect_delay()
-            self._log.info(f"Attempt {self._connection_attempts}: Reconnecting in {delay:.1f}s")
+            self._log.info(f"Attempt {attempt_count + 1}: Reconnecting in {delay:.1f}s")
             await asyncio.sleep(delay)
 
         await self._connection_service.connect()
@@ -1373,7 +1361,7 @@ class InteractiveBrokersClient(
                 ClientState.STOPPED,
                 ClientState.DISPOSED,
             ):
-                await asyncio.sleep(self._heartbeat_interval)
+                await asyncio.sleep(self._connection_service.get_heartbeat_interval())
                 if self.is_in_state(ClientState.READY):
                     try:
                         self._eclient.reqCurrentTime()
@@ -1411,7 +1399,11 @@ class InteractiveBrokersClient(
                     heartbeat_age = (
                         self._clock.timestamp() - self._connection_manager.last_heartbeat_time
                     )
-                    if heartbeat_age > self._heartbeat_interval * self.HEARTBEAT_TIMEOUT_MULTIPLIER:
+                    if (
+                        heartbeat_age
+                        > self._connection_service.get_heartbeat_interval()
+                        * self.HEARTBEAT_TIMEOUT_MULTIPLIER
+                    ):
                         self._log.error(f"Heartbeat timeout: {heartbeat_age:.1f}s")
                         await self._handle_disconnection()
         except asyncio.CancelledError:
@@ -1448,8 +1440,8 @@ class InteractiveBrokersClient(
             if not self.is_in_state(ClientState.RECONNECTING):
                 await self._state_machine.transition_to(ClientState.RECONNECTING)
 
-            # Reset connection attempts counter
-            self._connection_attempts = 0
+            # Reset connection attempts counter in the connection service
+            self._connection_service.reset_connection_attempts()
 
             # Start reconnection process
             await self._start_async()
@@ -1462,13 +1454,13 @@ class InteractiveBrokersClient(
         # Calculate and apply reconnection delay with backoff
         delay = self._calculate_reconnect_delay()
         self._log.info(
-            f"Initiating reconnection after {delay:.1f}s delay (attempt {self._connection_attempts + 1})",
+            f"Initiating reconnection after {delay:.1f}s delay (attempt {self._connection_service.get_connection_attempts() + 1})",
         )
         await asyncio.sleep(delay)
 
         # Transition to reconnecting state and start connection
         await self._state_machine.transition_to(ClientState.RECONNECTING)
-        self._connection_attempts = 0  # Reset connection attempts for fresh reconnection
+        self._connection_service.reset_connection_attempts()  # Reset connection attempts for fresh reconnection
         await self._start_async()
 
     def _create_task(
