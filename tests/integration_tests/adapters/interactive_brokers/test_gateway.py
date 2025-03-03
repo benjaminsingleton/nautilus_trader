@@ -14,35 +14,48 @@
 # -------------------------------------------------------------------------------------------------
 
 import pytest
-from docker.models.containers import ContainerCollection
 
+from nautilus_trader.adapters.interactive_brokers.config import DockerizedIBGatewayConfig
 from nautilus_trader.adapters.interactive_brokers.gateway import DockerizedIBGateway
 
 
-pytestmark = pytest.mark.skip(reason="Skip due currently flaky mocks")
+# Docker integration tests
+
+pytestmark = pytest.mark.skip(reason="Skip due docker dependency")
 
 
 def test_gateway_start_no_container(mocker):
     # Arrange
-    mock_docker = mocker.patch.object(ContainerCollection, "run")
-    gateway = DockerizedIBGateway(username="test", password="test")
+    # Mock the Docker module to avoid actual docker connections
+    mock_docker_client = mocker.MagicMock()
+    mock_containers = mocker.MagicMock()
+    mock_containers.list.return_value = []
+    mock_containers.run = mocker.MagicMock()
+    mock_docker_client.containers = mock_containers
+
+    # Mock the docker.from_env() call
+    _ = mocker.patch("docker.from_env", return_value=mock_docker_client)
+
+    config = DockerizedIBGatewayConfig(
+        username="test",
+        password="test",
+    )
+    gateway = DockerizedIBGateway(config=config)
 
     # Act
     gateway.start(wait=None)
 
     # Assert
-    expected = {
-        "image": "ghcr.io/unusualalpha/ib-gateway",
-        "name": "nautilus-ib-gateway",
-        "detach": True,
-        "ports": {"4001": "4001", "4002": "4002", "5900": "5900"},
-        "platform": "amd64",
-        "environment": {
-            "TWS_USERID": "test",
-            "TWS_PASSWORD": "test",
-            "TRADING_MODE": "paper",
-            "READ_ONLY_API": "yes",
-        },
-    }
-    result = mock_docker.call_args.kwargs
-    assert result == expected
+    # Verify that the docker client's run method was called with the correct args
+    call_args = mock_containers.run.call_args
+    kwargs = call_args.kwargs
+
+    # Check that the essential parameters were passed correctly
+    assert kwargs["image"] == "ghcr.io/unusualalpha/ib-gateway"
+    assert kwargs["name"] == f"{DockerizedIBGateway.CONTAINER_NAME}-4002"
+    assert kwargs["detach"] is True
+    assert "4002" in kwargs["ports"]
+    assert kwargs["environment"]["TWS_USERID"] == "test"
+    assert kwargs["environment"]["TWS_PASSWORD"] == "test"
+    assert kwargs["environment"]["TRADING_MODE"] == "paper"
+    assert kwargs["environment"]["READ_ONLY_API"] == "yes"

@@ -593,6 +593,9 @@ async def test_get_price_retrieval(ib_client):
     tick_type = "MidPoint"
     ib_client._eclient.reqMktData = MagicMock()
 
+    # Mock _await_request to return immediately instead of waiting for the timeout (60 seconds)
+    ib_client._await_request = AsyncMock(return_value=None)
+
     # Act
     # Call the method to get the price
     await ib_client.get_price(contract, tick_type)
