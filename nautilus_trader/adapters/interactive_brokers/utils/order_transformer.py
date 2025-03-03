@@ -1,11 +1,15 @@
-# Fixed OrderTransformer with proper mappings
-
 from abc import ABC
 from abc import abstractmethod
+from typing import TYPE_CHECKING, Any
 
 from ibapi.order import Order as IBOrder
 
-# Import the necessary mappings directly from execution.py
+
+# fmt: off
+if TYPE_CHECKING:
+    from nautilus_trader.adapters.interactive_brokers.execution import InteractiveBrokersExecutionClient  # noqa
+
+# fmt: on
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_ORDER_ACTION
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_TIME_IN_FORCE
 from nautilus_trader.adapters.interactive_brokers.parsing.execution import MAP_TRIGGER_METHOD
@@ -59,7 +63,7 @@ class BaseOrderTransformer(OrderTransformer):
 
     """
 
-    def __init__(self, exec_client):
+    def __init__(self, exec_client: Any) -> None:
         """
         Initialize the transformer with reference to the execution client.
 
@@ -349,7 +353,7 @@ class OrderTransformerFactory:
 
     """
 
-    def __init__(self, exec_client):
+    def __init__(self, exec_client: Any) -> None:
         """
         Initialize the factory with reference to the execution client.
 

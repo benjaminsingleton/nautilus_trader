@@ -113,6 +113,14 @@ async def test_start_tasks(ib_client, mock_coroutines):
     ib_client._eclient = MagicMock()
     ib_client._task_registry = MagicMock()
 
+    # Mock connection service and monitor
+    connection_monitor_mock = MagicMock()
+    connection_monitor_mock.run_connection_watchdog = AsyncMock()
+
+    ib_client._connection_service = MagicMock()
+    ib_client._connection_service.start_connection_watchdog = AsyncMock()
+    ib_client._connection_service._connection_monitor = connection_monitor_mock
+
     task_mock = AsyncMock()
     ib_client._task_registry.create_task = AsyncMock(return_value=task_mock)
 
@@ -124,6 +132,12 @@ async def test_start_tasks(ib_client, mock_coroutines):
 
     # Assert
     # Verify task_registry.create_task was called for each method
+    assert ib_client._task_registry.create_task.call_count >= 3
+    # Verify connection service methods were called
+    ib_client._connection_service.start_connection_watchdog.assert_called_once()
+
+    # Verify task was created for the connection monitor - just check the call count
+    # since we can't easily compare the coroutine objects
     assert ib_client._task_registry.create_task.call_count >= 3
 
 

@@ -697,6 +697,12 @@ class InteractiveBrokersClient(
             heartbeat_interval=self.HEARTBEAT_INTERVAL,
         )
 
+        # Register client callbacks for connection service to use
+        self._connection_service._notify_client_to_degrade = self._handle_disconnection
+
+        # Store a reference to our reconnection method that the connection service can call
+        self._connection_service._client_reconnection_callback = self._initiate_reconnection
+
         self._is_ib_connected = asyncio.Event()  # This was in the account mixin
 
         # Create account service
@@ -872,11 +878,13 @@ class InteractiveBrokersClient(
         else:
             self._log.warning(f"Startup ended in state {self.state}")
 
+    # Reconnect delay calculation is now handled by ConnectionService
     def _calculate_reconnect_delay(self) -> float:
         """
         Calculate the delay before attempting to reconnect.
 
-        Delegates to the ConnectionService for the calculation.
+        This is a wrapper around the ConnectionService's calculate_reconnect_delay method
+        for backward compatibility.
 
         Returns
         -------
@@ -985,7 +993,7 @@ class InteractiveBrokersClient(
         Start the connection watchdog task.
 
         This task monitors the connection to TWS/Gateway and initiates reconnection if
-        the connection is lost.
+        the connection is lost. The actual monitoring is delegated to the ConnectionService.
 
         Returns
         -------
@@ -993,8 +1001,12 @@ class InteractiveBrokersClient(
             The created task.
 
         """
+        # First await the start_connection_watchdog method
+        await self._connection_service.start_connection_watchdog()
+
+        # Then create a task for the connection monitor's run_connection_watchdog method
         task = await self._task_registry.create_task(
-            self._run_connection_watchdog(),
+            self._connection_service._connection_monitor.run_connection_watchdog(),
             "connection_watchdog",
         )
         return task
@@ -1004,7 +1016,8 @@ class InteractiveBrokersClient(
         Start the heartbeat monitor task.
 
         This task sends periodic heartbeat messages to TWS/Gateway to detect connection
-        issues even when there's no other activity.
+        issues even when there's no other activity. The actual monitoring is delegated
+        to the ConnectionService.
 
         Returns
         -------
@@ -1013,7 +1026,7 @@ class InteractiveBrokersClient(
 
         """
         task = await self._task_registry.create_task(
-            self._run_heartbeat_monitor(),
+            self._connection_service.start_heartbeat_monitor(),
             "heartbeat_monitor",
         )
         return task
@@ -1347,120 +1360,46 @@ class InteractiveBrokersClient(
             raise TimeoutError(f"Client is not ready after {timeout} seconds.")
 
     @handle_ib_error
-    async def _run_heartbeat_monitor(self) -> None:
-        """
-        Run a heartbeat monitor to periodically check connection health.
+    # Heartbeat monitoring is now handled by ConnectionService
 
-        Sends a lightweight request to TWS/Gateway periodically to ensure the connection
-        is still alive and responsive.
+    # Connection watchdog is now handled by ConnectionService
 
-        """
-        try:
-            while not self.is_in_state(
-                ClientState.STOPPING,
-                ClientState.STOPPED,
-                ClientState.DISPOSED,
-            ):
-                await asyncio.sleep(self._connection_service.get_heartbeat_interval())
-                if self.is_in_state(ClientState.READY):
-                    try:
-                        self._eclient.reqCurrentTime()
-                        await asyncio.sleep(0.1)  # Small delay to ensure response
-                        await self._connection_manager.update_heartbeat(self._clock.timestamp())
-                    except Exception as e:
-                        self._log.warning(f"Heartbeat failed: {e}")
-                        if self._connection_manager.is_connected:
-                            await self._handle_disconnection()
-        except asyncio.CancelledError:
-            self._log.debug("Heartbeat monitor cancelled")
-        except Exception as e:
-            self._log.exception(f"Heartbeat monitor error: {e}")
-
-    @handle_ib_error
-    async def _run_connection_watchdog(self) -> None:
-        """
-        Run a watchdog to monitor and manage the health of the socket connection.
-
-        Continuously checks the connection status, manages client state based on
-        connection health, and handles reconnection in case of network failure.
-
-        """
-        try:
-            while not self.is_in_state(
-                ClientState.STOPPING,
-                ClientState.STOPPED,
-                ClientState.DISPOSED,
-            ):
-                await asyncio.sleep(1)
-                if not self._connection_manager.is_connected:
-                    self._log.error("Watchdog detected connection loss")
-                    await self._handle_disconnection()
-                elif self.is_in_state(ClientState.READY):
-                    heartbeat_age = (
-                        self._clock.timestamp() - self._connection_manager.last_heartbeat_time
-                    )
-                    if (
-                        heartbeat_age
-                        > self._connection_service.get_heartbeat_interval()
-                        * self.HEARTBEAT_TIMEOUT_MULTIPLIER
-                    ):
-                        self._log.error(f"Heartbeat timeout: {heartbeat_age:.1f}s")
-                        await self._handle_disconnection()
-        except asyncio.CancelledError:
-            self._log.debug("Watchdog cancelled")
-        except Exception as e:
-            self._log.exception(f"Watchdog error: {e}")
-
+    # Disconnection handling is now delegated to ConnectionService
+    # This method is kept as a callback for the ConnectionService to use
     @handle_ib_error
     async def _handle_disconnection(self) -> None:
         """
         Handle the disconnection of the client from TWS/Gateway.
 
-        This method degrades the client state and initiates reconnection after a delay.
-        It ensures proper synchronization between various state objects.
+        This method is called by the ConnectionService when a disconnection is detected.
+        It degrades the client state to prepare for reconnection.
 
         """
         if self.is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
             self._log.info("Client is stopping or stopped, not attempting to reconnect")
             return
 
-        # Lock to ensure state transitions happen atomically
-        async with self._state_machine._transition_lock:
-            # Use the connection service to set the disconnected state
-            await self._connection_service.set_disconnected("Disconnected by watchdog")
+        # Set disconnected state in the connection service
+        await self._connection_service.set_disconnected("Disconnected by watchdog")
 
-            # Degrade state if in an operational state
-            if self.is_in_state(ClientState.READY, ClientState.CONNECTED, ClientState.WAITING_API):
-                await self._degrade()
+        # Degrade state if in an operational state
+        if self.is_in_state(ClientState.READY, ClientState.CONNECTED, ClientState.WAITING_API):
+            await self._degrade()
 
-            # Wait before reconnecting
-            await asyncio.sleep(self._calculate_reconnect_delay())
-
-            # Ensure we're in RECONNECTING state before starting reconnection
-            if not self.is_in_state(ClientState.RECONNECTING):
-                await self._state_machine.transition_to(ClientState.RECONNECTING)
-
-            # Reset connection attempts counter in the connection service
-            self._connection_service.reset_connection_attempts()
-
-            # Start reconnection process
-            await self._start_async()
-
+    # Reconnection is now handled by ConnectionService
+    # This method is kept as a callback for the ConnectionService to use
     @handle_ib_error
     async def _initiate_reconnection(self) -> None:
         """
-        Initiate the reconnection process with backoff strategy.
-        """
-        # Calculate and apply reconnection delay with backoff
-        delay = self._calculate_reconnect_delay()
-        self._log.info(
-            f"Initiating reconnection after {delay:.1f}s delay (attempt {self._connection_service.get_connection_attempts() + 1})",
-        )
-        await asyncio.sleep(delay)
+        Initiate the reconnection process.
 
+        This method is called by the ConnectionService when it's time to reconnect. It
+        transitions the client to the RECONNECTING state and starts the connection
+        process.
+
+        """
         # Transition to reconnecting state and start connection
         await self._state_machine.transition_to(ClientState.RECONNECTING)
-        self._connection_service.reset_connection_attempts()  # Reset connection attempts for fresh reconnection
         await self._start_async()
 
     def _create_task(

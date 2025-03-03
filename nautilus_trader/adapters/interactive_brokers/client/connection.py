@@ -16,6 +16,9 @@
 import asyncio
 import enum
 import functools
+import time
+from collections.abc import Callable
+from collections.abc import Coroutine
 from typing import Any, cast
 
 from ibapi import comm
@@ -72,6 +75,191 @@ class ConnectionResult:
 
     def __str__(self) -> str:
         return f"ConnectionResult(success={self.success}, error='{self.error}', message='{self.message}')"
+
+
+class ConnectionMonitor:
+    """
+    Monitors the health of the connection to Interactive Brokers TWS/Gateway.
+
+    This class is responsible for monitoring the connection health through heartbeats
+    and a watchdog mechanism. It detects disconnections and initiates recovery actions.
+
+    Parameters
+    ----------
+    log : Logger
+        The logger for the monitor.
+    connection_service : Any
+        The connection service to monitor.
+    heartbeat_interval : float
+        The interval between heartbeat messages in seconds.
+
+    """
+
+    def __init__(
+        self,
+        log: Logger,
+        connection_service: Any,
+        heartbeat_interval: float = 30.0,
+    ) -> None:
+        self._log = log
+        self._connection_service = connection_service
+        self._heartbeat_interval = heartbeat_interval
+        self._last_heartbeat_time = 0.0
+        self._last_server_response_time = 0.0
+        self._connection_healthy = False
+        self._monitor_running = False
+        self._watchdog_running = False
+
+    def update_last_server_response_time(self, timestamp: float | None = None) -> None:
+        """
+        Update the timestamp of the last server response.
+
+        This should be called whenever a message is received from the server.
+
+        Parameters
+        ----------
+        timestamp : float, optional
+            The timestamp to set. If None, uses the current time.
+
+        """
+        self._last_server_response_time = timestamp if timestamp is not None else time.time()
+        self._connection_healthy = True
+        self._log.debug(f"Updated last server response time: {timestamp}")
+
+    def update_last_heartbeat_time(self, timestamp: float | None = None) -> None:
+        """
+        Update the timestamp of the last heartbeat sent.
+
+        Parameters
+        ----------
+        timestamp : float, optional
+            The timestamp to set. If None, uses the current time.
+
+        """
+        self._last_heartbeat_time = timestamp if timestamp is not None else time.time()
+
+    def is_connection_healthy(self) -> bool:
+        """
+        Check connection health based on server responsiveness.
+
+        Returns
+        -------
+        bool
+            True if the connection is healthy, False otherwise.
+
+        """
+        if self._last_server_response_time == 0.0:
+            return False  # Never received a response
+
+        silence_duration = time.time() - self._last_server_response_time
+        max_allowed_silence = self._heartbeat_interval * 2.5  # More generous threshold
+
+        # Log connection quality indicators
+        if silence_duration > self._heartbeat_interval:
+            self._log.warning(
+                f"Connection quality degraded - " f"No server response for {silence_duration:.1f}s",
+            )
+
+        return silence_duration < max_allowed_silence
+
+    async def run_heartbeat_monitor(self) -> None:
+        """
+        Run the heartbeat monitor loop.
+
+        This method sends periodic heartbeat messages to the server to keep the
+        connection alive and to detect disconnections early.
+
+        """
+        if self._monitor_running:
+            self._log.warning("Heartbeat monitor is already running")
+            return
+
+        self._monitor_running = True
+        self._log.info(f"Starting heartbeat monitor (interval: {self._heartbeat_interval}s)")
+
+        # Set initial timestamps if they haven't been set
+        if self._last_heartbeat_time == 0.0:
+            self.update_last_heartbeat_time()
+
+        try:
+            while self._monitor_running:
+                try:
+                    # Only send heartbeats if we're connected
+                    if self._connection_service._eclient.isConnected():
+                        # Send a heartbeat message (reqCurrentTime is a lightweight request)
+                        self._connection_service._eclient.reqCurrentTime()
+                        self.update_last_heartbeat_time()
+                        self._log.debug("Sent heartbeat to TWS/Gateway")
+                    else:
+                        self._log.debug("Skipping heartbeat - not connected")
+                except Exception as e:
+                    self._log.warning(f"Failed to send heartbeat: {e}")
+
+                # Wait for the next heartbeat interval
+                await asyncio.sleep(self._heartbeat_interval)
+        except asyncio.CancelledError:
+            self._log.info("Heartbeat monitor cancelled")
+            self._monitor_running = False
+        except Exception as e:
+            self._log.error(f"Error in heartbeat monitor: {e}")
+            self._monitor_running = False
+            raise
+
+    async def _check_connection_health(self) -> bool:
+        """
+        Check current connection health status.
+        """
+        return await self._connection_service.check_connection()
+
+    async def _handle_unhealthy_connection(self):
+        """
+        Handle unhealthy connection scenario.
+        """
+        self._log.warning("Connection unhealthy - attempting reset")
+        await self._connection_service.reset_connection()
+
+    async def run_connection_watchdog(self) -> None:
+        """
+        Run the connection watchdog loop.
+
+        This method monitors the health of the connection by checking for responses to
+        heartbeats and initiates reconnection if the connection is deemed unhealthy.
+
+        """
+        if self._watchdog_running:
+            self._log.warning("Connection watchdog is already running")
+            return
+
+        self._watchdog_running = True
+        self._log.info("Starting connection watchdog")
+
+        # Set initial timestamps if they haven't been set
+        if self._last_server_response_time == 0.0:
+            self.update_last_server_response_time()
+        if self._last_heartbeat_time == 0.0:
+            self.update_last_heartbeat_time()
+
+        try:
+            while True:
+                try:
+                    if not await self._check_connection_health():
+                        await self._handle_unhealthy_connection()
+                    await asyncio.sleep(self._heartbeat_interval)
+                except asyncio.CancelledError:
+                    self._log.debug("Connection watchdog stopped")
+                    raise
+        except Exception as e:
+            self._log.error(f"Error in connection watchdog: {e}")
+            self._watchdog_running = False
+            raise
+
+    def stop(self) -> None:
+        """
+        Stop the heartbeat monitor and connection watchdog.
+        """
+        self._monitor_running = False
+        self._watchdog_running = False
+        self._log.info("Stopping connection monitor")
 
 
 class ConnectionService:
@@ -148,6 +336,20 @@ class ConnectionService:
         self._reconnect_max_jitter: float = reconnect_max_jitter
         self._heartbeat_interval: float = heartbeat_interval
 
+        # Initialize connection monitor
+        self._connection_monitor = ConnectionMonitor(
+            log=self._log,
+            connection_service=self,
+            heartbeat_interval=self._heartbeat_interval,
+        )
+
+        # Flag to track disconnection handling
+        self._disconnection_in_progress: bool = False
+
+        # Client callback methods (to be set by client)
+        self._notify_client_to_degrade = self._default_notify_client_to_degrade
+        self._client_reconnection_callback: Callable[[], Any] | None = None
+
     def initialize_connection_params(self) -> None:
         """
         Initialize the connection parameters in the EClient.
@@ -187,12 +389,18 @@ class ConnectionService:
         """
         return self._heartbeat_interval
 
-    def calculate_reconnect_delay(self) -> float:
+    def calculate_reconnect_delay(self, attempt: int | None = None) -> float:
         """
         Calculate the delay before attempting to reconnect.
 
         Returns a base delay plus random jitter to prevent thundering herd problems.
         Uses exponential backoff with capped maximum delay.
+
+        Parameters
+        ----------
+        attempt : int, optional
+            The connection attempt number to use for calculation. If None, uses the current
+            connection_attempts value.
 
         Returns
         -------
@@ -202,10 +410,25 @@ class ConnectionService:
         """
         import random
 
+        # Use provided attempt or current connection attempts
+        attempt_num = self._connection_attempts if attempt is None else attempt
+
+        # Apply exponential backoff with a cap on the exponent to avoid overflow
+        backoff_factor = min(attempt_num, 6)
+        base_delay = self._reconnect_delay * (2 ** max(0, backoff_factor - 1))
+
+        # Add jitter to avoid thundering herd problem
         jitter = random.uniform(0, self._reconnect_max_jitter)  # noqa: S311
-        backoff_factor = min(self._connection_attempts, 5)
-        delay = self._reconnect_delay * (2 ** (backoff_factor - 1)) + jitter
-        return min(delay, 60)
+
+        # Cap the maximum delay at 60 seconds
+        delay = min(base_delay + jitter, 60.0)
+
+        self._log.debug(
+            f"Calculated reconnect delay: {delay:.2f}s "
+            f"(base: {base_delay:.2f}s, jitter: {jitter:.2f}s, attempt: {attempt_num})",
+        )
+
+        return delay
 
     async def send_version_info(self) -> ConnectionResult:
         """
@@ -329,7 +552,10 @@ class ConnectionService:
             The result of the connection attempt.
 
         """
-        self._log.info(f"Connecting to {self._host}:{self._port} with client id: {self._client_id}")
+        self._log.info(
+            f"Initialized ConnectionService to {self._host}:{self._port} "
+            f"(client_id={self._client_id}, timeout={self._socket_connect_timeout}s)",
+        )
         try:
             self._eclient.conn = Connection(self._host, self._port)
             await asyncio.wait_for(
@@ -356,13 +582,19 @@ class ConnectionService:
             return ConnectionResult(
                 success=False,
                 error=e,
-                message=f"Connection refused by {self._host}:{self._port}",
+                message=f"Network error: {e.__class__.__name__}",
+            )
+        except TimeoutError as e:
+            return ConnectionResult(
+                success=False,
+                error=e,
+                message=f"Network error: {e.__class__.__name__}",
             )
         except OSError as e:
             return ConnectionResult(
                 success=False,
                 error=e,
-                message=f"Socket error: {e}",
+                message=f"OS error: {e.strerror}",
             )
         except Exception as e:
             return ConnectionResult(
@@ -564,3 +796,212 @@ class ConnectionService:
         elif not self._is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
             # If unexpected state, go to STOPPING to allow proper shutdown
             await self._state_machine.transition_to(ClientState.STOPPING)
+
+    async def handle_disconnection(self, reason: str) -> None:
+        """
+        Handle the disconnection of the client from TWS/Gateway.
+
+        This method degrades the client state and initiates reconnection after a delay.
+        It ensures proper synchronization between various state objects.
+
+        Parameters
+        ----------
+        reason : str
+            The reason for the disconnection.
+
+        """
+        # Check if client is already in a stopping/stopped state
+        if self._is_in_state(ClientState.STOPPING, ClientState.STOPPED, ClientState.DISPOSED):
+            self._log.info("Client is stopping or stopped, not attempting to reconnect")
+            return
+
+        # Lock to ensure state transitions happen atomically
+        async with self._connection_lock:
+            # Check if we're already handling a disconnection
+            if self._disconnection_in_progress:
+                self._log.debug("Disconnection already in progress, skipping duplicate handling")
+                return
+
+            # Set flag to prevent concurrent disconnection handling
+            self._disconnection_in_progress = True
+
+            try:
+                self._log.warning(f"Handling disconnection: {reason}")
+
+                # Set the disconnected state
+                await self.set_disconnected(reason)
+
+                # Force disconnect if still connected
+                if self._eclient.isConnected():
+                    self._log.info("Forcibly disconnecting from TWS/Gateway")
+                    self._eclient.disconnect()
+
+                # Degrade state if in an operational state
+                if self._is_in_state(
+                    ClientState.READY,
+                    ClientState.CONNECTED,
+                    ClientState.WAITING_API,
+                ):
+                    # Signal client to degrade (client will handle the actual state transition)
+                    self._create_task(
+                        self._notify_client_to_degrade(),
+                        log_msg="Notify client to degrade",
+                    )
+
+                # Calculate reconnection delay based on current attempt
+                delay = self.calculate_reconnect_delay()
+                self._log.info(f"Waiting {delay:.1f}s before attempting reconnection")
+                await asyncio.sleep(delay)
+
+                # Check if client is still in a state that allows reconnection
+                if self._is_in_state(
+                    ClientState.STOPPING,
+                    ClientState.STOPPED,
+                    ClientState.DISPOSED,
+                ):
+                    self._log.info(
+                        "Client state changed during reconnection delay, aborting reconnection",
+                    )
+                    return
+
+                # Ensure we're in RECONNECTING state before starting reconnection
+                if not self._is_in_state(ClientState.RECONNECTING):
+                    await self._state_machine.transition_to(ClientState.RECONNECTING)
+
+                # Initiate reconnection
+                await self.initiate_reconnection()
+            except Exception as e:
+                self._log.error(f"Error during disconnection handling: {e}")
+            finally:
+                # Clear the disconnection in progress flag
+                self._disconnection_in_progress = False
+
+    async def _default_notify_client_to_degrade(self) -> None:
+        """
+        Implement client degradation notification.
+
+        This is a placeholder method that will be replaced by a callback from the client
+        with a function that performs the actual degradation.
+
+        """
+        self._log.warning("Client degradation callback not set - using default implementation")
+        # Default implementation does nothing but log a warning
+
+    async def initiate_reconnection(self) -> None:
+        """
+        Initiate the reconnection process with backoff strategy.
+        """
+        try:
+            # Track the reconnection attempt
+            self._connection_attempts += 1
+            current_attempt = self._connection_attempts
+
+            # Check if we've exceeded the maximum number of connection attempts
+            if (
+                self._max_connection_attempts > 0
+                and current_attempt > self._max_connection_attempts
+            ):
+                if not self._indefinite_reconnect:
+                    self._log.error(
+                        f"Exceeded maximum connection attempts ({self._max_connection_attempts}), "
+                        f"giving up reconnection",
+                    )
+                    # Transition to STOPPED state since we're giving up
+                    await self._state_machine.transition_to(ClientState.STOPPING)
+                    await self._state_machine.transition_to(ClientState.STOPPED)
+                    return
+                else:
+                    self._log.warning(
+                        f"Exceeded maximum connection attempts ({self._max_connection_attempts}), "
+                        f"but continuing due to indefinite_reconnect=True",
+                    )
+
+            self._log.info(f"Initiating reconnection (attempt {current_attempt})")
+
+            # Ensure we're in RECONNECTING state
+            if not self._is_in_state(ClientState.RECONNECTING):
+                await self._state_machine.transition_to(ClientState.RECONNECTING)
+
+            # Use the client's reconnection callback if available, otherwise use our own connect method
+            if self._client_reconnection_callback is not None:
+                # Use the client's reconnection method
+                self._log.debug("Using client reconnection callback")
+                await self._client_reconnection_callback()
+                # If successful, reset connection attempts
+                self._connection_attempts = 0
+            else:
+                # Attempt to connect using our own method
+                try:
+                    await self.connect()
+                    # If successful, reset connection attempts
+                    self._connection_attempts = 0
+                except Exception as e:
+                    self._log.error(f"Reconnection attempt {current_attempt} failed: {e}")
+                    # Schedule another reconnection attempt with backoff
+                    delay = self.calculate_reconnect_delay()
+                    self._log.info(f"Scheduling next reconnection attempt in {delay:.1f}s")
+
+                    # Create a task for the next reconnection attempt
+                    self._create_task(
+                        self._delayed_reconnection(delay),
+                        log_msg=f"Delayed reconnection (attempt {current_attempt + 1})",
+                    )
+        except Exception as e:
+            self._log.error(f"Error in reconnection process: {e}")
+
+    async def _delayed_reconnection(self, delay: float) -> None:
+        """
+        Handle delayed reconnection attempts.
+
+        Parameters
+        ----------
+        delay : float
+            The delay in seconds before attempting reconnection.
+
+        """
+        try:
+            await asyncio.sleep(delay)
+            # Check if client is still in a state that allows reconnection
+            if not self._is_in_state(
+                ClientState.STOPPING,
+                ClientState.STOPPED,
+                ClientState.DISPOSED,
+            ):
+                await self.initiate_reconnection()
+            else:
+                self._log.info(
+                    "Client state changed during reconnection delay, aborting reconnection",
+                )
+        except Exception as e:
+            self._log.error(f"Error in delayed reconnection: {e}")
+
+    async def start_heartbeat_monitor(self) -> Coroutine[Any, Any, Any]:
+        """
+        Start the heartbeat monitor task.
+
+        Returns
+        -------
+        asyncio.Task
+            The created task.
+
+        """
+        # Update the initial server response time to avoid false disconnections
+        self._connection_monitor.update_last_server_response_time()
+
+        return self._connection_monitor.run_heartbeat_monitor()
+
+    async def start_connection_watchdog(self) -> None:
+        """
+        Start the connection watchdog task.
+
+        Returns
+        -------
+        None
+            This method doesn't return anything, it just starts the watchdog.
+
+        """
+        # Update the initial server response time to avoid false disconnections
+        self._connection_monitor.update_last_server_response_time()
+
+        # Return the coroutine directly so it can be awaited
+        await self._connection_monitor.run_connection_watchdog()
