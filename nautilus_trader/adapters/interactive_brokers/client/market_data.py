@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2021 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2025 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -22,21 +22,26 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 import pytz
+from ibapi.client import EClient
 from ibapi.common import BarData
 from ibapi.common import HistoricalTickLast
 from ibapi.common import MarketDataTypeEnum
 from ibapi.common import TickAttribBidAsk
 from ibapi.common import TickAttribLast
 
-# fmt: off
-from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin
+from nautilus_trader.adapters.interactive_brokers.client.common import Requests
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscription
+from nautilus_trader.adapters.interactive_brokers.client.common import Subscriptions
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
 from nautilus_trader.adapters.interactive_brokers.parsing.data import bar_spec_to_bar_size
 from nautilus_trader.adapters.interactive_brokers.parsing.data import generate_trade_id
 from nautilus_trader.adapters.interactive_brokers.parsing.data import timedelta_to_duration_str
 from nautilus_trader.adapters.interactive_brokers.parsing.data import what_to_show
 from nautilus_trader.adapters.interactive_brokers.parsing.instruments import ib_contract_to_instrument_id
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import LiveClock
+from nautilus_trader.common.component import Logger
+from nautilus_trader.common.component import MessageBus
 from nautilus_trader.core.data import Data
 from nautilus_trader.model.data import Bar
 from nautilus_trader.model.data import BarType
@@ -46,20 +51,66 @@ from nautilus_trader.model.enums import AggressorSide
 from nautilus_trader.model.identifiers import InstrumentId
 
 
-# fmt: on
-
-
-class InteractiveBrokersClientMarketDataMixin(BaseMixin):
+class MarketDataService:
     """
-    Handles market data requests, subscriptions and data processing for the
-    InteractiveBrokersClient.
+    Service that manages market data functionality for the InteractiveBrokersClient.
 
     This class handles real-time and historical market data subscription management,
     including subscribing and unsubscribing to ticks, bars, and other market data types.
     It processes and formats the received data to be compatible with the Nautilus
-    Trader.
+    Trader framework.
+
+    Parameters
+    ----------
+    log : Logger
+        The logger for the service.
+    eclient : EClient
+        The EClient instance.
+    msgbus : MessageBus
+        The message bus.
+    cache : Cache
+        The cache for instruments and data.
+    clock : LiveClock
+        The clock instance.
+    requests : Requests
+        The requests manager.
+    subscriptions : Subscriptions
+        The subscriptions manager.
+    next_req_id_func : callable
+        Function to get the next request ID.
+    await_request_func : callable
+        Function to await a request's completion.
+    end_request_func : callable
+        Function to end a request.
 
     """
+
+    def __init__(
+        self,
+        log: Logger,
+        eclient: EClient,
+        msgbus: MessageBus,
+        cache: Cache,
+        clock: LiveClock,
+        requests: Requests,
+        subscriptions: Subscriptions,
+        next_req_id_func: Callable[[], int],
+        await_request_func: Callable[..., Any],
+        end_request_func: Callable[..., Any],
+    ) -> None:
+        self._log = log
+        self._eclient = eclient
+        self._msgbus = msgbus
+        self._cache = cache
+        self._clock = clock
+        self._requests = requests
+        self._subscriptions = subscriptions
+        self._next_req_id = next_req_id_func
+        self._await_request = await_request_func
+        self._end_request = end_request_func
+
+        # Initialize market data state
+        self._bar_type_to_last_bar: dict[str, BarData | None] = {}
 
     async def set_market_data_type(self, market_data_type: MarketDataTypeEnum) -> None:
         """
@@ -663,6 +714,51 @@ class InteractiveBrokersClientMarketDataMixin(BaseMixin):
         """
         self._msgbus.send(endpoint="DataEngine.process", msg=data)
 
+    async def get_price(self, contract: IBContract, tick_type: str = "MidPoint") -> Any:
+        """
+        Request market data for a specific contract and tick type.
+
+        This method requests market data from Interactive Brokers for the given
+        contract and tick type, waits for the response, and returns the result.
+
+        Parameters
+        ----------
+        contract : IBContract
+            The contract details for which market data is requested.
+        tick_type : str, optional
+            The type of tick data to request (default is "MidPoint").
+
+        Returns
+        -------
+        Any
+            The market data result.
+
+        Raises
+        ------
+        asyncio.TimeoutError
+            If the request times out.
+
+        """
+        req_id = self._next_req_id()
+        request = self._requests.add(
+            req_id=req_id,
+            name=f"{contract.symbol}-{tick_type}",
+            handle=functools.partial(
+                self._eclient.reqMktData,
+                req_id,
+                contract,
+                tick_type,
+                False,
+                False,
+                [],
+            ),
+            cancel=functools.partial(self._eclient.cancelMktData, req_id),
+        )
+        request.handle()
+        return await self._await_request(request, timeout=60)
+
+    # Event handlers for processing market data
+
     async def process_market_data_type(self, *, req_id: int, market_data_type: int) -> None:
         """
         Return the market data type (real-time, frozen, delayed, delayed-frozen)
@@ -882,46 +978,3 @@ class InteractiveBrokersClientMarketDataMixin(BaseMixin):
         if not done:
             return
         await self._process_trade_ticks(req_id, ticks)
-
-    async def get_price(self, contract, tick_type="MidPoint"):
-        """
-        Request market data for a specific contract and tick type.
-
-        This method requests market data from Interactive Brokers for the given
-        contract and tick type, waits for the response, and returns the result.
-
-        Parameters
-        ----------
-        contract : IBContract
-            The contract details for which market data is requested.
-        tick_type : str, optional
-            The type of tick data to request (default is "MidPoint").
-
-        Returns
-        -------
-        Any
-            The market data result.
-
-        Raises
-        ------
-        asyncio.TimeoutError
-            If the request times out.
-
-        """
-        req_id = self._next_req_id()
-        request = self._requests.add(
-            req_id=req_id,
-            name=f"{contract.symbol}-{tick_type}",
-            handle=functools.partial(
-                self._eclient.reqMktData,
-                req_id,
-                contract,
-                tick_type,
-                False,
-                False,
-                [],
-            ),
-            cancel=functools.partial(self._eclient.cancelMktData, req_id),
-        )
-        request.handle()
-        return await self._await_request(request, timeout=60)

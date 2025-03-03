@@ -17,6 +17,7 @@ import asyncio
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import suppress
+from unittest.mock import AsyncMock
 from unittest.mock import MagicMock
 
 import pytest
@@ -142,6 +143,10 @@ async def test_request_concurrency():
         # Simulate making a request
         task = asyncio.create_task(slow_request_handler(req_id))
         tasks.append(task)
+        
+    # Ensure all tasks are awaited at the end
+    for task in tasks:
+        await task
 
     # Wait for all requests to complete or timeout
     try:

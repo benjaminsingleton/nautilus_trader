@@ -119,6 +119,9 @@ async def test_start_tasks(ib_client, mock_coroutines):
 
     ib_client._connection_service = MagicMock()
     ib_client._connection_service.start_connection_watchdog = AsyncMock()
+    
+    # Create a proper AsyncMock for run_connection_watchdog that returns a completed future
+    connection_monitor_mock.run_connection_watchdog = AsyncMock(return_value=None)
     ib_client._connection_service._connection_monitor = connection_monitor_mock
 
     task_mock = AsyncMock()
