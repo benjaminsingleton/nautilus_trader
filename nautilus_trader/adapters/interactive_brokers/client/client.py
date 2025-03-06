@@ -51,7 +51,7 @@ from nautilus_trader.adapters.interactive_brokers.client.common import Subscript
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscriptions
 from nautilus_trader.adapters.interactive_brokers.client.connection import ConnectionService
 from nautilus_trader.adapters.interactive_brokers.client.contract import InteractiveBrokersClientContractMixin
-from nautilus_trader.adapters.interactive_brokers.client.error import InteractiveBrokersClientErrorMixin
+from nautilus_trader.adapters.interactive_brokers.client.error import ErrorService
 from nautilus_trader.adapters.interactive_brokers.client.error import handle_ib_error
 from nautilus_trader.adapters.interactive_brokers.client.market_data import MarketDataService
 from nautilus_trader.adapters.interactive_brokers.client.order import InteractiveBrokersClientOrderMixin
@@ -71,7 +71,6 @@ from nautilus_trader.model.data import TradeTick
 from nautilus_trader.model.enums import AggressorSide
 from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.model.identifiers import InstrumentId
-from nautilus_trader.model.identifiers import TradeId
 
 
 # fmt: on
@@ -592,7 +591,6 @@ class InteractiveBrokersClient(
     Component,
     InteractiveBrokersClientOrderMixin,
     InteractiveBrokersClientContractMixin,
-    InteractiveBrokersClientErrorMixin,
 ):
     """
     A client component that interfaces with the Interactive Brokers TWS or Gateway.
@@ -681,6 +679,7 @@ class InteractiveBrokersClient(
         self.registered_nautilus_clients: set = set()
         self._event_subscriptions: dict[str, Callable] = {}
         self._active_tasks: set[asyncio.Task] = set()  # For tracking tasks
+        self._order_id_to_order_ref: dict[int, AccountOrderRef] = {}
 
         # Subscriptions
         self._requests = Requests()
@@ -689,9 +688,19 @@ class InteractiveBrokersClient(
         # Initialize mixins with appropriate parameters
         InteractiveBrokersClientOrderMixin.__init__(self)
         InteractiveBrokersClientContractMixin.__init__(self)
-        InteractiveBrokersClientErrorMixin.__init__(self)
 
         # Create services
+        self._error_service = ErrorService(
+            log=self._log,
+            state_machine=self._state_machine,
+            connection_manager=self._connection_manager,
+            requests=self._requests,
+            subscriptions=self._subscriptions,
+            event_subscriptions=self._event_subscriptions,
+            end_request_func=self._end_request,
+            order_id_to_order_ref=self._order_id_to_order_ref,
+        )
+
         self._connection_service = ConnectionService(
             log=self._log,
             host=self._host,
@@ -763,11 +772,13 @@ class InteractiveBrokersClient(
             str,
             dict[str, Execution | CommissionReport | str],
         ] = {}
-        self._order_id_to_order_ref: dict[int, AccountOrderRef] = {}
         self._next_valid_order_id: int = -1
 
         # Start client
         self._request_id_seq: int = 10000
+
+        # Market data related attributes
+        self._bar_type_to_last_bar: dict[str, BarData] = {}
 
         # Use weak references to allow proper garbage collection
         self._weakref = weakref.ref(self)
@@ -1030,10 +1041,10 @@ class InteractiveBrokersClient(
         await self._connection_service.start_connection_watchdog()
 
         # Then create a task for the connection monitor's run_connection_watchdog method
-        # Note: We need to pass the coroutine function reference, not call it and pass the result
-        # This ensures proper awaiting of the coroutine
+        # Create the coroutine and pass it to create_task
+        coro = self._connection_service._connection_monitor.run_connection_watchdog()
         task = await self._task_registry.create_task(
-            self._connection_service._connection_monitor.run_connection_watchdog,
+            coro,
             "connection_watchdog",
         )
         return task
@@ -1479,14 +1490,17 @@ class InteractiveBrokersClient(
         """
         # Create and register request
         req_id = self._next_req_id()
+
         # Need to provide a handle function for the request
-        dummy_handle = lambda: None
+        def dummy_handle():
+            return None
+
         request = self._requests.add(
-            req_id=req_id, 
-            name=f"get_price-{tick_type}", 
+            req_id=req_id,
+            name=f"get_price-{tick_type}",
             handle=dummy_handle,
         )
-        
+
         # Send request for market data
         self._eclient.reqMktData(
             req_id,
@@ -1494,9 +1508,9 @@ class InteractiveBrokersClient(
             tick_type,
             False,  # snapshot
             False,  # regulatory snapshot
-            [],     # market data options
+            [],  # market data options
         )
-        
+
         # Wait for the response with timeout
         # Mock the _await_request method in tests to avoid actual waiting
         try:
@@ -1504,9 +1518,9 @@ class InteractiveBrokersClient(
         finally:
             # Cancel the market data request to clean up
             self._eclient.cancelMktData(req_id)
-            
+
         return request.result
-        
+
     # Expose needed methods for testing compatibility
     async def _subscribe(
         self,
@@ -1552,7 +1566,7 @@ class InteractiveBrokersClient(
             self._log.info(f"Reusing existing Subscription instance for {subscription}")
 
         return subscription
-    
+
     async def _ib_bar_to_nautilus_bar(
         self,
         bar_type: BarType,
@@ -1561,7 +1575,8 @@ class InteractiveBrokersClient(
         is_revision: bool = False,
     ) -> Bar:
         """
-        Delegate to market data service _ib_bar_to_nautilus_bar method for backward compatibility.
+        Delegate to market data service _ib_bar_to_nautilus_bar method for backward
+        compatibility.
         """
         return await self._market_data_service._ib_bar_to_nautilus_bar(
             bar_type=bar_type,
@@ -1569,7 +1584,7 @@ class InteractiveBrokersClient(
             ts_init=ts_init,
             is_revision=is_revision,
         )
-    
+
     async def _process_bar_data(
         self,
         bar_type_str: str,
@@ -1578,7 +1593,8 @@ class InteractiveBrokersClient(
         historical: bool | None = False,
     ) -> Bar | None:
         """
-        Delegate to market data service _process_bar_data method for backward compatibility.
+        Delegate to market data service _process_bar_data method for backward
+        compatibility.
         """
         return await self._market_data_service._process_bar_data(
             bar_type_str=bar_type_str,
@@ -1586,7 +1602,7 @@ class InteractiveBrokersClient(
             handle_revised_bars=handle_revised_bars,
             historical=historical,
         )
-        
+
     async def _process_trade_ticks(self, req_id: int, ticks: list[HistoricalTickLast]) -> None:
         """
         Implement locally for test compatibility rather than delegating.
@@ -1595,7 +1611,7 @@ class InteractiveBrokersClient(
         if request := self._requests.get(req_id=req_id):
             instrument_id = InstrumentId.from_str(request.name[0])
             instrument = self._cache.instrument(instrument_id)
-            
+
             from nautilus_trader.adapters.interactive_brokers.parsing.data import generate_trade_id
 
             for tick in ticks:
@@ -1612,17 +1628,16 @@ class InteractiveBrokersClient(
                 request.result.append(trade_tick)
 
             self._end_request(req_id)
-            
+
         # Also forward to market data service
         await self._market_data_service._process_trade_ticks(req_id=req_id, ticks=ticks)
-        
-    @property
-    def _bar_type_to_last_bar(self) -> dict[str, BarData | None]:
+
+    def _get_bar_type_to_last_bar(self) -> dict[str, BarData | None]:
         """
         Access market data service's _bar_type_to_last_bar for backward compatibility.
         """
         return self._market_data_service._bar_type_to_last_bar
-        
+
     async def _handle_data(self, data: Data) -> None:
         """
         For test compatibility: handle data directly rather than delegating.
@@ -1673,7 +1688,7 @@ class InteractiveBrokersClient(
         )
 
         await self._handle_data(quote_tick)
-        
+
         # Forward to market data service
         await self._market_data_service.process_tick_by_tick_bid_ask(
             req_id=req_id,
@@ -1713,7 +1728,7 @@ class InteractiveBrokersClient(
         ts_event = pd.Timestamp.fromtimestamp(time, tz=pytz.utc).value
 
         from nautilus_trader.adapters.interactive_brokers.parsing.data import generate_trade_id
-        
+
         trade_tick = TradeTick(
             instrument_id=instrument_id,
             price=instrument.make_price(price),
@@ -1725,7 +1740,7 @@ class InteractiveBrokersClient(
         )
 
         await self._handle_data(trade_tick)
-        
+
         # Forward to market data service
         await self._market_data_service.process_tick_by_tick_all_last(
             req_id=req_id,
@@ -1757,7 +1772,7 @@ class InteractiveBrokersClient(
         # For tests, directly implement the handling
         if not (subscription := self._subscriptions.get(req_id=req_id)):
             return
-            
+
         bar_type = BarType.from_str(subscription.name)
         instrument = self._cache.instrument(bar_type.instrument_id)
 
@@ -1774,7 +1789,7 @@ class InteractiveBrokersClient(
         )
 
         await self._handle_data(bar)
-        
+
         # Forward to market data service
         await self._market_data_service.process_realtime_bar(
             req_id=req_id,
@@ -2462,3 +2477,35 @@ class InteractiveBrokersClient(
         else:
             prms = fnParams
         self._log.debug(f"TWS API prepared request: function={fnName} data={prms}")
+
+    async def process_error(
+        self,
+        *,
+        req_id: int,
+        error_code: int,
+        error_string: str,
+        advanced_order_reject_json: str = "",
+    ) -> None:
+        """
+        Process an error message from Interactive Brokers API.
+
+        This function delegates error processing to the error service.
+
+        Parameters
+        ----------
+        req_id : int
+            The request ID associated with the error.
+        error_code : int
+            The error code.
+        error_string : str
+            The error message string.
+        advanced_order_reject_json : str, optional
+            The JSON string for advanced order rejection.
+
+        """
+        await self._error_service.process_error(
+            req_id=req_id,
+            error_code=error_code,
+            error_string=error_string,
+            advanced_order_reject_json=advanced_order_reject_json,
+        )

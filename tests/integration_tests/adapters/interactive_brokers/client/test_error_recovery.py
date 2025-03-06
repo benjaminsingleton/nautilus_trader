@@ -25,7 +25,7 @@ from ibapi.errors import ALREADY_CONNECTED
 # from ibapi.errors import FAIL_SEND_REQMKT - missing in IB API version
 # fmt: off
 from nautilus_trader.adapters.interactive_brokers.client.common import ClientState
-from nautilus_trader.adapters.interactive_brokers.client.error import InteractiveBrokersClientErrorMixin
+from nautilus_trader.adapters.interactive_brokers.client.error import ErrorService
 
 
 # fmt: on
@@ -33,22 +33,23 @@ from nautilus_trader.adapters.interactive_brokers.client.error import Interactiv
 
 @pytest.mark.asyncio
 async def test_error_handling_connect_fail(ib_client):
-    # Arrange - Create an error handler mixin to test directly
-    error_handler = InteractiveBrokersClientErrorMixin()
+    # Arrange - Create an error handler service to test directly
+    error_handler = ErrorService(
+        log=MagicMock(),
+        state_machine=MagicMock(),
+        connection_manager=MagicMock(),
+        requests=MagicMock(),
+        subscriptions=MagicMock(),
+        event_subscriptions={},
+        end_request_func=MagicMock(),
+        order_id_to_order_ref={},
+    )
 
-    # Set needed components
-    error_handler._connection_manager = MagicMock()
-    error_handler._state_machine = MagicMock()
+    # Set up for the test
     error_handler._state_machine.transition_to = AsyncMock()
     error_handler._state_machine.current_state = ClientState.CONNECTING
-    error_handler._log = MagicMock()
-
-    # Set up additional required components
-    error_handler._requests = MagicMock()
     error_handler._requests.get = MagicMock(return_value=None)
-    error_handler._subscriptions = MagicMock()
     error_handler._subscriptions.get = MagicMock(return_value=None)
-    error_handler._order_id_to_order_ref = {}
     error_handler._create_task = MagicMock()
     error_handler._handle_connection_error = AsyncMock()
 
@@ -72,23 +73,24 @@ async def test_error_handling_connect_fail(ib_client):
 
 @pytest.mark.asyncio
 async def test_error_handling_already_connected(ib_client):
-    # Arrange - Create an error handler mixin to test directly
-    error_handler = InteractiveBrokersClientErrorMixin()
+    # Arrange - Create an error handler service to test directly
+    error_handler = ErrorService(
+        log=MagicMock(),
+        state_machine=MagicMock(),
+        connection_manager=MagicMock(),
+        requests=MagicMock(),
+        subscriptions=MagicMock(),
+        event_subscriptions={},
+        end_request_func=MagicMock(),
+        order_id_to_order_ref={},
+    )
 
-    # Set needed components
-    error_handler._connection_manager = MagicMock()
+    # Set up for the test
     error_handler._connection_manager.set_connected = AsyncMock()
-    error_handler._state_machine = MagicMock()
     error_handler._state_machine.transition_to = AsyncMock()
     error_handler._state_machine.current_state = ClientState.CONNECTING
-    error_handler._log = MagicMock()
-
-    # Set up additional required components
-    error_handler._requests = MagicMock()
     error_handler._requests.get = MagicMock(return_value=None)
-    error_handler._subscriptions = MagicMock()
     error_handler._subscriptions.get = MagicMock(return_value=None)
-    error_handler._order_id_to_order_ref = {}
     error_handler._create_task = MagicMock()
     error_handler._handle_connection_restored = AsyncMock()
 
@@ -108,28 +110,35 @@ async def test_error_handling_already_connected(ib_client):
 
 @pytest.mark.asyncio
 async def test_error_handling_request_failure():
-    # Arrange - Create an error handler mixin to test directly
-    error_handler = InteractiveBrokersClientErrorMixin()
-
-    # Set up mock components
-    error_handler._log = MagicMock()
-    error_handler._connection_manager = MagicMock()
-    error_handler._state_machine = MagicMock()
-    error_handler._state_machine.current_state = ClientState.READY
-    error_handler._subscriptions = MagicMock()
-    error_handler._subscriptions.get = MagicMock(return_value=None)
-    error_handler._order_id_to_order_ref = {}
-    error_handler._create_task = MagicMock()
-    error_handler._end_request = MagicMock()
-
-    # Create a mock request and set up request handling
+    # Arrange - Create a mock request and set up components
     mock_req = MagicMock()
     mock_req.req_id = 123
     mock_req.client_error_code = None
     mock_req.client_error_msg = None
-    error_handler._requests = MagicMock()
-    error_handler._requests.get = MagicMock(return_value=mock_req)
+
+    # Set up mock requests manager
+    mock_requests = MagicMock()
+    mock_requests.get = MagicMock(return_value=mock_req)
+
+    # Set up mock subscriptions
+    mock_subscriptions = MagicMock()
+    mock_subscriptions.get = MagicMock(return_value=None)
+
+    # Create the error handler service
+    error_handler = ErrorService(
+        log=MagicMock(),
+        state_machine=MagicMock(),
+        connection_manager=MagicMock(),
+        requests=mock_requests,
+        subscriptions=mock_subscriptions,
+        event_subscriptions={},
+        end_request_func=MagicMock(),
+        order_id_to_order_ref={},
+    )
+
+    # Mock the _handle_request_error method
     error_handler._handle_request_error = AsyncMock()
+    error_handler._create_task = MagicMock()
 
     # Act - simulate a request failure error using the IB API method name
     # Use hardcoded error code and message since FAIL_SEND_REQMKT may not be available in all IB API versions
