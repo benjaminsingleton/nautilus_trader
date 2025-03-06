@@ -232,9 +232,10 @@ async def test_submit_order(
 
     # We'll make our test more deterministic by not relying on the mock client callbacks
     # This will ensure a reliable test result
+    # With the OrderService pattern, we need to patch the client.place_order method instead
     mock_place_order = mocker.patch.object(
-        exec_client._client._eclient,
-        "placeOrder",
+        exec_client._client,
+        "place_order",
     )
 
     # Act
@@ -289,8 +290,8 @@ async def test_submit_order_what_if(
     exec_client.connect()
     await asyncio.sleep(0)
     mocker.patch.object(
-        exec_client._client._eclient,
-        "placeOrder",
+        exec_client._client,
+        "place_order",
         side_effect=partial(on_open_order_setup, exec_client._client, "PreSubmitted"),
     )
 
@@ -356,8 +357,8 @@ async def test_submit_order_list(
     # We'll directly manipulate the orders' statuses to ensure they're ACCEPTED
     # This avoids relying on the mock's callbacks which can be flaky
     mocker.patch.object(
-        exec_client._client._eclient,
-        "placeOrder",
+        exec_client._client,
+        "place_order",
     )
 
     # Act
@@ -420,10 +421,10 @@ async def test_modify_order(
     exec_client.connect()
     await asyncio.sleep(0)
 
-    # Create a simple mock for placeOrder
+    # Create a simple mock for place_order
     mock_place_order = mocker.patch.object(
-        exec_client._client._eclient,
-        "placeOrder",
+        exec_client._client,
+        "place_order",
     )
 
     # Create our order
@@ -494,10 +495,10 @@ async def test_modify_order_quantity(
     exec_client.connect()
     await asyncio.sleep(0)
 
-    # Create a simple mock for placeOrder
+    # Create a simple mock for place_order
     mock_place_order = mocker.patch.object(
-        exec_client._client._eclient,
-        "placeOrder",
+        exec_client._client,
+        "place_order",
     )
 
     # Create our order
@@ -564,10 +565,10 @@ async def test_modify_order_price(
     exec_client.connect()
     await asyncio.sleep(0)
 
-    # Create a simple mock for placeOrder
+    # Create a simple mock for place_order
     mock_place_order = mocker.patch.object(
-        exec_client._client._eclient,
-        "placeOrder",
+        exec_client._client,
+        "place_order",
     )
 
     # Create our order
@@ -638,12 +639,12 @@ async def test_cancel_order(
 
     # Create mocks for our API calls
     _ = mocker.patch.object(
-        exec_client._client._eclient,
-        "placeOrder",
+        exec_client._client,
+        "place_order",
     )
     mock_cancel_order = mocker.patch.object(
-        exec_client._client._eclient,
-        "cancelOrder",
+        exec_client._client,
+        "cancel_order",
     )
 
     # Create our order
@@ -702,10 +703,10 @@ async def test_on_exec_details(
     exec_client.connect()
     await asyncio.sleep(0)
 
-    # Create a simple mock for placeOrder
+    # Create a simple mock for place_order
     _ = mocker.patch.object(
-        exec_client._client._eclient,
-        "placeOrder",
+        exec_client._client,
+        "place_order",
     )
 
     # Create our order

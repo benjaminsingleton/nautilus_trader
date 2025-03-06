@@ -90,17 +90,17 @@ async def test_process_connection_error():
     mock_state_machine = MagicMock()
     mock_state_machine.transition_to = AsyncMock()
     mock_state_machine.current_state = ClientState.CONNECTING
-    
+
     mock_connection_manager = MagicMock()
     mock_connection_manager.set_connected = AsyncMock()
     mock_connection_manager.is_connected = True
-    
+
     mock_requests = MagicMock()
     mock_requests.get = MagicMock(return_value=None)
-    
+
     mock_subscriptions = MagicMock()
     mock_subscriptions.get = MagicMock(return_value=None)
-    
+
     error_service = ErrorService(
         log=MagicMock(),
         state_machine=mock_state_machine,
@@ -132,14 +132,14 @@ async def test_handle_request_error():
     # Arrange
     mock_requests = MagicMock()
     mock_requests.get = MagicMock()
-    
+
     # Create a mock request
     mock_request = MagicMock(spec=Request)
     mock_request.req_id = 123
     mock_requests.get.return_value = mock_request
-    
+
     mock_end_request_func = MagicMock()
-    
+
     error_service = ErrorService(
         log=MagicMock(),
         state_machine=MagicMock(),
@@ -163,14 +163,14 @@ async def test_handle_subscription_error():
     # Arrange
     mock_subscriptions = MagicMock()
     mock_subscriptions.get = MagicMock()
-    
+
     # Create a mock subscription
     mock_subscription = MagicMock()
     mock_subscription.name = "test_subscription"
     mock_subscription.req_id = 456
     mock_subscription.handle = MagicMock()
     mock_subscriptions.get.return_value = mock_subscription
-    
+
     error_service = ErrorService(
         log=MagicMock(),
         state_machine=MagicMock(),

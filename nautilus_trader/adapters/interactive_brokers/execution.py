@@ -170,6 +170,19 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
         return self._instrument_provider  # type: ignore
 
     async def _connect(self):
+        """
+        Connect to Interactive Brokers and set up event subscriptions.
+
+        This method waits for the client to be ready, validates the account ID,
+        initializes the instrument provider, sets up event subscriptions, loads
+        initial account data, and finally sets the client as connected.
+
+        Raises
+        ------
+        ValueError
+            If the specified account ID is not found in the connected TWS/Gateway.
+
+        """
         # Connect client
         await self._client.wait_until_ready(self._connection_timeout)
         await self.instrument_provider.initialize()
@@ -214,8 +227,11 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
         venue_order_id: VenueOrderId | None = None,
     ) -> OrderStatusReport | None:
         """
-        Generate an `OrderStatusReport` for the given order identifier parameter(s). If
-        the order is not found, or an error occurs, then logs and returns ``None``.
+        Generate an `OrderStatusReport` for the given order identifier parameter(s).
+
+        This method retrieves order information from Interactive Brokers using the OrderService,
+        and creates an OrderStatusReport for the specified order. If the order is not found,
+        or an error occurs, it logs the issue and returns `None`.
 
         Parameters
         ----------
@@ -254,15 +270,27 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
             ):
                 report = await self._parse_ib_order_to_order_status_report(ib_order)
                 break
+
         if report is None:
             self._log.warning(
                 f"Order {client_order_id=}, {venue_order_id} not found, canceling",
             )
-            self._on_order_status(
-                order_ref=client_order_id.value,
-                order_status="Cancelled",
-                reason="Not found in query",
-            )
+            # Use process_order_status to ensure compatibility with the OrderService
+            if client_order_id:
+                await self._client.process_order_status(
+                    order_id=0,  # Not a valid order ID
+                    status="Cancelled",
+                    filled=Decimal(0),
+                    remaining=Decimal(0),
+                    avg_fill_price=0.0,
+                    perm_id=0,
+                    parent_id=0,
+                    last_fill_price=0.0,
+                    client_id=0,
+                    why_held="Not found in query",
+                    mkt_cap_price=0.0,
+                )
+
         return report
 
     async def _parse_ib_order_to_order_status_report(self, ib_order: IBOrder) -> OrderStatusReport:
@@ -574,6 +602,19 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
             )
 
     async def _submit_order_list(self, command: SubmitOrderList) -> None:
+        """
+        Submit a list of orders to Interactive Brokers.
+
+        This method transforms a list of Nautilus orders into IB orders, preserving
+        the parent-child relationships, and submits them to the exchange through
+        the OrderService.
+
+        Parameters
+        ----------
+        command : SubmitOrderList
+            The command containing the list of orders to submit.
+
+        """
         PyCondition.type(command, SubmitOrderList, "command")
 
         order_id_map = {}
@@ -611,6 +652,7 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
         # Mark last order to transmit
         ib_orders[-1].transmit = True
 
+        # Consider using place_order_list if available in OrderService
         for ib_order in ib_orders:
             # Map the Parent Order Ids
             if parent_id := order_id_map.get(ib_order.parentId):
@@ -795,6 +837,22 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
         self._send_order_status_report(report)
 
     def _on_open_order(self, order_ref: str, order: IBOrder, order_state: IBOrderState) -> None:
+        """
+        Handle open order callbacks from Interactive Brokers.
+
+        This callback is invoked by the OrderService when an open order notification is received.
+        It processes the order information and generates appropriate order events.
+
+        Parameters
+        ----------
+        order_ref : str
+            The client order ID reference.
+        order : IBOrder
+            The IB order object.
+        order_state : IBOrderState
+            The current state of the order.
+
+        """
         if not order.orderRef:
             self._log.warning(
                 f"ClientOrderId not available, order={order.__dict__}, state={order_state.__dict__}",
@@ -854,6 +912,21 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
             )
 
     def _on_order_status(self, order_ref: str, order_status: str, reason: str = "") -> None:
+        """
+        Handle order status updates from Interactive Brokers.
+
+        This callback receives order status updates from the OrderService.
+
+        Parameters
+        ----------
+        order_ref : str
+            The client order ID reference.
+        order_status : str
+            The IB order status string.
+        reason : str, optional
+            Additional reason for the status (usually provided for rejections).
+
+        """
         if order_status in ["ApiCancelled", "Cancelled"]:
             status = OrderStatus.CANCELED
         elif order_status == "PendingCancel":
@@ -894,6 +967,22 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
         execution: Execution,
         commission_report: CommissionReport,
     ) -> None:
+        """
+        Handle execution details callbacks from Interactive Brokers.
+
+        This callback is invoked by the OrderService when an order execution is received.
+        It processes the fill information and generates an order filled event.
+
+        Parameters
+        ----------
+        order_ref : str
+            The client order ID reference.
+        execution : Execution
+            The execution details from IB.
+        commission_report : CommissionReport
+            The commission report for the execution.
+
+        """
         if not execution.orderRef:
             self._log.warning(f"ClientOrderId not available, order={execution.__dict__}")
             return

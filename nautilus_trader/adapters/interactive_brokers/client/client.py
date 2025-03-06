@@ -36,8 +36,11 @@ from ibapi.common import HistoricalTickLast
 from ibapi.common import MarketDataTypeEnum
 from ibapi.common import TickAttribBidAsk
 from ibapi.common import TickAttribLast
+from ibapi.contract import Contract
 from ibapi.errors import BAD_LENGTH
 from ibapi.execution import Execution
+from ibapi.order import Order as IBOrder
+from ibapi.order_state import OrderState as IBOrderState
 from ibapi.utils import current_fn_name
 
 # fmt: off
@@ -54,7 +57,7 @@ from nautilus_trader.adapters.interactive_brokers.client.contract import Interac
 from nautilus_trader.adapters.interactive_brokers.client.error import ErrorService
 from nautilus_trader.adapters.interactive_brokers.client.error import handle_ib_error
 from nautilus_trader.adapters.interactive_brokers.client.market_data import MarketDataService
-from nautilus_trader.adapters.interactive_brokers.client.order import InteractiveBrokersClientOrderMixin
+from nautilus_trader.adapters.interactive_brokers.client.order import OrderService
 from nautilus_trader.adapters.interactive_brokers.client.wrapper import InteractiveBrokersEWrapper
 from nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
@@ -589,7 +592,6 @@ class ConnectionManager:
 
 class InteractiveBrokersClient(
     Component,
-    InteractiveBrokersClientOrderMixin,
     InteractiveBrokersClientContractMixin,
 ):
     """
@@ -597,8 +599,8 @@ class InteractiveBrokersClient(
 
     This class uses composition to integrate various services to provide functionality
     for connection management, account management, market data, and order processing with
-    Interactive Brokers. It inherits from both `Component` and various mixins to provide
-    event-driven responses and custom component behavior.
+    Interactive Brokers. It inherits from `Component` and uses composition with various
+    services to provide event-driven responses and custom component behavior.
 
     Parameters
     ----------
@@ -680,13 +682,16 @@ class InteractiveBrokersClient(
         self._event_subscriptions: dict[str, Callable] = {}
         self._active_tasks: set[asyncio.Task] = set()  # For tracking tasks
         self._order_id_to_order_ref: dict[int, AccountOrderRef] = {}
+        self._exec_id_details: dict[
+            str,
+            dict[str, Execution | CommissionReport | str],
+        ] = {}
 
         # Subscriptions
         self._requests = Requests()
         self._subscriptions = Subscriptions()
 
-        # Initialize mixins with appropriate parameters
-        InteractiveBrokersClientOrderMixin.__init__(self)
+        # Initialize ContractMixin
         InteractiveBrokersClientContractMixin.__init__(self)
 
         # Create services
@@ -755,6 +760,24 @@ class InteractiveBrokersClient(
             end_request_func=self._end_request,
         )
 
+        # Create order service
+        self._order_service = OrderService(
+            log=self._log,
+            eclient=self._eclient,
+            requests=self._requests,
+            event_subscriptions=self._event_subscriptions,
+            is_ib_connected=self._is_ib_connected,
+            next_req_id_func=self._next_req_id,
+            await_request_func=self._await_request,
+            end_request_func=self._end_request,
+            order_id_to_order_ref=self._order_id_to_order_ref,
+        )
+        # Set the accounts function for the order service
+        self._order_service.set_accounts_func(self.accounts)
+
+        # For testing purposes, direct access to _exec_id_details is needed
+        self._order_service._exec_id_details = self._exec_id_details
+
         # Register state change callbacks
         self._state_machine.register_state_changed_callback(
             ClientState.READY,
@@ -766,13 +789,6 @@ class InteractiveBrokersClient(
         )
 
         # Connection management is fully delegated to ConnectionService
-
-        # OrderMixin
-        self._exec_id_details: dict[
-            str,
-            dict[str, Execution | CommissionReport | str],
-        ] = {}
-        self._next_valid_order_id: int = -1
 
         # Start client
         self._request_id_seq: int = 10000
@@ -1865,6 +1881,133 @@ class InteractiveBrokersClient(
             req_id=req_id,
             ticks=ticks,
             done=done,
+        )
+
+    # Order service delegations
+    def place_order(self, order: IBOrder) -> None:
+        """
+        Place an order through the EClient.
+        """
+        self._order_service.place_order(order)
+
+    def place_order_list(self, orders: list[IBOrder]) -> None:
+        """
+        Place a list of orders through the EClient.
+        """
+        self._order_service.place_order_list(orders)
+
+    def cancel_order(self, order_id: int, manual_cancel_order_time: str = "") -> None:
+        """
+        Cancel an order through the EClient.
+        """
+        self._order_service.cancel_order(order_id, manual_cancel_order_time)
+
+    def cancel_all_orders(self) -> None:
+        """
+        Request to cancel all open orders through the EClient.
+        """
+        self._order_service.cancel_all_orders()
+
+    async def get_open_orders(self, account_id: str) -> list[IBOrder]:
+        """
+        Retrieve a list of open orders for a specific account.
+        """
+        return await self._order_service.get_open_orders(account_id)
+
+    def next_order_id(self) -> int:
+        """
+        Retrieve the next valid order ID to be used for a new order.
+        """
+        return self._order_service.next_order_id()
+
+    async def process_next_valid_id(self, *, order_id: int) -> None:
+        """
+        Receive the next valid order id.
+        """
+        await self._order_service.process_next_valid_id(order_id=order_id)
+
+    async def process_open_order(
+        self,
+        *,
+        order_id: int,
+        contract: Contract,
+        order: IBOrder,
+        order_state: IBOrderState,
+    ) -> None:
+        """
+        Feed in currently open orders.
+        """
+        await self._order_service.process_open_order(
+            order_id=order_id,
+            contract=contract,
+            order=order,
+            order_state=order_state,
+        )
+
+    async def process_open_order_end(self) -> None:
+        """
+        Notifies the end of the open orders' reception.
+        """
+        await self._order_service.process_open_order_end()
+
+    async def process_order_status(
+        self,
+        *,
+        order_id: int,
+        status: str,
+        filled: Decimal,
+        remaining: Decimal,
+        avg_fill_price: float,
+        perm_id: int,
+        parent_id: int,
+        last_fill_price: float,
+        client_id: int,
+        why_held: str,
+        mkt_cap_price: float,
+    ) -> None:
+        """
+        Get the up-to-date information of an order every time it changes.
+        """
+        await self._order_service.process_order_status(
+            order_id=order_id,
+            status=status,
+            filled=filled,
+            remaining=remaining,
+            avg_fill_price=avg_fill_price,
+            perm_id=perm_id,
+            parent_id=parent_id,
+            last_fill_price=last_fill_price,
+            client_id=client_id,
+            why_held=why_held,
+            mkt_cap_price=mkt_cap_price,
+        )
+
+    async def process_exec_details(
+        self,
+        *,
+        req_id: int,
+        contract: Contract,
+        execution: Execution,
+    ) -> None:
+        """
+        Provide the executions that happened in the prior 24 hours.
+        """
+        await self._order_service.process_exec_details(
+            req_id=req_id,
+            contract=contract,
+            execution=execution,
+        )
+
+    async def process_commission_report(
+        self,
+        *,
+        commission_report: CommissionReport,
+    ) -> None:
+        """
+        Provide the CommissionReport of an Execution.
+        """
+        await self._order_service.process_commission_report(
+            commission_report=commission_report,
         )
 
     @handle_ib_error

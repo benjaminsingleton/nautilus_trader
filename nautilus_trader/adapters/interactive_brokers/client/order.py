@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2021 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2025 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,8 +13,13 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+import asyncio
+from collections.abc import Callable
+from collections.abc import Coroutine
 from decimal import Decimal
+from typing import Any
 
+from ibapi.client import EClient
 from ibapi.commission_report import CommissionReport
 from ibapi.contract import Contract
 from ibapi.execution import Execution
@@ -22,12 +27,14 @@ from ibapi.order import Order as IBOrder
 from ibapi.order_state import OrderState as IBOrderState
 
 from nautilus_trader.adapters.interactive_brokers.client.common import AccountOrderRef
-from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin
+from nautilus_trader.adapters.interactive_brokers.client.common import Request
+from nautilus_trader.adapters.interactive_brokers.client.common import Requests
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
+from nautilus_trader.common.component import Logger
 from nautilus_trader.common.enums import LogColor
 
 
-class InteractiveBrokersClientOrderMixin(BaseMixin):
+class OrderService:
     """
     Manages orders for the InteractiveBrokersClient.
 
@@ -36,7 +43,57 @@ class InteractiveBrokersClientOrderMixin(BaseMixin):
     ensuring that actions such as placing, modifying, and canceling orders are correctly
     reflected in both systems.
 
+    Parameters
+    ----------
+    log : Logger
+        The logger for the service.
+    eclient : EClient
+        The EClient for communication with TWS/Gateway.
+    requests : Requests
+        The request registry for tracking order requests.
+    event_subscriptions : dict[str, Callable]
+        Registry for event handlers.
+    is_ib_connected : asyncio.Event
+        Event flag for IB connection status.
+    next_req_id_func : Callable[[], int]
+        Function to get the next request ID.
+    await_request_func : Callable[[Request, int, Any, bool], Coroutine[Any, Any, Any]]
+        Function to await requests.
+    end_request_func : Callable[[int, bool, type | BaseException | None], None]
+        Function to end requests.
+    order_id_to_order_ref : dict[int, AccountOrderRef]
+        Mapping from order IDs to order references.
+
     """
+
+    def __init__(
+        self,
+        log: Logger,
+        eclient: EClient,
+        requests: Requests,
+        event_subscriptions: dict[str, Callable],
+        is_ib_connected: asyncio.Event,
+        next_req_id_func: Callable[[], int],
+        await_request_func: Callable[[Request, int, Any, bool], Coroutine[Any, Any, Any]],
+        end_request_func: Callable[[int, bool, type | BaseException | None], None],
+        order_id_to_order_ref: dict[int, AccountOrderRef],
+    ) -> None:
+        self._log = log
+        self._eclient = eclient
+        self._requests = requests
+        self._event_subscriptions = event_subscriptions
+        self._is_ib_connected = is_ib_connected
+        self._next_req_id = next_req_id_func
+        self._await_request = await_request_func
+        self._end_request = end_request_func
+        self._order_id_to_order_ref = order_id_to_order_ref
+
+        # Order tracking
+        self._next_valid_order_id: int = -1
+        self._exec_id_details: dict[
+            str,
+            dict[str, Execution | CommissionReport | str],
+        ] = {}
 
     def place_order(self, order: IBOrder) -> None:
         """
@@ -120,7 +177,7 @@ class InteractiveBrokersClientOrderMixin(BaseMixin):
                 return []
             request.handle()
 
-        all_orders: list[IBOrder] | None = await self._await_request(request, 30)
+        all_orders: list[IBOrder] | None = await self._await_request(request, 30, None, False)
         if all_orders:
             orders: list[IBOrder] = [order for order in all_orders if order.account == account_id]
         else:
@@ -152,9 +209,21 @@ class InteractiveBrokersClientOrderMixin(BaseMixin):
 
         """
         self._next_valid_order_id = max(self._next_valid_order_id, order_id, 101)
-        if self.accounts() and not self._is_ib_connected.is_set():
+        if self._accounts_func() and not self._is_ib_connected.is_set():
             self._log.debug("`_is_ib_connected` set by `nextValidId`.", LogColor.BLUE)
             self._is_ib_connected.set()
+
+    def set_accounts_func(self, accounts_func: Callable[[], set[str]]) -> None:
+        """
+        Set the function to retrieve account information.
+
+        Parameters
+        ----------
+        accounts_func : Callable[[], set[str]]
+            The function that returns account information.
+
+        """
+        self._accounts_func = accounts_func
 
     async def process_open_order(
         self,
@@ -204,7 +273,7 @@ class InteractiveBrokersClientOrderMixin(BaseMixin):
         Notifies the end of the open orders' reception.
         """
         if request := self._requests.get(name="OpenOrders"):
-            self._end_request(request.req_id)
+            self._end_request(request.req_id, True, None)
 
     async def process_order_status(
         self,
