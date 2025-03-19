@@ -34,9 +34,12 @@ from ibapi.common import NO_VALID_ID
 from ibapi.common import BarData
 from ibapi.common import HistoricalTickLast
 from ibapi.common import MarketDataTypeEnum
+from ibapi.common import SetOfFloat
+from ibapi.common import SetOfString
 from ibapi.common import TickAttribBidAsk
 from ibapi.common import TickAttribLast
 from ibapi.contract import Contract
+from ibapi.contract import ContractDetails
 from ibapi.errors import BAD_LENGTH
 from ibapi.execution import Execution
 from ibapi.order import Order as IBOrder
@@ -53,7 +56,7 @@ from nautilus_trader.adapters.interactive_brokers.client.common import Requests
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscription
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscriptions
 from nautilus_trader.adapters.interactive_brokers.client.connection import ConnectionService
-from nautilus_trader.adapters.interactive_brokers.client.contract import InteractiveBrokersClientContractMixin
+from nautilus_trader.adapters.interactive_brokers.client.contract import ContractService
 from nautilus_trader.adapters.interactive_brokers.client.error import ErrorService
 from nautilus_trader.adapters.interactive_brokers.client.error import handle_ib_error
 from nautilus_trader.adapters.interactive_brokers.client.market_data import MarketDataService
@@ -61,6 +64,7 @@ from nautilus_trader.adapters.interactive_brokers.client.order import OrderServi
 from nautilus_trader.adapters.interactive_brokers.client.wrapper import InteractiveBrokersEWrapper
 from nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
+from nautilus_trader.adapters.interactive_brokers.common import IBContractDetails
 from nautilus_trader.cache.cache import Cache
 from nautilus_trader.common.component import Component
 from nautilus_trader.common.component import LiveClock
@@ -590,10 +594,7 @@ class ConnectionManager:
             return False
 
 
-class InteractiveBrokersClient(
-    Component,
-    InteractiveBrokersClientContractMixin,
-):
+class InteractiveBrokersClient(Component):
     """
     A client component that interfaces with the Interactive Brokers TWS or Gateway.
 
@@ -691,9 +692,6 @@ class InteractiveBrokersClient(
         self._requests = Requests()
         self._subscriptions = Subscriptions()
 
-        # Initialize ContractMixin
-        InteractiveBrokersClientContractMixin.__init__(self)
-
         # Create services
         self._error_service = ErrorService(
             log=self._log,
@@ -778,6 +776,16 @@ class InteractiveBrokersClient(
         # For testing purposes, direct access to _exec_id_details is needed
         self._order_service._exec_id_details = self._exec_id_details
 
+        # Create contract service
+        self._contract_service = ContractService(
+            log=self._log,
+            eclient=self._eclient,
+            requests=self._requests,
+            next_req_id_func=self._next_req_id,
+            await_request_func=self._await_request,
+            end_request_func=self._end_request,
+        )
+
         # Register state change callbacks
         self._state_machine.register_state_changed_callback(
             ClientState.READY,
@@ -860,6 +868,121 @@ class InteractiveBrokersClient(
         await self._task_registry.create_task(
             self._connection_manager.set_ready(False, "State machine entered STOPPING state"),
             "set_not_ready_on_stopping_state",
+        )
+
+    # Contract service forwarding methods
+
+    async def get_contract_details(self, contract: IBContract) -> list[IBContractDetails] | None:
+        """
+        Request details for a specific contract.
+
+        Parameters
+        ----------
+        contract : IBContract
+            The contract for which details are requested.
+
+        Returns
+        -------
+        list[IBContractDetails] | ``None``
+
+        """
+        return await self._contract_service.get_contract_details(contract)
+
+    async def get_matching_contracts(self, pattern: str) -> list[IBContract] | None:
+        """
+        Request contracts matching a specific pattern.
+
+        Parameters
+        ----------
+        pattern : str
+            The pattern to match for contract symbols.
+
+        Returns
+        -------
+        list[IBContract] | ``None``
+
+        """
+        return await self._contract_service.get_matching_contracts(pattern)
+
+    async def get_option_chains(self, underlying: IBContract) -> Any | None:
+        """
+        Request option chains for a specific underlying contract.
+
+        Parameters
+        ----------
+        underlying : IBContract
+            The underlying contract for which option chains are requested.
+
+        Returns
+        -------
+        list[IBContractDetails] | ``None``
+
+        """
+        return await self._contract_service.get_option_chains(underlying)
+
+    async def process_contract_details(
+        self,
+        *,
+        req_id: int,
+        contract_details: ContractDetails,
+    ) -> None:
+        """
+        Forward contract details to the contract service.
+        """
+        await self._contract_service.process_contract_details(
+            req_id=req_id,
+            contract_details=contract_details,
+        )
+
+    async def process_contract_details_end(self, *, req_id: int) -> None:
+        """
+        Forward contract details end notification to the contract service.
+        """
+        await self._contract_service.process_contract_details_end(req_id=req_id)
+
+    async def process_security_definition_option_parameter(
+        self,
+        *,
+        req_id: int,
+        exchange: str,
+        underlying_con_id: int,
+        trading_class: str,
+        multiplier: str,
+        expirations: SetOfString,
+        strikes: SetOfFloat,
+    ) -> None:
+        """
+        Forward security definition option parameter to the contract service.
+        """
+        await self._contract_service.process_security_definition_option_parameter(
+            req_id=req_id,
+            exchange=exchange,
+            underlying_con_id=underlying_con_id,
+            trading_class=trading_class,
+            multiplier=multiplier,
+            expirations=expirations,
+            strikes=strikes,
+        )
+
+    async def process_security_definition_option_parameter_end(self, *, req_id: int) -> None:
+        """
+        Forward security definition option parameter end notification to the contract
+        service.
+        """
+        await self._contract_service.process_security_definition_option_parameter_end(req_id=req_id)
+
+    async def process_symbol_samples(
+        self,
+        *,
+        req_id: int,
+        contract_descriptions: list,
+    ) -> None:
+        """
+        Forward symbol samples to the contract service.
+        """
+        await self._contract_service.process_symbol_samples(
+            req_id=req_id,
+            contract_descriptions=contract_descriptions,
         )
 
     def _start(self) -> None:
