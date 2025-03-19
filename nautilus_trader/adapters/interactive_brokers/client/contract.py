@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2021 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2025 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -14,26 +14,61 @@
 # -------------------------------------------------------------------------------------------------
 
 import functools
+from collections.abc import Callable
 from typing import Any
 
+from ibapi.client import EClient
 from ibapi.common import SetOfFloat
 from ibapi.common import SetOfString
 from ibapi.contract import ContractDetails
 
-from nautilus_trader.adapters.interactive_brokers.client.common import BaseMixin
+from nautilus_trader.adapters.interactive_brokers.client.common import Requests
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
 from nautilus_trader.adapters.interactive_brokers.common import IBContractDetails
+from nautilus_trader.common.component import Logger
 
 
-class InteractiveBrokersClientContractMixin(BaseMixin):
+class ContractService:
     """
-    Handles contracts (instruments) for the InteractiveBrokersClient.
+    Service that manages contract (instrument) functionality for the
+    InteractiveBrokersClient.
 
     This class provides methods to request contract details, matching contracts, and
     option chains. The InteractiveBrokersInstrumentProvider class uses methods defined
     in this class to request the data it needs.
 
+    Parameters
+    ----------
+    log : Logger
+        The logger for the service.
+    eclient : EClient
+        The EClient instance.
+    requests : Requests
+        The requests manager.
+    next_req_id_func : callable
+        Function to get the next request ID.
+    await_request_func : callable
+        Function to await a request's completion.
+    end_request_func : callable
+        Function to end a request.
+
     """
+
+    def __init__(
+        self,
+        log: Logger,
+        eclient: EClient,
+        requests: Requests,
+        next_req_id_func: Callable[[], int],
+        await_request_func: Callable[..., Any],
+        end_request_func: Callable[..., Any],
+    ) -> None:
+        self._log = log
+        self._eclient = eclient
+        self._requests = requests
+        self._next_req_id = next_req_id_func
+        self._await_request = await_request_func
+        self._end_request = end_request_func
 
     async def get_contract_details(self, contract: IBContract) -> list[IBContractDetails] | None:
         """
@@ -46,7 +81,7 @@ class InteractiveBrokersClientContractMixin(BaseMixin):
 
         Returns
         -------
-        IBContractDetails | ``None``
+        list[IBContractDetails] | ``None``
 
         """
         name = str(contract)
@@ -64,9 +99,9 @@ class InteractiveBrokersClientContractMixin(BaseMixin):
             if not request:
                 return None
             request.handle()
-            return await self._await_request(request, 10, supress_timeout_warning=True)
+            return await self._await_request(request, 10, suppress_timeout_warning=True)
         else:
-            return await self._await_request(request, 10, supress_timeout_warning=True)
+            return await self._await_request(request, 10, suppress_timeout_warning=True)
 
     async def get_matching_contracts(self, pattern: str) -> list[IBContract] | None:
         """

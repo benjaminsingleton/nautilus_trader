@@ -21,7 +21,7 @@ use nautilus_core::{
     ffi::{cvec::CVec, parsing::u8_as_bool},
 };
 
-use crate::engine::TimeEventAccumulator;
+use crate::accumulator::TimeEventAccumulator;
 
 #[repr(C)]
 pub struct TimeEventAccumulatorAPI(Box<TimeEventAccumulator>);
@@ -42,7 +42,7 @@ impl DerefMut for TimeEventAccumulatorAPI {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn time_event_accumulator_new() -> TimeEventAccumulatorAPI {
-    TimeEventAccumulatorAPI(Box::new(TimeEventAccumulator::new()))
+    TimeEventAccumulatorAPI(Box::default())
 }
 
 #[unsafe(no_mangle)]

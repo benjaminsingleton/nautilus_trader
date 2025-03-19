@@ -27,7 +27,7 @@ use nautilus_analysis::analyzer::PortfolioAnalyzer;
 use nautilus_common::{
     cache::Cache,
     clock::Clock,
-    msgbus::{MessageBus, handler::ShareableMessageHandler},
+    msgbus::{self, MessageBus, handler::ShareableMessageHandler},
 };
 use nautilus_model::{
     accounts::AccountAny,
@@ -35,8 +35,8 @@ use nautilus_model::{
     enums::{OrderSide, OrderType, PositionSide, PriceType},
     events::{AccountState, OrderEventAny, position::PositionEvent},
     identifiers::{InstrumentId, Venue},
-    instruments::InstrumentAny,
-    orders::OrderAny,
+    instruments::{Instrument, InstrumentAny},
+    orders::{Order, OrderAny},
     position::Position,
     types::{Currency, Money, Price},
 };
@@ -203,7 +203,7 @@ impl Portfolio {
 
         let update_order_handler = {
             let cache = cache;
-            let msgbus = msgbus.clone();
+            let msgbus = msgbus;
             let clock = clock.clone();
             let inner = inner;
             ShareableMessageHandler(Rc::new(UpdateOrderHandler {
@@ -220,16 +220,15 @@ impl Portfolio {
             }))
         };
 
-        let mut msgbus = msgbus.borrow_mut();
-        msgbus.register("Portfolio.update_account", update_account_handler.clone());
+        msgbus::register("Portfolio.update_account", update_account_handler.clone());
 
-        msgbus.subscribe("data.quotes.*", update_quote_handler, Some(10));
+        msgbus::subscribe("data.quotes.*", update_quote_handler, Some(10));
         if bar_updates {
-            msgbus.subscribe("data.quotes.*EXTERNAL", update_bar_handler, Some(10));
+            msgbus::subscribe("data.quotes.*EXTERNAL", update_bar_handler, Some(10));
         }
-        msgbus.subscribe("events.order.*", update_order_handler, Some(10));
-        msgbus.subscribe("events.position.*", update_position_handler, Some(10));
-        msgbus.subscribe("events.account.*", update_account_handler, Some(10));
+        msgbus::subscribe("events.order.*", update_order_handler, Some(10));
+        msgbus::subscribe("events.position.*", update_position_handler, Some(10));
+        msgbus::subscribe("events.account.*", update_account_handler, Some(10));
     }
 
     pub fn reset(&mut self) {
@@ -1285,7 +1284,7 @@ fn update_order(
         let mut portfolio_clone = Portfolio {
             clock: clock.clone(),
             cache: cache.clone(),
-            msgbus: msgbus.clone(),
+            msgbus,
             inner: inner.clone(),
             config: PortfolioConfig::default(), // TODO: TBD
         };
@@ -1319,7 +1318,7 @@ fn update_order(
     borrowed_cache.update_account(account.clone()).unwrap();
 
     if let Some(account_state) = account_state {
-        msgbus.borrow().publish(
+        msgbus::publish(
             &Ustr::from(&format!("events.account.{}", account.id())),
             &account_state,
         );

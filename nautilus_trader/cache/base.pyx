@@ -67,6 +67,10 @@ cdef class CacheFacade:
         """Abstract method (implement in subclass)."""
         raise NotImplementedError("method `price` must be implemented in the subclass")  # pragma: no cover
 
+    cpdef dict[InstrumentId, Price] prices(self, PriceType price_type):
+        """Abstract method (implement in subclass)."""
+        raise NotImplementedError("method `prices` must be implemented in the subclass")  # pragma: no cover
+
     cpdef OrderBook order_book(self, InstrumentId instrument_id):
         """Abstract method (implement in subclass)."""
         raise NotImplementedError("method `order_book` must be implemented in the subclass")  # pragma: no cover
@@ -75,11 +79,11 @@ cdef class CacheFacade:
         """Abstract method (implement in subclass)."""
         raise NotImplementedError("method `own_order_book` must be implemented in the subclass")  # pragma: no cover
 
-    cpdef dict[Decimal, list[Order]] own_bid_orders(self, InstrumentId instrument_id):
+    cpdef dict[Decimal, list[Order]] own_bid_orders(self, InstrumentId instrument_id, set[OrderStatus] status = None):
         """Abstract method (implement in subclass)."""
         raise NotImplementedError("method `own_bid_book` must be implemented in the subclass")  # pragma: no cover
 
-    cpdef dict[Decimal, list[Order]] own_ask_orders(self, InstrumentId instrument_id):
+    cpdef dict[Decimal, list[Order]] own_ask_orders(self, InstrumentId instrument_id, set[OrderStatus] status = None):
         """Abstract method (implement in subclass)."""
         raise NotImplementedError("method `own_ask_book` must be implemented in the subclass")  # pragma: no cover
 

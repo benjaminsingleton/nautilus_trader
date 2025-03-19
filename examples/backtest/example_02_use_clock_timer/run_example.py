@@ -16,103 +16,84 @@
 
 from decimal import Decimal
 
-import pandas as pd
 from strategy import SimpleTimerStrategy
 
-from nautilus_trader import TEST_DATA_DIR
+from examples.utils.data_provider import prepare_demo_data_eurusd_futures_1min
 from nautilus_trader.backtest.engine import BacktestEngine
 from nautilus_trader.config import BacktestEngineConfig
 from nautilus_trader.config import LoggingConfig
+from nautilus_trader.core.nautilus_pyo3 import BarType
+from nautilus_trader.model import Bar
 from nautilus_trader.model import TraderId
 from nautilus_trader.model.currencies import USD
-from nautilus_trader.model.data import Bar
-from nautilus_trader.model.data import BarType
 from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import OmsType
 from nautilus_trader.model.identifiers import Venue
+from nautilus_trader.model.instruments.base import Instrument
 from nautilus_trader.model.objects import Money
-from nautilus_trader.persistence.wranglers import BarDataWrangler
-from nautilus_trader.test_kit.providers import TestInstrumentProvider
 
 
 if __name__ == "__main__":
-    # Step 1: Configure and create backtest engine
+    """
+    This example demonstrates how to use timer functionality in a trading strategy.
+
+    The strategy sets up a timer that triggers every 3 minutes and processes bar data.
+    This is useful for implementing periodic actions in your trading strategies.
+
+    """
+
+    # ----------------------------------------------------------------------------------
+    # 1. Configure and create backtest engine
+    # ----------------------------------------------------------------------------------
+
     engine_config = BacktestEngineConfig(
-        trader_id=TraderId("BACKTEST_TRADER-001"),
+        trader_id=TraderId("BACKTEST-TIMER-001"),  # Unique identifier for this backtest
         logging=LoggingConfig(
-            log_level="DEBUG",  # set DEBUG log level for console to see loaded bars in logs
+            log_level="DEBUG",  # Set to DEBUG to see detailed timer and bar processing logs
         ),
     )
     engine = BacktestEngine(config=engine_config)
 
-    # Step 2: Define exchange and add it to the engine
-    XCME = Venue("XCME")
+    # ----------------------------------------------------------------------------------
+    # 2. Prepare market data
+    # ----------------------------------------------------------------------------------
+
+    prepared_data: dict = prepare_demo_data_eurusd_futures_1min()
+    venue_name: str = prepared_data["venue_name"]
+    eurusd_instrument: Instrument = prepared_data["instrument"]
+    eurusd_1min_bartype: BarType = prepared_data["bar_type"]
+    eurusd_1min_bars: list[Bar] = prepared_data["bars_list"]
+
+    # ----------------------------------------------------------------------------------
+    # 3. Configure trading environment
+    # ----------------------------------------------------------------------------------
+
+    # Set up the trading venue with a margin account
     engine.add_venue(
-        venue=XCME,
-        oms_type=OmsType.NETTING,  # Order Management System type
-        account_type=AccountType.MARGIN,  # Type of trading account
-        starting_balances=[Money(1_000_000, USD)],  # Initial account balance
-        base_currency=USD,  # Base currency for account
-        default_leverage=Decimal(1),  # No leverage used for account
+        venue=Venue(venue_name),
+        oms_type=OmsType.NETTING,  # Use a netting order management system
+        account_type=AccountType.MARGIN,  # Use a margin trading account
+        starting_balances=[Money(1_000_000, USD)],  # Set initial capital
+        base_currency=USD,  # Account currency
+        default_leverage=Decimal(1),  # No leverage (1:1)
     )
 
-    # Step 3: Create instrument definition and add it to the engine
-    EURUSD_FUTURES_INSTRUMENT = TestInstrumentProvider.eurusd_future(
-        expiry_year=2024,
-        expiry_month=3,
-        venue_name="XCME",
-    )
-    engine.add_instrument(EURUSD_FUTURES_INSTRUMENT)
+    # Register the trading instrument
+    engine.add_instrument(eurusd_instrument)
 
-    # ==========================================================================================
-    # Loading bars from CSV
-    # ------------------------------------------------------------------------------------------
+    # Load historical market data
+    engine.add_data(eurusd_1min_bars)
 
-    # Step 4a: Load bar data from CSV file -> into pandas DataFrame
-    csv_file_path = rf"{TEST_DATA_DIR}/xcme/6EH4.XCME_1min_bars_20240101_20240131.csv.gz"
-    df = pd.read_csv(
-        csv_file_path,
-        header=0,
-        index_col=False,
-    )
+    # ----------------------------------------------------------------------------------
+    # 4. Configure and run strategy
+    # ----------------------------------------------------------------------------------
 
-    # Step 4b: Restructure DataFrame into required structure, that can be passed `BarDataWrangler`
-    #   - 5 required columns: 'open', 'high', 'low', 'close', 'volume' (volume is optional)
-    #   - column 'timestamp': should be in index of the DataFrame
-    df = (
-        # Change order of columns
-        df.reindex(columns=["timestamp_utc", "open", "high", "low", "close", "volume"])
-        # Convert string timestamps into datetime
-        .assign(
-            timestamp_utc=lambda dft: pd.to_datetime(
-                dft["timestamp_utc"],
-                format="%Y-%m-%d %H:%M:%S",
-            ),
-        )
-        # Rename column to required name
-        .rename(columns={"timestamp_utc": "timestamp"}).set_index("timestamp")
-    )
-
-    # Step 4c: Define type of loaded bars
-    EURUSD_FUTURES_1MIN_BARTYPE = BarType.from_str(
-        f"{EURUSD_FUTURES_INSTRUMENT.id}-1-MINUTE-LAST-EXTERNAL",
-    )
-
-    # Step 4d: `BarDataWrangler` converts each row into objects of type `Bar`
-    wrangler = BarDataWrangler(EURUSD_FUTURES_1MIN_BARTYPE, EURUSD_FUTURES_INSTRUMENT)
-    eurusd_1min_bars_list: list[Bar] = wrangler.process(df)
-
-    # Step 4e: Add loaded data to the engine
-    engine.add_data(eurusd_1min_bars_list)
-
-    # ------------------------------------------------------------------------------------------
-
-    # Step 5: Create strategy and add it to the engine
-    strategy = SimpleTimerStrategy(primary_bar_type=EURUSD_FUTURES_1MIN_BARTYPE)
+    # Create and register the timer strategy
+    strategy = SimpleTimerStrategy(primary_bar_type=eurusd_1min_bartype)
     engine.add_strategy(strategy)
 
-    # Step 6: Run engine = Run backtest
+    # Execute the backtest
     engine.run()
 
-    # Step 7: Release system resources
+    # Clean up resources
     engine.dispose()

@@ -23,12 +23,13 @@ use std::{
 use nautilus_common::{
     cache::Cache,
     messages::data::DataResponse,
-    msgbus::{MessageBus, handler::MessageHandler},
+    msgbus::{self, MessageBus, handler::MessageHandler},
     timer::TimeEvent,
 };
 use nautilus_model::{
     data::Data,
     identifiers::{InstrumentId, Venue},
+    instruments::Instrument,
 };
 use ustr::Ustr;
 
@@ -151,11 +152,11 @@ impl BookSnapshotter {
             .order_book(instrument_id)
             .unwrap_or_else(|| panic!("OrderBook for {instrument_id} was not in cache"));
 
-        if book.count == 0 {
+        if book.update_count == 0 {
             log::debug!("OrderBook for {instrument_id} not yet updated for snapshot");
             return;
         }
 
-        msgbus.publish(topic, book as &dyn Any);
+        msgbus::publish(topic, book as &dyn Any);
     }
 }

@@ -11,7 +11,7 @@ name = "nautilus_backtest"
 crate-type = ["rlib", "staticlib"]
 
 [features]
-default = ["ffi", "python"]
+default = []
 extension-module = [
   "pyo3/extension-module",
   "nautilus-common/extension-module",
@@ -41,6 +41,7 @@ nautilus-core = { path = "../core" }
 nautilus-data = { path = "../data" }
 nautilus-execution = { path = "../execution" }
 nautilus-model = { path = "../model" , features = ["stubs"]}
+nautilus-system = { path = "../system" }
 anyhow = { workspace = true }
 chrono = { workspace = true }
 log = { workspace = true }

@@ -29,7 +29,7 @@ mod serial_tests {
     use nautilus_core::UnixNanos;
     use nautilus_infrastructure::sql::cache::get_pg_cache_database;
     use nautilus_model::{
-        accounts::{any::AccountAny, cash::CashAccount},
+        accounts::{AccountAny, CashAccount},
         data::{
             DataType,
             stubs::{quote_ethusdt_binance, stub_bar, stub_trade_ethusdt_buyer},
@@ -47,7 +47,7 @@ mod serial_tests {
                 currency_pair_ethusdt, equity_aapl, futures_contract_es, option_contract_appl,
             },
         },
-        orders::{builder::OrderTestBuilder, stubs::TestOrderEventStubs},
+        orders::{Order, builder::OrderTestBuilder, stubs::TestOrderEventStubs},
         position::Position,
         types::{Currency, Price, Quantity},
     };

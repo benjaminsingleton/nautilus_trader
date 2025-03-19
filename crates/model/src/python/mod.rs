@@ -13,7 +13,9 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-//! Python bindings from `pyo3`.
+#![allow(clippy::missing_errors_doc)] // Allow missing errors docs for Python modules at this stage
+
+//! Python bindings from [PyO3](https://pyo3.rs).
 
 use pyo3::prelude::*;
 
@@ -134,6 +136,7 @@ pub fn model(_: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<crate::instruments::BettingInstrument>()?;
     m.add_class::<crate::instruments::BinaryOption>()?;
     m.add_class::<crate::instruments::CryptoFuture>()?;
+    m.add_class::<crate::instruments::CryptoOption>()?;
     m.add_class::<crate::instruments::CryptoPerpetual>()?;
     m.add_class::<crate::instruments::CurrencyPair>()?;
     m.add_class::<crate::instruments::Equity>()?;

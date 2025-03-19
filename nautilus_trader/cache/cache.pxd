@@ -95,6 +95,7 @@ cdef class Cache(CacheFacade):
     cdef dict _index_exec_spawn_orders
     cdef set _index_orders
     cdef set _index_orders_open
+    cdef set _index_orders_open_pyo3
     cdef set _index_orders_closed
     cdef set _index_orders_emulated
     cdef set _index_orders_inflight
@@ -177,6 +178,7 @@ cdef class Cache(CacheFacade):
     cpdef void update_account(self, Account account)
     cpdef void update_order(self, Order order)
     cpdef void update_order_pending_cancel_local(self, Order order)
+    cpdef void update_own_order_book(self, Order order)
     cpdef void update_position(self, Position position)
     cpdef void update_actor(self, Actor actor)
     cpdef void update_strategy(self, Strategy strategy)
@@ -184,6 +186,7 @@ cdef class Cache(CacheFacade):
     cpdef void delete_strategy(self, Strategy strategy)
 
     cpdef void heartbeat(self, datetime timestamp)
+    cpdef void audit_own_order_books(self)
 
     cdef timedelta _get_timedelta(self, BarType bar_type)
 

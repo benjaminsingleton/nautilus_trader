@@ -22,7 +22,6 @@ from unittest.mock import Mock
 import pytest
 
 from nautilus_trader.adapters.interactive_brokers.client.common import AccountOrderRef
-from nautilus_trader.adapters.interactive_brokers.common import IBContract
 from tests.integration_tests.adapters.interactive_brokers.test_kit import IBTestContractStubs
 from tests.integration_tests.adapters.interactive_brokers.test_kit import IBTestExecStubs
 
@@ -93,7 +92,7 @@ async def test_get_open_orders(ib_client):
     order_2 = IBTestExecStubs.aapl_buy_ib_order(order_id=2, account_id=account_id_1)
     order_3 = IBTestExecStubs.aapl_buy_ib_order(order_id=3, account_id=account_id_2)
     all_orders = [order_1, order_2, order_3]
-    ib_client._await_request = AsyncMock(return_value=all_orders)
+    ib_client._order_service._await_request = AsyncMock(return_value=all_orders)
 
     ib_client._eclient.reqOpenOrders = MagicMock()
 
@@ -123,11 +122,14 @@ async def test_openOrder(ib_client):
     # Arrange
     mock_request = Mock()
     mock_request.result = []
-    ib_client._requests = Mock()
-    ib_client._requests.get = Mock(return_value=mock_request)
+    # Mock the order service's requests
+    ib_client._order_service._requests = Mock()
+    ib_client._order_service._requests.get = Mock(return_value=mock_request)
     handler_mock = Mock()
-    ib_client._event_subscriptions = Mock()
-    ib_client._event_subscriptions.get = Mock(return_value=handler_mock)
+    # Mock event subscriptions for both client and service
+    handler_mock = Mock()
+    ib_client._order_service._event_subscriptions = Mock()
+    ib_client._order_service._event_subscriptions.get = Mock(return_value=handler_mock)
 
     order_id = 1
     contract = IBTestContractStubs.aapl_equity_contract()
@@ -143,7 +145,7 @@ async def test_openOrder(ib_client):
     )
 
     # Assert
-    assert ib_client._order_id_to_order_ref[order.orderId]
+    assert ib_client._order_service._order_id_to_order_ref[order.orderId]
     assert mock_request.result == [order]
     handler_mock.assert_not_called()
 
@@ -151,9 +153,14 @@ async def test_openOrder(ib_client):
 @pytest.mark.asyncio
 async def test_process_open_order_when_request_not_present(ib_client):
     # Arrange
+    # Set up the requests mock to return None (no request)
+    ib_client._order_service._requests = Mock()
+    ib_client._order_service._requests.get = Mock(return_value=None)
+
+    # Set up the event_subscriptions mock
     handler_mock = Mock()
-    ib_client._event_subscriptions = Mock()
-    ib_client._event_subscriptions.get = Mock(return_value=handler_mock)
+    ib_client._order_service._event_subscriptions = Mock()
+    ib_client._order_service._event_subscriptions.get = Mock(return_value=handler_mock)
 
     order_id = 1
     contract = IBTestContractStubs.aapl_equity_contract()
@@ -169,21 +176,26 @@ async def test_process_open_order_when_request_not_present(ib_client):
     )
 
     # Assert
-    kwargs = handler_mock.call_args_list[-1].kwargs
-    assert kwargs["order_ref"] == "O-20240102-1754-001-000-1"
-    assert kwargs["order"].contract == IBContract(**contract.__dict__)
-    assert kwargs["order"].order_state == order_state
+    ib_client._order_service._event_subscriptions.get.assert_called_with(
+        f"openOrder-{order.account}",
+        None,
+    )
+    handler_mock.assert_called_with(
+        order_ref="O-20240102-1754-001-000-1",
+        order=order,
+        order_state=order_state,
+    )
 
 
 @pytest.mark.asyncio
 async def test_orderStatus(ib_client):
     # Arrange
-    ib_client._order_id_to_order_ref = {
+    ib_client._order_service._order_id_to_order_ref = {
         1: AccountOrderRef(order_id=1, account_id="DU123456"),
     }
     handler_func = Mock()
-    ib_client._event_subscriptions = Mock()
-    ib_client._event_subscriptions.get = MagicMock(return_value=handler_func)
+    ib_client._order_service._event_subscriptions = Mock()
+    ib_client._order_service._event_subscriptions.get = MagicMock(return_value=handler_func)
 
     # Act
     await ib_client.process_order_status(
@@ -201,7 +213,10 @@ async def test_orderStatus(ib_client):
     )
 
     # Assert
-    ib_client._event_subscriptions.get.assert_called_with("orderStatus-DU123456", None)
+    ib_client._order_service._event_subscriptions.get.assert_called_with(
+        "orderStatus-DU123456",
+        None,
+    )
     handler_func.assert_called_with(
         order_ref=1,
         order_status="Filled",
@@ -220,7 +235,8 @@ async def test_execDetails(ib_client):
 
     commission_report_mock = Mock()
 
-    ib_client._exec_id_details = {
+    # Set up _exec_id_details in the OrderService
+    ib_client._order_service._exec_id_details = {
         execution.execId: {
             "execution": execution,
             "order_ref": execution.orderRef,
@@ -229,8 +245,8 @@ async def test_execDetails(ib_client):
     }
 
     handler_func = Mock()
-    ib_client._event_subscriptions = Mock()
-    ib_client._event_subscriptions.get = MagicMock(return_value=handler_func)
+    ib_client._order_service._event_subscriptions = Mock()
+    ib_client._order_service._event_subscriptions.get = MagicMock(return_value=handler_func)
 
     # Act
     await ib_client.process_exec_details(
@@ -240,6 +256,10 @@ async def test_execDetails(ib_client):
     )
 
     # Assert
+    ib_client._order_service._event_subscriptions.get.assert_called_with(
+        f"execDetails-{execution.acctNumber}",
+        None,
+    )
     handler_func.assert_called_with(
         order_ref="O-20220104-1432-001-000-1",
         execution=execution,
@@ -256,7 +276,8 @@ async def test_commissionReport(ib_client):
     )
     commission_report = IBTestExecStubs.commission()
 
-    ib_client._exec_id_details = {
+    # Set up _exec_id_details in the OrderService
+    ib_client._order_service._exec_id_details = {
         commission_report.execId: {
             "execution": execution,
             "order_ref": execution.orderRef.rsplit(":", 1)[0],
@@ -265,13 +286,18 @@ async def test_commissionReport(ib_client):
     }
 
     handler_func = Mock()
-    ib_client._event_subscriptions = Mock()
-    ib_client._event_subscriptions.get = MagicMock(return_value=handler_func)
+    ib_client._order_service._event_subscriptions = Mock()
+    ib_client._order_service._event_subscriptions.get = MagicMock(return_value=handler_func)
 
     # Act
     await ib_client.process_commission_report(commission_report=commission_report)
 
     # Assert
+    account = execution.acctNumber
+    ib_client._order_service._event_subscriptions.get.assert_called_with(
+        f"execDetails-{account}",
+        None,
+    )
     handler_func.assert_called_with(
         order_ref="O-20220104-1432-001-000-1",
         execution=execution,

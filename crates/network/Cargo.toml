@@ -11,7 +11,7 @@ name = "nautilus_network"
 crate-type = ["rlib", "staticlib", "cdylib"]
 
 [features]
-default = ["python", "std"]
+default = []
 extension-module = [
   "pyo3/extension-module",
   "nautilus-core/extension-module",
@@ -39,9 +39,9 @@ tokio-tungstenite = { workspace = true }
 dashmap = "6.1.0"
 http = "1.2.0"
 nonzero_ext = "0.3.0"
-rustls = { version = "0.23.23", features = ["ring"] }
+rustls = { version = "0.23.25", features = ["ring"] }
 rustls-pemfile = "2.2.0"
-tokio-rustls = "0.26.1"
+tokio-rustls = "0.26.2"
 webpki-roots = "0.26.8"
 
 [dev-dependencies]

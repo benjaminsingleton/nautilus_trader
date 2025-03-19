@@ -29,19 +29,19 @@ jobs:
           python-version: "3.11"
           free-disk-space: "true"
 
-      - name: Install
-        run: poetry install
+      - name: Ensure script is executable
+        run: chmod +x scripts/package-version.sh
 
       - name: Create git tag
         uses: salsify/action-detect-and-tag-new-version@v2
         with:
-          version-command: poetry version --short
+          version-command: ./scripts/package-version.sh
 
       - name: Set output
         id: vars
         run: |
-          echo "TAG_NAME=v$(poetry version --short)" >> $GITHUB_ENV
-          echo "RELEASE_NAME=NautilusTrader $(poetry version --short) Beta" >> $GITHUB_ENV
+          echo "TAG_NAME=v$(./scripts/package-version.sh)" >> $GITHUB_ENV
+          echo "RELEASE_NAME=NautilusTrader $(./scripts/package-version.sh) Beta" >> $GITHUB_ENV
           sed -n '/^#/,${p;/^---/q};w RELEASE.md' RELEASES.md
 
       - name: Create GitHub release
@@ -73,17 +73,27 @@ jobs:
           python-version: "3.11"
           free-disk-space: "true"
 
-      - name: Install / Build
+      - name: Build sdist
         run: |
-          poetry install
-          poetry build --format sdist
+          uv build --sdist
 
       - name: Set release output
         id: vars
         run: |
-          echo "ASSET_PATH=$(find ./dist -mindepth 1 -print -quit)" >> $GITHUB_ENV
-          cd dist
-          echo "ASSET_NAME=$(printf '%s\0' * | awk 'BEGIN{RS="\0"} {print;  exit}')" >> $GITHUB_ENV
+          if [ ! -d "./dist" ]; then
+            echo "Error: dist directory not found"
+            exit 1
+          fi
+
+          ASSET_PATH=$(find ./dist -name "*.tar.gz" -type f | xargs ls -t 2>/dev/null | head -n 1)
+
+          if [ -z "$ASSET_PATH" ]; then
+            echo "Error: No .tar.gz files found in dist directory"
+            exit 1
+          fi
+
+          echo "ASSET_PATH=$ASSET_PATH" >> $GITHUB_ENV
+          echo "ASSET_NAME=$(basename "$ASSET_PATH")" >> $GITHUB_ENV
 
       - name: Upload release asset
         id: upload-release-asset
@@ -94,13 +104,13 @@ jobs:
           upload_url: ${{ needs.tag-release.outputs.upload_url }}
           asset_path: ${{ env.ASSET_PATH }}
           asset_name: ${{ env.ASSET_NAME }}
-          asset_content_type: application/zip
+          asset_content_type: application/gzip
 
       - name: Publish to PyPI
         env:
-          POETRY_HTTP_BASIC_PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          POETRY_HTTP_BASIC_PYPI_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: poetry publish
+          UV_PUBLISH_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          UV_PUBLISH_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: uv publish
 
   publish-wheels:
     if: github.event.workflow_run.conclusion == 'success'
@@ -127,17 +137,28 @@ jobs:
           python-version: ${{ matrix.python-version }}
           free-disk-space: "true"
 
-      - name: Install / Build
-        run: |
-          poetry install
-          poetry build --format wheel
+      - name: Build wheel
+        uses: ./.github/actions/common-wheel-build
+        with:
+          python-version: ${{ matrix.python-version }}
 
       - name: Set release output
         id: vars
         run: |
-          echo "ASSET_PATH=$(find ./dist -mindepth 1 -print -quit)" >> $GITHUB_ENV
-          cd dist
-          echo "ASSET_NAME=$(printf '%s\0' * | awk 'BEGIN{RS="\0"} {print;  exit}')" >> $GITHUB_ENV
+          if [ ! -d "./dist" ]; then
+            echo "Error: dist directory not found"
+            exit 1
+          fi
+
+          ASSET_PATH=$(find ./dist -name "*.whl" -type f | xargs ls -t 2>/dev/null | head -n 1)
+
+          if [ -z "$ASSET_PATH" ]; then
+            echo "Error: No .whl files found in dist directory"
+            exit 1
+          fi
+
+          echo "ASSET_PATH=$ASSET_PATH" >> $GITHUB_ENV
+          echo "ASSET_NAME=$(basename "$ASSET_PATH")" >> $GITHUB_ENV
 
       - name: Upload release asset
         id: upload-release-asset-unix
@@ -152,6 +173,6 @@ jobs:
 
       - name: Publish to PyPI
         env:
-          POETRY_HTTP_BASIC_PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          POETRY_HTTP_BASIC_PYPI_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: poetry publish
+          UV_PUBLISH_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          UV_PUBLISH_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: uv publish
