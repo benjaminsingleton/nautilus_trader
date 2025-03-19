@@ -29,6 +29,7 @@ from ibapi.common import MarketDataTypeEnum
 from ibapi.common import TickAttribBidAsk
 from ibapi.common import TickAttribLast
 
+# fmt: off
 from nautilus_trader.adapters.interactive_brokers.client.common import Requests
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscription
 from nautilus_trader.adapters.interactive_brokers.client.common import Subscriptions
@@ -49,6 +50,9 @@ from nautilus_trader.model.data import QuoteTick
 from nautilus_trader.model.data import TradeTick
 from nautilus_trader.model.enums import AggressorSide
 from nautilus_trader.model.identifiers import InstrumentId
+
+
+# fmt: on
 
 
 class MarketDataService:
@@ -778,8 +782,6 @@ class MarketDataService:
         )
         request.handle()
         return await self._await_request(request, timeout=60)
-
-    # Event handlers for processing market data
 
     async def process_market_data_type(self, *, req_id: int, market_data_type: int) -> None:
         """
