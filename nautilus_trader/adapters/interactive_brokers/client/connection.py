@@ -24,8 +24,8 @@ from typing import Any, cast
 from ibapi import comm
 from ibapi import decoder
 from ibapi.client import EClient
-from ibapi.common import NO_VALID_ID
 from ibapi.connection import Connection
+from ibapi.const import NO_VALID_ID
 from ibapi.errors import CONNECT_FAIL
 from ibapi.server_versions import MAX_CLIENT_VER
 from ibapi.server_versions import MIN_CLIENT_VER

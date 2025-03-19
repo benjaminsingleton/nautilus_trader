@@ -29,8 +29,6 @@ import pytz
 from ibapi import comm
 from ibapi.client import EClient
 from ibapi.commission_report import CommissionReport
-from ibapi.common import MAX_MSG_LEN
-from ibapi.common import NO_VALID_ID
 from ibapi.common import BarData
 from ibapi.common import HistoricalTickLast
 from ibapi.common import MarketDataTypeEnum

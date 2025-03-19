@@ -1217,6 +1217,7 @@ mod tests {
 
     use databento::dbn::decode::{DecodeStream, dbn::Decoder};
     use fallible_streaming_iterator::FallibleStreamingIterator;
+    use nautilus_model::instruments::Instrument;
     use rstest::*;
 
     use super::*;
@@ -1283,9 +1284,7 @@ mod tests {
         #[case] input: Result<&str, &'static str>, // Using `&'static str` for errors
         #[case] expected: Currency,
     ) {
-        let actual = parse_currency_or_usd_default(
-            input.map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e)),
-        );
+        let actual = parse_currency_or_usd_default(input.map_err(std::io::Error::other));
         assert_eq!(actual, expected);
     }
 

@@ -14,7 +14,7 @@
 // -------------------------------------------------------------------------------------------------
 
 use std::{
-    collections::hash_map::DefaultHasher,
+    collections::{HashSet, hash_map::DefaultHasher},
     hash::{Hash, Hasher},
 };
 
@@ -25,16 +25,18 @@ use rust_decimal::Decimal;
 
 use crate::{
     enums::{OrderSide, OrderStatus, OrderType, TimeInForce},
-    identifiers::{ClientOrderId, InstrumentId},
+    identifiers::{ClientOrderId, InstrumentId, TraderId, VenueOrderId},
     orderbook::{OwnBookOrder, own::OwnOrderBook},
     types::{Price, Quantity},
 };
 
 #[pymethods]
 impl OwnBookOrder {
+    #[pyo3(signature = (trader_id, client_order_id, side, price, size, order_type, time_in_force, status, ts_last, ts_accepted, ts_submitted, ts_init, venue_order_id=None))]
     #[new]
     #[allow(clippy::too_many_arguments)]
     fn py_new(
+        trader_id: TraderId,
         client_order_id: ClientOrderId,
         side: OrderSide,
         price: Price,
@@ -43,10 +45,15 @@ impl OwnBookOrder {
         time_in_force: TimeInForce,
         status: OrderStatus,
         ts_last: u64,
+        ts_accepted: u64,
+        ts_submitted: u64,
         ts_init: u64,
+        venue_order_id: Option<VenueOrderId>,
     ) -> PyResult<Self> {
         Ok(OwnBookOrder::new(
+            trader_id,
             client_order_id,
+            venue_order_id,
             side.as_specified(),
             price,
             size,
@@ -54,6 +61,8 @@ impl OwnBookOrder {
             time_in_force,
             status,
             ts_last.into(),
+            ts_accepted.into(),
+            ts_submitted.into(),
             ts_init.into(),
         ))
     }
@@ -173,9 +182,9 @@ impl OwnOrderBook {
     }
 
     #[getter]
-    #[pyo3(name = "count")]
-    fn py_count(&self) -> u64 {
-        self.count
+    #[pyo3(name = "update_count")]
+    fn py_update_count(&self) -> u64 {
+        self.update_count
     }
 
     #[pyo3(name = "reset")]
@@ -203,13 +212,127 @@ impl OwnOrderBook {
         self.clear();
     }
 
-    #[pyo3(name = "bids_to_dict")]
-    fn py_bids_to_dict(&self) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
-        self.bids_as_map()
+    #[pyo3(name = "bid_client_order_ids")]
+    pub fn py_bid_client_order_ids(&self) -> Vec<ClientOrderId> {
+        self.bid_client_order_ids()
     }
 
+    #[pyo3(name = "ask_client_order_ids")]
+    pub fn py_ask_client_order_ids(&self) -> Vec<ClientOrderId> {
+        self.ask_client_order_ids()
+    }
+
+    #[pyo3(name = "is_order_in_book")]
+    pub fn py_is_order_in_book(&self, client_order_id: &ClientOrderId) -> bool {
+        self.is_order_in_book(client_order_id)
+    }
+
+    #[pyo3(name = "orders_to_list")]
+    fn py_orders_to_list(&self) -> Vec<OwnBookOrder> {
+        let total_orders = self.bids.cache.len() + self.asks.cache.len();
+        let mut all_orders = Vec::with_capacity(total_orders);
+
+        all_orders.extend(
+            self.bids()
+                .flat_map(|level| level.orders.values().cloned())
+                .chain(self.asks().flat_map(|level| level.orders.values().cloned())),
+        );
+
+        all_orders
+    }
+
+    #[pyo3(name = "bids_to_list")]
+    fn py_bids_to_list(&self) -> Vec<OwnBookOrder> {
+        self.bids()
+            .flat_map(|level| level.orders.values().cloned())
+            .collect()
+    }
+
+    #[pyo3(name = "asks_to_list")]
+    fn py_asks_to_list(&self) -> Vec<OwnBookOrder> {
+        self.asks()
+            .flat_map(|level| level.orders.values().cloned())
+            .collect()
+    }
+
+    #[pyo3(signature = (status=None, accepted_buffer_ns=None, ts_now=None))]
+    #[pyo3(name = "bids_to_dict")]
+    fn py_bids_to_dict(
+        &self,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
+        self.bids_as_map(status, accepted_buffer_ns, ts_now)
+    }
+
+    #[pyo3(signature = (status=None, accepted_buffer_ns=None, ts_now=None))]
     #[pyo3(name = "asks_to_dict")]
-    fn py_asks_to_dict(&self) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
-        self.asks_as_map()
+    fn py_asks_to_dict(
+        &self,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
+        self.asks_as_map(status, accepted_buffer_ns, ts_now)
+    }
+
+    #[pyo3(signature = (status=None, accepted_buffer_ns=None, ts_now=None))]
+    #[pyo3(name = "bid_quantity")]
+    fn py_bid_quantity(
+        &self,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Decimal> {
+        self.bid_quantity(status, accepted_buffer_ns, ts_now)
+    }
+
+    #[pyo3(signature = (status=None, accepted_buffer_ns=None, ts_now=None))]
+    #[pyo3(name = "ask_quantity")]
+    fn py_ask_quantity(
+        &self,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Decimal> {
+        self.ask_quantity(status, accepted_buffer_ns, ts_now)
+    }
+
+    #[pyo3(signature = (group_size, depth=None, status=None, accepted_buffer_ns=None, ts_now=None))]
+    #[pyo3(name = "group_bids")]
+    fn py_group_bids(
+        &self,
+        group_size: Decimal,
+        depth: Option<usize>,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Decimal> {
+        self.group_bids(group_size, depth, status, accepted_buffer_ns, ts_now)
+    }
+
+    #[pyo3(signature = (group_size, depth=None, status=None, accepted_buffer_ns=None, ts_now=None))]
+    #[pyo3(name = "group_asks")]
+    fn py_group_asks(
+        &self,
+        group_size: Decimal,
+        depth: Option<usize>,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Decimal> {
+        self.group_asks(group_size, depth, status, accepted_buffer_ns, ts_now)
+    }
+
+    #[pyo3(name = "audit_open_orders")]
+    fn py_audit_open_orders(&mut self, open_order_ids: HashSet<ClientOrderId>) {
+        self.audit_open_orders(&open_order_ids)
+    }
+
+    #[pyo3(signature = (num_levels=3))]
+    #[pyo3(name = "pprint")]
+    fn py_pprint(&self, num_levels: usize) -> String {
+        self.pprint(num_levels)
     }
 }

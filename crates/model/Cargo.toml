@@ -26,7 +26,9 @@ nautilus-core = { path = "../core" }
 anyhow = { workspace = true }
 chrono = { workspace = true }
 derive_builder = { workspace = true }
+enum_dispatch = { workspace = true }
 indexmap = { workspace = true }
+log = { workspace = true }
 pyo3 = { workspace = true, optional = true }
 rstest = { workspace = true, optional = true }
 rust_decimal = { workspace = true }
@@ -37,7 +39,7 @@ strum = { workspace = true }
 thiserror = { workspace = true }
 thousands = { workspace = true }
 ustr = { workspace = true }
-evalexpr = "12.0.2"
+evalexpr = "=11.3.1"  # Pinned for MIT licensing
 implied-vol = { version = "1.0.1", features = ["normal-distribution"] }
 tabled = "0.18.0"
 

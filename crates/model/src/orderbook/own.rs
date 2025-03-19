@@ -19,19 +19,21 @@
 
 use std::{
     cmp::Ordering,
-    collections::{BTreeMap, HashMap},
+    collections::{BTreeMap, HashMap, HashSet},
     fmt::{Debug, Display},
     hash::{Hash, Hasher},
 };
 
 use indexmap::IndexMap;
-use nautilus_core::UnixNanos;
+use nautilus_core::{UnixNanos, time::nanos_since_unix_epoch};
 use rust_decimal::Decimal;
 
+use super::display::pprint_own_book;
 use crate::{
     enums::{OrderSideSpecified, OrderStatus, OrderType, TimeInForce},
-    identifiers::{ClientOrderId, InstrumentId},
+    identifiers::{ClientOrderId, InstrumentId, TraderId, VenueOrderId},
     orderbook::BookPrice,
+    orders::{Order, OrderAny},
     types::{Price, Quantity},
 };
 
@@ -46,8 +48,12 @@ use crate::{
     pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct OwnBookOrder {
+    /// The trader ID.
+    pub trader_id: TraderId,
     /// The client order ID.
     pub client_order_id: ClientOrderId,
+    /// The venue order ID (if assigned by the venue).
+    pub venue_order_id: Option<VenueOrderId>,
     /// The specified order side (BUY or SELL).
     pub side: OrderSideSpecified,
     /// The order price.
@@ -58,10 +64,14 @@ pub struct OwnBookOrder {
     pub order_type: OrderType,
     /// The order time in force.
     pub time_in_force: TimeInForce,
-    /// The current order status (SUBMITTED/ACCEPTED/CANCELED/FILLED).
+    /// The current order status (SUBMITTED/ACCEPTED/PENDING_CANCEL/PENDING_UPDATE/PARTIALLY_FILLED).
     pub status: OrderStatus,
-    /// UNIX timestamp (nanoseconds) when the last event occurred for this order.
+    /// UNIX timestamp (nanoseconds) when the last order event occurred for this order.
     pub ts_last: UnixNanos,
+    /// UNIX timestamp (nanoseconds) when the order was accepted (zero unless accepted).
+    pub ts_accepted: UnixNanos,
+    /// UNIX timestamp (nanoseconds) when the order was submitted (zero unless submitted).
+    pub ts_submitted: UnixNanos,
     /// UNIX timestamp (nanoseconds) when the order was initialized.
     pub ts_init: UnixNanos,
 }
@@ -71,7 +81,9 @@ impl OwnBookOrder {
     #[must_use]
     #[allow(clippy::too_many_arguments)]
     pub fn new(
+        trader_id: TraderId,
         client_order_id: ClientOrderId,
+        venue_order_id: Option<VenueOrderId>,
         side: OrderSideSpecified,
         price: Price,
         size: Quantity,
@@ -79,10 +91,14 @@ impl OwnBookOrder {
         time_in_force: TimeInForce,
         status: OrderStatus,
         ts_last: UnixNanos,
+        ts_accepted: UnixNanos,
+        ts_submitted: UnixNanos,
         ts_init: UnixNanos,
     ) -> Self {
         Self {
+            trader_id,
             client_order_id,
+            venue_order_id,
             side,
             price,
             size,
@@ -90,6 +106,8 @@ impl OwnBookOrder {
             time_in_force,
             status,
             ts_last,
+            ts_accepted,
+            ts_submitted,
             ts_init,
         }
     }
@@ -131,7 +149,9 @@ impl PartialOrd for OwnBookOrder {
 
 impl PartialEq for OwnBookOrder {
     fn eq(&self, other: &Self) -> bool {
-        self.client_order_id == other.client_order_id && self.ts_init == other.ts_init
+        self.client_order_id == other.client_order_id
+            && self.status == other.status
+            && self.ts_last == other.ts_last
     }
 }
 
@@ -145,14 +165,42 @@ impl Debug for OwnBookOrder {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "{}(client_order_id={}, side={}, price={}, size={}, order_type={}, time_in_force={}, ts_init={})",
+            "{}(trader_id={}, client_order_id={}, venue_order_id={:?}, side={}, price={}, size={}, order_type={}, time_in_force={}, status={}, ts_last={}, ts_accepted={}, ts_submitted={}, ts_init={})",
             stringify!(OwnBookOrder),
+            self.trader_id,
             self.client_order_id,
+            self.venue_order_id,
             self.side,
             self.price,
             self.size,
             self.order_type,
             self.time_in_force,
+            self.status,
+            self.ts_last,
+            self.ts_accepted,
+            self.ts_submitted,
+            self.ts_init,
+        )
+    }
+}
+
+impl Display for OwnBookOrder {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{},{},{:?},{},{},{},{},{},{},{},{},{},{}",
+            self.trader_id,
+            self.client_order_id,
+            self.venue_order_id,
+            self.side,
+            self.price,
+            self.size,
+            self.order_type,
+            self.time_in_force,
+            self.status,
+            self.ts_last,
+            self.ts_accepted,
+            self.ts_submitted,
             self.ts_init,
         )
     }
@@ -168,8 +216,8 @@ pub struct OwnOrderBook {
     pub instrument_id: InstrumentId,
     /// The timestamp of the last event applied to the order book.
     pub ts_last: UnixNanos,
-    /// The current count of events applied to the order book.
-    pub count: u64,
+    /// The current count of updates applied to the order book.
+    pub update_count: u64,
     pub(crate) bids: OwnBookLadder,
     pub(crate) asks: OwnBookLadder,
 }
@@ -184,9 +232,11 @@ impl Display for OwnOrderBook {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "{}(instrument_id={})",
-            stringify!(OrderBook),
+            "{}(instrument_id={}, orders={}, update_count={})",
+            stringify!(OwnOrderBook),
             self.instrument_id,
+            self.bids.cache.len() + self.asks.cache.len(),
+            self.update_count,
         )
     }
 }
@@ -198,7 +248,7 @@ impl OwnOrderBook {
         Self {
             instrument_id,
             ts_last: UnixNanos::default(),
-            count: 0,
+            update_count: 0,
             bids: OwnBookLadder::new(OrderSideSpecified::Buy),
             asks: OwnBookLadder::new(OrderSideSpecified::Sell),
         }
@@ -206,7 +256,7 @@ impl OwnOrderBook {
 
     fn increment(&mut self, order: &OwnBookOrder) {
         self.ts_last = order.ts_last;
-        self.count += 1;
+        self.update_count += 1;
     }
 
     /// Resets the order book to its initial empty state.
@@ -214,7 +264,7 @@ impl OwnOrderBook {
         self.bids.clear();
         self.asks.clear();
         self.ts_last = UnixNanos::default();
-        self.count = 0;
+        self.update_count = 0;
     }
 
     /// Adds an own order to the book.
@@ -260,45 +310,239 @@ impl OwnOrderBook {
         self.asks.levels.values()
     }
 
-    /// Returns bid price levels as a map of level price to order list at that level.
-    pub fn bids_as_map(&self) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
-        self.bids()
-            .map(|level| {
-                (
-                    level.price.value.as_decimal(),
-                    level.orders.values().cloned().collect(),
-                )
-            })
+    /// Returns the client order IDs currently on the bid side.
+    pub fn bid_client_order_ids(&self) -> Vec<ClientOrderId> {
+        self.bids.cache.keys().cloned().collect()
+    }
+
+    /// Returns the client order IDs currently on the ask side.
+    pub fn ask_client_order_ids(&self) -> Vec<ClientOrderId> {
+        self.asks.cache.keys().cloned().collect()
+    }
+
+    /// Return whether the given client order ID is in the own book.
+    pub fn is_order_in_book(&self, client_order_id: &ClientOrderId) -> bool {
+        self.asks.cache.contains_key(client_order_id)
+            || self.bids.cache.contains_key(client_order_id)
+    }
+
+    /// Maps bid price levels to their own orders, excluding empty levels after filtering.
+    ///
+    /// Filters by `status` if provided. With `accepted_buffer_ns`, only includes orders accepted
+    /// at least that many nanoseconds before `ts_now` (defaults to now).
+    pub fn bids_as_map(
+        &self,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
+        filter_orders(self.bids(), status.as_ref(), accepted_buffer_ns, ts_now)
+    }
+
+    /// Maps ask price levels to their own orders, excluding empty levels after filtering.
+    ///
+    /// Filters by `status` if provided. With `accepted_buffer_ns`, only includes orders accepted
+    /// at least that many nanoseconds before `ts_now` (defaults to now).
+    pub fn asks_as_map(
+        &self,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
+        filter_orders(self.asks(), status.as_ref(), accepted_buffer_ns, ts_now)
+    }
+
+    /// Aggregates own bid quantities per price level, omitting zero-quantity levels.
+    ///
+    /// Filters by `status` if provided, including only matching orders. With `accepted_buffer_ns`,
+    /// only includes orders accepted at least that many nanoseconds before `ts_now` (defaults to now).
+    pub fn bid_quantity(
+        &self,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Decimal> {
+        self.bids_as_map(status, accepted_buffer_ns, ts_now)
+            .into_iter()
+            .map(|(price, orders)| (price, sum_order_sizes(orders.iter())))
+            .filter(|(_, quantity)| *quantity > Decimal::ZERO)
             .collect()
     }
 
-    /// Returns ask price levels as a map of level price to order list at that level.
-    pub fn asks_as_map(&self) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
-        self.asks()
-            .map(|level| {
-                (
-                    level.price.value.as_decimal(),
-                    level.orders.values().cloned().collect(),
-                )
+    /// Aggregates own ask quantities per price level, omitting zero-quantity levels.
+    ///
+    /// Filters by `status` if provided, including only matching orders. With `accepted_buffer_ns`,
+    /// only includes orders accepted at least that many nanoseconds before `ts_now` (defaults to now).
+    pub fn ask_quantity(
+        &self,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Decimal> {
+        self.asks_as_map(status, accepted_buffer_ns, ts_now)
+            .into_iter()
+            .map(|(price, orders)| {
+                let quantity = sum_order_sizes(orders.iter());
+                (price, quantity)
             })
+            .filter(|(_, quantity)| *quantity > Decimal::ZERO)
             .collect()
+    }
+
+    /// Groups own bid quantities by price into buckets, truncating to a maximum depth.
+    ///
+    /// Filters by `status` if provided. With `accepted_buffer_ns`, only includes orders accepted
+    /// at least that many nanoseconds before `ts_now` (defaults to now).
+    pub fn group_bids(
+        &self,
+        group_size: Decimal,
+        depth: Option<usize>,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Decimal> {
+        let quantities = self.bid_quantity(status, accepted_buffer_ns, ts_now);
+        group_quantities(quantities, group_size, depth, true)
+    }
+
+    /// Groups own ask quantities by price into buckets, truncating to a maximum depth.
+    ///
+    /// Filters by `status` if provided. With `accepted_buffer_ns`, only includes orders accepted
+    /// at least that many nanoseconds before `ts_now` (defaults to now).
+    pub fn group_asks(
+        &self,
+        group_size: Decimal,
+        depth: Option<usize>,
+        status: Option<HashSet<OrderStatus>>,
+        accepted_buffer_ns: Option<u64>,
+        ts_now: Option<u64>,
+    ) -> IndexMap<Decimal, Decimal> {
+        let quantities = self.ask_quantity(status, accepted_buffer_ns, ts_now);
+        group_quantities(quantities, group_size, depth, false)
+    }
+
+    /// Return a formatted string representation of the order book.
+    #[must_use]
+    pub fn pprint(&self, num_levels: usize) -> String {
+        pprint_own_book(&self.bids, &self.asks, num_levels)
+    }
+
+    pub fn audit_open_orders(&mut self, open_order_ids: &HashSet<ClientOrderId>) {
+        log::debug!("Auditing {self}");
+
+        // Audit bids
+        let bids_to_remove: Vec<ClientOrderId> = self
+            .bids
+            .cache
+            .keys()
+            .filter(|&key| !open_order_ids.contains(key))
+            .cloned()
+            .collect();
+
+        // Audit asks
+        let asks_to_remove: Vec<ClientOrderId> = self
+            .asks
+            .cache
+            .keys()
+            .filter(|&key| !open_order_ids.contains(key))
+            .cloned()
+            .collect();
+
+        for client_order_id in bids_to_remove {
+            log_audit_error(&client_order_id);
+            if let Err(e) = self.bids.remove(&client_order_id) {
+                log::error!("{e}");
+            }
+        }
+
+        for client_order_id in asks_to_remove {
+            log_audit_error(&client_order_id);
+            if let Err(e) = self.asks.remove(&client_order_id) {
+                log::error!("{e}");
+            }
+        }
     }
 }
 
-impl Display for OwnBookOrder {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{},{},{},{},{},{},{}",
-            self.client_order_id,
-            self.side,
-            self.price,
-            self.size,
-            self.order_type,
-            self.time_in_force,
-            self.ts_init,
-        )
+fn log_audit_error(client_order_id: &ClientOrderId) {
+    log::error!(
+        "Audit error - {} cached order already closed, deleting from own book",
+        client_order_id
+    );
+}
+
+fn filter_orders<'a>(
+    levels: impl Iterator<Item = &'a OwnBookLevel>,
+    status: Option<&HashSet<OrderStatus>>,
+    accepted_buffer_ns: Option<u64>,
+    ts_now: Option<u64>,
+) -> IndexMap<Decimal, Vec<OwnBookOrder>> {
+    let accepted_buffer_ns = accepted_buffer_ns.unwrap_or(0);
+    let ts_now = ts_now.unwrap_or_else(nanos_since_unix_epoch);
+    levels
+        .map(|level| {
+            let orders = level
+                .orders
+                .values()
+                .filter(|order| status.is_none_or(|f| f.contains(&order.status)))
+                .filter(|order| order.ts_accepted + accepted_buffer_ns <= ts_now)
+                .cloned()
+                .collect::<Vec<OwnBookOrder>>();
+
+            (level.price.value.as_decimal(), orders)
+        })
+        .filter(|(_, orders)| !orders.is_empty())
+        .collect::<IndexMap<Decimal, Vec<OwnBookOrder>>>()
+}
+
+fn group_quantities(
+    quantities: IndexMap<Decimal, Decimal>,
+    group_size: Decimal,
+    depth: Option<usize>,
+    is_bid: bool,
+) -> IndexMap<Decimal, Decimal> {
+    let mut grouped = IndexMap::new();
+    let depth = depth.unwrap_or(usize::MAX);
+
+    for (price, size) in quantities {
+        let grouped_price = if is_bid {
+            (price / group_size).floor() * group_size
+        } else {
+            (price / group_size).ceil() * group_size
+        };
+
+        grouped
+            .entry(grouped_price)
+            .and_modify(|total| *total += size)
+            .or_insert(size);
+
+        if grouped.len() > depth {
+            if is_bid {
+                // For bids, remove the lowest price level
+                if let Some((lowest_price, _)) = grouped.iter().min_by_key(|(price, _)| *price) {
+                    let lowest_price = *lowest_price;
+                    grouped.shift_remove(&lowest_price);
+                }
+            } else {
+                // For asks, remove the highest price level
+                if let Some((highest_price, _)) = grouped.iter().max_by_key(|(price, _)| *price) {
+                    let highest_price = *highest_price;
+                    grouped.shift_remove(&highest_price);
+                }
+            }
+        }
     }
+
+    grouped
+}
+
+fn sum_order_sizes<'a, I>(orders: I) -> Decimal
+where
+    I: Iterator<Item = &'a OwnBookOrder>,
+{
+    orders.fold(Decimal::ZERO, |total, order| {
+        total + order.size.as_decimal()
+    })
 }
 
 /// Represents a ladder of price levels for one side of an order book.
@@ -381,14 +625,14 @@ impl OwnBookLadder {
 
     /// Deletes an order from the ladder.
     pub fn delete(&mut self, order: OwnBookOrder) -> anyhow::Result<()> {
-        self.remove(order.client_order_id)
+        self.remove(&order.client_order_id)
     }
 
     /// Removes an order by its ID from the ladder.
-    pub fn remove(&mut self, client_order_id: ClientOrderId) -> anyhow::Result<()> {
-        if let Some(price) = self.cache.remove(&client_order_id) {
+    pub fn remove(&mut self, client_order_id: &ClientOrderId) -> anyhow::Result<()> {
+        if let Some(price) = self.cache.remove(client_order_id) {
             if let Some(level) = self.levels.get_mut(&price) {
-                level.delete(&client_order_id)?;
+                level.delete(client_order_id)?;
                 if level.is_empty() {
                     self.levels.remove(&price);
                 }
@@ -571,315 +815,8 @@ impl Ord for OwnBookLevel {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Tests
-////////////////////////////////////////////////////////////////////////////////
-
-#[cfg(test)]
-mod tests {
-    use nautilus_core::UnixNanos;
-    use rstest::{fixture, rstest};
-
-    use super::*;
-
-    #[fixture]
-    fn own_order() -> OwnBookOrder {
-        let client_order_id = ClientOrderId::from("O-123456789");
-        let side = OrderSideSpecified::Buy;
-        let price = Price::from("100.00");
-        let size = Quantity::from("10");
-        let order_type = OrderType::Limit;
-        let time_in_force = TimeInForce::Gtc;
-        let status = OrderStatus::Submitted;
-        let ts_last = UnixNanos::default();
-        let ts_init = UnixNanos::default();
-
-        OwnBookOrder::new(
-            client_order_id,
-            side,
-            price,
-            size,
-            order_type,
-            time_in_force,
-            status,
-            ts_last,
-            ts_init,
-        )
-    }
-
-    #[rstest]
-    fn test_to_book_price(own_order: OwnBookOrder) {
-        let book_price = own_order.to_book_price();
-        assert_eq!(book_price.value, Price::from("100.00"));
-        assert_eq!(book_price.side, OrderSideSpecified::Buy);
-    }
-
-    #[rstest]
-    fn test_exposure(own_order: OwnBookOrder) {
-        let exposure = own_order.exposure();
-        assert_eq!(exposure, 1000.0);
-    }
-
-    #[rstest]
-    fn test_signed_size(own_order: OwnBookOrder) {
-        let own_order_buy = own_order;
-        let own_order_sell = OwnBookOrder::new(
-            ClientOrderId::from("O-123456789"),
-            OrderSideSpecified::Sell,
-            Price::from("101.0"),
-            Quantity::from("10"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-
-        assert_eq!(own_order_buy.signed_size(), 10.0);
-        assert_eq!(own_order_sell.signed_size(), -10.0);
-    }
-
-    #[rstest]
-    fn test_debug(own_order: OwnBookOrder) {
-        assert_eq!(
-            format!("{own_order:?}"),
-            "OwnBookOrder(client_order_id=O-123456789, side=BUY, price=100.00, size=10, order_type=LIMIT, time_in_force=GTC, ts_init=0)"
-        );
-    }
-
-    #[rstest]
-    fn test_display(own_order: OwnBookOrder) {
-        assert_eq!(
-            own_order.to_string(),
-            "O-123456789,BUY,100.00,10,LIMIT,GTC,0".to_string()
-        );
-    }
-
-    #[rstest]
-    fn test_own_book_level_size_and_exposure() {
-        let mut level = OwnBookLevel::new(BookPrice::new(
-            Price::from("100.00"),
-            OrderSideSpecified::Buy,
-        ));
-        let order1 = OwnBookOrder::new(
-            ClientOrderId::from("O-1"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("10"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        let order2 = OwnBookOrder::new(
-            ClientOrderId::from("O-2"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("20"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        level.add(order1);
-        level.add(order2);
-
-        assert_eq!(level.len(), 2);
-        assert_eq!(level.size(), 30.0);
-        assert_eq!(level.exposure(), 3000.0);
-    }
-
-    #[rstest]
-    fn test_own_book_level_add_update_delete() {
-        let mut level = OwnBookLevel::new(BookPrice::new(
-            Price::from("100.00"),
-            OrderSideSpecified::Buy,
-        ));
-        let order = OwnBookOrder::new(
-            ClientOrderId::from("O-1"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("10"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        level.add(order);
-        assert_eq!(level.len(), 1);
-
-        // Update the order to a new size
-        let order_updated = OwnBookOrder::new(
-            ClientOrderId::from("O-1"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("15"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        level.update(order_updated);
-        let orders = level.get_orders();
-        assert_eq!(orders[0].size, Quantity::from("15"));
-
-        // Delete the order
-        level.delete(&ClientOrderId::from("O-1")).unwrap();
-        assert!(level.is_empty());
-    }
-
-    #[rstest]
-    fn test_own_book_ladder_add_update_delete() {
-        let mut ladder = OwnBookLadder::new(OrderSideSpecified::Buy);
-        let order1 = OwnBookOrder::new(
-            ClientOrderId::from("O-1"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("10"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        let order2 = OwnBookOrder::new(
-            ClientOrderId::from("O-2"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("20"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        ladder.add(order1);
-        ladder.add(order2);
-        assert_eq!(ladder.len(), 1);
-        assert_eq!(ladder.sizes(), 30.0);
-
-        // Update order2 to a larger size
-        let order2_updated = OwnBookOrder::new(
-            ClientOrderId::from("O-2"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("25"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        ladder.update(order2_updated).unwrap();
-        assert_eq!(ladder.sizes(), 35.0);
-
-        // Delete order1
-        ladder.delete(order1).unwrap();
-        assert_eq!(ladder.sizes(), 25.0);
-    }
-
-    #[rstest]
-    fn test_own_order_book_add_update_delete_clear() {
-        let instrument_id = InstrumentId::from("AAPL.XNAS");
-        let mut book = OwnOrderBook::new(instrument_id);
-        let order_buy = OwnBookOrder::new(
-            ClientOrderId::from("O-1"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("10"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        let order_sell = OwnBookOrder::new(
-            ClientOrderId::from("O-2"),
-            OrderSideSpecified::Sell,
-            Price::from("101.00"),
-            Quantity::from("20"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-
-        // Add orders to respective ladders
-        book.add(order_buy);
-        book.add(order_sell);
-        assert!(!book.bids.is_empty());
-        assert!(!book.asks.is_empty());
-
-        // Update buy order
-        let order_buy_updated = OwnBookOrder::new(
-            ClientOrderId::from("O-1"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("15"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        book.update(order_buy_updated).unwrap();
-        book.delete(order_sell).unwrap();
-
-        assert_eq!(book.bids.sizes(), 15.0);
-        assert!(book.asks.is_empty());
-
-        // Clear the book
-        book.clear();
-        assert!(book.bids.is_empty());
-        assert!(book.asks.is_empty());
-    }
-
-    #[rstest]
-    fn test_own_order_book_bids_and_asks_as_map() {
-        let instrument_id = InstrumentId::from("AAPL.XNAS");
-        let mut book = OwnOrderBook::new(instrument_id);
-        let order1 = OwnBookOrder::new(
-            ClientOrderId::from("O-1"),
-            OrderSideSpecified::Buy,
-            Price::from("100.00"),
-            Quantity::from("10"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        let order2 = OwnBookOrder::new(
-            ClientOrderId::from("O-2"),
-            OrderSideSpecified::Sell,
-            Price::from("101.00"),
-            Quantity::from("20"),
-            OrderType::Limit,
-            TimeInForce::Gtc,
-            OrderStatus::Accepted,
-            UnixNanos::default(),
-            UnixNanos::default(),
-        );
-        book.add(order1);
-        book.add(order2);
-        let bids_map = book.bids_as_map();
-        let asks_map = book.asks_as_map();
-
-        assert_eq!(bids_map.len(), 1);
-        let bid_price = Price::from("100.00").as_decimal();
-        let bid_orders = bids_map.get(&bid_price).unwrap();
-        assert_eq!(bid_orders.len(), 1);
-        assert_eq!(bid_orders[0], order1);
-
-        assert_eq!(asks_map.len(), 1);
-        let ask_price = Price::from("101.00").as_decimal();
-        let ask_orders = asks_map.get(&ask_price).unwrap();
-        assert_eq!(ask_orders.len(), 1);
-        assert_eq!(ask_orders[0], order2);
-    }
+pub fn should_handle_own_book_order(order: &OrderAny) -> bool {
+    order.has_price()
+        && order.time_in_force() != TimeInForce::Ioc
+        && order.time_in_force() != TimeInForce::Fok
 }

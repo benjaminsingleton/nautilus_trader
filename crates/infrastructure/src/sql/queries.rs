@@ -17,7 +17,7 @@ use std::collections::HashMap;
 
 use nautilus_common::{custom::CustomData, signal::Signal};
 use nautilus_model::{
-    accounts::{any::AccountAny, base::Account},
+    accounts::{Account, AccountAny},
     data::{Bar, DataType, QuoteTick, TradeTick},
     events::{
         AccountState, OrderEvent, OrderEventAny, OrderSnapshot,
@@ -263,9 +263,6 @@ impl DatabaseQueries {
                 DatabaseQueries::add_order_event(pool, Box::new(event), client_id).await
             }
             OrderEventAny::Triggered(event) => {
-                DatabaseQueries::add_order_event(pool, Box::new(event), client_id).await
-            }
-            OrderEventAny::PartiallyFilled(event) => {
                 DatabaseQueries::add_order_event(pool, Box::new(event), client_id).await
             }
         }

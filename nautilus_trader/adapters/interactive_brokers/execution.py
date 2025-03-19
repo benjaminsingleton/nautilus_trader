@@ -18,10 +18,9 @@ import json
 from decimal import Decimal
 from typing import Any
 
-import pandas as pd
 from ibapi.commission_report import CommissionReport
-from ibapi.common import UNSET_DECIMAL
-from ibapi.common import UNSET_DOUBLE
+from ibapi.const import UNSET_DECIMAL
+from ibapi.const import UNSET_DOUBLE
 from ibapi.execution import Execution
 from ibapi.order import Order as IBOrder
 from ibapi.order_state import OrderState as IBOrderState
@@ -51,6 +50,10 @@ from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.execution.messages import BatchCancelOrders
 from nautilus_trader.execution.messages import CancelAllOrders
 from nautilus_trader.execution.messages import CancelOrder
+from nautilus_trader.execution.messages import GenerateFillReports
+from nautilus_trader.execution.messages import GenerateOrderStatusReport
+from nautilus_trader.execution.messages import GenerateOrderStatusReports
+from nautilus_trader.execution.messages import GeneratePositionStatusReports
 from nautilus_trader.execution.messages import ModifyOrder
 from nautilus_trader.execution.messages import SubmitOrder
 from nautilus_trader.execution.messages import SubmitOrderList
@@ -70,7 +73,6 @@ from nautilus_trader.model.enums import TriggerType
 from nautilus_trader.model.identifiers import AccountId
 from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.model.identifiers import ClientOrderId
-from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import TradeId
 from nautilus_trader.model.identifiers import VenueOrderId
 from nautilus_trader.model.objects import AccountBalance
@@ -222,48 +224,20 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
 
     async def generate_order_status_report(
         self,
-        instrument_id: InstrumentId,
-        client_order_id: ClientOrderId | None = None,
-        venue_order_id: VenueOrderId | None = None,
+        command: GenerateOrderStatusReport,
     ) -> OrderStatusReport | None:
-        """
-        Generate an `OrderStatusReport` for the given order identifier parameter(s).
-
-        This method retrieves order information from Interactive Brokers using the OrderService,
-        and creates an OrderStatusReport for the specified order. If the order is not found,
-        or an error occurs, it logs the issue and returns `None`.
-
-        Parameters
-        ----------
-        instrument_id : InstrumentId
-            The instrument ID for the report.
-        client_order_id : ClientOrderId, optional
-            The client order ID for the report.
-        venue_order_id : VenueOrderId, optional
-            The venue order ID for the report.
-
-        Returns
-        -------
-        OrderStatusReport or ``None``
-
-        Raises
-        ------
-        ValueError
-            If both the `client_order_id` and `venue_order_id` are ``None``.
-
-        """
-        PyCondition.type_or_none(client_order_id, ClientOrderId, "client_order_id")
-        PyCondition.type_or_none(venue_order_id, VenueOrderId, "venue_order_id")
-        if not (client_order_id or venue_order_id):
+        PyCondition.type_or_none(command.client_order_id, ClientOrderId, "client_order_id")
+        PyCondition.type_or_none(command.venue_order_id, VenueOrderId, "venue_order_id")
+        if not (command.client_order_id or command.venue_order_id):
             self._log.debug("Both `client_order_id` and `venue_order_id` cannot be None")
             return None
 
         report = None
         ib_orders = await self._client.get_open_orders(self.account_id.get_id())
         for ib_order in ib_orders:
-            if (client_order_id and client_order_id.value == ib_order.orderRef) or (
-                venue_order_id
-                and venue_order_id.value
+            if (command.client_order_id and command.client_order_id.value == ib_order.orderRef) or (
+                command.venue_order_id
+                and command.venue_order_id.value
                 == str(
                     ib_order.orderId,
                 )
@@ -273,24 +247,13 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
 
         if report is None:
             self._log.warning(
-                f"Order {client_order_id=}, {venue_order_id} not found, canceling",
+                f"Order {command.client_order_id=}, {command.venue_order_id} not found, canceling",
             )
-            # Use process_order_status to ensure compatibility with the OrderService
-            if client_order_id:
-                await self._client.process_order_status(
-                    order_id=0,  # Not a valid order ID
-                    status="Cancelled",
-                    filled=Decimal(0),
-                    remaining=Decimal(0),
-                    avg_fill_price=0.0,
-                    perm_id=0,
-                    parent_id=0,
-                    last_fill_price=0.0,
-                    client_id=0,
-                    why_held="Not found in query",
-                    mkt_cap_price=0.0,
-                )
-
+            self._on_order_status(
+                order_ref=command.client_order_id.value,
+                order_status="Cancelled",
+                reason="Not found in query",
+            )
         return report
 
     async def _parse_ib_order_to_order_status_report(self, ib_order: IBOrder) -> OrderStatusReport:
@@ -358,31 +321,8 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
 
     async def generate_order_status_reports(
         self,
-        instrument_id: InstrumentId | None = None,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-        open_only: bool = False,
+        command: GenerateOrderStatusReports,
     ) -> list[OrderStatusReport]:
-        """
-        Generate a list of `OrderStatusReport`s with optional query filters. The
-        returned list may be empty if no orders match the given parameters.
-
-        Parameters
-        ----------
-        instrument_id : InstrumentId, optional
-            The instrument ID query filter.
-        start : pd.Timestamp, optional
-            The start datetime (UTC) query filter.
-        end : pd.Timestamp, optional
-            The end datetime (UTC) query filter.
-        open_only : bool, default False
-            If the query is for open orders only.
-
-        Returns
-        -------
-        list[OrderStatusReport]
-
-        """
         report = []
         # Create the Filled OrderStatusReport from Open Positions
         positions: list[IBPosition] = await self._client.get_positions(
@@ -446,59 +386,15 @@ class InteractiveBrokersExecutionClient(LiveExecutionClient):
 
     async def generate_fill_reports(
         self,
-        instrument_id: InstrumentId | None = None,
-        venue_order_id: VenueOrderId | None = None,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
+        command: GenerateFillReports,
     ) -> list[FillReport]:
-        """
-        Generate a list of `FillReport`s with optional query filters. The returned list
-        may be empty if no trades match the given parameters.
-
-        Parameters
-        ----------
-        instrument_id : InstrumentId, optional
-            The instrument ID query filter.
-        venue_order_id : VenueOrderId, optional
-            The venue order ID (assigned by the venue) query filter.
-        start : pd.Timestamp, optional
-            The start datetime (UTC) query filter.
-        end : pd.Timestamp, optional
-            The end datetime (UTC) query filter.
-
-        Returns
-        -------
-        list[FillReport]
-
-        """
         self._log.warning("Cannot generate `list[FillReport]`: not yet implemented")
-
         return []  # TODO: Implement
 
     async def generate_position_status_reports(
         self,
-        instrument_id: InstrumentId | None = None,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
+        command: GeneratePositionStatusReports,
     ) -> list[PositionStatusReport]:
-        """
-        Generate a list of `PositionStatusReport`s with optional query filters. The
-        returned list may be empty if no positions match the given parameters.
-
-        Parameters
-        ----------
-        instrument_id : InstrumentId, optional
-            The instrument ID query filter.
-        start : pd.Timestamp, optional
-            The start datetime (UTC) query filter.
-        end : pd.Timestamp, optional
-            The end datetime (UTC) query filter.
-
-        Returns
-        -------
-        list[PositionStatusReport]
-
-        """
         report = []
         positions: list[IBPosition] | None = await self._client.get_positions(
             self.account_id.get_id(),
